@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzg.wawaji.dao.DeliverDao">
+
+    <!-- 用户地址表 -->
+    <resultMap type="com.lzg.wawaji.entity.Deliver" id="deliverMap">
+        <!-- 主键id -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <!-- 用户编号 -->
+        <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
+        <!-- 用户姓名 -->
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <!-- 手机号 -->
+        <result property="mobileNo" column="mobile_no" jdbcType="VARCHAR"/>
+        <!-- 地址 -->
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <!-- 快递单号 -->
+        <result property="deliverNo" column="deliver_no" jdbcType="VARCHAR"/>
+        <!-- 快递公司 -->
+        <result property="company" column="company" jdbcType="VARCHAR"/>
+        <!-- 快递详情 -->
+        <result property="deliverMsg" column="deliver_msg" jdbcType="VARCHAR"/>
+        <!-- 货物状态 -->
+        <result property="deliverStatus" column="deliver_status" jdbcType="INTEGER"/>
+        <!-- 创建时间 -->
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <!-- 最后修改时间 -->
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 添加发货记录 -->
+    <insert id="addDeliver" parameterType="com.lzg.wawaji.entity.Deliver">
+        insert into deliver
+            (
+            user_no,
+            user_name,
+            mobile_no,
+            address,
+            deliver_no,
+            company,
+            deliver_msg,
+            deliver_status
+            )
+        values
+            (
+            #{userNo, jdbcType=VARCHAR},
+            #{userName, jdbcType=VARCHAR},
+            #{mobileNo, jdbcType=VARCHAR},
+            #{address, jdbcType=VARCHAR},
+            #{deliverNo, jdbcType=VARCHAR},
+            #{company, jdbcType=VARCHAR},
+            #{deliverMsg, jdbcType=VARCHAR},
+            #{deliverStatus, jdbcType=INTEGER}
+            )
+    </insert>
+
+    <!-- 根据用户编号获得用户发货记录数量 -->
+    <select id="countDeliverByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from deliver  where user_no = #{userNo}
+    </select>
+
+    <!-- 根据用户编号分页获得用户发货记录集合 -->
+    <select id="getDeliverByUserNo" resultMap="deliverMap">
+        select
+            id,
+            user_no,
+            user_name,
+            mobile_no,
+            address,
+            deliver_no,
+            company,
+            deliver_msg,
+            deliver_status
+        from deliver
+        where user_no = #{userNo} order by create_time desc
+        limit #{startPage}, #{pageSize}
+    </select>
+
+    <!-- 根据id,用户编号获得用户地址 -->
+    <select id="getDeliverByIdAndUserNo" resultMap="deliverMap">
+        select
+            id,
+            user_no,
+            user_name,
+            mobile_no,
+            address,
+            deliver_no,
+            company,
+            deliver_msg,
+            deliver_status
+        from deliver
+        where user_no = #{userNo} and id = #{id}
+    </select>
+
+    <!-- 根据id,用户编号修改用户地址及状态 -->
+    <update id="updateDeliverMsgByIdAndUserNo">
+        update deliver set
+            deliver_msg = #{deliverMsg, jdbcType=VARCHAR},
+            deliver_status = #{deliverStatus, jdbcType=INTEGER}
+        where id = #{id} and user_no = #{userNo}
+    </update>
+
+</mapper>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzg.wawaji.dao.UserToyDao">
+
+    <!-- 用户消费记录表 -->
+    <resultMap type="com.lzg.wawaji.entity.UserToy" id="userToyMap">
+        <!-- 主键id -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <!-- 用户编号 -->
+        <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
+        <!-- 娃娃编号 -->
+        <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
+        <!-- 选择方式 -->
+        <result property="choiceType" column="choice_type" jdbcType="INTEGER"/>
+        <!-- 处理状态 -->
+        <result property="handleStatus" column="handle_status" jdbcType="INTEGER"/>
+        <!-- 创建时间 -->
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <!-- 最后修改时间 -->
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+
+        <!-- 链表查询用字段 toy -->
+        <!-- 娃娃图片 -->
+        <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 添加用户娃娃记录 -->
+    <insert id="addUserToy" parameterType="com.lzg.wawaji.entity.UserToy">
+        insert into user_toy
+            (
+                user_no,
+                toy_no,
+                choice_type,
+                handle_status
+            )
+        values
+            (
+                #{userNo, jdbcType=VARCHAR},
+                #{toyNo, jdbcType=VARCHAR},
+                #{choiceType, jdbcType=INTEGER},
+                #{handle_status, jdbcType=INTEGER}
+            )
+    </insert>
+
+    <!-- 根据用户编号分页获得所有用户娃娃记录 -->
+    <select id="getUserSpendRecordByUserNo" resultMap="userToyMap">
+        select
+            u.id,
+            u.user_no,
+            u.toy_no,
+            u.choice_type,
+            u.handle_status,
+            t.toy_img
+        from user_toy u,toy t
+        where u.toy_no = t.toy_no and user_no = #{userNo}
+        limit #{startPage}, #{pageSize}
+    </select>
+
+    <!-- 根据id,用户编号修改选择方式 -->
+    <update id="updateChoiceTypeByIdAndUserNo">
+        update user_toy set
+          choice_type = #{choiceType, jdbcType=INTEGER}
+        where id = #{id} and user_no = #{userNo}
+    </update>
+
+    <!-- 根据用id,用户编号修改处理状态 -->
+    <update id="updateHandleStatusByIdAndUserNo">
+        update user_toy set
+        handle_status = #{handleStatus, jdbcType=INTEGER}
+        where id = #{id} and user_no = #{userNo}
+    </update>
+
+</mapper>

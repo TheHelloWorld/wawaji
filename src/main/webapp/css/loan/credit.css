@@ -1,0 +1,910 @@
+/*公共样式-开始*/
+
+html, body {
+    font-family: "Microsoft YaHei", sans-serif !important;
+    font-size: 62.5%;
+    background: #e4e2e2;
+}
+
+button[disabled] {
+    cursor: not-allowed;
+}
+
+ol, ul {
+    padding: 0;
+    margin: 0;
+
+}
+
+ul li {
+    list-style: none;
+}
+
+.logoImg {
+    width: 70px;
+    height: 70px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.default-cursor {
+    cursor: default;
+}
+
+.width5 {
+    width: 5%;
+}
+
+.width8 {
+    width: 8%;
+}
+
+.width10 {
+    width: 10%;
+}
+
+.width15 {
+    width: 15%;
+}
+
+.width20 {
+    width: 20%;
+}
+
+.width33 {
+    width: 33%;
+}
+
+.width50 {
+    width: 50%;
+}
+
+.width60 {
+    width: 60%;
+}
+
+.width70 {
+    width: 70%;
+}
+
+.width80 {
+    width: 80%;
+}
+
+.padding-10 {
+    padding: 10px;
+}
+
+.form-control-feedback {
+    right: 20px
+}
+
+/*公共半径*/
+.common-border-radius {
+    border-radius: 4px;
+}
+
+/*表单验证错误提示*/
+.error {
+    color: #a94442;
+    font-size: 12px;
+    /*margin: 15px 0 0 0;*/
+}
+
+.ellipsis {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.ellipsis:hover {
+    text-overflow: clip;
+
+}
+
+.upload {
+    display: inline-block;
+    width: 140px;
+    height: 140px;
+    line-height: 120px;
+    text-align: center;
+
+}
+
+.text-center {
+    text-align: center;
+}
+
+.pull-right {
+    float: right;
+}
+
+.pull-left {
+    float: left;
+}
+
+a {
+    cursor: pointer;
+}
+
+a:focus, a:hover {
+    text-decoration: none;
+}
+
+.btn-red {
+    padding: 0 40px;
+    background: #ec5244;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.btn-red:hover {
+    background: #D74C3E;
+    color: #fff;
+}
+
+.btn-bor-red {
+    border: 1px solid #ec5244;
+    color: #ec5244;
+}
+
+.position-r {
+    position: relative;
+}
+
+.position-a {
+    position: absolute;
+}
+
+/*手机账号登录输入框*/
+.inputTel {
+    width: 85%;
+    height: 42px;
+    background-size: 14px;
+    border: 0;
+    border-radius: 0;
+    margin-left: 13%;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
+}
+
+/*密码登录输入框*/
+.inputPwd {
+    width: 85%;
+    height: 42px;
+    border: 0;
+    border-radius: 0;
+    margin-left: 13%;
+    background-size: 15px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
+}
+
+.inputVer {
+    width: 42vw;
+    height: 42px;
+    border: 0;
+    background-size: 16px;
+    border-radius: 0;
+    margin-left: 13%;
+}
+
+.inputGetVer {
+    height: 30px;
+    border: 0;
+    border-radius: 5px;
+    display: inline-block;
+    background: #d9d9d9;
+    /*padding: 0 15px;*/
+    color: #fff;
+}
+
+/*激活状态聚焦样式*/
+.TipBox {
+    height: 30px;
+    line-height: 30px;
+    color: red;
+    text-align: left;
+    text-indent: 48px;
+}
+
+.common-btn {
+    font-family: "Microsoft YaHei", sans-serif;
+    font-size: 2rem;
+    width: 100%;
+    height: 45px;
+    background-color: #d9d9d9;
+    margin: 30px 0 10px 0;
+    border: none;
+    border-radius: 7px;
+    color: #999;
+
+}
+
+.common-form {
+    height: 100vh;
+    position: relative;
+    margin: 0 auto;
+    padding-top: 25px;
+    font-size: 1.6rem;
+    /*background-color: #e4e2e2;*/
+}
+
+.common-form input {
+    font-size: 1.4rem;
+    font-family: "Microsoft YaHei", sans-serif !important;
+}
+
+/*公共样式-结束*/
+
+/*首页-开始*/
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.indexOld-wrap {
+    position: relative;
+}
+
+.index-logo {
+    width: 90px;
+    margin-top: 25vh;
+}
+
+.home-header {
+    background-color: #448aca;
+    height: 8vh;
+    line-height: 8vh;
+    color: #fff;
+    font-size: 24px;
+}
+
+.home-header p {
+    font-size: 2.6rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: "Microsoft YaHei", sans-serif !important;
+}
+
+.home-header h2 {
+    font-size: 26px;
+    margin: 0;
+    color: #fff;
+}
+
+.home-footer {
+    margin-top: 60vh
+}
+
+.home-button-1 {
+    padding: 3vw 15vw;
+    margin: 0 2vw;
+    border: 1px solid #979797;
+    border-radius: 5px;
+    color: #e6d7cd;
+    /*opacity:0.5;*/
+    background-color: rgba(255, 255, 255, 0);
+    position: relative;
+    z-index: 10;
+}
+
+.home-button-2 {
+    padding: 3vw 15vw;
+    margin: 0 2vw;
+    border: 1px solid #448aca;
+    border-radius: 5px;
+    color: #e6d7cd;
+    background-color: #448aca;
+}
+
+.login-phone {
+    width: 10vw;
+    height: 40px;
+    position: absolute;
+    background: url("../images/phone.png") no-repeat center center;
+    background-size: 17px;
+    border-right: 2px solid #efefef;
+}
+
+.login-pwd {
+    width: 10vw;
+    height: 40px;
+    position: absolute;
+    background: url("../images/password.png") no-repeat center center;
+    background-size: 17px;
+    border-right: 2px solid #efefef;
+}
+
+.login-safe {
+    width: 10vw;
+    height: 40px;
+    position: absolute;
+    background: url("../images/safe.png") no-repeat center center;
+    background-size: 17px;
+    border-right: 2px solid #efefef;
+}
+
+.home-login {
+    padding: 0 10%;
+}
+
+.home-login a {
+    font-size: 1.6rem;
+    color: #448aca;
+}
+
+.home-alter {
+    clear: both;
+    padding-top: 50px;
+}
+
+.home-alter span {
+    color: #fff;
+    background-color: #605f5f;
+    padding: 5px;
+
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+.home-close {
+    position: absolute;
+    top: 3px;
+    left: 15px;
+    width: 28px;
+    height: 34px;
+    background: url("../images/close.png") no-repeat 0 0;
+    background-size: 70%;
+}
+/*首页-结束*/
+
+/*登陆-开始*/
+.new-close{
+    position: absolute;
+    display: inline-block;
+    top: 3px;
+    left: 15px;
+    width: 38px;
+    height: 4rem;
+    line-height: 4rem;
+    background: white;
+}
+.new-close img {
+    width: 80%;
+}
+.dialog-title{
+    font-size: 1.8rem;
+    height: 4.5rem;
+    line-height: 4.5rem;
+    border-bottom: 1px solid #cccccc;
+}
+.dialog-name{
+    font-size: 2.5rem;
+    display: inline-block;
+    height: 4.5rem;
+    line-height: 5.5rem;
+}
+.form-control.input-bottom{
+    box-shadow:none;
+    -webkit-box-shadow:none;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    outline: none;
+}
+
+@media screen and (max-width: 350px) {
+    .new-close{
+        width: 34px;
+        height: 3rem;
+        line-height: 3rem;
+    }
+    .new-close img {
+        width: 80%;
+    }
+    .dialog-title{
+        font-size: 1.6rem;
+        height: 3.5rem;
+        line-height: 3.5rem;
+    }
+    .dialog-name{
+        font-size: 2.2rem;
+        height: 3.5rem;
+        line-height: 4.5rem;
+    }
+}
+
+/*****短信验证码按钮*******/
+.sendSmsCode{
+    background: transparent;
+    color: #3399ff;
+    margin-top: 2rem;
+}
+.btn-disabled{
+    color: #656565;
+}
+
+.tel-user {
+    background: #f3f3f3 url(../images/login-tel-user1.png) no-repeat center center;
+    position: absolute;
+    top: 13px;
+    left: 1px;
+    display: inline-block;
+    width: 39px;
+    height: 38px;
+    text-align: center;
+    border-right: 1px solid #bdbdbd;
+}
+
+.pwd-user {
+    background: url(../images/login-pwd-user1.png) no-repeat center center;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    display: inline-block;
+    width: 39px;
+    height: 38px;
+    text-align: center;
+    border-right: 1px solid #bdbdbd;
+}
+
+/*登陆-结束*/
+
+/*信贷超市-开始*/
+
+.credit-data {
+    width: 15vw;
+    display: inline-block;
+}
+
+.credit-hot {
+    clear: both;
+}
+
+.credit-limit {
+    color: #5c5c5d;
+    width: 65%;
+    float: right;
+}
+
+.credit-limit span {
+    width: 25vw;
+    /*float: left;*/
+    /*padding-left: 10px;*/
+    line-height: 2em;
+
+}
+
+.credit-close {
+    font-size: 1.6rem;
+    position: absolute;
+    margin-left: 10px;
+    color: #fff;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.material {
+    clear: both;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    /*padding-left: 10px;*/
+    color: #5c5c5d;
+}
+
+.credit .carousel-inner img {
+    width: 100vw;
+}
+
+.wrap {
+    /*background: #e4e2e2;*/
+    /*height: 100%;*/
+    padding: 5px;
+}
+
+.credit-main {
+    font-size: 1.3rem;
+    background: #fff;
+}
+
+.money {
+    color: #e32020;
+}
+
+.credit-main-border {
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    padding: 10px;
+    overflow: hidden;
+}
+
+/**********信贷超市样式**********/
+.credit-main-f0 {
+    border: 1px solid #f0f0f0;
+    margin-top: 10px;
+    padding: 10px;
+    overflow: hidden;
+}
+.credit-title div.logo-icon {
+    display: inline-block;
+}
+.credit-title div.logo-icon img {
+    width:70%;
+    height: auto;
+    display: inline-block;
+}
+.credit-title span {
+    color: #242424;
+    font-size: 2rem;
+    margin-left: -5px;
+}
+.credit-title label {
+    background: #fff9f0;
+    display: inline-block;
+    color: #ffac36;
+    padding: 2px 3px;
+    margin:0 5px;
+    font-size: small;
+    font-weight:200;
+}
+.credit-amount-info{
+    color: #969696;
+    font-size: 0.8rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+.credit-amount-info span {
+    color: #ff9600;
+    font-size: 2.2rem;
+}
+.credit-amount-info .credit-amount {
+    display: inline-block;
+    width: 40%;
+    height: 2.4rem;
+    line-height: 2.4rem;
+    border-right: 1px solid #f0f0f0;
+}
+.credit-amount-info label {
+    color: #242424;
+    margin-left: 1rem;
+    font-size: 1.4rem;
+    font-weight: 200;
+}
+
+/****信贷超市样式申请借款按钮*****/
+.credit-btn{
+    display: inline-block;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 1.4rem;
+    font-weight: 200;
+    color:#ff9600;
+    border: 1px solid #ff9600;
+    border-radius: 20px;
+    position:absolute;
+    top:-8px;
+    right:8px;
+}
+.credit-condition{
+    color: #a8a7a7;
+    font-weight: 200;
+    font-size: 1.4rem;
+}
+.credit-condition p.pfirst{
+    float: left;
+    width: 12%;
+}
+.credit-condition p.plast{
+    float: left;
+    width: 81%;
+}
+
+.hot {
+    max-width: 25px !important;
+    float: right;
+    margin: 0 !important;
+    position: relative;
+    bottom: 4px;
+}
+
+.credit-carousel {
+    left: -100%;
+    width: 400%;
+    position: absolute;
+    transition: all 0.5s ease-in 0s;
+}
+
+.credit-carousel .banner {
+    width: 25%;
+    float: left;
+    text-align: center
+}
+@media (min-width: 550px) and (max-width: 630px) {
+    .credit-condition p.pfirst{
+        float: left;
+        width: 14%;
+    }
+}
+@media (min-width: 480px) and (max-width: 549px) {
+    .credit-condition p.pfirst{
+        float: left;
+        width: 16%;
+    }
+}
+@media (min-width: 400px) and (max-width: 479px) {
+    .credit-condition p.pfirst{
+        float: left;
+        width: 18%;
+    }
+}
+@media screen and (max-width: 400px) {
+    .credit-title div.logo-icon img {
+        width:60%;
+    }
+    .credit-title span {
+        font-size: 1.8rem;
+        margin-left: -10px;
+    }
+    .credit-title label {
+        font-size:10px;
+    }
+    .credit-btn{
+        font-size: 1.2rem;
+    }
+    .credit-condition{
+        font-size: 1.2rem;
+    }
+    .credit-amount-info span {
+        font-size: 2rem;
+    }
+    .credit-amount-info label {
+        font-size: 1.2rem;
+    }
+    .credit-condition p.pfirst{
+        float: left;
+        width: 18%;
+    }
+}
+@media screen and (max-width: 350px) {
+    .credit-title div.logo-icon img {
+        width:50%;
+    }
+    .credit-title span {
+        font-size: 1.4rem;
+        margin-left: -20px;
+    }
+    .credit-title label {
+        font-size:8px;
+    }
+    .credit-btn{
+        font-size: 1rem;
+        height: 2.4rem;
+        line-height: 2.4rem;
+        padding-left: 10px;
+        padding-right: 10px;
+        position:absolute;
+        top:-5px;
+        right:4px;
+    }
+    .credit-condition{
+        font-size: 1rem;
+    }
+    .credit-amount-info span {
+        font-size: 1.6rem;
+    }
+    .credit-amount-info label {
+        font-size: 1.2rem;
+    }
+    .credit-condition p.pfirst{
+        float: left;
+        width: 21%;
+    }
+    .credit-condition p.plast{
+        float: left;
+        width: 78%;
+    }
+}
+/*信贷超市-结束*/
+
+/*注册开始*/
+.home-login {
+    font-size: 22px;
+}
+
+.home-login p {
+    font-size: 1.6rem;
+}
+
+.register-wrap {
+    background: #e4e2e2;
+}
+
+.register-main input {
+    font-size: 22px;
+    border: 0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
+}
+
+.position-r {
+    background-color: #fff;
+    padding: 10px 0;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+/*注册结束*/
+
+/*找回密码开始*/
+.forget-wrap {
+    position: relative;
+    background: #e4e2e2;
+}
+
+.forget-return {
+    width: 12vw;
+    height: 8vh;
+    position: absolute;
+    background: url("../images/return.png") no-repeat 3vw 1.7vh;
+    background-size: 2.5vh;
+}
+
+/*找回密码结束*/
+
+/*模态框*/
+.modalDiy {
+    position: fixed;
+    left: 0;
+    top: 35vw;
+    right: 0;
+    width: 80vw;
+    height: 24vw;
+    padding: 10.5vw 0 3vw 0;
+    margin: 0 auto;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 10px;
+    z-index: 1002;
+    display: none;
+}
+
+.modalDiy p {
+    text-align: justify;
+    padding: 0 11vw;
+    height: 10vw;
+    color: #000000;
+    font-size: 4.6vw;
+    font-family: "Microsoft YaHei", serif;
+}
+
+.buttonWrap {
+    display: inline-block;
+    width: 36vw;
+    height: 13vw;
+    line-height: 13vw;
+    margin: 0 1vw 0 1vw;
+    border-radius: 10px;
+    border: 1px solid #CFCFCF;
+    font-size: 4vw;
+    color: #454b3b;
+    font-family: "Microsoft YaHei", serif;
+}
+
+#shadowDiv {
+    background-color: black;
+    height: 100%;
+    min-height: 100vh;
+    width: 100%;
+    min-width: 100vw;
+    opacity: .5;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: none;
+}
+
+/*模态框-结束*/
+
+/*媒体查询*/
+
+@media screen and (min-width: 320px ) {
+    .credit-limit {
+        width: 68%;
+    }
+
+    .common-form input {
+        font-size: 1.3rem;
+    }
+
+    .logoImg {
+        width: 80px;
+        height: 80px;
+    }
+
+    .inputVer {
+        width: 25vw;
+    }
+}
+
+@media screen and (min-width: 375px ) {
+    .inputVer {
+        width: 30vw !important;
+    }
+
+    .common-form input {
+        font-size: 1.4rem;
+    }
+}
+
+@media screen and (min-width: 360px ) {
+    .inputVer {
+        width: 40vw;
+    }
+
+    .inputGetVer {
+        padding: 0 10px;
+    }
+}
+
+@media screen and (min-width: 375px ) {
+    .inputVer {
+        width: 35vw;
+    }
+
+    .inputGetVer {
+        padding: 0 5px;
+
+    }
+}
+
+@media screen and (min-width: 410px ) {
+    .inputVer {
+        width: 38vw;
+    }
+
+    .credit-main {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (min-width: 768px ) {
+    .inputVer {
+        width: 60vw;
+    }
+
+    .logoImg {
+        width: 100px;
+        height: 100px;
+    }
+
+    .credit-main {
+        font-size: 1.5rem;
+
+    }
+
+    .credit-main {
+        font-size: 1.8rem;
+
+    }
+}
+
+/********btn的颜色********/
+.color-fff{
+    color: white;
+}
+.bg-3399ff{
+    background: #3399ff;
+}
+
+
+
+

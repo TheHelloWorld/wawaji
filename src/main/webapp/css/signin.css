@@ -1,0 +1,107 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+/*     liulong */
+.table-style{
+	border-collapse: collapse;
+	width:600px;
+	box-sizing: border-box;
+	border:1px solid #eee;	
+}
+.jiufu table td{
+	border-bottom:1px solid #eee;
+	text-align:center;
+}
+.jiufu thead td{
+	border:none;
+}
+.jiufu table h2{
+	margin:0 auto;
+	width:100%;
+	height:40px;
+}
+.jiufu table input{
+	border:none;
+	outline:none;
+	background:none;
+	width:100%;
+	text-align:center;
+}
+.modal-body{
+	padding:0;
+}
+.modal-content{
+	border:none;
+}
+.editSub,.saveSub{
+	width:100%;
+	height:40px;
+	text-align:center;
+	position:absolute;
+	left:0;
+	bottom:0;
+}
+.editSub input,.saveSub input{
+	padding:5px 10px ;
+	border-radius:4px;
+	margin:0 40px;
+	outline:none;
+	background:#dff0d8;
+	
+}
+.saveSub {
+	width:100%;
+	margin:0 auto;
+	text-align:center;
+}
+.jiufu{
+	position:relative;
+}
+.kong{
+	clear:both;
+	height:40px;
+}
+.b{
+	display:block;
+}
+.n{
+	display:none;
+}
+/*     liulong**** */

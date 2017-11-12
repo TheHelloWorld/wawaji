@@ -1,0 +1,29 @@
+package com.lzg.wawaji.service;
+
+import com.lzg.wawaji.entity.UserSpendRecord;
+
+import java.util.List;
+
+public interface UserSpendRecordService {
+
+    /**
+     * 添加用户消费记录
+     * @param userSpendRecord 用户消费记录
+     */
+    void addUserSpendRecord(UserSpendRecord userSpendRecord);
+
+    /**
+     * 根据用户编号获得所有用户消费记录
+     * @param userNo 用户编号
+     * @return
+     */
+    Integer countUserSpendRecordByUserNo(String userNo);
+
+    /**
+     * 根据用户编号分页获得用户消费记录
+     * @param userNo 用户编号
+     * @param startPage 开始页
+     * @return
+     */
+    List<UserSpendRecord> getUserSpendRecordByUserNo(String userNo, int startPage);
+}

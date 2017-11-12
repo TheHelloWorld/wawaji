@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzg.wawaji.dao.ToyDao">
+
+    <!-- 娃娃表 -->
+    <resultMap type="com.lzg.wawaji.entity.Toy" id="toyMap">
+        <!-- 主键Id -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <!-- 娃娃编号 -->
+        <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
+        <!-- 娃娃兑换游戏币数 -->
+        <result property="toyForCoin" column="toy_for_coin" jdbcType="INTEGER"/>
+        <!-- 娃娃图片地址 -->
+        <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
+        <!-- 娃娃描述 -->
+        <result property="toyDesc" column="toy_desc" jdbcType="VARCHAR"/>
+        <!-- 娃娃当前游戏币 -->
+        <result property="toyNowCoin" column="toy_now_coin" jdbcType="INTEGER"/>
+        <!-- 娃娃原本游戏币 -->
+        <result property="toyOriginCoin" column="toy_origin_coin" jdbcType="INTEGER"/>
+        <!-- 娃娃成本 -->
+        <result property="toyCost" column="toy_cost" jdbcType="DECIMAL"/>
+        <!-- 创建时间 -->
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <!-- 最后修改时间 -->
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 添加娃娃记录 -->
+    <insert id="addToy" parameterType="com.lzg.wawaji.entity.Toy">
+        insert into toy
+            (
+                toy_no ,
+                toy_for_coin,
+                toy_img,
+                toy_desc,
+                toy_now_coin,
+                toy_origin_coin,
+                toy_cost
+            )
+        values
+            (
+                #{toyNo, jdbcType=VARCHAR},
+                #{toyForCoin, jdbcType=INTEGER},
+                #{toyImg, jdbcType=VARCHAR},
+                #{toyDesc, jdbcType=VARCHAR},
+                #{toyNowCoin, jdbcType=INTEGER},
+                #{toyOriginCoin, jdbcType=INTEGER},
+                #{toyCost, jdbcType=DECIMAL}
+            )
+    </insert>
+
+    <!-- 获得所有玩具数 -->
+    <select id="countAllToy" resultType="java.lang.Integer">
+        select count(*) from toy
+    </select>
+
+    <!-- 分页获得所有娃娃记录 -->
+    <select id="getAllToyByPage" resultMap="toyMap">
+        select
+            id,
+            toy_no,
+            toy_for_coin,
+            toy_img,
+            toy_desc,
+            toy_now_coin,
+            toy_origin_coin,
+            toy_cost
+        from toy
+        limit #{startPage}, #{pageSize}
+    </select>
+
+    <!-- 根据id,娃娃编号获得娃娃及信息 -->
+    <select id="getToyByIdAndToyNo" parameterType="java.lang.Long" resultMap="toyMap">
+        select
+          id,
+          toy_no,
+          toy_for_coin,
+          toy_img,
+          toy_desc,
+          toy_now_coin,
+          toy_origin_coin,
+          toy_cost
+        from toy
+        where id = #{id} and toy_no = #{toyNo}
+    </select>
+
+    <!-- 根据id,娃娃机编号修改娃娃机记录 -->
+    <update id="updateToyByIdAndToyNo" parameterType="com.lzg.wawaji.entity.Toy">
+        update toy set
+            toy_for_coin = #{toyForCoin, jdbcType=INTEGER},
+            toy_img = #{toyImg, jdbcType=VARCHAR},
+            toy_desc = #{toyDesc, jdbcType=VARCHAR},
+            toy_now_coin = #{toyNowCoin, jdbcType=INTEGER},
+            toy_origin_coin = #{toyOriginCoin, jdbcType=INTEGER},
+            toy_cost = #{toyCost, jdbcType=DECIMAL}
+        where id = #{id} and toy_no = #{toyNo, jdbcType=VARCHAR}
+    </update>
+
+</mapper>

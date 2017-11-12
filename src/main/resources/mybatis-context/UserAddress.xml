@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzg.wawaji.dao.UserAddressDao">
+
+    <!-- 用户地址表 -->
+    <resultMap type="com.lzg.wawaji.entity.UserAddress" id="userAddressMap">
+        <!-- 主键id -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <!-- 用户编号 -->
+        <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
+        <!-- 用户姓名 -->
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <!-- 手机号 -->
+        <result property="mobileNo" column="mobile_no" jdbcType="VARCHAR"/>
+        <!-- 地址 -->
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <!-- 创建时间 -->
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <!-- 最后修改时间 -->
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 添加用户地址记录 -->
+    <insert id="addUserAddress" parameterType="com.lzg.wawaji.entity.UserAddress">
+        insert into user_address
+            (
+            user_no,
+            user_name,
+            mobile_no,
+            address
+            )
+        values
+            (
+            #{userNo, jdbcType=VARCHAR},
+            #{userName, jdbcType=VARCHAR},
+            #{mobileNo, jdbcType=VARCHAR},
+            #{address, jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <!-- 根据用户编号获得用户地址数量 -->
+    <select id="countUserAddressByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from user_address  where user_no = #{userNo}
+    </select>
+
+    <!-- 根据用户编号获得用户地址集合 -->
+    <select id="getUserAddressByUserNo" parameterType="java.lang.String" resultMap="userAddressMap">
+        select
+            id,
+            user_no,
+            user_name,
+            mobile_no,
+            address
+        from user_address
+        where user_no = #{userNo}
+    </select>
+
+    <!-- 根据id,用户编号获得用户地址 -->
+    <select id="getUserAddressByIdAndUserNo" resultMap="userAddressMap">
+        select
+            id,
+            user_no,
+            user_name,
+            mobile_no,
+            address
+        from user_address
+        where user_no = #{userNo} and id = #{id}
+    </select>
+
+    <!-- 根据id,用户编号修改用户地址 -->
+    <update id="updateUserAddressByIdAndUserNo">
+        update user_address set
+            mobile_no = #{mobileNo, jdbcType=VARCHAR},
+            user_name = #{userName, jdbcType=VARCHAR},
+            address = #{address, jdbcType=VARCHAR}
+        where id = #{id} and user_no = #{userNo}
+    </update>
+
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzg.wawaji.dao.MachineDao">
+
+    <!-- 机器表 -->
+    <resultMap type="com.lzg.wawaji.entity.Machine" id="machineMap">
+        <!-- 主键Id -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <!-- 机器编号 -->
+        <result property="machineNo" column="machine_no" jdbcType="VARCHAR"/>
+        <!-- 娃娃编号 -->
+        <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
+        <!-- 正面直播url -->
+        <result property="frontUrl" column="front_url" jdbcType="VARCHAR"/>
+        <!-- 侧面直播url -->
+        <result property="sideUrl" column="side_url" jdbcType="VARCHAR"/>
+        <!-- 占用端口 -->
+        <result property="usePort" column="use_port" jdbcType="INTEGER"/>
+        <!-- 创建时间 -->
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <!-- 最后修改时间 -->
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+
+        <!-- 链表查询用 关联 toy表 -->
+        <!-- 娃娃当前游戏币 -->
+        <result property="toyNowCoin" column="toy_now_coin" jdbcType="INTEGER"/>
+        <!-- 娃娃原本游戏币 -->
+        <result property="toyOriginCoin" column="toy_origin_coin" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 添加机器记录 -->
+    <insert id="addMachine" parameterType="com.lzg.wawaji.entity.Machine">
+        insert into machine
+            (
+                machine_no ,
+                toy_no,
+                front_url,
+                side_url,
+                use_port
+            )
+        values
+            (
+                #{machineNo, jdbcType=VARCHAR},
+                #{toyNo, jdbcType=VARCHAR},
+                #{frontUrl, jdbcType=VARCHAR},
+                #{sideUrl, jdbcType=VARCHAR},
+                #{usePort, jdbcType=INTEGER}
+            )
+    </insert>
+
+
+
+    <!-- 获得所有机器记录数 -->
+    <select id="countAllMachine" resultType="java.lang.Integer">
+        select count(*) from machine
+    </select>
+
+    <!-- 分页获得所有机器记录 -->
+    <select id="getAllMachineByPage" resultMap="machineMap">
+        select
+            m.id,
+            m.machine_no,
+            m.toy_no,
+            m.front_url,
+            m.side_url,
+            m.use_port,
+            t.toy_now_coin,
+            t.toy_origin_coin
+        from machine m, toy t
+        where m.toy_no = t.toy_no
+          limit #{startPage}, #{pageSize}
+    </select>
+
+    <!-- 根据id获得机器记录 -->
+    <select id="getMachineByIdAndMachineNo" parameterType="java.lang.Long" resultMap="machineMap">
+        select
+            id,
+            machine_no,
+            toy_no,
+            front_url,
+            side_url,
+            use_port
+        from machine
+        where id = #{id} and machine_no = #{machineNo}
+    </select>
+
+    <!-- 根据id,机器编号修改机器记录 -->
+    <update id="updateMachineByIdAndMachineNo" parameterType="com.lzg.wawaji.entity.Machine">
+        update machine set
+            toy_no = #{toyNo, jdbcType=VARCHAR},
+            front_url = #{frontUrl, jdbcType=VARCHAR},
+            side_url = #{sideUrl, jdbcType=VARCHAR},
+            use_port = #{usePort, jdbcType=INTEGER}
+        where id = #{id} and machine_no = #{machineNo, jdbcType=VARCHAR}
+    </update>
+
+    <!-- 根据机器编号获得机器记录 -->
+    <select id="getMachineByMachineNo" parameterType="java.lang.String" resultMap="machineMap">
+        select
+            m.id,
+            m.machine_no,
+            m.toy_no,
+            m.front_url,
+            m.side_url,
+            m.use_port,
+            t.toy_now_coin,
+            t.toy_origin_coin
+        from machine m, toy t
+        where m.toy_no = t.toy_no and machine_no = #{machineNo}
+    </select>
+
+    <!-- 根据机器编号获得机器所需游戏币数 -->
+    <select id="getCoinByMachineNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select  t.toy_now_coin from machine m, toy t where m.toy_no = t.toy_no and machine_no = #{machineNo}
+    </select>
+
+</mapper>

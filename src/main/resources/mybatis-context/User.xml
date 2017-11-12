@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzg.wawaji.dao.UserDao">
+
+    <!-- 用户表 -->
+    <resultMap type="com.lzg.wawaji.entity.User" id="userMap">
+        <!-- 主键id -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <!-- 用户编号 -->
+        <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
+        <!-- 用户名 -->
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <!-- 用户图片 -->
+        <result property="userImg" column="user_img" jdbcType="VARCHAR"/>
+        <!-- 用户游戏币数 -->
+        <result property="userCoin" column="user_coin" jdbcType="INTEGER"/>
+        <!-- 创建时间 -->
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <!-- 最后修改时间 -->
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 添加用户记录 -->
+    <insert id="addUser" parameterType="com.lzg.wawaji.entity.User">
+        insert into user
+            (
+                user_no ,
+                user_name,
+                user_img,
+                user_coin
+            )
+        values
+            (
+                #{userNo, jdbcType=VARCHAR},
+                #{userName, jdbcType=VARCHAR},
+                #{userImg, jdbcType=VARCHAR},
+                #{userCoin, jdbcType=INTEGER}
+            )
+    </insert>
+
+    <!-- 获得所有用户记录数 -->
+    <select id="countAllUser" resultType="java.lang.Integer">
+        select count(*) from `user`
+    </select>
+
+    <!-- 分页获得所有用户记录 -->
+    <select id="getAllUserByPage" resultMap="userMap">
+        select
+            id,
+            user_no,
+            user_name,
+            user_img,
+            user_coin
+        from `user`
+          limit #{startPage}, #{pageSize}
+    </select>
+
+    <!-- 分页获得所有用户记录 -->
+    <select id="getUserCoinByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select user_coin from `user` where user_no = #{userNo}
+    </select>
+
+    <!-- 根据用户编号修改用户游戏币数(用户操作 充值coin为正数,消费coin为负数) -->
+    <update id="updateUserCoinByUserNo">
+        update `user` set
+          user_coin += #{userCoin, jdbcType=INTEGER}
+        where user_no = #{userNo}
+    </update>
+
+    <!-- 根据id修改用户游戏币数(后台操作) -->
+    <update id="updateUserCoinByIdAndUserNo">
+        update `user` set
+        user_coin = #{userCoin, jdbcType=INTEGER}
+        where id = #{id} and user_no = #{userNo}
+    </update>
+
+</mapper>
