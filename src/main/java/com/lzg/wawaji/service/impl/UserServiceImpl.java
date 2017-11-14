@@ -11,11 +11,13 @@ import com.lzg.wawaji.service.MachineService;
 import com.lzg.wawaji.service.UserService;
 import com.lzg.wawaji.service.UserSpendRecordService;
 import com.lzg.wawaji.utils.DateUtil;
+import com.lzg.wawaji.utils.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 
 @Service("userService")
@@ -54,6 +56,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
+    @Transactional
     public String userPlay(String userNo, String machineNo) {
         try {
             // 获得用户当前游戏币数
@@ -64,6 +67,17 @@ public class UserServiceImpl implements UserService {
 
             // 判断用户游戏币是否足够
             if(userCoin >= needCoin) {
+
+                try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                    // 判断当前机器是否已有用户使用
+                    if(redisUtil.setnx(machineNo, userNo) == 0) {
+                        // 若当前机器已被占用
+                        return BaseConstant.MARCHINE_ALREADY_IN_UES;
+                    }
+                } catch (Exception e) {
+                    logger.error("{} redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                }
+
                 // 添加用户消费记录
                 Date date = new Date();
                 UserSpendRecord userSpendRecord = new UserSpendRecord();

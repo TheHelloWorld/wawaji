@@ -90,6 +90,9 @@ public class BaseConstant {
 	 */
 	public static final Integer DEFAULT_PAGE_SIZE = 15;
 
+	/**
+	 * 用户游戏币提示
+	 */
 	public static final String DEDUCTION_COIN_FAIL = "扣除游戏币失败,请新操作";
 
 	public static final String NOT_ENOUGH_COIN = "当前游戏币不足,请充值";
@@ -100,5 +103,12 @@ public class BaseConstant {
 	public static final Integer MAX_USER_ADDRESS = 5;
 
 	public static final String OVER_MAX_USER_ADDRESS = "地址最多只能填5个";
+
+	public static final String MARCHINE_ALREADY_IN_UES = "机器已被占用";
+
+	/**
+	 * redis配置文件名
+	 */
+	public static final String REDIS = "redis";
 
 }
