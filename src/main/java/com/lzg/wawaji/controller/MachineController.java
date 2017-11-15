@@ -54,7 +54,7 @@ public class MachineController {
      * @param machineNo 机器编号
      * @return
      */
-    @RequestMapping(value = "/addMachine", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/getMachineByIdAndMachineNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getMachineByIdAndMachineNo(Long id, String machineNo) {
         JSONObject json = new JSONObject();
@@ -69,7 +69,7 @@ public class MachineController {
      * @param machine 机器记录
      * @return
      */
-    @RequestMapping(value = "/addMachine", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/updateMachineByIdAndMachineNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String updateMachineByIdAndMachineNo(Machine machine) {
         machineService.updateMachineByIdAndMachineNo(machine);
