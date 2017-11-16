@@ -7,9 +7,15 @@ var totalCount = 0;
 // 每页数据数
 var pageSize = 0;
 
+var step = 5;
+
+var nowPage = 1;
+
 $(function(){
     getTotalCountAndPageSize();
     getAllToyByPage();
+    console.info(totalPage);
+    initPage(totalPage,step);
 });
 
 // 根据分页获得所有玩具数据
@@ -22,8 +28,6 @@ function getAllToyByPage() {
             startPage:startPage
         },
         success:function(data) {
-
-            console.info("2:"+data);
 
             data = eval("(" + data + ")");
 
@@ -75,7 +79,6 @@ function getTotalCountAndPageSize() {
             startPage:startPage
         },
         success:function(data){
-            console.info("1:"+data);
 
             data = eval("(" + data + ")");
 
@@ -83,7 +86,32 @@ function getTotalCountAndPageSize() {
 
             pageSize = data["pageSize"];
 
+            if(totalCount <= pageSize) {
+                totalPage = 1;
+            } else if(totalCount % pageSize == 0) {
+                totalPage = totalCount/pageSize;
+            } else {
+                totalPage = parseInt(totalCount/pageSize);
+            }
+
+
         }
 
     });
+}
+
+function getPage(page){
+    //console.info("now:"+nowpage);
+    nowPage = getPageByNum(nowPage,page,totalPage,step);
+
+}
+
+function nextPage(){
+    nowPage = nextPageNum(nowPage,totalPage,step);
+
+}
+
+//上一页
+function lastPage(){
+    nowPage = lastPageNum(nowPage,totalPage,step);
 }

@@ -1,6 +1,8 @@
 //记录收缩列的字符串
 var shrinkStr = "";
 var totalPage = 0;
+
+var totalCount = 0;
 //当前日期
 var now = new Date();
 //今天本周的第几天
@@ -24,11 +26,11 @@ var lastMonth = lastMonthDate.getMonth();
 var tableOrPicture = false;
 
 //初始化页码
-function initPage(num,step){
+function initPage(num, step){
 
 	$("#splitPage").html("");
 
-	if(totalPage == 0){
+	if(totalCount == 0){
 
 		$("#dataDiv").hide();
 		var msg = "<div class='alert alert-warning'>";
@@ -215,14 +217,14 @@ function getPageByNum(nowpage,page,totalPage,step){
 			num = (page + 1)-step;
 		}
 
-		var lastnum = page +1;
-		if(lastnum > totalPage){
-			lastnum = totalPage;
+		var lastNum = page +1;
+		if(lastNum > totalPage){
+            lastNum = totalPage;
 		}
 		var str = "";
 		str += "<ul class='pagination'>";
 		str += "<li><a href='javascript:lastPage()'>&laquo;</a></li>";
-		for(var i = num;i<=lastnum;i++){
+		for(var i = num;i<=lastNum;i++){
 			str += "<li id=page"+i+"><a href='javascript:getPage("+i+")'>"+i+"</a></li>";
 		}
 		str += "<li><a href='javascript:nextPage()'>&raquo;</a></li>";
@@ -240,7 +242,6 @@ function getPageByNum(nowpage,page,totalPage,step){
 
 //下一页
 function nextPageNum(nowpage,totalPage,step){
-	//console.info("next:"+nowpage);
 	if(nowpage+1<=totalPage){
 		return getPageByNum(nowpage,(nowpage+1),totalPage,step);
 	}else{
@@ -251,7 +252,6 @@ function nextPageNum(nowpage,totalPage,step){
 
 //上一页
 function lastPageNum(nowpage,totalPage,step){
-	//console.info("last:"+nowpage);
 	if(nowpage-1>0){
 		return getPageByNum(nowpage,(nowpage-1),totalPage,step);
 	}else{
@@ -367,7 +367,7 @@ function shrinkMethon(tableId){
 }
 
 //准备自动补全数据
-function prepareData(url,keyword,id,datas,widthId){
+function prepareData(url, keyword, id, datas, widthId){
 	$.ajax({
 		url:url,
 		type:"POST",
