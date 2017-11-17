@@ -78,11 +78,8 @@ public class ToyController {
     @RequestMapping(value = "/getToyByIdAndToyNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getToyByIdAndToyNo(Long id, String toyNo) {
-        JSONObject json = new JSONObject();
 
-        json.put("toy", toyService.getToyByIdAndToyNo(id, toyNo));
-
-        return json.toString();
+        return String.valueOf(toyService.getToyByIdAndToyNo(id, toyNo));
     }
 
     /**

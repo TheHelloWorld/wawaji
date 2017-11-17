@@ -76,7 +76,7 @@
     </select>
 
     <!-- 根据id,娃娃编号获得娃娃及信息 -->
-    <select id="getToyByIdAndToyNo" parameterType="java.lang.Long" resultMap="toyMap">
+    <select id="getToyByIdAndToyNo" resultMap="toyMap">
         select
           id,
           toy_no,
@@ -88,7 +88,7 @@
           toy_cost,
           current_state
         from toy where current_state = 1
-        where id = #{id} and toy_no = #{toyNo}
+        and id = #{id} and toy_no = #{toyNo}
     </select>
 
     <!-- 根据id,娃娃机编号修改娃娃机记录 -->

@@ -47,7 +47,7 @@ function getAllToyByPage() {
 
                     if(col == "operation") {
 
-                        td += "修改 | 删除";
+                        td += "<a href='/wawaji/toy/toyDetailPage.jsp?type=update&id="+list[i]['id']+"&toyNo="+list[i]['toyNo']+"'>修改</a> | <a>删除</a>";
 
                     } else {
                         //如果数据为空则写无
@@ -102,7 +102,6 @@ function getTotalCountAndPageSize() {
 }
 
 function getPage(page){
-    //console.info("now:"+nowpage);
     nowPage = getPageByNum(nowPage,page,totalPage,step);
 
 }
