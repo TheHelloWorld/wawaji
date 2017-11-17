@@ -1,5 +1,6 @@
 package com.lzg.wawaji.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.entity.Toy;
 import com.lzg.wawaji.service.ToyService;
@@ -51,22 +52,19 @@ public class ToyController {
 
     /**
      * 添加玩具记录
-     * @param toy 玩具记录
+     * @param toyStr 玩具记录
      * @return
      */
     @RequestMapping(value = "/addToy", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String addToy(Toy toy) {
-
+    public String addToy(String toyStr) {
         try {
-            toyService.addToy(toy);
+            toyService.addToy(JSON.parseObject(toyStr, Toy.class));
             return BaseConstant.SUCCESS;
         } catch (Exception e) {
-            logger.error("{} addToy param:{} error "+e, BaseConstant.LOG_ERR_MSG, toy, e);
+            logger.error("{} addToy param:{} error "+e, BaseConstant.LOG_ERR_MSG, toyStr, e);
             return BaseConstant.FAIL;
         }
-
-
     }
 
     /**
@@ -84,18 +82,39 @@ public class ToyController {
 
     /**
      * 根据id和玩具编号修改玩具记录
-     * @param toy 玩具记录
+     * @param toyStr 玩具记录
      * @return
      */
     @RequestMapping(value = "/updateToyByIdAndToyNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String updateToyByIdAndToyNo(Toy toy) {
+    public String updateToyByIdAndToyNo(String toyStr) {
         try {
-            toyService.updateToyByIdAndToyNo(toy);
+            toyService.updateToyByIdAndToyNo(JSON.parseObject(toyStr, Toy.class));
             return BaseConstant.SUCCESS;
         } catch (Exception e) {
-            logger.error("{} updateToyByIdAndToyNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, toy, e);
+            logger.error("{} updateToyByIdAndToyNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, toyStr, e);
             return BaseConstant.FAIL;
         }
+    }
+
+    /**
+     * 根据id和玩具编号删除记录
+     * @param id id
+     * @param toyNo 玩具编号
+     * @return
+     */
+    @RequestMapping(value = "/deleteToyByIdAndToyNo", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteToyByIdAndToyNo(Long id, String toyNo) {
+        try {
+            toyService.deleteToyByIdAndToyNo(id, toyNo);
+            return BaseConstant.SUCCESS;
+        } catch (Exception e) {
+            JSONObject json = new JSONObject();
+            json.put("id",id);
+            json.put("toyNo",toyNo);
+            logger.error("{} deleteToyByIdAndToyNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, json, e);
+            return BaseConstant.FAIL;
+    }
     }
 }

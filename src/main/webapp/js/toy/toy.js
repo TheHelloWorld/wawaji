@@ -38,7 +38,8 @@ function getAllToyByPage() {
             //console.info("length:"+s.length);
             for(var i = 0;i<list.length;i++) {
 
-                str += "<tr class='even gradeA'>";
+                str += "<tr id=tr"+list[i]["id"]+" class='even gradeA'>";
+
                 $("#titleColumn").find("lable").each(function() {
 
                     var col = $(this).attr("name");
@@ -47,8 +48,8 @@ function getAllToyByPage() {
 
                     if(col == "operation") {
 
-                        td += "<a href='/wawaji/toy/toyDetailPage.jsp?type=update&id="+list[i]['id']+"&toyNo="+list[i]['toyNo']+"'>修改</a> | <a>删除</a>";
-
+                        td += "<a href='/wawaji/toy/toyDetailPage.jsp?type=update&id="+list[i]['id']+"&toyNo="+list[i]['toyNo']+"'>修改</a> | ";
+                        td += "<a href='javascript:void(0);' onclick=deleteToy('"+list[i]['id']+"','"+list[i]['toyNo']+"')>删除</a>";
                     } else {
                         //如果数据为空则写无
                         if((list[i][col] == undefined) || (list[i][col] == null) || (list[i][col] == "null")) {
@@ -66,6 +67,26 @@ function getAllToyByPage() {
             }
 
             $("#dataBody").append(str);
+        }
+
+    });
+}
+
+function deleteToy(id, toyNo) {
+    $.ajax({
+        url:"/wawaji/toy/deleteToyByIdAndToyNo.action",
+        type:"POST",
+        async:false,
+        data:{
+            id:id,
+            toyNo:toyNo
+        },
+        success:function(data){
+
+            if(data == "success") {
+                $("#tr"+id).remove();
+            }
+
         }
 
     });

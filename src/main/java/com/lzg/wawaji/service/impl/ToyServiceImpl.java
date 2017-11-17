@@ -94,11 +94,7 @@ public class ToyServiceImpl implements ToyService {
      */
     @Override
     public void deleteToyByIdAndToyNo(Long id, String toyNo) {
-        try {
-
-        } catch (Exception e) {
-            logger.error("{} getAllToyByPage error "+e, BaseConstant.LOG_ERR_MSG, e);
-        }
+        toyDao.deleteToyByIdAndToyNo(id, toyNo);
     }
 
 }

@@ -32,6 +32,15 @@
                             <input class="form-control" id = "toyNo">
                         </span>
                     </div>
+                    <div class="col-xs-5">
+                        是否可用:
+                        <span name = "currentState">
+                            <select id="currentState" class="form-control">
+                                <option value="1">可用</option>
+                                <option value="0">不可用</option>
+                            </select>
+                        </span>
+                    </div>
                 </div>
                 <br/>
                 <div class="row">

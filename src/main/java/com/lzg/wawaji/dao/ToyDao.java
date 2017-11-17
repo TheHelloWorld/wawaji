@@ -42,4 +42,11 @@ public interface ToyDao {
      * @param toy 娃娃Bean
      */
     void updateToyByIdAndToyNo(Toy toy);
+
+    /**
+     * 根据id和玩具编号删除记录
+     * @param id id
+     * @param toyNo 玩具编号
+     */
+    void deleteToyByIdAndToyNo(@Param("id") Long id, @Param("toyNo") String toyNo);
 }

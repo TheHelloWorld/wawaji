@@ -1,10 +1,13 @@
 package com.lzg.wawaji.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.entity.Machine;
 import com.lzg.wawaji.service.MachineService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/wawaji/machine")
 @Controller
 public class MachineController {
+
+    private static final Logger logger = LoggerFactory.getLogger(MachineController.class);
 
     @Autowired
     private MachineService machineService;
@@ -38,14 +43,21 @@ public class MachineController {
 
     /**
      * 添加机器记录
-     * @param machine 机器记录
+     * @param machineStr 机器记录
      * @return
      */
     @RequestMapping(value = "/addMachine", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String addMachine(Machine machine) {
-        machineService.addMachine(machine);
-        return BaseConstant.SUCCESS;
+    public String addMachine(String machineStr) {
+        try{
+            machineService.addMachine(JSON.parseObject(machineStr, Machine.class));
+            return BaseConstant.SUCCESS;
+        } catch(Exception e) {
+            logger.error("{} addMachine param:{} error "+e, BaseConstant.LOG_ERR_MSG, machineStr, e);
+            return BaseConstant.FAIL;
+        }
+
+
     }
 
     /**
@@ -66,13 +78,18 @@ public class MachineController {
 
     /**
      * 根据id和机器编号获得机器记录
-     * @param machine 机器记录
+     * @param machineStr 机器记录
      * @return
      */
     @RequestMapping(value = "/updateMachineByIdAndMachineNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String updateMachineByIdAndMachineNo(Machine machine) {
-        machineService.updateMachineByIdAndMachineNo(machine);
-        return BaseConstant.SUCCESS;
+    public String updateMachineByIdAndMachineNo(String machineStr) {
+        try{
+            machineService.updateMachineByIdAndMachineNo(JSON.parseObject(machineStr, Machine.class));
+            return BaseConstant.SUCCESS;
+        } catch(Exception e) {
+            logger.error("{} updateMachineByIdAndMachineNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, machineStr, e);
+            return BaseConstant.FAIL;
+        }
     }
 }

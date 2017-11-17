@@ -26,14 +26,7 @@ public class MachineServiceImpl implements MachineService {
      */
     @Override
     public void addMachine(Machine machine) {
-        try {
-            machineDao.addMachine(machine);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("machine",machine);
-            logger.error("{} addMachine param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
-
+        machineDao.addMachine(machine);
     }
 
     /**
@@ -93,14 +86,7 @@ public class MachineServiceImpl implements MachineService {
      */
     @Override
     public void updateMachineByIdAndMachineNo(Machine machine) {
-        try {
-            machineDao.updateMachineByIdAndMachineNo(machine);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("machine",machine);
-            logger.error("{} getMachineByIdAndMachineNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
-
+        machineDao.updateMachineByIdAndMachineNo(machine);
     }
 
     /**
