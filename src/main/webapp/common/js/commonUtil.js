@@ -595,3 +595,30 @@ function sleep(numberMillis) {
 	}
 }
 
+
+// 获取URL参数
+function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null)
+        return unescape(r[2]);
+    return null;
+}
+
+// 判断是否为空
+function isNotNull(id) {
+    if($("#"+id).val() != null && $("#"+id).val() != undefined && $("#"+id).val() != "" && $("#"+id).val().trim().length >0) {
+        return true;
+    }
+    return false;
+}
+
+// 判断id对象是否存在
+function isExistsId(id) {
+    if($("#"+id).length>0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+

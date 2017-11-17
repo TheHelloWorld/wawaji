@@ -5,6 +5,8 @@ import com.lzg.wawaji.entity.Toy;
 import com.lzg.wawaji.service.ToyService;
 import com.lzg.wawaji.utils.JSONUtil;
 import net.sf.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/wawaji/toy")
 @Controller
 public class ToyController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ToyController.class);
 
     @Autowired
     private ToyService toyService;
@@ -53,8 +57,16 @@ public class ToyController {
     @RequestMapping(value = "/addToy", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String addToy(Toy toy) {
-        toyService.addToy(toy);
-        return BaseConstant.SUCCESS;
+
+        try {
+            toyService.addToy(toy);
+            return BaseConstant.SUCCESS;
+        } catch (Exception e) {
+            logger.error("{} addToy param:{} error "+e, BaseConstant.LOG_ERR_MSG, toy, e);
+            return BaseConstant.FAIL;
+        }
+
+
     }
 
     /**
@@ -81,9 +93,12 @@ public class ToyController {
     @RequestMapping(value = "/updateToyByIdAndToyNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String updateToyByIdAndToyNo(Toy toy) {
-
-        toyService.updateToyByIdAndToyNo(toy);
-
-        return BaseConstant.SUCCESS;
+        try {
+            toyService.updateToyByIdAndToyNo(toy);
+            return BaseConstant.SUCCESS;
+        } catch (Exception e) {
+            logger.error("{} updateToyByIdAndToyNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, toy, e);
+            return BaseConstant.FAIL;
+        }
     }
 }

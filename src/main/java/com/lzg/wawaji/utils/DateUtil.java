@@ -9,9 +9,11 @@ public class DateUtil {
 
     }
 
-    private static final String DateFormat = "yyyyMMdd";
+    private static final String dateFormat = "yyyyMMdd";
 
-    private static final String FullFormat = "yyyy-MM-dd HH:mm:ss";
+    private static final String fullFormat = "yyyy-MM-dd HH:mm:ss";
+
+    private static final String secondFormat = "yyyyMMddHHmmss";
 
     /**
      * 获取日期
@@ -19,7 +21,7 @@ public class DateUtil {
      */
     public static Integer getDate() {
 
-        SimpleDateFormat sdf = new SimpleDateFormat(DateFormat);
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
         return Integer.valueOf(sdf.format(new Date()));
     }
 
@@ -30,7 +32,7 @@ public class DateUtil {
      */
     public static Integer getDateByTime(Date date) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat(DateFormat);
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
         return Integer.valueOf(sdf.format(date));
     }
 
@@ -40,7 +42,27 @@ public class DateUtil {
      */
     public static String getFullDate() {
 
-        SimpleDateFormat sdf = new SimpleDateFormat(FullFormat);
+        SimpleDateFormat sdf = new SimpleDateFormat(fullFormat);
+        return sdf.format(new Date());
+    }
+
+    /**
+     * 获取秒时间字符串
+     * @return
+     */
+    public static String getSecondDate() {
+
+        SimpleDateFormat sdf = new SimpleDateFormat(secondFormat);
+        return sdf.format(new Date());
+    }
+
+    /**
+     * 根据字符串格式化时间
+     * @param formatStr 格式化代码
+     * @return
+     */
+    public static String getFormatTiem(String formatStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat(formatStr);
         return sdf.format(new Date());
     }
 }

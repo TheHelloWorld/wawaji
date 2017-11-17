@@ -12,9 +12,11 @@ var step = 5;
 var nowPage = 1;
 
 $(function(){
+    // 获得总页数和总数量
     getTotalCountAndPageSize();
+    // 分页获得所有记录
     getAllToyByPage();
-    console.info(totalPage);
+    // 初始化页码
     initPage(totalPage,step);
 });
 
@@ -94,7 +96,6 @@ function getTotalCountAndPageSize() {
                 totalPage = parseInt(totalCount/pageSize);
             }
 
-
         }
 
     });
@@ -114,4 +115,8 @@ function nextPage(){
 //上一页
 function lastPage(){
     nowPage = lastPageNum(nowPage,totalPage,step);
+}
+
+function addToyPage() {
+    window.location.href="/wawaji/toy/toyDetailPage.jsp?type=save";
 }

@@ -20,6 +20,8 @@
         <result property="toyOriginCoin" column="toy_origin_coin" jdbcType="INTEGER"/>
         <!-- 娃娃成本 -->
         <result property="toyCost" column="toy_cost" jdbcType="DECIMAL"/>
+        <!-- 是否可用 -->
+        <result property="currentState" column="current_state" jdbcType="INTEGER"/>
         <!-- 创建时间 -->
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <!-- 最后修改时间 -->
@@ -36,7 +38,8 @@
                 toy_desc,
                 toy_now_coin,
                 toy_origin_coin,
-                toy_cost
+                toy_cost,
+                current_state
             )
         values
             (
@@ -46,7 +49,8 @@
                 #{toyDesc, jdbcType=VARCHAR},
                 #{toyNowCoin, jdbcType=INTEGER},
                 #{toyOriginCoin, jdbcType=INTEGER},
-                #{toyCost, jdbcType=DECIMAL}
+                #{toyCost, jdbcType=DECIMAL},
+                #{currentState, jdbcType=INTEGER}
             )
     </insert>
 
@@ -65,8 +69,9 @@
             toy_desc,
             toy_now_coin,
             toy_origin_coin,
-            toy_cost
-        from toy
+            toy_cost,
+            current_state
+        from toy where current_state = 1
         limit #{startPage}, #{pageSize}
     </select>
 
@@ -80,8 +85,9 @@
           toy_desc,
           toy_now_coin,
           toy_origin_coin,
-          toy_cost
-        from toy
+          toy_cost,
+          current_state
+        from toy where current_state = 1
         where id = #{id} and toy_no = #{toyNo}
     </select>
 
@@ -93,7 +99,8 @@
             toy_desc = #{toyDesc, jdbcType=VARCHAR},
             toy_now_coin = #{toyNowCoin, jdbcType=INTEGER},
             toy_origin_coin = #{toyOriginCoin, jdbcType=INTEGER},
-            toy_cost = #{toyCost, jdbcType=DECIMAL}
+            toy_cost = #{toyCost, jdbcType=DECIMAL},
+            current_state = #{currentState, jdbcType=INTEGER},
         where id = #{id} and toy_no = #{toyNo, jdbcType=VARCHAR}
     </update>
 

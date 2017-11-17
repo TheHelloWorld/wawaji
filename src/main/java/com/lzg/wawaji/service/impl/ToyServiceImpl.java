@@ -3,6 +3,7 @@ package com.lzg.wawaji.service.impl;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.ToyDao;
 import com.lzg.wawaji.entity.Toy;
+import com.lzg.wawaji.enums.CurrentState;
 import com.lzg.wawaji.service.ToyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +26,9 @@ public class ToyServiceImpl implements ToyService {
      */
     @Override
     public void addToy(Toy toy) {
-        try {
-            toyDao.addToy(toy);
-        } catch (Exception e) {
-            logger.error("{} addToy param:{} error "+e, BaseConstant.LOG_ERR_MSG, toy, e);
-        }
 
+        toy.setCurrentState(CurrentState.AVAILABLE.getStatus());
+        toyDao.addToy(toy);
     }
 
     /**
@@ -85,11 +83,7 @@ public class ToyServiceImpl implements ToyService {
      */
     @Override
     public void updateToyByIdAndToyNo(Toy toy) {
-        try {
-            toyDao.updateToyByIdAndToyNo(toy);
-        } catch (Exception e) {
-            logger.error("{} updateToyByIdAndToyNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, toy, e);
-        }
+        toyDao.updateToyByIdAndToyNo(toy);
 
     }
 

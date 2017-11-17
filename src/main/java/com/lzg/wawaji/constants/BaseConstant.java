@@ -61,6 +61,11 @@ public class BaseConstant {
 	public static final String SUCCESS = "success";
 
 	/**
+	 * 失败标志
+	 **/
+	public static final String FAIL = "fail";
+
+	/**
 	 * 系统错误
 	 */
 	public static final String SYSTEM_ERROR = "系统升级维护中,请稍候";
