@@ -30,12 +30,29 @@ public interface MachineDao {
     List<Machine> getAllMachineByPage(@Param("startPage") int startPage, @Param("pageSize") int pageSize);
 
     /**
+     * 用户分页获得所有机器记录
+     * @param startPage 开始页数
+     * @param pageSize 每页数据数
+     * @return
+     */
+    List<Machine> getUserAllMachineByPage(@Param("startPage") int startPage, @Param("pageSize") int pageSize);
+
+
+    /**
      * 根据id和机器编号获得机器记录
      * @param id id
      * @param machineNo 机器编号
      * @return
      */
     Machine getMachineByIdAndMachineNo(@Param("id") Long id, @Param("machineNo") String machineNo);
+
+    /**
+     * 用户根据机器编号获得机器记录
+     * @param id id
+     * @param machineNo 机器编号
+     * @return
+     */
+    Machine getUserMachineByMachineNo(@Param("id") Long id, @Param("machineNo") String machineNo);
 
     /**
      * 根据id,机器编号修改机器记录

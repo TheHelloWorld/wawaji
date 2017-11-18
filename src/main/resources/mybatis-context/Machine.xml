@@ -16,6 +16,8 @@
         <result property="sideUrl" column="side_url" jdbcType="VARCHAR"/>
         <!-- 占用端口 -->
         <result property="usePort" column="use_port" jdbcType="INTEGER"/>
+        <!-- 是否可用 -->
+        <result property="currentState" column="current_state" jdbcType="INTEGER"/>
         <!-- 创建时间 -->
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <!-- 最后修改时间 -->
@@ -36,7 +38,8 @@
                 toy_no,
                 front_url,
                 side_url,
-                use_port
+                use_port,
+                current_state
             )
         values
             (
@@ -44,19 +47,32 @@
                 #{toyNo, jdbcType=VARCHAR},
                 #{frontUrl, jdbcType=VARCHAR},
                 #{sideUrl, jdbcType=VARCHAR},
-                #{usePort, jdbcType=INTEGER}
+                #{usePort, jdbcType=INTEGER},
+                #{currentState, jdbcType=INTEGER}
             )
     </insert>
-
-
 
     <!-- 获得所有机器记录数 -->
     <select id="countAllMachine" resultType="java.lang.Integer">
         select count(*) from machine
     </select>
 
-    <!-- 分页获得所有机器记录 -->
+    <!-- 用户分页获得所有机器记录 -->
     <select id="getAllMachineByPage" resultMap="machineMap">
+        select
+            m.id,
+            m.machine_no,
+            m.toy_no,
+            m.front_url,
+            m.side_url,
+            m.use_port,
+            m.current_state
+        from machine m
+        limit #{startPage}, #{pageSize}
+    </select>
+
+    <!-- 用户分页获得所有机器记录 -->
+    <select id="getUserAllMachineByPage" resultMap="machineMap">
         select
             m.id,
             m.machine_no,
@@ -67,7 +83,7 @@
             t.toy_now_coin,
             t.toy_origin_coin
         from machine m, toy t
-        where m.toy_no = t.toy_no
+        where m.toy_no = t.toy_no and m.current_state = 1
           limit #{startPage}, #{pageSize}
     </select>
 
@@ -79,7 +95,8 @@
             toy_no,
             front_url,
             side_url,
-            use_port
+            use_port,
+            current_state
         from machine
         where id = #{id} and machine_no = #{machineNo}
     </select>
@@ -90,7 +107,8 @@
             toy_no = #{toyNo, jdbcType=VARCHAR},
             front_url = #{frontUrl, jdbcType=VARCHAR},
             side_url = #{sideUrl, jdbcType=VARCHAR},
-            use_port = #{usePort, jdbcType=INTEGER}
+            use_port = #{usePort, jdbcType=INTEGER},
+            current_state = #{currentState, jdbcType=INTEGER}
         where id = #{id} and machine_no = #{machineNo, jdbcType=VARCHAR}
     </update>
 
@@ -103,15 +121,28 @@
             m.front_url,
             m.side_url,
             m.use_port,
+            m.current_state
+        from machine m where machine_no = #{machineNo}
+    </select>
+
+    <!-- 用户根据机器编号获得机器记录 -->
+    <select id="getUserMachineByMachineNo" parameterType="java.lang.String" resultMap="machineMap">
+        select
+            m.id,
+            m.machine_no,
+            m.toy_no,
+            m.front_url,
+            m.side_url,
+            m.use_port,
             t.toy_now_coin,
             t.toy_origin_coin
         from machine m, toy t
-        where m.toy_no = t.toy_no and machine_no = #{machineNo}
+        where m.toy_no = t.toy_no and m.current_state = 1 and machine_no = #{machineNo}
     </select>
 
     <!-- 根据机器编号获得机器所需游戏币数 -->
     <select id="getCoinByMachineNo" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select  t.toy_now_coin from machine m, toy t where m.toy_no = t.toy_no and machine_no = #{machineNo}
+        select  t.toy_now_coin from machine m, toy t where m.toy_no = t.toy_no and m.current_state = 1 and machine_no = #{machineNo}
     </select>
 
     <!-- 根据id和机器编号删除机器记录 -->

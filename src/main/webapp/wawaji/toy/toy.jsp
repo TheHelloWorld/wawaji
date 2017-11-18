@@ -36,6 +36,7 @@
                                     <th><lable name="toyNowCoin">娃娃当前游戏币数</lable></th>
                                     <th><lable name="toyOriginCoin">娃娃原本游戏币数</lable></th>
                                     <th><lable name="toyCost">娃娃成本</lable></th>
+                                    <th><lable name="currentState">是否可用</lable></th>
                                     <th><lable name="operation">操作</lable></th>
                                 </tr>
                                 </thead>

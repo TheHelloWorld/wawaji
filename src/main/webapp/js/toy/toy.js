@@ -50,6 +50,13 @@ function getAllToyByPage() {
 
                         td += "<a href='/wawaji/toy/toyDetailPage.jsp?type=update&id="+list[i]['id']+"&toyNo="+list[i]['toyNo']+"'>修改</a> | ";
                         td += "<a href='javascript:void(0);' onclick=deleteToy('"+list[i]['id']+"','"+list[i]['toyNo']+"')>删除</a>";
+
+                    } else if(col == "currentState") {
+                        if(list[i][col] == "0") {
+                            td += "禁用";
+                        } else if(list[i][col] == "1") {
+                            td += "可用";
+                        }
                     } else {
                         //如果数据为空则写无
                         if((list[i][col] == undefined) || (list[i][col] == null) || (list[i][col] == "null")) {
@@ -95,7 +102,7 @@ function deleteToy(id, toyNo) {
 // 获得当前玩具总数量和分页数据
 function getTotalCountAndPageSize() {
     $.ajax({
-        url:"/wawaji/toy/getTotalCountAndPageSize.action",
+        url:"/wawaji/toy/getToyTotalCountAndPageSize.action",
         type:"POST",
         async:false,
         data:{

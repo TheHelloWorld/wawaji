@@ -71,7 +71,7 @@
             toy_origin_coin,
             toy_cost,
             current_state
-        from toy where current_state = 1
+        from toy
         limit #{startPage}, #{pageSize}
     </select>
 
@@ -87,8 +87,7 @@
           toy_origin_coin,
           toy_cost,
           current_state
-        from toy where current_state = 1
-        and id = #{id} and toy_no = #{toyNo}
+        from toy where id = #{id} and toy_no = #{toyNo}
     </select>
 
     <!-- 根据id,娃娃机编号修改娃娃机记录 -->

@@ -35,6 +35,11 @@ public class Machine extends BaseEntity implements Serializable {
      */
     private Integer usePort;
 
+    /**
+     * 是否可用
+     */
+    private Integer currentState;
+
 
     /*********** 链表查询用 toy表***************/
     /**
@@ -85,6 +90,14 @@ public class Machine extends BaseEntity implements Serializable {
 
     public void setUsePort(Integer usePort) {
         this.usePort = usePort;
+    }
+
+    public Integer getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(Integer currentState) {
+        this.currentState = currentState;
     }
 
     public Integer getToyNowCoin() {

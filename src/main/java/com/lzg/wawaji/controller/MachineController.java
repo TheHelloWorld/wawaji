@@ -1,11 +1,12 @@
 package com.lzg.wawaji.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.entity.Machine;
 import com.lzg.wawaji.service.MachineService;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+
+import com.lzg.wawaji.utils.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +34,23 @@ public class MachineController {
     public String getAllMachineByPage(int startPage) {
 
         JSONObject json = new JSONObject();
-
-        json.put("pageSize", BaseConstant.DEFAULT_PAGE_SIZE);
-        json.put("list", JSONArray.fromObject(machineService.getAllMachineByPage(startPage)));
-        json.put("totalCount", machineService.countAllMachine());
+        json.put("list", machineService.getAllMachineByPage(startPage));
 
         return json.toString();
     }
 
+
+    /**
+     * 获得总记录数和每页数据数
+     * @return
+     */
+    @RequestMapping(value = "/getMachineTotalCountAndPageSize", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getMachineTotalCountAndPageSize() {
+
+        return JSONUtil.getTotalCountAndPageSize(machineService.countAllMachine(), BaseConstant.DEFAULT_PAGE_SIZE);
+
+    }
     /**
      * 添加机器记录
      * @param machineStr 机器记录
@@ -69,11 +79,7 @@ public class MachineController {
     @RequestMapping(value = "/getMachineByIdAndMachineNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getMachineByIdAndMachineNo(Long id, String machineNo) {
-        JSONObject json = new JSONObject();
-
-        json.put("machine", machineService.getMachineByIdAndMachineNo(id, machineNo));
-
-        return json.toString();
+        return String.valueOf(machineService.getMachineByIdAndMachineNo(id, machineNo));
     }
 
     /**
@@ -89,6 +95,27 @@ public class MachineController {
             return BaseConstant.SUCCESS;
         } catch(Exception e) {
             logger.error("{} updateMachineByIdAndMachineNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, machineStr, e);
+            return BaseConstant.FAIL;
+        }
+    }
+
+    /**
+     * 根据id和机器编号删除机器记录
+     * @param id id
+     * @param machineNo 机器编号
+     * @return
+     */
+    @RequestMapping(value = "/deleteMachineByIdAndToyNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String deleteMachineByIdAndToyNo(Long id, String machineNo) {
+        try{
+            machineService.deleteMachineByIdAndMachineNo(id, machineNo);
+            return BaseConstant.SUCCESS;
+        } catch(Exception e) {
+            JSONObject json = new JSONObject();
+            json.put("id",id);
+            json.put("machineNo",machineNo);
+            logger.error("{} deleteMachineByIdAndToyNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, json, e);
             return BaseConstant.FAIL;
         }
     }

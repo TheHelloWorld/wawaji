@@ -18,67 +18,64 @@
     <div id="machineDefine">
         <div class="modal-header">
             <h4 class="modal-title">
-                玩具页
+                机器页
             </h4>
         </div>
         <div id="machine-body" class="modal-body">
-                    <span name = "id">
-                        <input type = 'hidden' id = "id">
-                    </span>
+            <span name = "id">
+                <input type = 'hidden' id = "id">
+            </span>
             <div class="row">
                 <div class="col-xs-5">
-                    玩具编号:
-                    <span name = "toyNo">
-                            <input class="form-control" id = "toyNo">
+                    机器编号:
+                    <span name = "machineNo">
+                            <input class="form-control" id = "machineNo">
                         </span>
                 </div>
                 <div class="col-xs-5">
                     是否可用:
                     <span name = "currentState">
-                            <select id="currentState" class="form-control">
-                                <option value="1">可用</option>
-                                <option value="0">不可用</option>
-                            </select>
-                        </span>
+                        <select id="currentState" class="form-control">
+                            <option value="1">可用</option>
+                            <option value="0">不可用</option>
+                        </select>
+                    </span>
                 </div>
             </div>
             <br/>
             <div class="row">
                 <div class="col-xs-5">
-                    娃娃可兑换游戏币数:
-                    <span name = "toyForCoin">
-                            <input class="form-control" id = "toyForCoin">
-                        </span>
+                    玩具编号:
+                    <span name = "toyNo">
+                        <input class="form-control" id = "toyNo">
+                    </span>
                 </div>
             </div>
             <br/>
             <div class="row">
                 <div class="col-xs-5">
-                    玩具描述:
-                    <span name = "toyDesc">
-                            <input class="form-control" id="toyDesc" />
-                        </span>
+                    正面直播地址:
+                    <span name = "frontUrl">
+                        <input class="form-control" id = "frontUrl">
+                    </span>
                 </div>
             </div>
             <br/>
             <div class="row">
-                <div class="col-xs-4">
-                    娃娃当前游戏币数:
-                    <span name = "toyNowCoin">
-                           <input class="form-control" id="toyNowCoin" />
-                        </span>
+                <div class="col-xs-5">
+                    侧面直播地址:
+                    <span name = "sideUrl">
+                        <input class="form-control" id="sideUrl" />
+                    </span>
                 </div>
-                <div class="col-xs-4">
-                    娃娃原本游戏币数:
-                    <span name = "toyOriginCoin">
-                            <input class="form-control" id="toyOriginCoin" />
-                        </span>
-                </div>
-                <div class="col-xs-4">
-                    娃娃成本:
-                    <span name = "toyCost">
-                            <input class="form-control" id="toyCost" />
-                        </span>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-xs-5">
+                    占用端口号:
+                    <span name = "usePort">
+                        <input class="form-control" id="usePort" />
+                    </span>
                 </div>
             </div>
         </div>
@@ -86,7 +83,7 @@
     <div class="text-center">
         <button type="button" class="btn btn-danger btn-lg" onclick="cancelThis()">取 消</button>
         &nbsp;&nbsp;&nbsp;
-        <button type="button" class="btn btn-primary btn-lg" onclick="updateOrSaveToy()">
+        <button type="button" class="btn btn-primary btn-lg" onclick="updateOrSaveMachine()">
             提 交
         </button>
     </div>
