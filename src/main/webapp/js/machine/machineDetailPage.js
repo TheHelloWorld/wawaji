@@ -5,8 +5,6 @@ function cancelThis() {
     window.location.href = "/wawaji/machine/machine.jsp";
 }
 
-
-
 $(function(){
     // 判断当前类型为修改
     if(getQueryString("type") == "update") {

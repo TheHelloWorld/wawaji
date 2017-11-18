@@ -11,6 +11,7 @@ var step = 5;
 
 var nowPage = 1;
 
+
 $(function(){
     // 获得总页数和总数量
     getTotalCountAndPageSize();

@@ -3,7 +3,6 @@
 <!-- Navigation -->
 <%@ include file="../../include/nav.jsp"%>
 
-
 <!-- 该页面功能js -->
 <script type="text/javascript" src="../../js/machine/machine.js"></script>
 
