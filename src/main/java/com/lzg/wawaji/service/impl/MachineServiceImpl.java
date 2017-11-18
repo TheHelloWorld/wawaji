@@ -96,7 +96,7 @@ public class MachineServiceImpl implements MachineService {
      */
     @Override
     public void deleteMachineByIdAndMachineNo(Long id, String machineNo) {
-
+        machineDao.deleteMachineByIdAndToyNo(id, machineNo);
     }
 
     /**

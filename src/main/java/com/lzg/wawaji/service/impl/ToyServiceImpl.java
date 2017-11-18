@@ -84,7 +84,6 @@ public class ToyServiceImpl implements ToyService {
     @Override
     public void updateToyByIdAndToyNo(Toy toy) {
         toyDao.updateToyByIdAndToyNo(toy);
-
     }
 
     /**

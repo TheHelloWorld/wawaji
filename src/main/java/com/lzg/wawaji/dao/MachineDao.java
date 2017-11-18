@@ -57,4 +57,11 @@ public interface MachineDao {
      */
     Integer getCoinByMachineNo(String machineNo);
 
+    /**
+     * 根据id和机器编号删除机器记录
+     * @param id id
+     * @param machineNo 机器编号
+     */
+    void deleteMachineByIdAndToyNo(@Param("id") Long id, @Param("machineNo") String machineNo);
+
 }

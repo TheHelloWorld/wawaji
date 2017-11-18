@@ -15,13 +15,13 @@
 </head>
 <body>
     <div id="toyInfo">
-        <div id="indicatorDefine">
+        <div id="toyDefine">
             <div class="modal-header">
                 <h4 class="modal-title">
                     玩具页
                 </h4>
             </div>
-            <div id="indicatorDefine-body" class="modal-body">
+            <div id="toy-body" class="modal-body">
                     <span name = "id">
                         <input type = 'hidden' id = "id">
                     </span>

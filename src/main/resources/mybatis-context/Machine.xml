@@ -114,4 +114,9 @@
         select  t.toy_now_coin from machine m, toy t where m.toy_no = t.toy_no and machine_no = #{machineNo}
     </select>
 
+    <!-- 根据id和机器编号删除机器记录 -->
+    <delete id="deleteMachineByIdAndToyNo">
+        delete from machine where machine_no = #{machineNo} and id = #{id}
+    </delete>
+
 </mapper>
