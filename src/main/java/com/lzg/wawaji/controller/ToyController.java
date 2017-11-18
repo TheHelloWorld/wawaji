@@ -47,7 +47,6 @@ public class ToyController {
     public String getToyTotalCountAndPageSize() {
 
         return JSONUtil.getTotalCountAndPageSize(toyService.countAllToy(), BaseConstant.DEFAULT_PAGE_SIZE);
-
     }
 
     /**

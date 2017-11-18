@@ -99,6 +99,7 @@ public class MachineController {
         }
     }
 
+
     /**
      * 根据id和机器编号删除机器记录
      * @param id id
