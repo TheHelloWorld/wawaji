@@ -18,6 +18,7 @@ import java.util.Map;
 @Controller
 public class FileUploadController {
 
+
     @RequestMapping(value = "uploadFile",method= RequestMethod.POST)
     @ResponseBody
     public String uploadFile(Model model, HttpServletRequest request) {
