@@ -63,4 +63,5 @@ public enum ChoiceType {
         initValueMap();
         return valueMap.get(key);
     }
+
 }

@@ -8,6 +8,7 @@ import java.util.Map;
  */
 public enum HandleStatus {
 
+
     INIT(0, "未处理"),
     COIN(1, "已兑换"),
     DELIVER(2,"已发货");

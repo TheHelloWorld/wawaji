@@ -8,6 +8,7 @@ import java.util.Map;
  */
 public enum TradeType {
 
+
     RECHARGE(0, "充值"),
     SPEND(1, "消费");
 

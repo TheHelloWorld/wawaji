@@ -113,4 +113,5 @@ public class Toy extends BaseEntity implements Serializable {
     public void setCurrentState(Integer currentState) {
         this.currentState = currentState;
     }
+
 }

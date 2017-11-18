@@ -15,6 +15,7 @@ import java.util.List;
 @Service("toyService")
 public class ToyServiceImpl implements ToyService {
 
+
     private static final Logger logger = LoggerFactory.getLogger(ToyServiceImpl.class);
 
     @Autowired

@@ -8,6 +8,7 @@ import java.util.Map;
  */
 public enum TradeStatus {
 
+
     SUCCESS(0, "成功"),
     FAIL(1, "失败"),
     PROCESSING(2,"处理中");

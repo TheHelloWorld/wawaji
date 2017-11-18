@@ -5,6 +5,7 @@ import java.util.Map;
 
 public enum CurrentState {
 
+
     AVAILABLE(1, "可用"),
     UNAVAILABLE(0, "不可用");
 
