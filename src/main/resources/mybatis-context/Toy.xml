@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lzg.wawaji.dao.ToyDao">
 
+
     <!-- 娃娃表 -->
     <resultMap type="com.lzg.wawaji.entity.Toy" id="toyMap">
         <!-- 主键Id -->

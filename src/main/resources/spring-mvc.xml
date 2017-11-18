@@ -14,6 +14,7 @@
                         http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
 
+
     <mvc:annotation-driven />
     <!--避免IE执行AJAX时，返回JSON出现下载文件 -->
     <bean id="mappingJacksonHttpMessageConverter"
