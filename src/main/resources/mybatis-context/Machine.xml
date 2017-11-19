@@ -23,11 +23,34 @@
         <!-- 最后修改时间 -->
         <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
 
+    </resultMap>
+
+    <!-- 用户查看机器表 -->
+    <resultMap type="com.lzg.wawaji.entity.UserMachine" id="userMachineMap">
+        <!-- 主键Id -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <!-- 机器编号 -->
+        <result property="machineNo" column="machine_no" jdbcType="VARCHAR"/>
+        <!-- 娃娃编号 -->
+        <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
+        <!-- 正面直播url -->
+        <result property="frontUrl" column="front_url" jdbcType="VARCHAR"/>
+        <!-- 侧面直播url -->
+        <result property="sideUrl" column="side_url" jdbcType="VARCHAR"/>
+        <!-- 占用端口 -->
+        <result property="usePort" column="use_port" jdbcType="INTEGER"/>
+        <!-- 是否可用 -->
+        <result property="currentState" column="current_state" jdbcType="INTEGER"/>
+
         <!-- 链表查询用 关联 toy表 -->
         <!-- 娃娃当前游戏币 -->
         <result property="toyNowCoin" column="toy_now_coin" jdbcType="INTEGER"/>
         <!-- 娃娃原本游戏币 -->
         <result property="toyOriginCoin" column="toy_origin_coin" jdbcType="INTEGER"/>
+        <!-- 娃娃图片 -->
+        <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
+        <!-- 娃娃图片 -->
+        <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!-- 添加机器记录 -->
@@ -72,7 +95,7 @@
     </select>
 
     <!-- 用户分页获得所有机器记录 -->
-    <select id="getUserAllMachineByPage" resultMap="machineMap">
+    <select id="getUserAllMachineByPage" resultMap="userMachineMap">
         select
             m.id,
             m.machine_no,
@@ -80,10 +103,13 @@
             m.front_url,
             m.side_url,
             m.use_port,
+            m.current_state,
             t.toy_now_coin,
-            t.toy_origin_coin
+            t.toy_origin_coin,
+            t.toy_img,
+            t.toy_name
         from machine m, toy t
-        where m.toy_no = t.toy_no and m.current_state = 1
+        where m.toy_no = t.toy_no
           limit #{startPage}, #{pageSize}
     </select>
 
@@ -126,7 +152,7 @@
     </select>
 
     <!-- 用户根据机器编号获得机器记录 -->
-    <select id="getUserMachineByMachineNo" parameterType="java.lang.String" resultMap="machineMap">
+    <select id="getUserMachineByMachineNo" parameterType="java.lang.String" resultMap="userMachineMap">
         select
             m.id,
             m.machine_no,
@@ -135,7 +161,9 @@
             m.side_url,
             m.use_port,
             t.toy_now_coin,
-            t.toy_origin_coin
+            t.toy_origin_coin,
+            t.toy_img,
+            t.toy_name
         from machine m, toy t
         where m.toy_no = t.toy_no and m.current_state = 1 and machine_no = #{machineNo}
     </select>

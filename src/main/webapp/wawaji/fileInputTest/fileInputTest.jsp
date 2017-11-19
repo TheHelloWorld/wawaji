@@ -81,7 +81,7 @@
                             $("#files").append(file_link);
                             $("#files").show();
                         } else {
-                            var img_link = "<div class='col-xs-5' height='200' width='"+width+"' ><img src='/"+data.response+"' width=80%  /></div>"
+                            var img_link = "<div class='col-xs-5' height='200' width='"+width+"' ><img src='/image/"+data.response+"' width=80%  /></div>"
                             $("#images").append(img_link);
                             $("#images").show();
                         }

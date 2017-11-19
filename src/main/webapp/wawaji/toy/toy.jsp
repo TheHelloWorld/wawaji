@@ -29,6 +29,7 @@
                                 <thead>
                                 <tr id="titleColumn">
                                     <th><lable name="toyNo">玩具编号</lable></th>
+                                    <th><lable name="toyName">玩具名称</lable></th>
                                     <th><lable name="toyForCoin">娃娃兑换游戏币数</lable></th>
                                     <th><lable name="toyImg">娃娃图片地址</lable></th>
                                     <th><lable name="toyDesc">娃娃描述</lable></th>

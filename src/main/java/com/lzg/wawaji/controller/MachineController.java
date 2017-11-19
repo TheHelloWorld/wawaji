@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.entity.Machine;
+import com.lzg.wawaji.entity.UserMachine;
 import com.lzg.wawaji.service.MachineService;
 
 import com.lzg.wawaji.utils.JSONUtil;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @RequestMapping("/wawaji/machine")
 @Controller
@@ -39,6 +42,26 @@ public class MachineController {
         return json.toString();
     }
 
+    /**
+     * 分页获得所有用户机器记录
+     * @param startPage 开始页
+     * @return
+     */
+    @RequestMapping(value = "/getUserAllMachineByPage", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getUserAllMachineByPage(int startPage) {
+        JSONObject json = new JSONObject();
+        try {
+            List<UserMachine> list = machineService.getUserAllMachineByPage(startPage);
+            json.put("list", list);
+            json.put("result", BaseConstant.SUCCESS);
+        } catch (Exception e) {
+            logger.error("{} getUserAllMachineByPage param:{} error "+e, BaseConstant.LOG_ERR_MSG, startPage, e);
+            json.put("result", BaseConstant.SYSTEM_ERROR);
+        }
+        return json.toString();
+    }
+
 
     /**
      * 获得总记录数和每页数据数
@@ -49,7 +72,6 @@ public class MachineController {
     public String getMachineTotalCountAndPageSize() {
 
         return JSONUtil.getTotalCountAndPageSize(machineService.countAllMachine(), BaseConstant.DEFAULT_PAGE_SIZE);
-
     }
     /**
      * 添加机器记录
@@ -66,8 +88,6 @@ public class MachineController {
             logger.error("{} addMachine param:{} error "+e, BaseConstant.LOG_ERR_MSG, paramStr, e);
             return BaseConstant.FAIL;
         }
-
-
     }
 
     /**

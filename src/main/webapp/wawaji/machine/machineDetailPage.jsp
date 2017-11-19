@@ -30,8 +30,8 @@
                 <div class="col-xs-5">
                     机器编号:
                     <span name = "machineNo">
-                            <input class="form-control" id = "machineNo">
-                        </span>
+                        <input class="form-control" id = "machineNo">
+                    </span>
                 </div>
                 <div class="col-xs-5">
                     是否可用:

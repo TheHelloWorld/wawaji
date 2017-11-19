@@ -4,7 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.MachineDao;
 import com.lzg.wawaji.entity.Machine;
+import com.lzg.wawaji.entity.UserMachine;
 import com.lzg.wawaji.service.MachineService;
+import com.lzg.wawaji.utils.RedisUtil;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +64,41 @@ public class MachineServiceImpl implements MachineService {
         return null;
     }
 
+    /**
+     * 分页获得所有用户使用娃娃机
+     * @param startPage 开始页
+     * @return
+     */
+    @Override
+    public List<UserMachine> getUserAllMachineByPage(int startPage) {
+
+        List<UserMachine> userMachineList = machineDao.getUserAllMachineByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE);
+
+        if(userMachineList != null && userMachineList.size() >0) {
+            try(RedisUtil redisUtil = new RedisUtil("redis")) {
+                for(UserMachine userMachine : userMachineList) {
+                    String viewerNum = redisUtil.hget(userMachine.getMachineNo(), "viewer");
+
+                    if(StringUtils.isBlank(viewerNum)) {
+                        viewerNum = "0";
+                    }
+                    userMachine.setViewer(Integer.valueOf(viewerNum));
+
+                    String isUse = redisUtil.get(userMachine.getMachineNo());
+
+                    boolean available = false;
+                    if(StringUtils.isBlank(isUse)) {
+                        available = true;
+                    }
+                    userMachine.setAvailable(available);
+                }
+            } catch (Exception e) {
+                logger.error("{} redis error " + e, BaseConstant.LOG_ERR_MSG);
+            }
+        }
+
+        return userMachineList;
+    }
     /**
      * 根据id,机器编号获得机器信息
      * @param id id

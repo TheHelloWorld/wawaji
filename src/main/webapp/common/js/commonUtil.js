@@ -490,7 +490,7 @@ function getAllByPage(url, startPage) {
             var list = data["list"];
             var str = "";
 
-            for(var i = 0;i<list.length;i++) {
+            for(var i = 0; i<list.length; i++) {
 
                 str += "<tr id=tr"+list[i]["id"]+" class='even gradeA'>";
 
@@ -544,7 +544,9 @@ function getTotalCountAndPageSize(url) {
         async:false,
         success:function(data){
 
-            data = eval("(" + data + ")");
+            if(typeof(data) == "string"){
+                data = eval("("+data+")");
+            }
 
             totalCount = data["totalCount"];
 

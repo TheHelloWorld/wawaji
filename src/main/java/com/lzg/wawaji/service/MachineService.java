@@ -1,6 +1,7 @@
 package com.lzg.wawaji.service;
 
 import com.lzg.wawaji.entity.Machine;
+import com.lzg.wawaji.entity.UserMachine;
 
 import java.util.List;
 
@@ -24,6 +25,13 @@ public interface MachineService {
      * @return
      */
     List<Machine> getAllMachineByPage(int startPage);
+
+    /**
+     * 分页获得所有用户使用娃娃机
+     * @param startPage 开始页
+     * @return
+     */
+    List<UserMachine> getUserAllMachineByPage(int startPage);
 
     /**
      * 根据id获得机器信息

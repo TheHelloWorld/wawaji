@@ -16,6 +16,11 @@ public class Toy extends BaseEntity implements Serializable {
     private String toyNo;
 
     /**
+     * 娃娃名称
+     */
+    private String toyName;
+
+    /**
      * 娃娃兑换游戏币数
      */
     private Integer toyForCoin;
@@ -56,6 +61,14 @@ public class Toy extends BaseEntity implements Serializable {
 
     public void setToyNo(String toyNo) {
         this.toyNo = toyNo;
+    }
+
+    public String getToyName() {
+        return toyName;
+    }
+
+    public void setToyName(String toyName) {
+        this.toyName = toyName;
     }
 
     public Integer getToyForCoin() {

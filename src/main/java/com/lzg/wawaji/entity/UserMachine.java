@@ -1,12 +1,11 @@
 package com.lzg.wawaji.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * 机器表
  */
-public class Machine extends BaseEntity implements Serializable {
+public class UserMachine extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -4954366162493302680L;
 
@@ -40,6 +39,37 @@ public class Machine extends BaseEntity implements Serializable {
      */
     private Integer currentState;
 
+
+    /*********** 链表查询用 toy表***************/
+    /**
+     * 娃娃当前价格
+     */
+    private Integer toyNowCoin;
+
+    /**
+     * 娃娃原本价格
+     */
+    private Integer toyOriginCoin;
+
+    /**
+     * 娃娃图片
+     */
+    private String toyImg;
+
+    /**
+     * 娃娃名称
+     */
+    private String toyName;
+
+    /**
+     * 观看人数
+     */
+    private Integer viewer;
+
+    /**
+     * 是否可用
+     */
+    private Boolean available;
 
     public String getMachineNo() {
         return machineNo;
@@ -89,4 +119,51 @@ public class Machine extends BaseEntity implements Serializable {
         this.currentState = currentState;
     }
 
+    public Integer getToyNowCoin() {
+        return toyNowCoin;
+    }
+
+    public void setToyNowCoin(Integer toyNowCoin) {
+        this.toyNowCoin = toyNowCoin;
+    }
+
+    public Integer getToyOriginCoin() {
+        return toyOriginCoin;
+    }
+
+    public void setToyOriginCoin(Integer toyOriginCoin) {
+        this.toyOriginCoin = toyOriginCoin;
+    }
+
+    public String getToyImg() {
+        return toyImg;
+    }
+
+    public void setToyImg(String toyImg) {
+        this.toyImg = toyImg;
+    }
+
+    public String getToyName() {
+        return toyName;
+    }
+
+    public void setToyName(String toyName) {
+        this.toyName = toyName;
+    }
+
+    public Integer getViewer() {
+        return viewer;
+    }
+
+    public void setViewer(Integer viewer) {
+        this.viewer = viewer;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
 }

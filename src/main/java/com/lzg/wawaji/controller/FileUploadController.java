@@ -25,7 +25,7 @@ public class FileUploadController {
 
         System.out.println("123123123213");
         // 获取项目目录
-        String rootPath = request.getSession().getServletContext().getRealPath("/");
+        String rootPath = "E:/gitWorkSpeace/wawaji/src/main/webapp/image";
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
         String key = null;
         // 目前只有一个文件所以可以这样，多文件需要将读写逻辑写入for循环
@@ -39,7 +39,7 @@ public class FileUploadController {
         // 获取文件类型
         String prefix = originFileName.substring(originFileName.lastIndexOf("."));
         // 放到files文件夹下
-        rootPath += "/files";
+        rootPath += "/toy";
         String fileName = DateUtil.getSecondDate();
         fileName += prefix;
         try {
@@ -49,7 +49,7 @@ public class FileUploadController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        fileName = "files/"+fileName;
+        fileName = "toy/"+fileName;
         return fileName;
     }
 }

@@ -48,6 +48,15 @@
                 <br/>
                 <div class="row">
                     <div class="col-xs-5">
+                        娃娃名称:
+                        <span name = "toyName">
+                            <input class="form-control" id = "toyName">
+                        </span>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-5">
                         娃娃可兑换游戏币数:
                         <span name = "toyForCoin">
                             <input class="form-control" id = "toyForCoin">

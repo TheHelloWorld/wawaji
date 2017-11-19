@@ -1,6 +1,7 @@
 package com.lzg.wawaji.dao;
 
 import com.lzg.wawaji.entity.Machine;
+import com.lzg.wawaji.entity.UserMachine;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -35,7 +36,7 @@ public interface MachineDao {
      * @param pageSize 每页数据数
      * @return
      */
-    List<Machine> getUserAllMachineByPage(@Param("startPage") int startPage, @Param("pageSize") int pageSize);
+    List<UserMachine> getUserAllMachineByPage(@Param("startPage") int startPage, @Param("pageSize") int pageSize);
 
 
     /**
@@ -52,7 +53,7 @@ public interface MachineDao {
      * @param machineNo 机器编号
      * @return
      */
-    Machine getUserMachineByMachineNo(@Param("id") Long id, @Param("machineNo") String machineNo);
+    UserMachine getUserMachineByMachineNo(@Param("id") Long id, @Param("machineNo") String machineNo);
 
     /**
      * 根据id,机器编号修改机器记录
