@@ -1,8 +1,8 @@
-var json = {};
+var returnUtl = "/wawaji/toy/toy.jsp";
 
 // 返回玩具列表页
 function cancelThis() {
-    window.location.href = "/wawaji/toy/toy.jsp";
+    window.location.href = returnUtl;
 }
 
 $(function(){
@@ -11,93 +11,19 @@ $(function(){
 
         var id = getQueryString("id");
         var toyNo = getQueryString("toyNo");
-        $.ajax({
-            url:"/wawaji/toy/getToyByIdAndToyNo.action",
-            type:"POST",
-            async:false,
-            data:{
-                id:id,
-                toyNo:toyNo
-            },
-            success:function(data){
-
-                var toy = eval("(" + data + ")");
-
-                $("#toyInfo").find("span").each(function() {
-
-                    var col = $(this).attr("name");
-                    $("#"+col).val(toy[col])
-                });
-            }
-        });
+        var getUrl = "/wawaji/toy/getToyByIdAndToyNo.action";
+        getDataByInfo(getUrl, id, toyNo);
     }
 });
 
 function updateOrSaveToy() {
 
     if(getQueryString("type") == "save") {
-        saveToy();
+        var saveUrl = "/wawaji/toy/addToy.action";
+        saveThis(saveUrl, returnUtl);
     } else {
-        updateToy();
+        var updateUrl = "/wawaji/toy/updateToyByIdAndToyNo.action";
+        updateThis(updateUrl, returnUtl);
     }
 
-}
-
-// 储存玩具
-function saveToy() {
-
-    $("#toyInfo").find("span").each(function() {
-
-        var col = $(this).attr("name");
-        if(col != "id") {
-            json[col] = $("#"+col).val();
-        }
-    });
-    json["toyImg"] = "img";
-    var toyStr = JSON.stringify(json);
-
-    $.ajax({
-        url:"/wawaji/toy/addToy.action",
-        type:"POST",
-        async:false,
-        data:{
-            toyStr:toyStr
-        },
-        success:function(data){
-
-            console.info(data);
-            if(data == "success") {
-                window.location.href="/wawaji/toy/toy.jsp";
-            }
-        }
-
-    });
-}
-
-// 修改玩具
-function updateToy() {
-
-    $("#toyInfo").find("span").each(function() {
-        var col = $(this).attr("name");
-        json[col] = $("#"+col).val();
-    });
-    json["toyImg"] = "img";
-    var toyStr = JSON.stringify(json);
-
-    $.ajax({
-        url:"/wawaji/toy/updateToyByIdAndToyNo.action",
-        type:"POST",
-        async:false,
-        data:{
-            toyStr:toyStr
-        },
-        success:function(data){
-
-            console.info(data);
-            if(data == "success") {
-                window.location.href="/wawaji/toy/toy.jsp";
-            }
-        }
-
-    });
 }

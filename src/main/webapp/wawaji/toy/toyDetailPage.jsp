@@ -14,7 +14,7 @@
     <script type="text/javascript" src="/js/toy/toyDetailPage.js"></script>
 </head>
 <body>
-    <div id="toyInfo">
+    <div id="dataInfo">
         <div id="toyDefine">
             <div class="modal-header">
                 <h4 class="modal-title">

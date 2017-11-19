@@ -1,11 +1,11 @@
 package com.lzg.wawaji.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.entity.Toy;
 import com.lzg.wawaji.service.ToyService;
 import com.lzg.wawaji.utils.JSONUtil;
-import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,26 +42,27 @@ public class ToyController {
      * 获得总记录数和每页数据数
      * @return
      */
-    @RequestMapping(value = "/getToyTotalCountAndPageSize", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/getTotalCountAndPageSize", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String getToyTotalCountAndPageSize() {
+    public String getTotalCountAndPageSize() {
 
         return JSONUtil.getTotalCountAndPageSize(toyService.countAllToy(), BaseConstant.DEFAULT_PAGE_SIZE);
+
     }
 
     /**
      * 添加玩具记录
-     * @param toyStr 玩具记录
+     * @param paramStr 玩具记录
      * @return
      */
     @RequestMapping(value = "/addToy", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String addToy(String toyStr) {
+    public String addToy(String paramStr) {
         try {
-            toyService.addToy(JSON.parseObject(toyStr, Toy.class));
+            toyService.addToy(JSON.parseObject(paramStr, Toy.class));
             return BaseConstant.SUCCESS;
         } catch (Exception e) {
-            logger.error("{} addToy param:{} error "+e, BaseConstant.LOG_ERR_MSG, toyStr, e);
+            logger.error("{} addToy param:{} error "+e, BaseConstant.LOG_ERR_MSG, paramStr, e);
             return BaseConstant.FAIL;
         }
     }
@@ -69,29 +70,29 @@ public class ToyController {
     /**
      * 根据id和玩具编号获得玩具信息
      * @param id id
-     * @param toyNo 玩具编号
+     * @param dataNo 玩具编号
      * @return
      */
     @RequestMapping(value = "/getToyByIdAndToyNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String getToyByIdAndToyNo(Long id, String toyNo) {
+    public String getToyByIdAndToyNo(Long id, String dataNo) {
 
-        return String.valueOf(toyService.getToyByIdAndToyNo(id, toyNo));
+        return String.valueOf(toyService.getToyByIdAndToyNo(id, dataNo));
     }
 
     /**
      * 根据id和玩具编号修改玩具记录
-     * @param toyStr 玩具记录
+     * @param paramStr 玩具记录
      * @return
      */
     @RequestMapping(value = "/updateToyByIdAndToyNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String updateToyByIdAndToyNo(String toyStr) {
+    public String updateToyByIdAndToyNo(String paramStr) {
         try {
-            toyService.updateToyByIdAndToyNo(JSON.parseObject(toyStr, Toy.class));
+            toyService.updateToyByIdAndToyNo(JSON.parseObject(paramStr, Toy.class));
             return BaseConstant.SUCCESS;
         } catch (Exception e) {
-            logger.error("{} updateToyByIdAndToyNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, toyStr, e);
+            logger.error("{} updateToyByIdAndToyNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, paramStr, e);
             return BaseConstant.FAIL;
         }
     }

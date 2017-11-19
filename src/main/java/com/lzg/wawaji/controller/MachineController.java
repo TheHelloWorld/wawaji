@@ -53,17 +53,17 @@ public class MachineController {
     }
     /**
      * 添加机器记录
-     * @param machineStr 机器记录
+     * @param paramStr 机器记录
      * @return
      */
     @RequestMapping(value = "/addMachine", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String addMachine(String machineStr) {
+    public String addMachine(String paramStr) {
         try{
-            machineService.addMachine(JSON.parseObject(machineStr, Machine.class));
+            machineService.addMachine(JSON.parseObject(paramStr, Machine.class));
             return BaseConstant.SUCCESS;
         } catch(Exception e) {
-            logger.error("{} addMachine param:{} error "+e, BaseConstant.LOG_ERR_MSG, machineStr, e);
+            logger.error("{} addMachine param:{} error "+e, BaseConstant.LOG_ERR_MSG, paramStr, e);
             return BaseConstant.FAIL;
         }
 
@@ -73,28 +73,28 @@ public class MachineController {
     /**
      * 根据id和机器编号获得机器记录
      * @param id id
-     * @param machineNo 机器编号
+     * @param dataNo 机器编号
      * @return
      */
     @RequestMapping(value = "/getMachineByIdAndMachineNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String getMachineByIdAndMachineNo(Long id, String machineNo) {
-        return String.valueOf(machineService.getMachineByIdAndMachineNo(id, machineNo));
+    public String getMachineByIdAndMachineNo(Long id, String dataNo) {
+        return String.valueOf(machineService.getMachineByIdAndMachineNo(id, dataNo));
     }
 
     /**
      * 根据id和机器编号获得机器记录
-     * @param machineStr 机器记录
+     * @param paramStr 机器记录
      * @return
      */
     @RequestMapping(value = "/updateMachineByIdAndMachineNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String updateMachineByIdAndMachineNo(String machineStr) {
+    public String updateMachineByIdAndMachineNo(String paramStr) {
         try{
-            machineService.updateMachineByIdAndMachineNo(JSON.parseObject(machineStr, Machine.class));
+            machineService.updateMachineByIdAndMachineNo(JSON.parseObject(paramStr, Machine.class));
             return BaseConstant.SUCCESS;
         } catch(Exception e) {
-            logger.error("{} updateMachineByIdAndMachineNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, machineStr, e);
+            logger.error("{} updateMachineByIdAndMachineNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, paramStr, e);
             return BaseConstant.FAIL;
         }
     }

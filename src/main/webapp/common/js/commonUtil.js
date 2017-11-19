@@ -24,6 +24,8 @@ var lastMonth = lastMonthDate.getMonth();
 
 //显示图表或表格的标志位
 var tableOrPicture = false;
+// 储存或修改用json
+var json = {};
 
 //初始化页码
 function initPage(num, step){
@@ -620,5 +622,172 @@ function isExistsId(id) {
     } else {
         return false;
     }
+}
+
+// 公共展示方法
+function getAllByPage(url) {
+    $.ajax({
+        url:url,
+        type:"POST",
+        async:false,
+        data:{
+            startPage:startPage
+        },
+        success:function(data) {
+
+            data = eval("(" + data + ")");
+
+            var list = data["list"];
+            var str = "";
+
+            for(var i = 0;i<list.length;i++) {
+
+                str += "<tr id=tr"+list[i]["id"]+" class='even gradeA'>";
+
+                $("#titleColumn").find("lable").each(function() {
+
+                    var col = $(this).attr("name");
+
+                    var td = "<td>";
+
+                    if(col == "operation") {
+
+                    	var dataStr = JSON.stringify(list[i]);
+
+                        td += "<a href='javascript:void(0);' onclick=updateThis('"+dataStr+"')>修改</a> | ";
+                        td += "<a href='javascript:void(0);' onclick=deleteThis('"+dataStr+"')>删除</a>";
+
+                    } else if(col == "currentState") {
+
+                        if(list[i][col] == "0") {
+                            td += "禁用";
+                        } else if(list[i][col] == "1") {
+                            td += "可用";
+                        }
+                    } else {
+                        //如果数据为空则写无
+                        if((list[i][col] == undefined) || (list[i][col] == null) || (list[i][col] == "null")) {
+                            td += "无";
+                        } else {
+                            td += list[i][col] + "";
+                        }
+                    }
+
+                    td += "</td>";
+
+                    str += td;
+                });
+                str += "</tr>";
+            }
+
+            $("#dataBody").append(str);
+        }
+
+    });
+}
+
+// 获得当前数据总数量和分页数据
+function getTotalCountAndPageSize(url) {
+    $.ajax({
+        url:url,
+        type:"POST",
+        async:false,
+        success:function(data){
+
+            data = eval("(" + data + ")");
+
+            totalCount = data["totalCount"];
+
+            pageSize = data["pageSize"];
+
+            if(totalCount <= pageSize) {
+                totalPage = 1;
+            } else if(totalCount % pageSize == 0) {
+                totalPage = totalCount/pageSize;
+            } else {
+                totalPage = parseInt(totalCount/pageSize);
+            }
+
+        }
+
+    });
+}
+
+// 储存机器
+function saveThis(saveUrl, returnUrl) {
+
+    $("#dataInfo").find("span").each(function() {
+
+        var col = $(this).attr("name");
+        if(col != "id") {
+            json[col] = $("#"+col).val();
+        }
+    });
+    var paramStr = JSON.stringify(json);
+
+    $.ajax({
+        url:saveUrl,
+        type:"POST",
+        async:false,
+        data:{
+            paramStr:paramStr
+        },
+        success:function(data){
+
+            if(data == "success") {
+                window.location.href = returnUrl;
+            }
+        }
+
+    });
+}
+
+// 修改
+function updateThis(updateUrl, returnUrl) {
+
+    $("#dataInfo").find("span").each(function() {
+        var col = $(this).attr("name");
+        json[col] = $("#"+col).val();
+    });
+    var paramStr = JSON.stringify(json);
+
+    $.ajax({
+        url:updateUrl,
+        type:"POST",
+        async:false,
+        data:{
+            paramStr:paramStr
+        },
+        success:function(data){
+
+            if(data == "success") {
+                window.location.href=returnUrl;
+            }
+        }
+
+    });
+}
+
+// 根据id和No获得数据信息
+function  getDataByInfo(url, id, dataNo) {
+    $.ajax({
+        url:url,
+        type:"POST",
+        async:false,
+        data:{
+            id:id,
+            dataNo:dataNo
+        },
+        success:function(data){
+
+            var info = eval("(" + data + ")");
+
+            $("#dataInfo").find("span").each(function() {
+
+                var col = $(this).attr("name");
+                $("#"+col).val(info[col])
+            });
+        }
+    });
 }
 

@@ -9,11 +9,13 @@
     <meta name="author" content="">
 
     <title>机器页</title>
+
     <%@ include file="../../include/header.jsp"%>
+
     <script type="text/javascript" src="/js/machine/machineDetailPage.js"></script>
 </head>
 <body>
-<div id="machineInfo">
+<div id="dataInfo">
     <div id="machineDefine">
         <div class="modal-header">
             <h4 class="modal-title">

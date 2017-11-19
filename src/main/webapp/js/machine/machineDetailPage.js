@@ -1,8 +1,8 @@
-var json = {};
+var returnUtl = "/wawaji/machine/machine.jsp";
 
 // 返回玩具列表页
 function cancelThis() {
-    window.location.href = "/wawaji/machine/machine.jsp";
+    window.location.href = returnUtl;
 }
 
 $(function(){
@@ -11,91 +11,21 @@ $(function(){
 
         var id = getQueryString("id");
         var toyNo = getQueryString("toyNo");
-        $.ajax({
-            url:"/wawaji/machine/getMachineByIdAndMachineNo.action",
-            type:"POST",
-            async:false,
-            data:{
-                id:id,
-                toyNo:toyNo
-            },
-            success:function(data){
 
-                var machine = eval("(" + data + ")");
-
-                $("#machineInfo").find("span").each(function() {
-
-                    var col = $(this).attr("name");
-                    $("#"+col).val(machine[col])
-                });
-            }
-        });
+        var getUrl = "/wawaji/machine/getMachineByIdAndMachineNo.action";
+        getDataByInfo(getUrl, id, toyNo);
     }
 });
 
-function updateOrSaveToy() {
+// 储存或修改
+function updateOrSaveMachine() {
 
     if(getQueryString("type") == "save") {
-        saveMachine();
+        var saveUrl = "/wawaji/machine/addMachine.action";
+        saveThis(saveUrl, returnUtl);
     } else {
-        updateMachine();
+        var updateUrl = "/wawaji/machine/updateMachineByIdAndMachineNo.action";
+        updateThis(updateUrl, returnUtl);
     }
 
-}
-
-// 储存机器
-function saveMachine() {
-
-    $("#machineInfo").find("span").each(function() {
-
-        var col = $(this).attr("name");
-        if(col != "id") {
-            json[col] = $("#"+col).val();
-        }
-    });
-    var machineStr = JSON.stringify(json);
-
-    $.ajax({
-        url:"/wawaji/machine/addMachine.action",
-        type:"POST",
-        async:false,
-        data:{
-            machineStr:machineStr
-        },
-        success:function(data){
-
-            console.info(data);
-            if(data == "success") {
-                window.location.href="/wawaji/machine/machine.jsp";
-            }
-        }
-
-    });
-}
-
-// 修改机器
-function updateMachine() {
-
-    $("#machineInfo").find("span").each(function() {
-        var col = $(this).attr("name");
-        json[col] = $("#"+col).val();
-    });
-    var machineStr = JSON.stringify(json);
-
-    $.ajax({
-        url:"/wawaji/machine/updateMachineByIdAndMachineNo.action",
-        type:"POST",
-        async:false,
-        data:{
-            machineStr:machineStr
-        },
-        success:function(data){
-
-            console.info(data);
-            if(data == "success") {
-                window.location.href="/wawaji/machine/machine.jsp";
-            }
-        }
-
-    });
 }
