@@ -75,13 +75,18 @@
                         response = data.response, reader = data.reader;
 
                     }).on("fileuploaded", function (event, data, previewId, index) {    //一个文件上传成功
-                        console.info(data.response);
-                        if(data.response.split(".")[1] == 'docx'|| data.response.split(".")[1] == 'doc'|| data.response.split(".")[1] == 'xls'|| data.response.split(".")[1] == 'xlsx'|| data.response.split(".")[1] == 'pdf') {
-                            var file_link = "<a href='/"+data.response+"'>文件</a>";
+                        console.info(data);
+                        var res = data.response;
+                        if(typeof(res) == "string") {
+                            res = eval("("+res+")");
+                        }
+                        var fileName = res["fileName"];
+                        if(fileName.split(".")[1] == 'docx'|| fileName.split(".")[1] == 'doc'|| fileName.split(".")[1] == 'xls'|| fileName.split(".")[1] == 'xlsx'|| fileName.split(".")[1] == 'pdf') {
+                            var file_link = "<a href='/image/"+fileName+"'>文件</a>";
                             $("#files").append(file_link);
                             $("#files").show();
                         } else {
-                            var img_link = "<div class='col-xs-5' height='200' width='"+width+"' ><img src='/image/"+data.response+"' width=80%  /></div>"
+                            var img_link = "<div class='col-xs-5' height='200' width='"+width+"' ><img src='http://localhost:8080/image/"+fileName+"' width=80%  /></div>";
                             $("#images").append(img_link);
                             $("#images").show();
                         }

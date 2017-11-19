@@ -395,8 +395,6 @@ function drawing(url,keyword) {
 		async:false,
 		success:function(data){
 			// 基于准备好的dom，初始化echarts实例
-
-
 			// 使用刚指定的配置项和数据显示图表。
 			$("#groupTable").hide();
 			$("#dataDiv").hide();
@@ -421,6 +419,12 @@ function commonSlide(id) {
 	var options = {};
 	$( "#"+id ).effect( "slide", options, 500, callback );
 }
+
+function callback() {
+    /*	setTimeout(function() {
+        $( "#splitPage" ).removeAttr( "style" ).hide().fadeIn();
+        }, 1000 );*/
+};
 
 //休眠方法
 function sleep(numberMillis) {

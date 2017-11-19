@@ -7,10 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="zikun.liu">
 
     <title>玩具页</title>
+
     <%@ include file="../../include/header.jsp"%>
+
+    <link href="/dist/css/fileInput/fileinput.css" media="all"rel="stylesheet" type="text/css" />
+
+    <script src="/dist/js/fileInput/fileinput.js" type="text/javascript"></script>
+
+    <script src="/dist/js/fileInput/locales/zh.js" type="text/javascript"></script>
+
     <script type="text/javascript" src="/js/toy/toyDetailPage.js"></script>
 </head>
 <body>
@@ -26,7 +34,7 @@
                     <input type = 'hidden' id = "id">
                 </span>
                 <span name = "toyImg">
-                    <input type = 'hidden' id = "toyImg" value="123">
+                    <input type = 'hidden' id = "toyImg">
                 </span>
                 <div class="row">
                     <div class="col-xs-5">
@@ -92,6 +100,72 @@
                             <input class="form-control" id="toyCost" />
                         </span>
                     </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <form id="form" method="post" enctype="multipart/form-data">
+                        <div class="col-xs-5">
+                            图片上传:
+                            <input id="uploadFile" name="file" multiple type="file" data-show-caption="true">
+                        </div>
+
+                        <script type="text/javascript">
+                                $("#images").hide();
+                                $("#files").hide();
+                                var width = $(document.body).width()/4;
+                                var url = "/wawaji/fileUpload/uploadFile.action";
+                                var inputId = "uploadFile";
+                                initFileInput(inputId,url);
+
+                                // 文件上传初始化
+                                function initFileInput(inputId,uploadUrl) {
+                                    $("#"+inputId).fileinput({
+                                        language: 'zh', //设置语言
+                                        uploadUrl:uploadUrl, //上传的地址
+                                        allowedFileExtensions: ['jpg','jpeg', 'gif', 'png','doc','docx','xls','xlsx','pdf'],//接收的文件后缀
+                                        //uploadExtraData:{"id": 1, "fileName":'123.mp3'},
+                                        uploadAsync: true, //默认异步上传
+                                        showUpload:true, //是否显示上传按钮
+                                        showRemove :true, //显示移除按钮
+                                        showPreview :true, //是否显示预览
+                                        showCaption:false,//是否显示标题
+                                        browseClass:"btn btn-primary", //按钮样式
+                                        dropZoneEnabled: false,//是否显示拖拽区域
+                                        //minImageWidth: 50, //图片的最小宽度
+                                        //minImageHeight: 50,//图片的最小高度
+                                        //maxImageWidth: 1000,//图片的最大宽度
+                                        //maxImageHeight: 1000,//图片的最大高度
+                                        //maxFileSize:0,//单位为kb，如果为0表示不限制文件大小
+                                        //minFileCount: 0,
+                                        maxFileCount:10, //表示允许同时上传的最大文件个数
+                                        enctype:'multipart/form-data',
+                                        validateInitialCount:true,
+                                        previewFileIcon: "<i class='glyphicon glyphicon-file'></i>",
+                                        msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+                                    }).on('filepreupload', function(event, data, previewId, index) {     //上传中
+                                        var form = data.form;
+                                        var files = data.files;
+                                        var extra = data.extra;
+                                        var response = data.response;
+                                        var reader = data.reader;
+
+                                    }).on("fileuploaded", function (event, data, previewId, index) {    //一个文件上传成功
+                                        console.info(data);
+                                        var res = data.response;
+                                        if(typeof(res) == "string") {
+                                            res = eval("("+res+")");
+                                        }
+                                        var fileName = res["fileName"];
+                                        $("#toyImg").val("/image/"+fileName);
+
+
+                                    }).on('fileerror', function(event, data, msg) {  //一个文件上传失败
+                                        alert("上传图片失败")
+                                    });
+                                }
+                        </script>
+                    </form>
+                   </span>
                 </div>
             </div>
         </div>

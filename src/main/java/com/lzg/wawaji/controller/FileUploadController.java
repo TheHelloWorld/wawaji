@@ -1,5 +1,7 @@
 package com.lzg.wawaji.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.lzg.wawaji.utils.DateUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +23,7 @@ public class FileUploadController {
 
     @RequestMapping(value = "uploadFile",method= RequestMethod.POST)
     @ResponseBody
-    public String uploadFile(Model model, HttpServletRequest request) {
+    public String uploadFile(HttpServletRequest request) {
 
         System.out.println("123123123213");
         // 获取项目目录
@@ -50,6 +52,8 @@ public class FileUploadController {
             e.printStackTrace();
         }
         fileName = "toy/"+fileName;
-        return fileName;
+        JSONObject json = new JSONObject();
+        json.put("fileName", fileName);
+        return json.toJSONString();
     }
 }
