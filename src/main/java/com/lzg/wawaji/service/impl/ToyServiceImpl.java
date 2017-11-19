@@ -55,6 +55,7 @@ public class ToyServiceImpl implements ToyService {
     @Override
     public List<Toy> getAllToyByPage(int startPage) {
         try {
+            startPage = startPage * BaseConstant.DEFAULT_PAGE_SIZE;
             return toyDao.getAllToyByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE);
         } catch (Exception e) {
             logger.error("{} getAllToyByPage error "+e, BaseConstant.LOG_ERR_MSG, e);

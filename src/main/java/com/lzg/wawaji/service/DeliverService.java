@@ -20,12 +20,26 @@ public interface DeliverService {
     Integer countDeliverByUserNo(String userNo);
 
     /**
+     * 获得所有用户发货记录数量
+     * @return
+     */
+    Integer countAllDeliver();
+
+
+    /**
      * 根据用户编号分页获得用户发货记录集合
      * @param userNo 用户编号
      * @param startPage 开始页
      * @return
      */
     List<Deliver> getDeliverByUserNo(String userNo, int startPage);
+
+    /**
+     * 分页获得所有用户发货记录
+     * @param startPage 开始页
+     * @return
+     */
+    List<Deliver> getAllDeliverByPage(int startPage);
 
     /**
      * 根据id,用户编号获得用户发货记录

@@ -59,6 +59,11 @@
         select count(*) from deliver  where user_no = #{userNo}
     </select>
 
+    <!-- 获得所有用户发货数量 -->
+    <select id="countAllDeliver" resultType="java.lang.Integer">
+        select count(*) from deliver
+    </select>
+
     <!-- 根据用户编号分页获得用户发货记录集合 -->
     <select id="getDeliverByUserNo" resultMap="deliverMap">
         select
@@ -73,6 +78,22 @@
             deliver_status
         from deliver
         where user_no = #{userNo} order by create_time desc
+        limit #{startPage}, #{pageSize}
+    </select>
+
+    <!-- 分页获得用户发货记录集合 -->
+    <select id="getAllDeliverByPage" resultMap="deliverMap">
+        select
+            id,
+            user_no,
+            user_name,
+            mobile_no,
+            address,
+            deliver_no,
+            company,
+            deliver_msg,
+            deliver_status
+        from deliver order by create_time desc
         limit #{startPage}, #{pageSize}
     </select>
 
@@ -95,6 +116,8 @@
     <!-- 根据id,用户编号修改用户地址及状态 -->
     <update id="updateDeliverMsgByIdAndUserNo">
         update deliver set
+            deliver_no = #{deliverNo, jdbcType=VARCHAR},
+            company = #{company, jdbcType=VARCHAR},
             deliver_msg = #{deliverMsg, jdbcType=VARCHAR},
             deliver_status = #{deliverStatus, jdbcType=INTEGER}
         where id = #{id} and user_no = #{userNo}

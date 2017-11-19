@@ -25,13 +25,7 @@ public class DeliverServiceImpl implements DeliverService {
      */
     @Override
     public void addDeliver(Deliver deliver) {
-        try {
-            deliverDao.addDeliver(deliver);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("deliver",deliver);
-            logger.error("{} addDeliver param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
+        deliverDao.addDeliver(deliver);
     }
 
     /**
@@ -52,6 +46,15 @@ public class DeliverServiceImpl implements DeliverService {
     }
 
     /**
+     * 获得所有用户发货数量
+     * @return
+     */
+    @Override
+    public Integer countAllDeliver() {
+        return deliverDao.countAllDeliver();
+    }
+
+    /**
      * 根据用户编号分页获得用户发货记录集合
      * @param userNo 用户编号
      * @param startPage 开始页
@@ -60,6 +63,7 @@ public class DeliverServiceImpl implements DeliverService {
     @Override
     public List<Deliver> getDeliverByUserNo(String userNo, int startPage) {
         try {
+            startPage = startPage * BaseConstant.DEFAULT_PAGE_SIZE;
             return deliverDao.getDeliverByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE);
         } catch (Exception e) {
             JSONObject json = new JSONObject();
@@ -67,6 +71,25 @@ public class DeliverServiceImpl implements DeliverService {
             json.put("startPage",startPage);
             json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
             logger.error("{} getDeliverByUserNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
+        }
+        return null;
+    }
+
+    /**
+     * 分页获得所有用户发货记录
+     * @param startPage 开始页
+     * @return
+     */
+    @Override
+    public List<Deliver> getAllDeliverByPage(int startPage) {
+        try {
+            startPage = startPage * BaseConstant.DEFAULT_PAGE_SIZE;
+            return deliverDao.getAllDeliverByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE);
+        } catch (Exception e) {
+            JSONObject json = new JSONObject();
+            json.put("startPage",startPage);
+            json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
+            logger.error("{} getAllDeliverByPage param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
         }
         return null;
     }
@@ -96,12 +119,6 @@ public class DeliverServiceImpl implements DeliverService {
      */
     @Override
     public void updateDeliverMsgByIdAndUserNo(Deliver deliver) {
-        try {
-            deliverDao.updateDeliverMsgByIdAndUserNo(deliver);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("deliver",deliver);
-            logger.error("{} updateDeliverMsgByIdAndUserNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
+        deliverDao.updateDeliverMsgByIdAndUserNo(deliver);
     }
 }

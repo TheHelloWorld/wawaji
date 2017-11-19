@@ -23,6 +23,12 @@ public interface DeliverDao {
     Integer countDeliverByUserNo(String userNo);
 
     /**
+     * 获得所有用户发货记录
+     * @return
+     */
+    Integer countAllDeliver();
+
+    /**
      * 根据用户编号分页获得用户发货记录集合
      * @param userNo 用户编号
      * @param startPage 开始页
@@ -31,6 +37,16 @@ public interface DeliverDao {
      */
     List<Deliver> getDeliverByUserNo(@Param("userNo") String userNo, @Param("startPage") int startPage,
                                      @Param("pageSize") int pageSize);
+
+    /**
+     * 分页获得所有用户发货记录
+     * @param startPage 开始也
+     * @param pageSize 每页数据数
+     * @return
+     */
+    List<Deliver> getAllDeliverByPage(@Param("startPage") int startPage,
+                                     @Param("pageSize") int pageSize);
+
 
     /**
      * 根据id,用户编号获得用户发货记录
