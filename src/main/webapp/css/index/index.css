@@ -17,3 +17,22 @@
     z-index:9999;
     background:#6DDBF6;
 }
+
+.machine-panel {
+
+    background-color: #fff;
+    border: 1px solid #bce8f1;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05)
+}
+
+.machine-col-xs-6 {
+
+    position: relative;
+    min-height: 1px;
+    padding-left: 5px;
+    float: left;
+    width: 50%
+
+}

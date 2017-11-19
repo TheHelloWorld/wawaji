@@ -5,6 +5,8 @@ var nowPage = 1;
 
 var showUrl = "/wawaji/machine/getAllMachineByPage.action";
 
+var width = $(window).width() / 2 - 20;
+
 $(function(){
     var url = "/wawaji/machine/getMachineTotalCountAndPageSize.action";
     getTotalCountAndPageSize(url);
@@ -39,11 +41,14 @@ function getAllMachineByPage(nowPage) {
 
             for(var i = 0; i<list.length; i++) {
                 if(i % 2 == 0) {
-                    str += "<div class='row'>";
+                    str += "<div class='row' style='margin-bottom: 5px'>";
                 }
 
-                str += "<div class='col-xs-5'>";
-                str += "<img src='" + list[i]["toyImg"] + "' />";
+                str += "<div class='machine-col-xs-6' >";
+                str += "<div class='machine-panel panel-info'>";
+                str += "<div class='panel-heading'></div>";
+                str += "<div class='panel-body' style='background: #ffff99'>";
+                str += "<img style='margin: 0 auto;' width=100% src='" + list[i]["toyImg"] + "' />";
                 str += "<p>" + list[i]["toyName"] + "</p>";
                 str += "<p>围观:" + list[i]["viewer"] + "</p>";
                 str += "<p>游戏币:" + list[i]["toyNowCoin"] + "</p>";
@@ -53,14 +58,16 @@ function getAllMachineByPage(nowPage) {
                 } else {
                     str += "<p>使用中</p>";
                 }
+                str += "</div>";
+                str += "<div class='panel-footer'></div>";
+                str += "</div>";
                 str += "</div>"
 
                 if(i % 2 != 0) {
                     str += "</div>";
-                    str += "<br>";
                 }
-
             }
+            $("#main").append(str);
 
         }
     });
