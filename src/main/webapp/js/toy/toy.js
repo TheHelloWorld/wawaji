@@ -1,9 +1,3 @@
-// 开始页码
-var startPage = 0;
-
-// 总数据数
-var totalCount = 0;
-
 // 每页数据数
 var pageSize = 0;
 
@@ -11,15 +5,15 @@ var step = 5;
 
 var nowPage = 1;
 
+var showUrl = "/wawaji/toy/getAllToyByPage.action";
 
-$(function(){
+$(function() {
     // 获得总页数和总数量
     var countAndPageSizeUrl = "/wawaji/toy/getTotalCountAndPageSize.action";
     getTotalCountAndPageSize(countAndPageSizeUrl);
 
     // 分页获得所有记录
-    var showUrl = "/wawaji/toy/getAllToyByPage.action";
-    getAllByPage(showUrl);
+    getAllByPage(showUrl, nowPage);
 
     // 初始化页码
     initPage(totalPage,step);
@@ -27,19 +21,22 @@ $(function(){
 
 
 
-function getPage(page){
+function getPage(page) {
     nowPage = getPageByNum(nowPage,page,totalPage,step);
+    getAllByPage(showUrl, nowPage);
 
 }
 
-function nextPage(){
+function nextPage() {
     nowPage = nextPageNum(nowPage,totalPage,step);
+    getAllByPage(showUrl, nowPage);
 
 }
 
 //上一页
-function lastPage(){
+function lastPage() {
     nowPage = lastPageNum(nowPage,totalPage,step);
+    getAllByPage(showUrl, nowPage);
 }
 
 function addToyPage() {

@@ -15,7 +15,6 @@ import java.util.List;
 @Service("toyService")
 public class ToyServiceImpl implements ToyService {
 
-
     private static final Logger logger = LoggerFactory.getLogger(ToyServiceImpl.class);
 
     @Autowired
@@ -27,8 +26,6 @@ public class ToyServiceImpl implements ToyService {
      */
     @Override
     public void addToy(Toy toy) {
-
-        toy.setCurrentState(CurrentState.AVAILABLE.getStatus());
         toyDao.addToy(toy);
     }
 
@@ -55,7 +52,6 @@ public class ToyServiceImpl implements ToyService {
     @Override
     public List<Toy> getAllToyByPage(int startPage) {
         try {
-            startPage = startPage * BaseConstant.DEFAULT_PAGE_SIZE;
             return toyDao.getAllToyByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE);
         } catch (Exception e) {
             logger.error("{} getAllToyByPage error "+e, BaseConstant.LOG_ERR_MSG, e);

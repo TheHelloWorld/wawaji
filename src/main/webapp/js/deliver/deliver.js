@@ -1,9 +1,3 @@
-// 开始页码
-var startPage = 0;
-
-// 总数据数
-var totalCount = 0;
-
 // 每页数据数
 var pageSize = 0;
 
@@ -11,21 +5,23 @@ var step = 5;
 
 var nowPage = 1;
 
-
 $(function(){
     // 获得总页数和总数量
     var countAndPageSizeUrl = "/wawaji/deliver/getDeliverTotalCountAndPageSize.action";
     getTotalCountAndPageSize(countAndPageSizeUrl);
 
     // 分页获得所有记录
-    getAllDeliverByPage();
+    getAllDeliverByPage(nowPage);
 
     // 初始化页码
-    initPage(totalPage,step);
+    initPage(totalPage, step);
 });
 
 // 公共展示方法
-function getAllDeliverByPage() {
+function getAllDeliverByPage(startPage) {
+
+    startPage = (startPage - 1) * pageSize;
+
     $.ajax({
         url:"/wawaji/deliver/getAllDeliverByPage.action",
         type:"POST",
@@ -35,7 +31,16 @@ function getAllDeliverByPage() {
         },
         success:function(data) {
 
-            data = eval("(" + data + ")");
+            $("#dataBody").html("");
+
+            if(typeof(data) == "string"){
+                data = eval("("+data+")");
+            }
+
+            if(totalPage == 0){
+                $("#dataDiv").hide();
+                return;
+            }
 
             var list = data["list"];
             var str = "";
@@ -88,18 +93,19 @@ function getAllDeliverByPage() {
 }
 
 function getPage(page){
-    nowPage = getPageByNum(nowPage,page,totalPage,step);
-
+    nowPage = getPageByNum(nowPage, page, totalPage, step);
+    getAllDeliverByPage(nowPage);
 }
 
 function nextPage(){
-    nowPage = nextPageNum(nowPage,totalPage,step);
-
+    nowPage = nextPageNum(nowPage, totalPage, step);
+    getAllDeliverByPage(nowPage);
 }
 
 //上一页
 function lastPage(){
-    nowPage = lastPageNum(nowPage,totalPage,step);
+    nowPage = lastPageNum(nowPage, totalPage, step);
+    getAllDeliverByPage(nowPage);
 }
 
 // 修改元素

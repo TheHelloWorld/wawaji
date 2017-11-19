@@ -1,16 +1,22 @@
 //记录收缩列的字符串
 var shrinkStr = "";
+
 var totalPage = 0;
 
 var totalCount = 0;
+
 //当前日期
 var now = new Date();
+
 //今天本周的第几天
 var nowDayOfWeek = now.getDay()-1;
+
 //当前日
 var nowDay = now.getDate();
+
 //当前月
 var nowMonth = now.getMonth();
+
 //当前年
 var nowYear = now.getYear();
 nowYear += (nowYear < 2000) ? 1900 : 0;
@@ -24,6 +30,7 @@ var lastMonth = lastMonthDate.getMonth();
 
 //显示图表或表格的标志位
 var tableOrPicture = false;
+
 // 储存或修改用json
 var json = {};
 
@@ -39,7 +46,7 @@ function initPage(num, step){
 		msg += "<strong>什么都找不到 QAQ </strong>没有符合的数据。";
 		msg += "</div>";
 		$("#splitPage").append(msg);
-		conmmonSlide("splitPage");
+        commonSlide("splitPage");
 		//$( "#splitPage" ).effect( "slide", options, 500, callback );
 		return;
 	}
@@ -62,171 +69,42 @@ function initPage(num, step){
 
 }
 
-//普通公共搜索方法
-function commonMethon(url,keyWord,page){
-	$("#groupDiv").hide();
-	$.ajax({
-		url:url,
-		type:"POST",
-		data:{
-			keyWord:keyWord,
-			page:page
-		},
-		async:false,
-		success:function(data){
-			$("#dataTbody").html("");
-			var str = "";
-			if(typeof(data) == "string"){
-				data = eval("("+data+")");
-			}
-			totalPage = data.num;
-			//console.info(totalPage);
-			if(totalPage == 0){
-				$("#dataDiv").hide();
-				return;
-			}
-			var s = eval(data.list);
-			//console.info("length:"+s.length);
-			for(var i = 0;i<s.length;i++){
-				str += "<tr class='even gradeA'>";
-
-				$("#titlecolumn").find("lable").each(function(){
-					var col = $(this).attr("name");
-					var td = "<td>";
-
-					if($(this).attr("class") == "onright"){
-						td = "<td class='onright'>"
-					}
-
-					if($(this).attr("lock") != undefined && $(this).attr("lock") != null){
-						td += "<span>"
-					}
-
-					//如果数据为空则写无
-					if((s[i][col] == undefined) || (s[i][col] == null) || (s[i][col] == "null")){
-						td+="无";
-					}else{
-						td+=s[i][col]+"";
-					}
-					if($(this).attr("lock") != undefined && $(this).attr("lock") != null){
-						td += "</span>&nbsp;&nbsp;&nbsp;&nbsp;"
-					}
-					td += "</td>";
-					str += td;
-				});
-				str += "</tr>";
-			}
-			$("#dataTbody").append(str);
-
-			$("#dataDiv").show();
-
-		}
-	});
-	return totalPage;
-}
-
-//合计公共搜索方法
-function commonGroupMethon(url,keyWord,page){
-	$("#dataDiv").hide();
-	$.ajax({
-		url:url,
-		type:"POST",
-		data:{
-			keyWord:keyWord,
-			page:page
-		},
-		async:false,
-		success:function(data){
-
-			var str = "";
-			if(typeof(data) == "string"){
-				data = eval("("+data+")");
-			}
-			totalPage = data.num;
-			//console.info(totalPage);
-			if(totalPage == 0){
-				$("#groupDiv").hide();
-				return;
-			}
-
-			$("#groupTbody").html("");
-
-			var s = eval(data.list);
-			//console.info("length:"+s.length);
-			for(var i = 0;i<s.length;i++){
-				str += "<tr class='even gradeA'>";
-
-				$("#groupcolumn").find("lable").each(function(){
-					var col = $(this).attr("name");
-					var td = "<td>";
-
-					if($(this).attr("class") == "onright"){
-						td = "<td class='onright'>"
-					}
-
-					if($(this).attr("lock") != undefined && $(this).attr("lock") != null){
-						td += "<span>"
-					}
-
-					//如果数据为空则写无
-					if((s[i][col] == undefined) || (s[i][col] == null) || (s[i][col] == "null")){
-						td+="无";
-					}else{
-						td+=s[i][col]+"";
-					}
-					if($(this).attr("lock") != undefined && $(this).attr("lock") != null){
-						td += "</span>&nbsp;&nbsp;&nbsp;&nbsp;"
-					}
-					td += "</td>";
-					str += td;
-				});
-				str += "</tr>";
-			}
-			$("#groupTbody").append(str);
-			$("#drawDiv").hide();
-
-			$("#groupDiv").show();
-			$("#groupTable").show();
-
-		}
-	});
-	return totalPage;
-}
-
 //根据页码获得数据
-function getPageByNum(nowpage,page,totalPage,step){
-	if(page % step == 0){
+function getPageByNum(nowPage, page, totalPage, step) {
+	if(page % step == 0) {
+
 		var num = 0;
-		if(page + step > totalPage){
+		if(page + step > totalPage) {
 			num = totalPage;
-		}else{
+		} else {
 			num = page + step;
 		}
 
 		var str = "";
 		str += "<ul class='pagination'>";
 		str += "<li><a href='javascript:lastPage()'>&laquo;</a></li>";
-		for(var i = page;i<=num;i++){
+		for(var i = page; i<=num; i++) {
 			str += "<li id=page"+i+"><a href='javascript:getPage("+i+")'>"+i+"</a></li>";
 		}
 		str += "<li><a href='javascript:nextPage()'>&raquo;</a></li>";
 		str += "</ul>";
 		$("#splitPage").html("");
 		$("#splitPage").append(str);
-	}else if((page+1) % step == 0){
+
+	} else if((page+1) % step == 0) {
 		var num = 1;
-		if((page + 1)-step > 0){
+		if((page + 1)-step > 0) {
 			num = (page + 1)-step;
 		}
 
 		var lastNum = page +1;
-		if(lastNum > totalPage){
+		if(lastNum > totalPage) {
             lastNum = totalPage;
 		}
 		var str = "";
 		str += "<ul class='pagination'>";
 		str += "<li><a href='javascript:lastPage()'>&laquo;</a></li>";
-		for(var i = num;i<=lastNum;i++){
+		for(var i = num; i<=lastNum; i++) {
 			str += "<li id=page"+i+"><a href='javascript:getPage("+i+")'>"+i+"</a></li>";
 		}
 		str += "<li><a href='javascript:nextPage()'>&raquo;</a></li>";
@@ -234,38 +112,37 @@ function getPageByNum(nowpage,page,totalPage,step){
 		$("#splitPage").html("");
 		$("#splitPage").append(str);
 
-	}else{
-		$("#page"+nowpage).removeClass("active");
+	} else {
+		$("#page"+nowPage).removeClass("active");
 	}
 	$("#page"+page).addClass("active");
-	nowpage = page;
-	return nowpage;
+    nowPage = page;
+	return nowPage;
 }
 
 //下一页
-function nextPageNum(nowpage,totalPage,step){
-	if(nowpage+1<=totalPage){
-		return getPageByNum(nowpage,(nowpage+1),totalPage,step);
-	}else{
+function nextPageNum(nowPage,totalPage,step) {
+	if(nowPage + 1 <= totalPage) {
+		return getPageByNum(nowPage, (nowPage+1), totalPage, step);
+	} else {
 		return 1;
 	}
 
 }
 
 //上一页
-function lastPageNum(nowpage,totalPage,step){
-	if(nowpage-1>0){
-		return getPageByNum(nowpage,(nowpage-1),totalPage,step);
-	}else{
+function lastPageNum(nowPage,totalPage,step) {
+	if(nowPage-1>0) {
+		return getPageByNum(nowPage, (nowPage-1), totalPage, step);
+	} else {
 		return 1;
 	}
 }
 
-
 //导出excel
 function downloadExcelUtil(url,excelUrl,keyword){
 
-	if(url != ""){
+	if(url != "") {
 		$.ajax({
 			url:url,
 			type:"POST",
@@ -274,33 +151,29 @@ function downloadExcelUtil(url,excelUrl,keyword){
 				keyWord:keyword
 			},
 			async:false,
-			success:function(data){
-				if(data == 0){
+			success:function(data) {
+				if(data == 0) {
 					$("#dataTable").hide();
 					$("#splitPage").html("");
 					var msg = "<div class='alert alert-warning'>";
 					msg += "<strong>什么都找不到 QAQ </strong>没有符合的数据。";
 					msg += "</div>";
 					$("#splitPage").append(msg);
-					conmmonSlide("splitPage");
+                    commonSlide("splitPage");
 					flag = 1;
 
-				}else{
-					if(flag == 1){
+				} else {
+					if(flag == 1) {
 						$("#splitPage").html("");
-
 					}
 					flag = 0;
 				}
 			}
-
 		});
-		if(flag == 1){
+		if(flag == 1) {
 			return;
 		}
 	}
-
-
 
 	//自定义一个隐藏的表单用于提交下载文件用的参数
 	//定义一个form表单
@@ -323,53 +196,8 @@ function downloadExcelUtil(url,excelUrl,keyword){
 
 }
 
-
-//收缩列方法
-function shrinkMethon(tableId){
-
-	$(".shrinkMethon").click(function(){
-
-		if($(this).find("span").length > 0){
-
-			if($(this).find("span").first().attr("class") == "fa fa-chevron-circle-left"){
-
-				$("#"+tableId+" tr").find("td:eq("+$(this).index()+")").each(function(){
-					$(this).find("span").hide();
-				});
-				$(this).find("lable").hide();
-				$(this).find("span").first().attr("class","fa fa-chevron-circle-right");
-				shrinkStr += $(this).index()+";";
-			}else{
-				$("#"+tableId+" tr").find("td:eq("+$(this).index()+")").each(function(){
-					$(this).find("span").show();
-				});
-				$(this).find("lable").show();
-				$(this).find("span").first().attr("class","fa fa-chevron-circle-left");
-				if(shrinkStr!=""){
-					shrinkStr = shrinkStr.replace($(this).index()+";","");
-				}
-			}
-		}
-	});
-
-	if(shrinkStr!=""){
-		shrinkStr.split(";").forEach(function(e){
-
-			if(e!=""){
-				$("#"+tableId+" tr").find("td:eq("+e+")").each(function(){
-					$(this).find("span").hide();
-				});
-				$("#"+tableId+" tr").find("th:eq("+e+")").find("lable").hide();
-				$("#"+tableId+" tr").find("th:eq("+e+")").find("span").first().attr("class","fa fa-chevron-circle-right");
-			}
-
-		});
-	}
-
-}
-
 //准备自动补全数据
-function prepareData(url, keyword, id, datas, widthId){
+function prepareData(url, keyword, id, dataArray, widthId) {
 	$.ajax({
 		url:url,
 		type:"POST",
@@ -378,18 +206,18 @@ function prepareData(url, keyword, id, datas, widthId){
 			keyWord:keyword
 		},
 		success:function(data){
-			datas = eval(data);
+            dataArray = eval(data);
 
 		}
 	});
-	bindToInputHide(id,datas,widthId);
+	bindToInputHide(id,dataArray,widthId);
 }
 
 //将自动补全绑定到特定的input上
-function bindToInputHide(id,datas,widthId){
+function bindToInputHide(id,dataArray,widthId) {
 
 	$("#"+id).unautocomplete();
-	$("#"+id).autocomplete(datas, {
+	$("#"+id).autocomplete(dataArray, {
 		max: 5,    //列表里的条目数
 		minChars: 0,    //自动完成激活之前填入的最小字符
 		width: $("#"+widthId).width(),     //提示的宽度，溢出隐藏
@@ -413,41 +241,55 @@ function bindToInputHide(id,datas,widthId){
 
 
 //计算日期
-function getDate(time,id1,id2){
+function getDate(time,id1,id2) {
+
 	var str1 = "";
+
 	var str2 = "";
-	if(time == "yesterday"){
+
+	if(time == "yesterday")  {
+
 		//昨天
 		var getYesterdayDate = new Date(nowYear, nowMonth, nowDay - 1);
 		str1 =  formatDate(getYesterdayDate);
 		str2 =  formatDate(getYesterdayDate);
-	}else if(time == "today"){
+
+	}else if(time == "today") {
+
 		//今天
 		var getCurrentDate = new Date(nowYear, nowMonth, nowDay);
 		str1 = formatDate(getCurrentDate);
-		str2 = formatDate(getCurrentDate)
-	}else if(time == "lastWeek"){
+		str2 = formatDate(getCurrentDate);
+
+	}else if(time == "lastWeek") {
+
 		//获得上周的开始日期
 		var getUpWeekStartDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek -7);
 		str1 = formatDate(getUpWeekStartDate);
 		//获得上周的结束日期
 		var getUpWeekEndDate = new Date(nowYear, nowMonth, nowDay + (6 - nowDayOfWeek - 7));
 		str2 = formatDate(getUpWeekEndDate);
-	}else if(time == "thisWeek"){
+
+	}else if(time == "thisWeek") {
+
 		//获得本周的开始日期
 		var getWeekStartDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek);
 		str1 = formatDate(getWeekStartDate);
 		//获得本周的结束日期
 		var getWeekEndDate = new Date(nowYear, nowMonth, nowDay + (6 - nowDayOfWeek));
 		str2 = formatDate(getWeekEndDate);
-	}else if(time == "lastMonth"){
+
+	}else if(time == "lastMonth") {
+
 		//获得上月开始时间
 		var getLastMonthStartDate = new Date(nowYear, lastMonth, 1);
 		str1 = formatDate(getLastMonthStartDate);
 		//获得上月结束时间
 		var getLastMonthEndDate = new Date(nowYear, lastMonth, getMonthDays(lastMonth));
 		str2 = formatDate(getLastMonthEndDate);
-	}else if(time == "thisMonth"){
+
+	}else if(time == "thisMonth") {
+
 		//获得本月的开始日期
 		var getMonthStartDate = new Date(nowYear, nowMonth, 1);
 		str1 =  formatDate(getMonthStartDate);
@@ -456,11 +298,11 @@ function getDate(time,id1,id2){
 		str2 = formatDate(getMonthEndDate);
 	}
 
-	if(id1 != "null"){
+	if(id1 != "null") {
 		$("#"+id1).val(str1);
 	}
 
-	if(id2 != "null"){
+	if(id2 != "null") {
 		$("#"+id2).val(str2);
 	}
 
@@ -469,67 +311,70 @@ function getDate(time,id1,id2){
 
 //格式化日期：yyyy-MM-dd
 function formatDate(date) {
-	var myyear = date.getFullYear();
-	var mymonth = date.getMonth()+1;
-	var myweekday = date.getDate();
+	var myYear = date.getFullYear();
+	var myMonth = date.getMonth()+1;
+	var myWeekDay = date.getDate();
 
-	if(mymonth < 10){
-		mymonth = "0" + mymonth;
+	if(myMonth < 10){
+        myMonth = "0" + myMonth;
 	}
-	if(myweekday < 10){
-		myweekday = "0" + myweekday;
+	if(myWeekDay < 10){
+        myWeekDay = "0" + myWeekDay;
 	}
-	return (myyear+"-"+mymonth + "-" + myweekday);
+	return (myYear+"-"+myMonth + "-" + myWeekDay);
 }
 
 //获得某月的天数
-function getMonthDays(myMonth){
+function getMonthDays(myMonth) {
 	var monthStartDate = new Date(nowYear, myMonth, 1);
 	var monthEndDate = new Date(nowYear, myMonth + 1, 1);
-	var days = (monthEndDate - monthStartDate)/(1000 * 60 * 60 * 24);
-	return days;
+    return (monthEndDate - monthStartDate)/(1000 * 60 * 60 * 24);
 }
 
 //获得本季度的开始月份
-function getQuarterStartMonth(){
+function getQuarterStartMonth() {
+
 	var quarterStartMonth = 0;
-	if(nowMonth<3){
+
+	if(nowMonth < 3) {
+
 		quarterStartMonth = 0;
-	}
-	if(2<6){
+
+	} else if(nowMonth < 6) {
+
 		quarterStartMonth = 3;
-	}
-	if(5<9){
+
+	}else if(nowMonth < 9) {
+
 		quarterStartMonth = 6;
-	}
-	if(nowMonth>8){
+
+	}else if(nowMonth>8) {
 		quarterStartMonth = 9;
 	}
 	return quarterStartMonth;
 }
 
 //清空输入框
-function getEmpty(id1,id2){
-	if(id1 != "null"){
+function getEmpty(id1,id2) {
+	if(id1 != "null") {
 		$("#"+id1).val("");
 	}
-
-	if(id2 != "null"){
+	if(id2 != "null") {
 		$("#"+id2).val("");
 	}
 }
 
 //判断是否选中
-function judgeCheck(id){
-	if($("#"+id+"").prop("checked")){
+function judgeCheck(id) {
+	if($("#"+id+"").prop("checked")) {
 		return true;
-	}else{
+	}else {
 		return false;
 	}
 }
 
 //选择表格或图表
-function selectTableOrPicture(flag){
+function selectTableOrPicture(flag)  {
 	if(flag == "table"){
 		tableOrPicture = true;
 	}else if(flag == "picture"){
@@ -539,8 +384,7 @@ function selectTableOrPicture(flag){
 
 
 //画图
-function drawing(url,keyword){
-
+function drawing(url,keyword) {
 
 	$.ajax({
 		url:url,
@@ -573,16 +417,10 @@ function drawing(url,keyword){
 }
 
 //公共滑动
-function conmmonSlide(id){
+function commonSlide(id) {
 	var options = {};
 	$( "#"+id ).effect( "slide", options, 500, callback );
 }
-
-function callback() {
-/*	setTimeout(function() {
-	$( "#splitPage" ).removeAttr( "style" ).hide().fadeIn();
-	}, 1000 );*/
-};
 
 //休眠方法
 function sleep(numberMillis) {
@@ -625,7 +463,10 @@ function isExistsId(id) {
 }
 
 // 公共展示方法
-function getAllByPage(url) {
+function getAllByPage(url, startPage) {
+
+    startPage = (startPage - 1) * pageSize;
+
     $.ajax({
         url:url,
         type:"POST",
@@ -635,7 +476,16 @@ function getAllByPage(url) {
         },
         success:function(data) {
 
-            data = eval("(" + data + ")");
+            $("#dataBody").html("");
+
+            if(typeof(data) == "string"){
+                data = eval("("+data+")");
+            }
+
+            if(totalPage == 0){
+                $("#dataDiv").hide();
+                return;
+            }
 
             var list = data["list"];
             var str = "";
@@ -703,11 +553,10 @@ function getTotalCountAndPageSize(url) {
             if(totalCount <= pageSize) {
                 totalPage = 1;
             } else if(totalCount % pageSize == 0) {
-                totalPage = totalCount/pageSize;
+                totalPage = totalCount / pageSize;
             } else {
-                totalPage = parseInt(totalCount/pageSize);
+                totalPage = parseInt(totalCount / pageSize);
             }
-
         }
 
     });

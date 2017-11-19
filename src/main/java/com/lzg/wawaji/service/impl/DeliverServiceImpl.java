@@ -83,7 +83,6 @@ public class DeliverServiceImpl implements DeliverService {
     @Override
     public List<Deliver> getAllDeliverByPage(int startPage) {
         try {
-            startPage = startPage * BaseConstant.DEFAULT_PAGE_SIZE;
             return deliverDao.getAllDeliverByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE);
         } catch (Exception e) {
             JSONObject json = new JSONObject();

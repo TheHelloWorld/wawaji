@@ -51,7 +51,6 @@ public class MachineServiceImpl implements MachineService {
     @Override
     public List<Machine> getAllMachineByPage(int startPage) {
         try {
-            startPage = startPage * BaseConstant.DEFAULT_PAGE_SIZE;
             return machineDao.getAllMachineByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE);
         } catch (Exception e) {
             JSONObject json = new JSONObject();
