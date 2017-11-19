@@ -38,7 +38,7 @@
                     <span name = "currentState">
                         <select id="currentState" class="form-control">
                             <option value="1">可用</option>
-                            <option value="0">不可用</option>
+                            <option value="0">禁用</option>
                         </select>
                     </span>
                 </div>

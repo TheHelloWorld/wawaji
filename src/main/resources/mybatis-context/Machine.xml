@@ -88,7 +88,7 @@
     </select>
 
     <!-- 根据id获得机器记录 -->
-    <select id="getMachineByIdAndMachineNo" parameterType="java.lang.Long" resultMap="machineMap">
+    <select id="getMachineByIdAndMachineNo" resultMap="machineMap">
         select
             id,
             machine_no,

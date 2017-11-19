@@ -781,7 +781,7 @@ function  getDataByInfo(url, id, dataNo) {
         success:function(data){
 
             var info = eval("(" + data + ")");
-
+			console.info(info);
             $("#dataInfo").find("span").each(function() {
 
                 var col = $(this).attr("name");

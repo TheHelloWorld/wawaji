@@ -10,10 +10,11 @@ $(function(){
     if(getQueryString("type") == "update") {
 
         var id = getQueryString("id");
-        var toyNo = getQueryString("toyNo");
+        console.info(id);
+        var machineNo = getQueryString("machineNo");
 
         var getUrl = "/wawaji/machine/getMachineByIdAndMachineNo.action";
-        getDataByInfo(getUrl, id, toyNo);
+        getDataByInfo(getUrl, id, machineNo);
     }
 });
 

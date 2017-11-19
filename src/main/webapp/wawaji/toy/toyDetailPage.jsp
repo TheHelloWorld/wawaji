@@ -22,9 +22,12 @@
                 </h4>
             </div>
             <div id="toy-body" class="modal-body">
-                    <span name = "id">
-                        <input type = 'hidden' id = "id">
-                    </span>
+                <span name = "id">
+                    <input type = 'hidden' id = "id">
+                </span>
+                <span name = "toyImg">
+                    <input type = 'hidden' id = "toyImg" value="123">
+                </span>
                 <div class="row">
                     <div class="col-xs-5">
                         玩具编号:
@@ -37,7 +40,7 @@
                         <span name = "currentState">
                             <select id="currentState" class="form-control">
                                 <option value="1">可用</option>
-                                <option value="0">不可用</option>
+                                <option value="0">禁用</option>
                             </select>
                         </span>
                     </div>
