@@ -2,10 +2,13 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+        <meta name="keywords" content="关键词" />
+        <meta name="description" content="描述" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="format-detection" content="telephone=no" />
 
         <title>娃娃机主页</title>
 
@@ -24,26 +27,24 @@
         <script type="text/javascript" src="/js/index/index.js"></script>
     </head>
 
-    <body>
-        <div class = "index-header" >
+    <body class="index-body">
+        <nav class = "index-header default-height" >
             test header
-        </div>
-        <div class="row">
-            <div class="banner-box">
-                <div class="banner">
-                    <img onclick="clickBanner()" width="100%" height="100%" src="/image/toy/20171120151537.jpeg">
-                </div>
+        </nav>
+        <div class="banner-box">
+            <div class="banner">
+                <img onclick="clickBanner()" width="100%" height="100%" src="/image/toy/20171119224847.jpg">
             </div>
         </div>
-        <div id = "main">
+        <div id = "main" style="margin-bottom: 25px">
 
         </div>
-        <div class = "index-footer" >
+        <nav class = "advertisement" >
             <button class="btn btn-warning btn-circle btn-lg footer-button" >推荐</button>
             <button class="btn btn-warning btn-circle btn-lg footer-button" >战利品</button>
             <button class="btn btn-danger btn-circle btn-xl footer-button" onclick="toIndex()" >抓</button>
             <button class="btn btn-warning btn-circle btn-lg footer-button" >充值</button>
             <button class="btn btn-warning btn-circle btn-lg footer-button" >我的</button>
-        </div>
+        </nav>
     </body>
 </html>
