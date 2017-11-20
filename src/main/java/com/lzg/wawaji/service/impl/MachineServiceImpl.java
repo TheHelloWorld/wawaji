@@ -74,28 +74,28 @@ public class MachineServiceImpl implements MachineService {
 
         List<UserMachine> userMachineList = machineDao.getUserAllMachineByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE);
 
-        if(userMachineList != null && userMachineList.size() >0) {
-            try(RedisUtil redisUtil = new RedisUtil("redis")) {
-                for(UserMachine userMachine : userMachineList) {
-                    String viewerNum = redisUtil.hget(userMachine.getMachineNo(), "viewer");
-
-                    if(StringUtils.isBlank(viewerNum)) {
-                        viewerNum = "0";
-                    }
-                    userMachine.setViewer(Integer.valueOf(viewerNum));
-
-                    String isUse = redisUtil.get(userMachine.getMachineNo());
-
-                    boolean available = false;
-                    if(StringUtils.isBlank(isUse)) {
-                        available = true;
-                    }
-                    userMachine.setAvailable(available);
-                }
-            } catch (Exception e) {
-                logger.error("{} redis error " + e, BaseConstant.LOG_ERR_MSG);
-            }
-        }
+//        if(userMachineList != null && userMachineList.size() >0) {
+//            try(RedisUtil redisUtil = new RedisUtil("redis")) {
+//                for(UserMachine userMachine : userMachineList) {
+//                    String viewerNum = redisUtil.hget(userMachine.getMachineNo(), "viewer");
+//
+//                    if(StringUtils.isBlank(viewerNum)) {
+//                        viewerNum = "0";
+//                    }
+//                    userMachine.setViewer(Integer.valueOf(viewerNum));
+//
+//                    String isUse = redisUtil.get(userMachine.getMachineNo());
+//
+//                    boolean available = false;
+//                    if(StringUtils.isBlank(isUse)) {
+//                        available = true;
+//                    }
+//                    userMachine.setAvailable(available);
+//                }
+//            } catch (Exception e) {
+//                logger.error("{} redis error " + e, BaseConstant.LOG_ERR_MSG);
+//            }
+//        }
 
         return userMachineList;
     }

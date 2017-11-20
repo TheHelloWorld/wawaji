@@ -48,7 +48,7 @@ function getAllMachineByPage(nowPage) {
                 str += "<div class='machine-panel panel-info'>";
                 str += "<div class='panel-heading'></div>";
                 str += "<div class='panel-body' style='background: #ffff99'>";
-                str += "<img style='margin: 0 auto;' width=100% src='" + list[i]["toyImg"] + "' />";
+                str += "<img height='100px' width=100% src='" + list[i]["toyImg"] + "' />";
                 str += "<p>" + list[i]["toyName"] + "</p>";
                 str += "<p>围观:" + list[i]["viewer"] + "</p>";
                 str += "<p>游戏币:" + list[i]["toyNowCoin"] + "</p>";
@@ -73,7 +73,13 @@ function getAllMachineByPage(nowPage) {
     });
 }
 
+function toIndex() {
+    window.location.href="/wawaji/index/index.html";
+}
 
+function clickBanner() {
+    window.location.href="/wawaji/index/index.html";
+}
 
 function getPage(page) {
     nowPage = getPageByNum(nowPage, page, totalPage, step);

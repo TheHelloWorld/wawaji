@@ -156,7 +156,7 @@
                                             res = eval("("+res+")");
                                         }
                                         var fileName = res["fileName"];
-                                        $("#toyImg").val("/image/"+fileName);
+                                        $("#toyImg").val(fileName);
 
 
                                     }).on('fileerror', function(event, data, msg) {  //一个文件上传失败

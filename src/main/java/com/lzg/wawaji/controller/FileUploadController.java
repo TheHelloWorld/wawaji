@@ -55,6 +55,7 @@ public class FileUploadController {
         String showPath = systemProperties.getProperty("toy_img_show_path");
 
         fileName = showPath + fileName;
+        System.out.println(fileName);
         JSONObject json = new JSONObject();
         json.put("fileName", fileName);
         return json.toJSONString();
