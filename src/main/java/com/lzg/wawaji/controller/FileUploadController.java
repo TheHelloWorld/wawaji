@@ -1,10 +1,9 @@
 package com.lzg.wawaji.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lzg.wawaji.utils.DateUtil;
+import com.lzg.wawaji.utils.PropertiesUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,9 +24,11 @@ public class FileUploadController {
     @ResponseBody
     public String uploadFile(HttpServletRequest request) {
 
-        System.out.println("123123123213");
+        PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
+
         // 获取项目目录
-        String rootPath = "E:/gitWorkSpeace/wawaji/src/main/webapp/image";
+        String rootPath = systemProperties.getProperty("toy_img_path");
+
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
         String key = null;
         // 目前只有一个文件所以可以这样，多文件需要将读写逻辑写入for循环
@@ -40,8 +41,7 @@ public class FileUploadController {
         String originFileName = multipartFile.getOriginalFilename();
         // 获取文件类型
         String prefix = originFileName.substring(originFileName.lastIndexOf("."));
-        // 放到files文件夹下
-        rootPath += "/toy";
+
         String fileName = DateUtil.getSecondDate();
         fileName += prefix;
         try {
@@ -51,7 +51,10 @@ public class FileUploadController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        fileName = "toy/"+fileName;
+
+        String showPath = systemProperties.getProperty("toy_img_show_path");
+
+        fileName = showPath + fileName;
         JSONObject json = new JSONObject();
         json.put("fileName", fileName);
         return json.toJSONString();
