@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service("userToyService")
-public class UserToyServiceImpl implements UserToyService {
+public class UserToyServiceImpl extends BaseServiceImpl implements UserToyService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserToyServiceImpl.class);
 
@@ -112,5 +112,10 @@ public class UserToyServiceImpl implements UserToyService {
             logger.error("{} updateHandleStatusByIdAndUserNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
         }
 
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return logger;
     }
 }

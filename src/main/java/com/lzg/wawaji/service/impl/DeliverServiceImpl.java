@@ -1,6 +1,9 @@
 package com.lzg.wawaji.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.lzg.wawaji.bean.Callback;
+import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.DeliverDao;
 import com.lzg.wawaji.entity.Deliver;
@@ -12,8 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@SuppressWarnings("all")
 @Service("deliverService")
-public class DeliverServiceImpl implements DeliverService {
+public class DeliverServiceImpl extends BaseServiceImpl implements DeliverService {
 
     private static final Logger logger = LoggerFactory.getLogger(DeliverServiceImpl.class);
 
@@ -24,8 +28,14 @@ public class DeliverServiceImpl implements DeliverService {
      * @param deliver 发货记录
      */
     @Override
-    public void addDeliver(Deliver deliver) {
-        deliverDao.addDeliver(deliver);
+    public CommonResult addDeliver(final Deliver deliver) {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                deliverDao.addDeliver(deliver);
+            }
+        }, "addDeliver", JSON.toJSONString(deliver));
     }
 
     /**
@@ -34,15 +44,17 @@ public class DeliverServiceImpl implements DeliverService {
      * @return
      */
     @Override
-    public Integer countDeliverByUserNo(String userNo) {
-        try {
-            return deliverDao.countDeliverByUserNo(userNo);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("userNo",userNo);
-            logger.error("{} countDeliverByUserNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
-        return null;
+    public CommonResult<Integer> countDeliverByUserNo(final String userNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("userNo",userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(deliverDao.countDeliverByUserNo(userNo));
+            }
+        },"countDeliverByUserNo", json.toJSONString());
     }
 
     /**
@@ -50,8 +62,15 @@ public class DeliverServiceImpl implements DeliverService {
      * @return
      */
     @Override
-    public Integer countAllDeliver() {
-        return deliverDao.countAllDeliver();
+    public CommonResult<Integer> countAllDeliver() {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(deliverDao.countAllDeliver());
+            }
+        },"countAllDeliver", new JSONObject().toJSONString());
+
     }
 
     /**
@@ -61,18 +80,20 @@ public class DeliverServiceImpl implements DeliverService {
      * @return
      */
     @Override
-    public List<Deliver> getDeliverByUserNo(String userNo, int startPage) {
-        try {
-            startPage = startPage * BaseConstant.DEFAULT_PAGE_SIZE;
-            return deliverDao.getDeliverByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("userNo",userNo);
-            json.put("startPage",startPage);
-            json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
-            logger.error("{} getDeliverByUserNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
-        return null;
+    public CommonResult<List<Deliver>> getDeliverByUserNo(final String userNo, final int startPage) {
+
+        JSONObject json = new JSONObject();
+        json.put("userNo",userNo);
+        json.put("startPage",startPage);
+        json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(deliverDao.getDeliverByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
+            }
+        },"getDeliverByUserNo", json.toJSONString());
+
     }
 
     /**
@@ -81,16 +102,18 @@ public class DeliverServiceImpl implements DeliverService {
      * @return
      */
     @Override
-    public List<Deliver> getAllDeliverByPage(int startPage) {
-        try {
-            return deliverDao.getAllDeliverByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("startPage",startPage);
-            json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
-            logger.error("{} getAllDeliverByPage param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
-        return null;
+    public CommonResult<List<Deliver>> getAllDeliverByPage(final int startPage) {
+
+        JSONObject json = new JSONObject();
+        json.put("startPage",startPage);
+        json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(deliverDao.getAllDeliverByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
+            }
+        },"getAllDeliverByPage", json.toJSONString());
     }
 
     /**
@@ -100,16 +123,18 @@ public class DeliverServiceImpl implements DeliverService {
      * @return
      */
     @Override
-    public Deliver getDeliverByIdAndUserNo(Long id, String userNo) {
-        try {
-            return deliverDao.getDeliverByIdAndUserNo(id, userNo);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("id",id);
-            json.put("userNo",userNo);
-            logger.error("{} getDeliverByIdAndUserNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
-        return null;
+    public CommonResult<Deliver> getDeliverByIdAndUserNo(final Long id, final String userNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("id",id);
+        json.put("userNo",userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(deliverDao.getDeliverByIdAndUserNo(id, userNo));
+            }
+        },"getDeliverByIdAndUserNo", json.toJSONString());
     }
 
     /**
@@ -117,7 +142,18 @@ public class DeliverServiceImpl implements DeliverService {
      * @param deliver 货物详情
      */
     @Override
-    public void updateDeliverMsgByIdAndUserNo(Deliver deliver) {
-        deliverDao.updateDeliverMsgByIdAndUserNo(deliver);
+    public CommonResult updateDeliverMsgByIdAndUserNo(final Deliver deliver) {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                deliverDao.updateDeliverMsgByIdAndUserNo(deliver);
+            }
+        }, "updateDeliverMsgByIdAndUserNo", JSON.toJSONString(deliver));
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return logger;
     }
 }

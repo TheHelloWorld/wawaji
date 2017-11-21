@@ -2,12 +2,11 @@ package com.lzg.wawaji.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.entity.Toy;
 import com.lzg.wawaji.service.ToyService;
 import com.lzg.wawaji.utils.JSONUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/wawaji/toy")
 @Controller
 public class ToyController {
-
-    private static final Logger logger = LoggerFactory.getLogger(ToyController.class);
 
     @Autowired
     private ToyService toyService;
@@ -46,7 +43,13 @@ public class ToyController {
     @ResponseBody
     public String getTotalCountAndPageSize() {
 
-        return JSONUtil.getTotalCountAndPageSize(toyService.countAllToy(), BaseConstant.DEFAULT_PAGE_SIZE);
+        CommonResult<Integer> result = toyService.countAllToy();
+
+        if(result.success()) {
+            return JSONUtil.getTotalCountAndPageSize(result.getValue(), BaseConstant.DEFAULT_PAGE_SIZE);
+        }
+
+        return JSONUtil.getErrorJson();
 
     }
 
@@ -58,13 +61,15 @@ public class ToyController {
     @RequestMapping(value = "/addToy", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String addToy(String paramStr) {
-        try {
-            toyService.addToy(JSON.parseObject(paramStr, Toy.class));
+
+        CommonResult result = toyService.addToy(JSON.parseObject(paramStr, Toy.class));
+
+        if(result.success()) {
             return BaseConstant.SUCCESS;
-        } catch (Exception e) {
-            logger.error("{} addToy param:{} error "+e, BaseConstant.LOG_ERR_MSG, paramStr, e);
-            return BaseConstant.FAIL;
         }
+
+        return BaseConstant.FAIL;
+
     }
 
     /**
@@ -77,7 +82,13 @@ public class ToyController {
     @ResponseBody
     public String getToyByIdAndToyNo(Long id, String dataNo) {
 
-        return String.valueOf(toyService.getToyByIdAndToyNo(id, dataNo));
+        CommonResult<Toy> result = toyService.getToyByIdAndToyNo(id, dataNo);
+
+        if(result.success()) {
+            return String.valueOf(result.getValue());
+        }
+
+        return BaseConstant.FAIL;
     }
 
     /**
@@ -88,13 +99,14 @@ public class ToyController {
     @RequestMapping(value = "/updateToyByIdAndToyNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String updateToyByIdAndToyNo(String paramStr) {
-        try {
-            toyService.updateToyByIdAndToyNo(JSON.parseObject(paramStr, Toy.class));
+
+        CommonResult result = toyService.updateToyByIdAndToyNo(JSON.parseObject(paramStr, Toy.class));
+
+        if(result.success()) {
             return BaseConstant.SUCCESS;
-        } catch (Exception e) {
-            logger.error("{} updateToyByIdAndToyNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, paramStr, e);
-            return BaseConstant.FAIL;
         }
+
+        return BaseConstant.FAIL;
     }
 
     /**
@@ -106,15 +118,14 @@ public class ToyController {
     @RequestMapping(value = "/deleteToyByIdAndToyNo", method = RequestMethod.POST)
     @ResponseBody
     public String deleteToyByIdAndToyNo(Long id, String toyNo) {
-        try {
-            toyService.deleteToyByIdAndToyNo(id, toyNo);
+
+        CommonResult result = toyService.deleteToyByIdAndToyNo(id, toyNo);
+
+        if(result.success()) {
             return BaseConstant.SUCCESS;
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("id",id);
-            json.put("toyNo",toyNo);
-            logger.error("{} deleteToyByIdAndToyNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, json, e);
-            return BaseConstant.FAIL;
-    }
+        }
+
+        return BaseConstant.FAIL;
+
     }
 }

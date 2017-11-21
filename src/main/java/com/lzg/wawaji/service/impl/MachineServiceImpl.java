@@ -1,6 +1,9 @@
 package com.lzg.wawaji.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.lzg.wawaji.bean.Callback;
+import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.MachineDao;
 import com.lzg.wawaji.entity.Machine;
@@ -15,8 +18,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@SuppressWarnings("all")
 @Service("machineService")
-public class MachineServiceImpl implements MachineService {
+public class MachineServiceImpl extends BaseServiceImpl implements MachineService {
 
     private static final Logger logger = LoggerFactory.getLogger(MachineServiceImpl.class);
 
@@ -28,8 +32,15 @@ public class MachineServiceImpl implements MachineService {
      * @param machine 机器Bean
      */
     @Override
-    public void addMachine(Machine machine) {
-        machineDao.addMachine(machine);
+    public CommonResult addMachine(final Machine machine) {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                machineDao.addMachine(machine);
+            }
+        }, "addMachine", JSON.toJSONString(machine));
+
     }
 
     /**
@@ -37,13 +48,14 @@ public class MachineServiceImpl implements MachineService {
      * @return
      */
     @Override
-    public Integer countAllMachine() {
-        try {
-            return machineDao.countAllMachine();
-        } catch (Exception e) {
-            logger.error("{} countAllMachine error "+ e, BaseConstant.LOG_ERR_MSG, e);
-        }
-        return null;
+    public CommonResult<Integer> countAllMachine() {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(machineDao.countAllMachine());
+            }
+        }, "countAllMachine", new JSONObject().toJSONString());
     }
 
     /**
@@ -52,16 +64,18 @@ public class MachineServiceImpl implements MachineService {
      * @return
      */
     @Override
-    public List<Machine> getAllMachineByPage(int startPage) {
-        try {
-            return machineDao.getAllMachineByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("startPage",startPage);
-            json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
-            logger.error("{} getAllMachineByPage param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
-        return null;
+    public CommonResult<List<Machine>> getAllMachineByPage(final int startPage) {
+
+        JSONObject json = new JSONObject();
+        json.put("startPage",startPage);
+        json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(machineDao.getAllMachineByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
+            }
+        }, "getAllMachineByPage", json.toJSONString());
     }
 
     /**
@@ -70,34 +84,45 @@ public class MachineServiceImpl implements MachineService {
      * @return
      */
     @Override
-    public List<UserMachine> getUserAllMachineByPage(int startPage) {
+    public CommonResult<List<UserMachine>> getUserAllMachineByPage(final int startPage) {
 
-        List<UserMachine> userMachineList = machineDao.getUserAllMachineByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE);
+        JSONObject json = new JSONObject();
+        json.put("startPage",startPage);
+        json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
 
-//        if(userMachineList != null && userMachineList.size() >0) {
-//            try(RedisUtil redisUtil = new RedisUtil("redis")) {
-//                for(UserMachine userMachine : userMachineList) {
-//                    String viewerNum = redisUtil.hget(userMachine.getMachineNo(), "viewer");
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                List<UserMachine> userMachineList = machineDao.getUserAllMachineByPage(startPage,
+                        BaseConstant.DEFAULT_PAGE_SIZE);
+
+//                if(userMachineList != null && userMachineList.size() >0) {
+//                    try(RedisUtil redisUtil = new RedisUtil("redis")) {
+//                        for(UserMachine userMachine : userMachineList) {
+//                            String viewerNum = redisUtil.hget(userMachine.getMachineNo(), "viewer");
 //
-//                    if(StringUtils.isBlank(viewerNum)) {
-//                        viewerNum = "0";
+//                            if(StringUtils.isBlank(viewerNum)) {
+//                                viewerNum = "0";
+//                            }
+//                            userMachine.setViewer(Integer.valueOf(viewerNum));
+//
+//                            String isUse = redisUtil.get(userMachine.getMachineNo());
+//
+//                            boolean available = false;
+//                            if(StringUtils.isBlank(isUse)) {
+//                                available = true;
+//                            }
+//                            userMachine.setAvailable(available);
+//                        }
+//                    } catch (Exception e) {
+//                        logger.error("{} redis error " + e, BaseConstant.LOG_ERR_MSG);
 //                    }
-//                    userMachine.setViewer(Integer.valueOf(viewerNum));
-//
-//                    String isUse = redisUtil.get(userMachine.getMachineNo());
-//
-//                    boolean available = false;
-//                    if(StringUtils.isBlank(isUse)) {
-//                        available = true;
-//                    }
-//                    userMachine.setAvailable(available);
 //                }
-//            } catch (Exception e) {
-//                logger.error("{} redis error " + e, BaseConstant.LOG_ERR_MSG);
-//            }
-//        }
 
-        return userMachineList;
+                got(userMachineList);
+            }
+        }, "getUserAllMachineByPage", json.toJSONString());
     }
     /**
      * 根据id,机器编号获得机器信息
@@ -106,16 +131,18 @@ public class MachineServiceImpl implements MachineService {
      * @return
      */
     @Override
-    public Machine getMachineByIdAndMachineNo(Long id, String machineNo) {
-        try {
-            return machineDao.getMachineByIdAndMachineNo(id, machineNo);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("id",id);
-            json.put("machineNo",machineNo);
-            logger.error("{} getMachineByIdAndMachineNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
-        return null;
+    public CommonResult<Machine> getMachineByIdAndMachineNo(final Long id, final String machineNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("id",id);
+        json.put("machineNo",machineNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(machineDao.getMachineByIdAndMachineNo(id, machineNo));
+            }
+        }, "getMachineByIdAndMachineNo", json.toJSONString());
     }
 
     /**
@@ -123,8 +150,15 @@ public class MachineServiceImpl implements MachineService {
      * @param machine 机器Bean
      */
     @Override
-    public void updateMachineByIdAndMachineNo(Machine machine) {
-        machineDao.updateMachineByIdAndMachineNo(machine);
+    public CommonResult updateMachineByIdAndMachineNo(final Machine machine) {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                machineDao.updateMachineByIdAndMachineNo(machine);;
+            }
+        }, "updateMachineByIdAndMachineNo", JSON.toJSONString(machine));
+
     }
 
     /**
@@ -133,8 +167,19 @@ public class MachineServiceImpl implements MachineService {
      * @param machineNo 机器编号
      */
     @Override
-    public void deleteMachineByIdAndMachineNo(Long id, String machineNo) {
-        machineDao.deleteMachineByIdAndToyNo(id, machineNo);
+    public CommonResult deleteMachineByIdAndMachineNo(final Long id, final String machineNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("id",id);
+        json.put("machineNo",machineNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                machineDao.deleteMachineByIdAndToyNo(id, machineNo);
+            }
+        }, "deleteMachineByIdAndMachineNo", json.toJSONString());
+
     }
 
     /**
@@ -143,16 +188,17 @@ public class MachineServiceImpl implements MachineService {
      * @return
      */
     @Override
-    public Machine getMachineByMachineNo(String machineNo) {
-        try {
-            return machineDao.getMachineByMachineNo(machineNo);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("machineNo",machineNo);
-            logger.error("{} getMachineByMachineNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
-        return null;
+    public CommonResult<Machine> getMachineByMachineNo(final String machineNo) {
 
+        JSONObject json = new JSONObject();
+        json.put("machineNo",machineNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(machineDao.getMachineByMachineNo(machineNo));
+            }
+        }, "getMachineByMachineNo", json.toJSONString());
     }
 
     /**
@@ -161,14 +207,21 @@ public class MachineServiceImpl implements MachineService {
      * @return
      */
     @Override
-    public Integer getCoinByMachineNo(String machineNo) {
-        try {
-            return machineDao.getCoinByMachineNo(machineNo);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("machineNo",machineNo);
-            logger.error("{} getCoinByMachineNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
-        return null;
+    public CommonResult<Integer> getCoinByMachineNo(final String machineNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("machineNo",machineNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(machineDao.getCoinByMachineNo(machineNo));
+            }
+        }, "getCoinByMachineNo", json.toJSONString());
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return logger;
     }
 }

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service("userRechargeRecordService")
-public class UserRechargeRecordServiceImpl implements UserRechargeRecordService {
+public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements UserRechargeRecordService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserRechargeRecordServiceImpl.class);
 
@@ -157,4 +157,8 @@ public class UserRechargeRecordServiceImpl implements UserRechargeRecordService 
         return null;
     }
 
+    @Override
+    protected Logger getLogger() {
+        return logger;
+    }
 }

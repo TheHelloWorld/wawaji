@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service("userSpendRecordService")
-public class UserSpendRecordServiceImpl implements UserSpendRecordService {
+public class UserSpendRecordServiceImpl extends BaseServiceImpl implements UserSpendRecordService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserSpendRecordServiceImpl.class);
 
@@ -69,5 +69,10 @@ public class UserSpendRecordServiceImpl implements UserSpendRecordService {
             logger.error("{} getUserSpendRecordByUserNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
             return null;
         }
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return logger;
     }
 }

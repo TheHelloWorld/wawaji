@@ -21,7 +21,7 @@ import javax.transaction.Transactional;
 import java.util.Date;
 
 @Service("userService")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -118,5 +118,10 @@ public class UserServiceImpl implements UserService {
 
             return BaseConstant.SYSTEM_ERROR;
         }
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return logger;
     }
 }

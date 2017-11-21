@@ -2,6 +2,7 @@ package com.lzg.wawaji.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.entity.Machine;
 import com.lzg.wawaji.entity.UserMachine;
@@ -50,16 +51,23 @@ public class MachineController {
     @RequestMapping(value = "/getUserAllMachineByPage", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getUserAllMachineByPage(int startPage) {
+
         JSONObject json = new JSONObject();
-        try {
-            List<UserMachine> list = machineService.getUserAllMachineByPage(startPage);
-            json.put("list", list);
+
+        CommonResult<List<UserMachine>> result = machineService.getUserAllMachineByPage(startPage);
+
+        if(result.success()) {
+
+            json.put("list", result.getValue());
             json.put("result", BaseConstant.SUCCESS);
-        } catch (Exception e) {
-            logger.error("{} getUserAllMachineByPage param:{} error "+e, BaseConstant.LOG_ERR_MSG, startPage, e);
+
+        } else {
+
             json.put("result", BaseConstant.SYSTEM_ERROR);
         }
+
         return json.toString();
+
     }
 
 
@@ -71,7 +79,15 @@ public class MachineController {
     @ResponseBody
     public String getMachineTotalCountAndPageSize() {
 
-        return JSONUtil.getTotalCountAndPageSize(machineService.countAllMachine(), BaseConstant.DEFAULT_PAGE_SIZE);
+        CommonResult<Integer> result = machineService.countAllMachine();
+
+        if(result.success()) {
+
+            return JSONUtil.getTotalCountAndPageSize(result.getValue(), BaseConstant.DEFAULT_PAGE_SIZE);
+        }
+
+        return JSONUtil.getErrorJson();
+
     }
     /**
      * 添加机器记录
@@ -81,13 +97,15 @@ public class MachineController {
     @RequestMapping(value = "/addMachine", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String addMachine(String paramStr) {
-        try{
-            machineService.addMachine(JSON.parseObject(paramStr, Machine.class));
+
+        CommonResult result = machineService.addMachine(JSON.parseObject(paramStr, Machine.class));
+
+        if(result.success()) {
+
             return BaseConstant.SUCCESS;
-        } catch(Exception e) {
-            logger.error("{} addMachine param:{} error "+e, BaseConstant.LOG_ERR_MSG, paramStr, e);
-            return BaseConstant.FAIL;
         }
+
+        return BaseConstant.FAIL;
     }
 
     /**
@@ -99,7 +117,16 @@ public class MachineController {
     @RequestMapping(value = "/getMachineByIdAndMachineNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getMachineByIdAndMachineNo(Long id, String dataNo) {
-        return String.valueOf(machineService.getMachineByIdAndMachineNo(id, dataNo));
+
+        CommonResult<Machine> result = machineService.getMachineByIdAndMachineNo(id, dataNo);
+
+        if(result.success()) {
+
+            return String.valueOf(result.getValue());
+        }
+
+        return BaseConstant.FAIL;
+
     }
 
     /**
@@ -110,13 +137,14 @@ public class MachineController {
     @RequestMapping(value = "/updateMachineByIdAndMachineNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String updateMachineByIdAndMachineNo(String paramStr) {
-        try{
-            machineService.updateMachineByIdAndMachineNo(JSON.parseObject(paramStr, Machine.class));
+
+        CommonResult result =  machineService.updateMachineByIdAndMachineNo(JSON.parseObject(paramStr, Machine.class));
+
+        if(result.success()) {
             return BaseConstant.SUCCESS;
-        } catch(Exception e) {
-            logger.error("{} updateMachineByIdAndMachineNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, paramStr, e);
-            return BaseConstant.FAIL;
         }
+
+        return BaseConstant.FAIL;
     }
 
 
@@ -129,15 +157,13 @@ public class MachineController {
     @RequestMapping(value = "/deleteMachineByIdAndToyNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String deleteMachineByIdAndToyNo(Long id, String machineNo) {
-        try{
-            machineService.deleteMachineByIdAndMachineNo(id, machineNo);
+
+        CommonResult result =  machineService.deleteMachineByIdAndMachineNo(id, machineNo);
+
+        if(result.success()) {
             return BaseConstant.SUCCESS;
-        } catch(Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("id",id);
-            json.put("machineNo",machineNo);
-            logger.error("{} deleteMachineByIdAndToyNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, json, e);
-            return BaseConstant.FAIL;
         }
+
+        return BaseConstant.FAIL;
     }
 }

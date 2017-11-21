@@ -1,5 +1,9 @@
 package com.lzg.wawaji.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.lzg.wawaji.bean.Callback;
+import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.ToyDao;
 import com.lzg.wawaji.entity.Toy;
@@ -12,8 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@SuppressWarnings("all")
 @Service("toyService")
-public class ToyServiceImpl implements ToyService {
+public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
 
     private static final Logger logger = LoggerFactory.getLogger(ToyServiceImpl.class);
 
@@ -25,8 +30,15 @@ public class ToyServiceImpl implements ToyService {
      * @param toy 娃娃记录
      */
     @Override
-    public void addToy(Toy toy) {
-        toyDao.addToy(toy);
+    public CommonResult addToy(final Toy toy) {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                toyDao.addToy(toy);
+            }
+        }, "addToy", JSON.toJSONString(toy));
+
     }
 
     /**
@@ -34,13 +46,14 @@ public class ToyServiceImpl implements ToyService {
      * @return
      */
     @Override
-    public Integer countAllToy() {
-        try {
-            return toyDao.countAllToy();
-        } catch (Exception e) {
-            logger.error("{} countAllToy error "+e, BaseConstant.LOG_ERR_MSG, e);
-        }
-        return null;
+    public CommonResult<Integer> countAllToy() {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(toyDao.countAllToy());
+            }
+        },"countAllToy", new JSONObject().toJSONString());
 
     }
 
@@ -50,13 +63,18 @@ public class ToyServiceImpl implements ToyService {
      * @return
      */
     @Override
-    public List<Toy> getAllToyByPage(int startPage) {
-        try {
-            return toyDao.getAllToyByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE);
-        } catch (Exception e) {
-            logger.error("{} getAllToyByPage error "+e, BaseConstant.LOG_ERR_MSG, e);
-        }
-        return null;
+    public CommonResult<List<Toy>> getAllToyByPage(final int startPage) {
+
+        JSONObject json = new JSONObject();
+        json.put("startPage",startPage);
+        json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(toyDao.getAllToyByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
+            }
+        }, "getAllToyByPage", json.toJSONString());
     }
 
     /**
@@ -66,13 +84,18 @@ public class ToyServiceImpl implements ToyService {
      * @return
      */
     @Override
-    public Toy getToyByIdAndToyNo(Long id, String toyNo) {
-        try {
-            return toyDao.getToyByIdAndToyNo(id, toyNo);
-        } catch (Exception e) {
-            logger.error("{} getToyByIdAndToyNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, id+","+toyNo, e);
-        }
-        return null;
+    public CommonResult<Toy> getToyByIdAndToyNo(final Long id, final String toyNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("id",id);
+        json.put("toyNo",toyNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(toyDao.getToyByIdAndToyNo(id, toyNo));
+            }
+        }, "getToyByIdAndToyNo", json.toJSONString());
     }
 
     /**
@@ -80,8 +103,13 @@ public class ToyServiceImpl implements ToyService {
      * @param toy 娃娃机Bean
      */
     @Override
-    public void updateToyByIdAndToyNo(Toy toy) {
-        toyDao.updateToyByIdAndToyNo(toy);
+    public CommonResult updateToyByIdAndToyNo(final Toy toy) {
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                toyDao.updateToyByIdAndToyNo(toy);
+            }
+        }, "updateToyByIdAndToyNo", JSON.toJSONString(toy));
     }
 
     /**
@@ -90,8 +118,22 @@ public class ToyServiceImpl implements ToyService {
      * @param toyNo 玩具编号
      */
     @Override
-    public void deleteToyByIdAndToyNo(Long id, String toyNo) {
-        toyDao.deleteToyByIdAndToyNo(id, toyNo);
+    public CommonResult deleteToyByIdAndToyNo(final Long id, final String toyNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("id",id);
+        json.put("toyNo",toyNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                toyDao.deleteToyByIdAndToyNo(id, toyNo);
+            }
+        }, "deleteToyByIdAndToyNo", json.toJSONString());
     }
 
+    @Override
+    protected Logger getLogger() {
+        return logger;
+    }
 }

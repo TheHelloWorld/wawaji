@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service("userAddressService")
-public class UserAddressServiceImpl implements UserAddressService {
+public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddressService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserAddressServiceImpl.class);
 
@@ -107,5 +107,10 @@ public class UserAddressServiceImpl implements UserAddressService {
             logger.error("{} updateUserAddressByIdAndUserNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, userAddress, e);
         }
 
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return logger;
     }
 }

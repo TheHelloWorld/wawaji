@@ -1,7 +1,9 @@
 package com.lzg.wawaji.utils;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.lzg.wawaji.constants.BaseConstant;
+
 
 public class JSONUtil {
 
@@ -16,14 +18,16 @@ public class JSONUtil {
      * @param pageSize 分页数量
      * @return
      */
-    public static String getQueryAllByPage(JSONArray jsonArray,int totalCount, int pageSize) {
+    public static String getQueryAllByPage(JSONArray jsonArray, int totalCount, int pageSize) {
+
         JSONObject json = new JSONObject();
 
+        json.put("result", BaseConstant.SUCCESS);
         json.put("list", jsonArray);
         json.put("totalCount", totalCount);
         json.put("pageSize", pageSize);
 
-        return json.toString();
+        return json.toJSONString();
     }
 
     /**
@@ -36,10 +40,20 @@ public class JSONUtil {
 
         JSONObject json = new JSONObject();
 
+        json.put("result", BaseConstant.SUCCESS);
         json.put("totalCount", totalCount);
         json.put("pageSize", pageSize);
 
-        return json.toString();
+        return json.toJSONString();
 
+    }
+
+    public static String getErrorJson() {
+
+        JSONObject json = new JSONObject();
+
+        json.put("result", BaseConstant.FAIL);
+
+        return json.toJSONString();
     }
 }
