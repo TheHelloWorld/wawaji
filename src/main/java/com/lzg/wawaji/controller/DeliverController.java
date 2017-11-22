@@ -2,23 +2,22 @@ package com.lzg.wawaji.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.entity.Deliver;
 import com.lzg.wawaji.service.DeliverService;
 import com.lzg.wawaji.utils.JSONUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @RequestMapping("/wawaji/deliver")
 @Controller
 public class DeliverController {
-
-    private static final Logger logger = LoggerFactory.getLogger(DeliverController.class);
 
     @Autowired
     private DeliverService deliverService;
@@ -33,9 +32,18 @@ public class DeliverController {
     public String getAllDeliverByPage(int startPage) {
 
         JSONObject json = new JSONObject();
-        json.put("list", deliverService.getAllDeliverByPage(startPage));
 
-        return json.toString();
+        CommonResult<List<Deliver>> result = deliverService.getAllDeliverByPage(startPage);
+
+        if(result.success()) {
+            json.put("result", BaseConstant.SUCCESS);
+            json.put("list", result.getValue());
+            return json.toJSONString();
+        }
+
+        json.put("result", BaseConstant.FAIL);
+
+        return json.toJSONString();
     }
 
 
@@ -47,7 +55,14 @@ public class DeliverController {
     @ResponseBody
     public String getDeliverTotalCountAndPageSize() {
 
-        return JSONUtil.getTotalCountAndPageSize(deliverService.countAllDeliver(), BaseConstant.DEFAULT_PAGE_SIZE);
+        CommonResult<Integer> result = deliverService.countAllDeliver();
+
+        if(result.success()) {
+            return JSONUtil.getTotalCountAndPageSize(result.getValue(), BaseConstant.DEFAULT_PAGE_SIZE);
+        }
+
+        return JSONUtil.getErrorJson();
+
     }
 
     /**
@@ -58,13 +73,14 @@ public class DeliverController {
     @RequestMapping(value = "/addDeliver", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String addDeliver(String paramStr) {
-        try{
-            deliverService.addDeliver(JSON.parseObject(paramStr, Deliver.class));
+
+        CommonResult result = deliverService.addDeliver(JSON.parseObject(paramStr, Deliver.class));
+
+        if(result.success()) {
             return BaseConstant.SUCCESS;
-        } catch(Exception e) {
-            logger.error("{} addDeliver param:{} error "+e, BaseConstant.LOG_ERR_MSG, paramStr, e);
-            return BaseConstant.FAIL;
         }
+
+        return BaseConstant.FAIL;
     }
 
     /**
@@ -76,7 +92,14 @@ public class DeliverController {
     @RequestMapping(value = "/getDeliverByIdAndUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getDeliverByIdAndUserNo(Long id, String dataNo) {
-        return String.valueOf(deliverService.getDeliverByIdAndUserNo(id, dataNo));
+
+        CommonResult<Deliver> result = deliverService.getDeliverByIdAndUserNo(id, dataNo);
+
+        if(result.success()) {
+            return String.valueOf(result.getValue());
+        }
+
+        return JSONUtil.getErrorJson();
     }
 
     /**
@@ -87,13 +110,14 @@ public class DeliverController {
     @RequestMapping(value = "/updateDeliverMsgByIdAndUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String updateDeliverMsgByIdAndUserNo(String paramStr) {
-        try{
-            deliverService.updateDeliverMsgByIdAndUserNo(JSON.parseObject(paramStr, Deliver.class));
+
+        CommonResult result = deliverService.updateDeliverMsgByIdAndUserNo(JSON.parseObject(paramStr, Deliver.class));
+
+        if(result.success()) {
             return BaseConstant.SUCCESS;
-        } catch(Exception e) {
-            logger.error("{} updateDeliverMsgByIdAndUserNo param:{} error "+e, BaseConstant.LOG_ERR_MSG, paramStr, e);
-            return BaseConstant.FAIL;
         }
+
+        return BaseConstant.FAIL;
     }
 
 }

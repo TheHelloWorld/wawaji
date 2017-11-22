@@ -13,8 +13,7 @@ import com.lzg.wawaji.enums.TradeType;
 import com.lzg.wawaji.service.MachineService;
 import com.lzg.wawaji.service.UserService;
 import com.lzg.wawaji.service.UserSpendRecordService;
-import com.lzg.wawaji.utils.DateUtil;
-import com.lzg.wawaji.utils.RedisUtil;
+import com.lzg.wawaji.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,18 +38,54 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     private UserSpendRecordService userSpendRecordService;
 
     /**
-     * 添加用户
+     * 用户注册或登录
      * @param user 用户Bean
      */
     @Override
-    public CommonResult addUser(final User user) {
+    public CommonResult registerOrLoginUser(final String ticket, final String mobileNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("ticket",ticket);
+        json.put("mobileNo",mobileNo);
 
         return exec(new Callback() {
             @Override
             public void exec() {
-                userDao.addUser(user);
+
+                try(RedisUtil redisUtil = new RedisUtil("redis")) {
+
+                    String verifyCode = redisUtil.get("sms-"+mobileNo);
+
+                    // 若验证码不对
+                    if(!ticket.equals(verifyCode)) {
+                        got(BaseConstant.VCODE_ERR_MSG);
+                        return;
+                    }
+
+                    // 若当前用户为新用户则添加用户
+                    if(userDao.countUserByMobileNo(mobileNo) == 0) {
+                        User user = new User();
+
+                        PropertiesUtil systemProperties = new PropertiesUtil("system");
+
+                        user.setMobileNo(mobileNo);
+                        user.setUserCoin(0);
+                        user.setUserImg(systemProperties.getProperty("user_default_img"));
+                        user.setUserNo(UUIDUtil.generateUUID());
+                        user.setUserName(Random.getRandomString(18));
+
+                        userDao.addUser(user);
+
+                    }
+
+
+                } catch(Exception e) {
+                    logger.error("{} registerOrLoginUser redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                    got(BaseConstant.VCODE_ERR_MSG);
+                    return;
+                }
             }
-        }, "addUserToy", JSON.toJSONString(user));
+        }, "addUserToy", json.toJSONString());
     }
 
     /**
@@ -139,6 +174,52 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 return;
             }
         }, "userPlay", json.toJSONString());
+    }
+
+    /**
+     * 发送短信验证码方法
+     * @param mobileNo 手机号
+     * @return
+     */
+    @Override
+    public CommonResult<String> sendMobileVerificationCode(final String mobileNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("mobileNo", mobileNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                // 通过配置文件获取参数
+                PropertiesUtil systemProperties = new PropertiesUtil("system");
+
+                // 获取短信超时参数
+                String timeout = systemProperties.getProperty("sms_time_out");
+
+                // 获取redis链接
+                try(RedisUtil redisUtil = new RedisUtil("redis")) {
+
+                    String random = Random.getRandom();
+
+                    if(SDKTestSendTemplateSMS.sendMobileVerificationCode(mobileNo, random, timeout)) {
+
+                        redisUtil.set(Integer.valueOf(timeout), "sms-"+mobileNo, random);
+
+                        got(BaseConstant.SUCCESS);
+
+                        return;
+                    }
+
+                } catch (Exception e) {
+                    logger.error("{} sendMobileVerificationCode redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                }
+
+                got(BaseConstant.FAIL);
+
+                return;
+            }
+        }, "userRegisterOrLogin", json.toJSONString());
     }
 
     @Override

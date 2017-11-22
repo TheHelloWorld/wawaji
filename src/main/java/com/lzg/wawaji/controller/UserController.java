@@ -1,5 +1,6 @@
 package com.lzg.wawaji.controller;
 
+import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.service.UserService;
 import com.lzg.wawaji.utils.PropertiesUtil;
@@ -23,16 +24,20 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
+
     /**
-     * 用户登陆
+     * 用户登录(若用户不存在则添加)
      *
      * @param ticket    手机验证码
      * @param mobile    手机号
      * @return
      */
-    @RequestMapping(value = "/userLogin", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/registerOrLoginUser", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String userLogin(String ticket, String mobile) {
+    public String registerOrLoginUser(String ticket, String mobile) {
+
+
         return null;
     }
 
@@ -45,19 +50,10 @@ public class UserController {
     @ResponseBody
     public String sendMobileVerificationCode(String mobileNo) {
 
-        PropertiesUtil systemProperties = new PropertiesUtil("system");
+        CommonResult<String> result = userService.sendMobileVerificationCode(mobileNo);
 
-        String timeout = systemProperties.getProperty("sms_time_out");
-
-        RedisUtil redisUtil = new RedisUtil("redis");
-
-        String random = Random.getRandom();
-
-        redisUtil.set(Integer.valueOf(timeout), "sms-"+mobileNo, random);
-
-        if(SDKTestSendTemplateSMS.sendMobileVerificationCode(mobileNo, random, timeout)) {
-
-            return BaseConstant.SUCCESS;
+        if(result.success()) {
+            return result.getValue();
         }
 
         return BaseConstant.FAIL;
@@ -73,7 +69,14 @@ public class UserController {
      */
     @RequestMapping(value = "/userPlay", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String userPlay(String userNo,String machineNo){
-        return userService.userPlay(userNo, machineNo);
+    public String userPlay(String userNo,String machineNo) {
+
+        CommonResult<String> result = userService.userPlay(userNo, machineNo);
+
+        if(result.success()) {
+           return result.getValue();
+        }
+
+        return BaseConstant.FAIL;
     }
 }

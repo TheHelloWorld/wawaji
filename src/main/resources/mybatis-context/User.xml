@@ -8,6 +8,8 @@
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 用户编号 -->
         <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
+        <!-- 手机号 -->
+        <result property="mobileNo" column="mobile_no" jdbcType="VARCHAR"/>
         <!-- 用户名 -->
         <result property="userName" column="user_name" jdbcType="VARCHAR"/>
         <!-- 用户图片 -->
@@ -24,7 +26,8 @@
     <insert id="addUser" parameterType="com.lzg.wawaji.entity.User">
         insert into user
             (
-                user_no ,
+                user_no,
+                mobile_no,
                 user_name,
                 user_img,
                 user_coin
@@ -32,6 +35,7 @@
         values
             (
                 #{userNo, jdbcType=VARCHAR},
+                #{mobileNo, jdbcType=VARCHAR},
                 #{userName, jdbcType=VARCHAR},
                 #{userImg, jdbcType=VARCHAR},
                 #{userCoin, jdbcType=INTEGER}
@@ -43,11 +47,16 @@
         select count(*) from `user`
     </select>
 
+    <!-- 根据手机号获得用户数量 -->
+    <select id="countUserByMobileNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+      select count(*) from `user` where mobile_no = #{mobileNo, jdbcType=VARCHAR}
+    </select>
     <!-- 分页获得所有用户记录 -->
     <select id="getAllUserByPage" resultMap="userMap">
         select
             id,
             user_no,
+            mobile_no,
             user_name,
             user_img,
             user_coin

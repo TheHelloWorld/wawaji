@@ -44,6 +44,13 @@ public interface UserDao {
     Integer getUserCoinByUserNo(String userNo);
 
     /**
+     * 根据手机号获得用户数量
+     * @param mobileNo 手机号
+     * @return
+     */
+    Integer countUserByMobileNo(String mobileNo);
+
+    /**
      * 根据用户编号修改用户游戏币数(用户操作 充值coin为正数,消费coin为负数)
      * @param coin 游戏币数
      * @param userNo 用户编号
