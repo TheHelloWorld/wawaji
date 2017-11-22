@@ -31,11 +31,12 @@ function getAllMachineByPage(nowPage) {
             }
 
             // 判断是否成功
-            if(data["result"] != "success") {
+            if(data["is_success"] != "success") {
                 alert(data["result"]);
+                return;
             }
 
-            var list = data["list"];
+            var list = data["result"];
 
             var str = "";
 

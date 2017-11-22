@@ -665,6 +665,10 @@ function  getDataByInfo(url, id, dataNo) {
 
             var info = data["result"];
 
+            if(typeof(info) == "string"){
+                info = eval("("+info+")");
+            }
+
             $("#dataInfo").find("span").each(function() {
 
                 var col = $(this).attr("name");

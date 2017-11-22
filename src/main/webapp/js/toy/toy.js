@@ -60,10 +60,17 @@ function deleteThis(dataParam) {
             toyNo:toyNo
         },
         success:function(data){
-            // 若后台操作成功则删除当前行
-            if(data == "success") {
-                $("#tr"+id).remove();
+
+            if(typeof(data) == "string"){
+                data = eval("("+data+")");
             }
+
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+            $("#tr"+id).remove();
         }
     });
 }

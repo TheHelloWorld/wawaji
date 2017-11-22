@@ -1,10 +1,5 @@
 var returnUtl = "/wawaji/toy/toy.jsp";
 
-// 返回玩具列表页
-function cancelThis() {
-    window.location.href = returnUtl;
-}
-
 $(function(){
     // 判断当前类型为修改
     if(getQueryString("type") == "update") {
@@ -16,6 +11,7 @@ $(function(){
     }
 });
 
+// 保存或修改
 function updateOrSaveToy() {
 
     if(getQueryString("type") == "save") {
@@ -25,5 +21,9 @@ function updateOrSaveToy() {
         var updateUrl = "/wawaji/toy/updateToyByIdAndToyNo.action";
         updateThis(updateUrl, returnUtl);
     }
+}
 
+// 返回玩具列表页
+function cancelThis() {
+    window.location.href = returnUtl;
 }
