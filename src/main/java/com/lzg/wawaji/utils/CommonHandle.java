@@ -22,13 +22,17 @@ import java.util.regex.Pattern;
  */
 public class CommonHandle {
 
+	private CommonHandle() {
+
+	}
+
 	/**
 	 * 获得session，可能为null
 	 *
 	 * @return HttpSession
 	 */
 	public static HttpSession getSession() {
-		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession(false);
 	}
 
 	/**
@@ -37,7 +41,7 @@ public class CommonHandle {
 	 * @return HttpSession
 	 */
 	public static HttpSession getSessionNew() {
-		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession(true);
 	}
 
 	/**

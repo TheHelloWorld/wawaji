@@ -33,12 +33,8 @@ public class UserAddressController {
         CommonResult<List<UserAddress>> result = userAddressService.getUserAddressByUserNo(userNo);
 
         if(result.success()) {
-            JSONObject json = new JSONObject();
-            json.put("result", BaseConstant.SUCCESS);
-            json.put("list", result.getValue());
-            return json.toJSONString();
+            return JSONUtil.getSuccessReturnJSON(result.getValue());
         }
-
         return JSONUtil.getErrorJson();
     }
 
@@ -52,11 +48,11 @@ public class UserAddressController {
     public String addUserAddress(UserAddress userAddress) {
 
         CommonResult result = userAddressService.addUserAddressService(userAddress);
-        if(result.success()) {
-            return BaseConstant.SUCCESS;
-        }
 
-        return BaseConstant.FAIL;
+        if(result.success()) {
+            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
+        }
+        return JSONUtil.getErrorJson();
     }
 
     /**
@@ -72,10 +68,13 @@ public class UserAddressController {
 
         if(result.success()) {
             if(BaseConstant.MAX_USER_ADDRESS > result.getValue()) {
-                return BaseConstant.SUCCESS;
+
+                return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
+            } else {
+                return JSONUtil.getSuccessReturnJSON(BaseConstant.FAIL);
             }
         }
-        return BaseConstant.FAIL;
+        return JSONUtil.getErrorJson();
     }
 
 }

@@ -1,9 +1,7 @@
 package com.lzg.wawaji.utils;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.lzg.wawaji.constants.BaseConstant;
-
 
 public class JSONUtil {
 
@@ -12,20 +10,16 @@ public class JSONUtil {
     }
 
     /**
-     * 获得分页返回值
-     * @param jsonArray 查询结果list
-     * @param totalCount 总页数
-     * @param pageSize 分页数量
+     * 获得返回结果json值
+     * @param obj 单个bean
      * @return
      */
-    public static String getQueryAllByPage(JSONArray jsonArray, int totalCount, int pageSize) {
+    public static String getSuccessReturnJSON(Object obj) {
 
         JSONObject json = new JSONObject();
 
-        json.put("result", BaseConstant.SUCCESS);
-        json.put("list", jsonArray);
-        json.put("totalCount", totalCount);
-        json.put("pageSize", pageSize);
+        json.put("is_success", BaseConstant.SUCCESS);
+        json.put("result", obj);
 
         return json.toJSONString();
     }
@@ -40,7 +34,7 @@ public class JSONUtil {
 
         JSONObject json = new JSONObject();
 
-        json.put("result", BaseConstant.SUCCESS);
+        json.put("is_success", BaseConstant.SUCCESS);
         json.put("totalCount", totalCount);
         json.put("pageSize", pageSize);
 
@@ -48,11 +42,16 @@ public class JSONUtil {
 
     }
 
+    /**
+     * 获得执行失败json
+     * @return
+     */
     public static String getErrorJson() {
 
         JSONObject json = new JSONObject();
 
-        json.put("result", BaseConstant.FAIL);
+        json.put("is_success", BaseConstant.FAIL);
+        json.put("result", BaseConstant.SYSTEM_ERROR);
 
         return json.toJSONString();
     }

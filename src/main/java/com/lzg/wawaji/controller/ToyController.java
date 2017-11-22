@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @RequestMapping("/wawaji/toy")
 @Controller
 public class ToyController {
@@ -28,11 +30,13 @@ public class ToyController {
     @RequestMapping(value = "/getAllToyByPage", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getAllToyByPage(int startPage) {
-        JSONObject json = new JSONObject();
 
-        json.put("list", toyService.getAllToyByPage(startPage));
+        CommonResult<List<Toy>> result = toyService.getAllToyByPage(startPage);
 
-        return json.toString();
+        if(result.success()) {
+            return JSONUtil.getSuccessReturnJSON(result.getValue());
+        }
+        return JSONUtil.getErrorJson();
     }
 
     /**
@@ -48,9 +52,7 @@ public class ToyController {
         if(result.success()) {
             return JSONUtil.getTotalCountAndPageSize(result.getValue(), BaseConstant.DEFAULT_PAGE_SIZE);
         }
-
         return JSONUtil.getErrorJson();
-
     }
 
     /**
@@ -65,11 +67,9 @@ public class ToyController {
         CommonResult result = toyService.addToy(JSON.parseObject(paramStr, Toy.class));
 
         if(result.success()) {
-            return BaseConstant.SUCCESS;
+            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
         }
-
-        return BaseConstant.FAIL;
-
+        return JSONUtil.getErrorJson();
     }
 
     /**
@@ -85,10 +85,9 @@ public class ToyController {
         CommonResult<Toy> result = toyService.getToyByIdAndToyNo(id, dataNo);
 
         if(result.success()) {
-            return String.valueOf(result.getValue());
+            return JSONUtil.getSuccessReturnJSON(String.valueOf(result.getValue()));
         }
-
-        return BaseConstant.FAIL;
+        return JSONUtil.getErrorJson();
     }
 
     /**
@@ -103,10 +102,9 @@ public class ToyController {
         CommonResult result = toyService.updateToyByIdAndToyNo(JSON.parseObject(paramStr, Toy.class));
 
         if(result.success()) {
-            return BaseConstant.SUCCESS;
+            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
         }
-
-        return BaseConstant.FAIL;
+        return JSONUtil.getErrorJson();
     }
 
     /**
@@ -122,10 +120,8 @@ public class ToyController {
         CommonResult result = toyService.deleteToyByIdAndToyNo(id, toyNo);
 
         if(result.success()) {
-            return BaseConstant.SUCCESS;
+            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
         }
-
-        return BaseConstant.FAIL;
-
+        return JSONUtil.getErrorJson();
     }
 }

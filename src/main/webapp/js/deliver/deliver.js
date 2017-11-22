@@ -33,16 +33,21 @@ function getAllDeliverByPage(startPage) {
 
             $("#dataBody").html("");
 
-            if(typeof(data) == "string"){
-                data = eval("("+data+")");
-            }
-
             if(totalPage == 0){
                 $("#dataDiv").hide();
                 return;
             }
 
-            var list = data["list"];
+            if(typeof(data) == "string"){
+                data = eval("("+data+")");
+            }
+
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+            var list = data["result"];
             var str = "";
 
             for(var i = 0;i<list.length;i++) {

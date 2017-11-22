@@ -482,16 +482,21 @@ function getAllByPage(url, startPage) {
 
             $("#dataBody").html("");
 
-            if(typeof(data) == "string"){
-                data = eval("("+data+")");
-            }
-
             if(totalPage == 0){
                 $("#dataDiv").hide();
                 return;
             }
 
-            var list = data["list"];
+            if(typeof(data) == "string"){
+                data = eval("("+data+")");
+            }
+
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+            var list = data["result"];
             var str = "";
 
             for(var i = 0; i<list.length; i++) {
@@ -568,7 +573,7 @@ function getTotalCountAndPageSize(url) {
     });
 }
 
-// 储存机器
+// 储存
 function saveThis(saveUrl, returnUrl) {
 
     $("#dataInfo").find("span").each(function() {
@@ -589,9 +594,16 @@ function saveThis(saveUrl, returnUrl) {
         },
         success:function(data){
 
-            if(data == "success") {
-                window.location.href = returnUrl;
+            if(typeof(data) == "string"){
+                data = eval("("+data+")");
             }
+
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+			window.location.href = returnUrl;
         }
 
     });
@@ -615,9 +627,16 @@ function updateThis(updateUrl, returnUrl) {
         },
         success:function(data){
 
-            if(data == "success") {
-                window.location.href=returnUrl;
+            if(typeof(data) == "string"){
+                data = eval("("+data+")");
             }
+
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+			window.location.href=returnUrl;
         }
 
     });
@@ -635,8 +654,17 @@ function  getDataByInfo(url, id, dataNo) {
         },
         success:function(data){
 
-            var info = eval("(" + data + ")");
-			console.info(info);
+            if(typeof(data) == "string"){
+                data = eval("("+data+")");
+            }
+
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+            var info = data["result"];
+
             $("#dataInfo").find("span").each(function() {
 
                 var col = $(this).attr("name");

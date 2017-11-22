@@ -51,6 +51,7 @@
     <select id="countUserByMobileNo" parameterType="java.lang.String" resultType="java.lang.Integer">
       select count(*) from `user` where mobile_no = #{mobileNo, jdbcType=VARCHAR}
     </select>
+
     <!-- 分页获得所有用户记录 -->
     <select id="getAllUserByPage" resultMap="userMap">
         select
@@ -64,9 +65,33 @@
           limit #{startPage}, #{pageSize}
     </select>
 
-    <!-- 分页获得所有用户记录 -->
+    <!-- 根据用户编号获得用户游戏币数 -->
     <select id="getUserCoinByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
         select user_coin from `user` where user_no = #{userNo}
+    </select>
+
+    <!-- 根据用户编号获得用户记录 -->
+    <select id="getUserByUserNo" parameterType="java.lang.String" resultMap="userMap">
+        select
+          id,
+          user_no,
+          mobile_no,
+          user_name,
+          user_img,
+          user_coin
+        from `user` where user_no = #{userNo}
+    </select>
+
+    <!-- 根据手机号获得用户记录 -->
+    <select id="getUserByMobileNo" parameterType="java.lang.String" resultMap="userMap">
+        select
+          id,
+          user_no,
+          mobile_no,
+          user_name,
+          user_img,
+          user_coin
+        from `user` where mobile_no = #{mobileNo}
     </select>
 
     <!-- 根据用户编号修改用户游戏币数(用户操作 充值coin为正数,消费coin为负数) -->

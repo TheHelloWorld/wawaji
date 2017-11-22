@@ -31,19 +31,14 @@ public class DeliverController {
     @ResponseBody
     public String getAllDeliverByPage(int startPage) {
 
-        JSONObject json = new JSONObject();
-
         CommonResult<List<Deliver>> result = deliverService.getAllDeliverByPage(startPage);
 
         if(result.success()) {
-            json.put("result", BaseConstant.SUCCESS);
-            json.put("list", result.getValue());
-            return json.toJSONString();
+
+            return JSONUtil.getSuccessReturnJSON(result.getValue());
         }
 
-        json.put("result", BaseConstant.FAIL);
-
-        return json.toJSONString();
+        return JSONUtil.getErrorJson();
     }
 
 
@@ -62,7 +57,6 @@ public class DeliverController {
         }
 
         return JSONUtil.getErrorJson();
-
     }
 
     /**
@@ -77,10 +71,10 @@ public class DeliverController {
         CommonResult result = deliverService.addDeliver(JSON.parseObject(paramStr, Deliver.class));
 
         if(result.success()) {
-            return BaseConstant.SUCCESS;
+            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
         }
 
-        return BaseConstant.FAIL;
+        return JSONUtil.getErrorJson();
     }
 
     /**
@@ -96,7 +90,7 @@ public class DeliverController {
         CommonResult<Deliver> result = deliverService.getDeliverByIdAndUserNo(id, dataNo);
 
         if(result.success()) {
-            return String.valueOf(result.getValue());
+            return JSONUtil.getSuccessReturnJSON(String.valueOf(result.getValue()));
         }
 
         return JSONUtil.getErrorJson();
@@ -114,10 +108,10 @@ public class DeliverController {
         CommonResult result = deliverService.updateDeliverMsgByIdAndUserNo(JSON.parseObject(paramStr, Deliver.class));
 
         if(result.success()) {
-            return BaseConstant.SUCCESS;
+            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
         }
 
-        return BaseConstant.FAIL;
+        return JSONUtil.getErrorJson();
     }
 
 }

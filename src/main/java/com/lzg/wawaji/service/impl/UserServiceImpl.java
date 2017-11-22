@@ -1,6 +1,5 @@
 package com.lzg.wawaji.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lzg.wawaji.bean.Callback;
 import com.lzg.wawaji.bean.CommonResult;
@@ -39,10 +38,50 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     /**
      * 用户注册或登录
-     * @param user 用户Bean
+     * @param mobileNo 手机号
      */
     @Override
-    public CommonResult registerOrLoginUser(final String ticket, final String mobileNo) {
+    public CommonResult<User> registerOrLoginUser(final String mobileNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("mobileNo",mobileNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                User user;
+                // 若当前用户为新用户则添加用户
+                if(userDao.countUserByMobileNo(mobileNo) == 0) {
+                    user = new User();
+
+                    PropertiesUtil systemProperties = new PropertiesUtil("system");
+
+                    user.setMobileNo(mobileNo);
+                    user.setUserCoin(0);
+                    user.setUserImg(systemProperties.getProperty("user_default_img"));
+                    user.setUserNo(UUIDUtil.generateUUID());
+                    user.setUserName(Random.getRandomString(18));
+                    userDao.addUser(user);
+
+                } else {
+                    user = userDao.getUserByMobileNo(mobileNo);
+                }
+
+                got(user);
+                return;
+            }
+        }, "registerOrLoginUser", json.toJSONString());
+    }
+
+    /**
+     * 验证短信验证码
+     * @param ticket
+     * @param mobileNo
+     * @return
+     */
+    @Override
+    public CommonResult<String> verifyCode(final String ticket, final String mobileNo) {
 
         JSONObject json = new JSONObject();
         json.put("ticket",ticket);
@@ -54,7 +93,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 try(RedisUtil redisUtil = new RedisUtil("redis")) {
 
-                    String verifyCode = redisUtil.get("sms-"+mobileNo);
+                    String verifyCode = redisUtil.get("sms-" + mobileNo);
 
                     // 若验证码不对
                     if(!ticket.equals(verifyCode)) {
@@ -62,22 +101,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                         return;
                     }
 
-                    // 若当前用户为新用户则添加用户
-                    if(userDao.countUserByMobileNo(mobileNo) == 0) {
-                        User user = new User();
-
-                        PropertiesUtil systemProperties = new PropertiesUtil("system");
-
-                        user.setMobileNo(mobileNo);
-                        user.setUserCoin(0);
-                        user.setUserImg(systemProperties.getProperty("user_default_img"));
-                        user.setUserNo(UUIDUtil.generateUUID());
-                        user.setUserName(Random.getRandomString(18));
-
-                        userDao.addUser(user);
-
-                    }
-
+                    got(BaseConstant.SUCCESS);
+                    return;
 
                 } catch(Exception e) {
                     logger.error("{} registerOrLoginUser redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
@@ -85,7 +110,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     return;
                 }
             }
-        }, "addUserToy", json.toJSONString());
+        }, "verifyCode", json.toJSONString());
     }
 
     /**

@@ -1,7 +1,6 @@
 package com.lzg.wawaji.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.entity.Machine;
@@ -9,8 +8,6 @@ import com.lzg.wawaji.entity.UserMachine;
 import com.lzg.wawaji.service.MachineService;
 
 import com.lzg.wawaji.utils.JSONUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +19,6 @@ import java.util.List;
 @RequestMapping("/wawaji/machine")
 @Controller
 public class MachineController {
-
-    private static final Logger logger = LoggerFactory.getLogger(MachineController.class);
 
     @Autowired
     private MachineService machineService;
@@ -37,10 +32,13 @@ public class MachineController {
     @ResponseBody
     public String getAllMachineByPage(int startPage) {
 
-        JSONObject json = new JSONObject();
-        json.put("list", machineService.getAllMachineByPage(startPage));
+        CommonResult<List<Machine>> result = machineService.getAllMachineByPage(startPage);
 
-        return json.toString();
+        if(result.success()) {
+            return JSONUtil.getSuccessReturnJSON(result.getValue());
+        }
+
+        return JSONUtil.getErrorJson();
     }
 
     /**
@@ -52,21 +50,13 @@ public class MachineController {
     @ResponseBody
     public String getUserAllMachineByPage(int startPage) {
 
-        JSONObject json = new JSONObject();
-
         CommonResult<List<UserMachine>> result = machineService.getUserAllMachineByPage(startPage);
 
         if(result.success()) {
-
-            json.put("list", result.getValue());
-            json.put("result", BaseConstant.SUCCESS);
-
-        } else {
-
-            json.put("result", BaseConstant.SYSTEM_ERROR);
+            return JSONUtil.getSuccessReturnJSON(result.getValue());
         }
 
-        return json.toString();
+        return JSONUtil.getErrorJson();
 
     }
 
@@ -82,7 +72,6 @@ public class MachineController {
         CommonResult<Integer> result = machineService.countAllMachine();
 
         if(result.success()) {
-
             return JSONUtil.getTotalCountAndPageSize(result.getValue(), BaseConstant.DEFAULT_PAGE_SIZE);
         }
 
@@ -101,11 +90,10 @@ public class MachineController {
         CommonResult result = machineService.addMachine(JSON.parseObject(paramStr, Machine.class));
 
         if(result.success()) {
-
-            return BaseConstant.SUCCESS;
+            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
         }
 
-        return BaseConstant.FAIL;
+        return JSONUtil.getErrorJson();
     }
 
     /**
@@ -121,12 +109,9 @@ public class MachineController {
         CommonResult<Machine> result = machineService.getMachineByIdAndMachineNo(id, dataNo);
 
         if(result.success()) {
-
-            return String.valueOf(result.getValue());
+            return JSONUtil.getSuccessReturnJSON(String.valueOf(result.getValue()));
         }
-
-        return BaseConstant.FAIL;
-
+        return JSONUtil.getErrorJson();
     }
 
     /**
@@ -141,10 +126,9 @@ public class MachineController {
         CommonResult result =  machineService.updateMachineByIdAndMachineNo(JSON.parseObject(paramStr, Machine.class));
 
         if(result.success()) {
-            return BaseConstant.SUCCESS;
+            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
         }
-
-        return BaseConstant.FAIL;
+        return JSONUtil.getErrorJson();
     }
 
 
@@ -161,9 +145,8 @@ public class MachineController {
         CommonResult result =  machineService.deleteMachineByIdAndMachineNo(id, machineNo);
 
         if(result.success()) {
-            return BaseConstant.SUCCESS;
+            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
         }
-
-        return BaseConstant.FAIL;
+        return JSONUtil.getErrorJson();
     }
 }

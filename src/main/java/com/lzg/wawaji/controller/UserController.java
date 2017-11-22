@@ -2,13 +2,9 @@ package com.lzg.wawaji.controller;
 
 import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
+import com.lzg.wawaji.entity.User;
 import com.lzg.wawaji.service.UserService;
-import com.lzg.wawaji.utils.PropertiesUtil;
-import com.lzg.wawaji.utils.Random;
-import com.lzg.wawaji.utils.RedisUtil;
-import com.lzg.wawaji.utils.SDKTestSendTemplateSMS;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.lzg.wawaji.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
     @Autowired
     private UserService userService;
-
-
 
     /**
      * 用户登录(若用户不存在则添加)
@@ -37,8 +29,27 @@ public class UserController {
     @ResponseBody
     public String registerOrLoginUser(String ticket, String mobile) {
 
+        CommonResult<String> verifyResult = userService.verifyCode(ticket, mobile);
 
-        return null;
+        // 系统异常
+        if(!verifyResult.success()) {
+            return JSONUtil.getErrorJson();
+        }
+
+        // 若短信验证码不通过
+        if(!BaseConstant.SUCCESS.equals(verifyResult.getValue())) {
+            // 此处前端需特殊判断
+            return JSONUtil.getSuccessReturnJSON(verifyResult.getValue());
+        }
+
+        // 获取用户信息并返回
+        CommonResult<User> result = userService.registerOrLoginUser(mobile);
+
+        if(result.success()) {
+            return JSONUtil.getSuccessReturnJSON(result.getValue());
+        }
+
+        return JSONUtil.getErrorJson();
     }
 
     /**
@@ -53,11 +64,10 @@ public class UserController {
         CommonResult<String> result = userService.sendMobileVerificationCode(mobileNo);
 
         if(result.success()) {
-            return result.getValue();
+            return JSONUtil.getSuccessReturnJSON(result.getValue());
         }
 
-        return BaseConstant.FAIL;
-
+        return JSONUtil.getErrorJson();
     }
 
     /**
@@ -74,9 +84,9 @@ public class UserController {
         CommonResult<String> result = userService.userPlay(userNo, machineNo);
 
         if(result.success()) {
-           return result.getValue();
+            return JSONUtil.getSuccessReturnJSON(result.getValue());
         }
 
-        return BaseConstant.FAIL;
+        return JSONUtil.getErrorJson();
     }
 }
