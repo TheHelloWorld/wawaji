@@ -1,5 +1,6 @@
 package com.lzg.wawaji.service;
 
+import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.entity.User;
 
 public interface UserService {
@@ -8,7 +9,7 @@ public interface UserService {
      * 添加用户
      * @param user 用户Bean
      */
-    void addUser(User user);
+    CommonResult addUser(User user);
 
     /**
      * 根据用户编号,娃娃机编号判断用户是否可以进行游戏若可以则直接扣除相应游戏币数
@@ -16,5 +17,5 @@ public interface UserService {
      * @param machineNo 娃娃机编号
      * @return
      */
-    String userPlay(String userNo, String machineNo);
+    CommonResult<String> userPlay(String userNo, String machineNo);
 }

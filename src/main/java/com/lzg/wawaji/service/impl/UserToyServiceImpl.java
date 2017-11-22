@@ -1,6 +1,9 @@
 package com.lzg.wawaji.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.lzg.wawaji.bean.Callback;
+import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.UserToyDao;
 import com.lzg.wawaji.entity.UserToy;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@SuppressWarnings("all")
 @Service("userToyService")
 public class UserToyServiceImpl extends BaseServiceImpl implements UserToyService {
 
@@ -27,14 +31,14 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
      * @param userToy 用户娃娃Bean
      */
     @Override
-    public void addUserToy(UserToy userToy) {
-        try {
-            userToyDao.addUserToy(userToy);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("userToy",userToy);
-            logger.error("{} addUserToy param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
+    public CommonResult addUserToy(final UserToy userToy) {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                userToyDao.addUserToy(userToy);
+            }
+        }, "addUserToy", JSON.toJSONString(userToy));
     }
 
     /**
@@ -43,15 +47,17 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
      * @return
      */
     @Override
-    public Integer countUserToyByUserNo(String userNo) {
-        try {
-            return userToyDao.countUserToyByUserNo(userNo);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("userNo", userNo);
-            logger.error("{} countUserToyByUserNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-            return null;
-        }
+    public CommonResult<Integer> countUserToyByUserNo(final String userNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("userNo",userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userToyDao.countUserToyByUserNo(userNo));
+            }
+        },"countUserToyByUserNo", json.toJSONString());
     }
 
     /**
@@ -61,17 +67,19 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
      * @return
      */
     @Override
-    public List<UserToy> getUserToyByUserNo(String userNo, int startPage) {
-        try {
-            return userToyDao.getUserToyByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("userNo", userNo);
-            json.put("startPage", startPage);
-            json.put("pageSize", BaseConstant.DEFAULT_PAGE_SIZE);
-            logger.error("{} getUserToyByUserNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-            return null;
-        }
+    public CommonResult<List<UserToy>> getUserToyByUserNo(final String userNo, final int startPage) {
+
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+        json.put("startPage", startPage);
+        json.put("pageSize", BaseConstant.DEFAULT_PAGE_SIZE);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userToyDao.getUserToyByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
+            }
+        },"getUserToyByUserNo", json.toJSONString());
 
     }
 
@@ -82,16 +90,19 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
      * @param userNo 用户编号
      */
     @Override
-    public void updateChoiceTypeByIdAndUserNo(Integer choiceType, Long id, String userNo) {
-        try {
-            userToyDao.updateChoiceTypeByIdAndUserNo(choiceType, id, userNo);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("choiceType", ChoiceType.getValueMapByKey(choiceType).name());
-            json.put("id", id);
-            json.put("userNo", userNo);
-            logger.error("{} updateChoiceTypeByIdAndUserNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
+    public CommonResult updateChoiceTypeByIdAndUserNo(final Integer choiceType, final Long id, final String userNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("choiceType", ChoiceType.getValueMapByKey(choiceType).name());
+        json.put("id", id);
+        json.put("userNo", userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                userToyDao.updateChoiceTypeByIdAndUserNo(choiceType, id, userNo);
+            }
+        }, "updateChoiceTypeByIdAndUserNo", json.toJSONString());
     }
 
     /**
@@ -101,16 +112,19 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
      * @param userNo 用户编号
      */
     @Override
-    public void updateHandleStatusByIdAndUserNo(Integer handleStatus, Long id, String userNo) {
-        try {
-            userToyDao.updateHandleStatusByIdAndUserNo(handleStatus, id, userNo);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("handleStatus", HandleStatus.getValueMapByKey(handleStatus).name());
-            json.put("id", id);
-            json.put("userNo", userNo);
-            logger.error("{} updateHandleStatusByIdAndUserNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
+    public CommonResult updateHandleStatusByIdAndUserNo(final Integer handleStatus, final Long id, final String userNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("handleStatus", HandleStatus.getValueMapByKey(handleStatus).name());
+        json.put("id", id);
+        json.put("userNo", userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                userToyDao.updateHandleStatusByIdAndUserNo(handleStatus, id, userNo);
+            }
+        }, "updateHandleStatusByIdAndUserNo", json.toJSONString());
 
     }
 

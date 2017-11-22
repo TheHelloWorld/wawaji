@@ -1,5 +1,8 @@
 package com.lzg.wawaji.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.lzg.wawaji.bean.Callback;
+import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.UserRechargeRecordDao;
 import com.lzg.wawaji.entity.UserRechargeRecord;
@@ -19,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("all")
 @Service("userRechargeRecordService")
 public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements UserRechargeRecordService {
 
@@ -35,24 +39,27 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
      * @param userRechargeRecord 用户充值记录
      */
     @Override
-    public void addUserRechargeRecord(UserRechargeRecord userRechargeRecord) {
-        try {
-            userRechargeRecordDao.addUserRechargeRecord(userRechargeRecord);
+    public CommonResult addUserRechargeRecord(final UserRechargeRecord userRechargeRecord) {
 
-            // TODO:待充值功能之后完善
-            Date date = new Date();
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                userRechargeRecordDao.addUserRechargeRecord(userRechargeRecord);
 
-            UserSpendRecord userSpendRecord = new UserSpendRecord();
-            userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
-            userSpendRecord.setTradeTime(date);
-            userSpendRecord.setTradeDate(DateUtil.getDateByTime(date));
-            userSpendRecord.setTradeType(TradeType.RECHARGE.getType());
-            userSpendRecord.setUserNo(userRechargeRecord.getUserNo());
+                // TODO:待充值功能之后完善
+                Date date = new Date();
 
-            userSpendRecordService.addUserSpendRecord(userSpendRecord);
-        } catch (Exception e) {
-            logger.error("{} addUserRechargeRecord param{} error:" + e, BaseConstant.LOG_ERR_MSG, userRechargeRecord, e);
-        }
+                UserSpendRecord userSpendRecord = new UserSpendRecord();
+                userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
+                userSpendRecord.setTradeTime(date);
+                userSpendRecord.setTradeDate(DateUtil.getDateByTime(date));
+                userSpendRecord.setTradeType(TradeType.RECHARGE.getType());
+                userSpendRecord.setUserNo(userRechargeRecord.getUserNo());
+
+                userSpendRecordService.addUserSpendRecord(userSpendRecord);
+
+            }
+        }, "addUserRechargeRecord", JSON.toJSONString(userRechargeRecord));
     }
 
     /**
@@ -61,13 +68,17 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
      * @return
      */
     @Override
-    public Integer countUserRechargeRecordByUserNo(String userNo) {
-        try {
-            userRechargeRecordDao.countUserRechargeRecordByUserNo(userNo);
-        } catch (Exception e) {
-            logger.error("{} countUserRechargeRecordByUserNo param{} error:" + e, BaseConstant.LOG_ERR_MSG, userNo, e);
-        }
-        return null;
+    public CommonResult<Integer> countUserRechargeRecordByUserNo(final String userNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("userNo",userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userRechargeRecordDao.countUserRechargeRecordByUserNo(userNo));
+            }
+        }, "countUserRechargeRecordByUserNo", json.toJSONString());
     }
 
     /**
@@ -77,17 +88,20 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
      * @return
      */
     @Override
-    public List<UserRechargeRecord> getUserRechargeRecordByUserNo(String userNo, int startPage) {
-        try {
-            return userRechargeRecordDao.getUserRechargeRecordByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("userNo",userNo);
-            json.put("startPage",startPage);
-            logger.error("{} getUserRechargeRecordByUserNo param{} error:" + e,
-                    BaseConstant.LOG_ERR_MSG, json, e);
-        }
-        return null;
+    public CommonResult<List<UserRechargeRecord>> getUserRechargeRecordByUserNo(final String userNo,
+                                                                                final int startPage) {
+
+        JSONObject json = new JSONObject();
+        json.put("userNo",userNo);
+        json.put("startPage",startPage);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userRechargeRecordDao.getUserRechargeRecordByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
+            }
+        }, "getUserRechargeRecordByUserNo", json.toJSONString());
+
     }
 
     /**
@@ -97,17 +111,19 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
      * @return
      */
     @Override
-    public Integer countUserRechargeRecordByTradeDateAndTradeStatus(Integer tradeDate, Integer tradeStatus) {
-        try {
-            return userRechargeRecordDao.countUserRechargeRecordByTradeDateAndTradeStatus(tradeDate, tradeStatus);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("tradeDate",tradeDate);
-            json.put("tradeStatus",tradeStatus);
-            logger.error("{} countUserRechargeRecordByTradeDateAndTradeStatus param{} error:" + e,
-                    BaseConstant.LOG_ERR_MSG, json, e);
-        }
-        return null;
+    public CommonResult<Integer> countUserRechargeRecordByTradeDateAndTradeStatus(final Integer tradeDate,
+                                                                                  final Integer tradeStatus) {
+
+        JSONObject json = new JSONObject();
+        json.put("tradeDate",tradeDate);
+        json.put("tradeStatus",tradeStatus);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userRechargeRecordDao.countUserRechargeRecordByTradeDateAndTradeStatus(tradeDate, tradeStatus));
+            }
+        }, "countUserRechargeRecordByTradeDateAndTradeStatus", json.toJSONString());
     }
 
     /**
@@ -118,22 +134,23 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
      * @return
      */
     @Override
-    public List<UserRechargeRecord> getUserRechargeRecordByTradeDateAndTradeStatus(Integer tradeDate,
-                                                                                   Integer tradeStatus,
-                                                                                   int startPage) {
-        try {
-            return userRechargeRecordDao.getUserRechargeRecordByTradeDateAndTradeStatus(tradeDate,
-                    tradeStatus, startPage, BaseConstant.DEFAULT_PAGE_SIZE);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("tradeDate",tradeDate);
-            json.put("tradeStatus",tradeStatus);
-            json.put("tradeDate",startPage);
-            json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
-            logger.error("{} getUserRechargeRecordByTradeDateAndTradeStatus param{} error:" + e,
-                    BaseConstant.LOG_ERR_MSG, json, e);
-        }
-        return null;
+    public CommonResult<List<UserRechargeRecord>> getUserRechargeRecordByTradeDateAndTradeStatus(final Integer tradeDate,
+                                                                                   final Integer tradeStatus,
+                                                                                   final int startPage) {
+        JSONObject json = new JSONObject();
+        json.put("tradeDate",tradeDate);
+        json.put("tradeStatus",tradeStatus);
+        json.put("tradeDate",startPage);
+        json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userRechargeRecordDao.getUserRechargeRecordByTradeDateAndTradeStatus(tradeDate,
+                        tradeStatus, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
+            }
+        }, "getUserRechargeRecordByTradeDateAndTradeStatus", json.toJSONString());
+
     }
 
     /**
@@ -143,18 +160,20 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
      * @return
      */
     @Override
-    public Map<String, Object> getSumRechargeAmountAndCountByTradeDateAndTradeStatus(Integer tradeDate,
-                                                                                     Integer tradeStatus) {
-        try {
-            return userRechargeRecordDao.getSumRechargeAmountAndCountByTradeDateAndTradeStatus(tradeDate, tradeStatus);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("tradeDate",tradeDate);
-            json.put("tradeStatus",tradeStatus);
-            logger.error("{} getSumRechargeAmountAndCountByTradeDateAndTradeStatus param{} error:" + e,
-                    BaseConstant.LOG_ERR_MSG, json, e);
-        }
-        return null;
+    public CommonResult<Map<String, Object>> getSumRechargeAmountAndCountByTradeDateAndTradeStatus(final Integer tradeDate,
+                                                                                     final Integer tradeStatus) {
+
+        JSONObject json = new JSONObject();
+        json.put("tradeDate",tradeDate);
+        json.put("tradeStatus",tradeStatus);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userRechargeRecordDao.getSumRechargeAmountAndCountByTradeDateAndTradeStatus(tradeDate, tradeStatus));
+            }
+        }, "getSumRechargeAmountAndCountByTradeDateAndTradeStatus", json.toJSONString());
+
     }
 
     @Override

@@ -1,6 +1,9 @@
 package com.lzg.wawaji.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.lzg.wawaji.bean.Callback;
+import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.UserDao;
 import com.lzg.wawaji.entity.User;
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Date;
 
+@SuppressWarnings("all")
 @Service("userService")
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
@@ -39,14 +43,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      * @param user 用户Bean
      */
     @Override
-    public void addUser(User user) {
-        try {
-            userDao.addUser(user);
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("user",user);
-            logger.error("{} addUser param:{} error"+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
+    public CommonResult addUser(final User user) {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                userDao.addUser(user);
+            }
+        }, "addUserToy", JSON.toJSONString(user));
     }
 
     /**
@@ -57,67 +61,84 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      */
     @Override
     @Transactional
-    public String userPlay(String userNo, String machineNo) {
-        try {
-            // 获得用户当前游戏币数
-            Integer userCoin = userDao.getUserCoinByUserNo(userNo);
-            // 获得机器信息
-            Integer needCoin = machineService.getCoinByMachineNo(machineNo);
+    public CommonResult<String> userPlay(final String userNo, final String machineNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("userNo",userNo);
+        json.put("machineNo",machineNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                // 获得用户当前游戏币数
+                Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+                // 获得机器信息
+                CommonResult<Integer> needCoinResult = machineService.getCoinByMachineNo(machineNo);
+
+                Integer needCoin;
+
+                if(needCoinResult.success()) {
+
+                    needCoin = needCoinResult.getValue();
+                } else {
+                    logger.error("{} getCoinByMachineNo error:", BaseConstant.LOG_ERR_MSG);
+                    got(BaseConstant.FAIL);
+                    return;
+                }
 
 
-            // 判断用户游戏币是否足够
-            if(userCoin >= needCoin) {
+                // 判断用户游戏币是否足够
+                if(userCoin >= needCoin) {
 
-                try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
-                    // 判断当前机器是否已有用户使用
-                    if(redisUtil.setnx(machineNo, userNo) == 0) {
-                        // 若当前机器已被占用
-                        return BaseConstant.MARCHINE_ALREADY_IN_UES;
+                    try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                        // 判断当前机器是否已有用户使用
+                        if(redisUtil.setnx(machineNo, userNo) == 0) {
+                            // 若当前机器已被占用
+                            got(BaseConstant.MARCHINE_ALREADY_IN_UES);
+                            return;
+                        }
+                    } catch (Exception e) {
+                        logger.error("{} redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
                     }
-                } catch (Exception e) {
-                    logger.error("{} redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+
+                    // 添加用户消费记录
+                    Date date = new Date();
+                    UserSpendRecord userSpendRecord = new UserSpendRecord();
+
+                    userSpendRecord.setUserNo(userNo);
+                    userSpendRecord.setCoin(needCoin);
+                    userSpendRecord.setTradeType(TradeType.SPEND.getType());
+                    userSpendRecord.setTradeDate(DateUtil.getDateByTime(date));
+                    userSpendRecord.setTradeTime(date);
+
+                    try {
+                        // 扣除用户游戏币
+                        userDao.updateUserCoinByUserNo( -needCoin, userNo);
+
+                        userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
+                        userSpendRecordService.addUserSpendRecord(userSpendRecord);
+                        logger.info("{} 成功扣除用户:{} 游戏币数:{}",BaseConstant.LOG_MSG, userNo, needCoin);
+
+                        got(BaseConstant.SUCCESS);
+                        return;
+                    } catch(Exception e) {
+                        logger.error("{} 扣除用户游戏币失败" + e,BaseConstant.LOG_ERR_MSG,e);
+                        userSpendRecord.setTradeStatus(TradeStatus.FAIL.getStatus());
+                        userSpendRecordService.addUserSpendRecord(userSpendRecord);
+
+                        got(BaseConstant.DEDUCTION_COIN_FAIL);
+                        return;
+
+                    }
                 }
 
-                // 添加用户消费记录
-                Date date = new Date();
-                UserSpendRecord userSpendRecord = new UserSpendRecord();
+                logger.info("{} 用户游戏币不足,用户游戏币数:{},所需游戏币数:{}", BaseConstant.LOG_MSG, userCoin, needCoin);
 
-                userSpendRecord.setUserNo(userNo);
-                userSpendRecord.setCoin(needCoin);
-                userSpendRecord.setTradeType(TradeType.SPEND.getType());
-                userSpendRecord.setTradeDate(DateUtil.getDateByTime(date));
-                userSpendRecord.setTradeTime(date);
-
-                try {
-                    // 扣除用户游戏币
-                    userDao.updateUserCoinByUserNo( -needCoin, userNo);
-
-                    userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
-                    userSpendRecordService.addUserSpendRecord(userSpendRecord);
-                    logger.info("{} 成功扣除用户:{} 游戏币数:{}",BaseConstant.LOG_MSG, userNo, needCoin);
-
-                    return BaseConstant.SUCCESS;
-                } catch(Exception e) {
-                    logger.error("{} 扣除用户游戏币失败" + e,BaseConstant.LOG_ERR_MSG,e);
-                    userSpendRecord.setTradeStatus(TradeStatus.FAIL.getStatus());
-                    userSpendRecordService.addUserSpendRecord(userSpendRecord);
-
-                    return BaseConstant.DEDUCTION_COIN_FAIL;
-
-                }
+                got(BaseConstant.NOT_ENOUGH_COIN);
+                return;
             }
-
-            logger.info("{} 用户游戏币不足,用户游戏币数:{},所需游戏币数:{}", BaseConstant.LOG_MSG, userCoin, needCoin);
-
-            return BaseConstant.NOT_ENOUGH_COIN;
-        } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("userNo",userNo);
-            json.put("machineNo",machineNo);
-            logger.error("{} userPlay param:{} error"+ e, BaseConstant.LOG_ERR_MSG, json, e);
-
-            return BaseConstant.SYSTEM_ERROR;
-        }
+        }, "userPlay", json.toJSONString());
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.lzg.wawaji.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.lzg.wawaji.bean.Callback;
+import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.UserAddressDao;
 import com.lzg.wawaji.entity.UserAddress;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@SuppressWarnings("all")
 @Service("userAddressService")
 public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddressService {
 
@@ -26,22 +30,26 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
      * @return
      */
     @Override
-    public String addUserAddressService(UserAddress userAddress) {
-        try {
-            // 判断当前用户的地址数量是否超过最大用户地址数量
-            if(userAddressDao.countUserAddressByUserNo(userAddress.getUserNo()) < BaseConstant.MAX_USER_ADDRESS) {
-                userAddressDao.addUserAddress(userAddress);
+    public CommonResult<String> addUserAddressService(final UserAddress userAddress) {
 
-                return BaseConstant.SUCCESS;
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                // 判断当前用户的地址数量是否超过最大用户地址数量
+                if(userAddressDao.countUserAddressByUserNo(userAddress.getUserNo()) < BaseConstant.MAX_USER_ADDRESS) {
+                    userAddressDao.addUserAddress(userAddress);
+
+                    got(BaseConstant.SUCCESS);
+                    return;
+                }
+                logger.info("{} userNO:{} 当前已有 {} 个地址",BaseConstant.LOG_MSG, BaseConstant.MAX_USER_ADDRESS,
+                        userAddress.getUserNo());
+
+                got(BaseConstant.OVER_MAX_USER_ADDRESS);
+                return;
             }
-            logger.info("{}userNO:{}当前已有{}个地址",BaseConstant.LOG_MSG, BaseConstant.MAX_USER_ADDRESS,
-                    userAddress.getUserNo());
-            return BaseConstant.OVER_MAX_USER_ADDRESS;
-        }catch (Exception e) {
-            logger.error("{} addUserAddressService param:{} error "+ e,BaseConstant.LOG_ERR_MSG, userAddress, e);
-            return BaseConstant.SYSTEM_ERROR;
-        }
-
+        }, "addUserAddressService", JSON.toJSONString(userAddress));
 
     }
 
@@ -51,13 +59,17 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
      * @return
      */
     @Override
-    public List<UserAddress> getUserAddressByUserNo(String userNo) {
-        try{
-            return userAddressDao.getUserAddressByUserNo(userNo);
-        }catch (Exception e) {
-            logger.error("{} getUserAddressByUserNo userNo:{} error "+ e, BaseConstant.LOG_ERR_MSG, userNo, e);
-        }
-        return null;
+    public CommonResult<List<UserAddress>> getUserAddressByUserNo(final String userNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("userNo",userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userAddressDao.getUserAddressByUserNo(userNo));
+            }
+        }, "getUserAddressByUserNo", json.toJSONString());
     }
 
     /**
@@ -66,13 +78,18 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
      * @return
      */
     @Override
-    public Integer countUserAddressByUserNo(String userNo) {
-        try{
-            return userAddressDao.countUserAddressByUserNo(userNo);
-        }catch (Exception e) {
-            logger.error("{} countUserAddressByUserNo userNo:{} error "+ e, BaseConstant.LOG_ERR_MSG, userNo, e);
-        }
-        return null;
+    public CommonResult<Integer> countUserAddressByUserNo(final String userNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("userNo",userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userAddressDao.countUserAddressByUserNo(userNo));
+            }
+        }, "countUserAddressByUserNo", json.toJSONString());
+
     }
 
     /**
@@ -82,16 +99,18 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
      * @return
      */
     @Override
-    public UserAddress getUserAddressByIdAndUserNo(Long id, String userNo) {
-        try{
-            return userAddressDao.getUserAddressByIdAndUserNo(id, userNo);
-        }catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("id",id);
-            json.put("userNo",userNo);
-            logger.error("{} getUserAddressByIdAndUserNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, json, e);
-        }
-        return null;
+    public CommonResult<UserAddress> getUserAddressByIdAndUserNo(final Long id, final String userNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("id",id);
+        json.put("userNo",userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userAddressDao.getUserAddressByIdAndUserNo(id, userNo));
+            }
+        }, "getUserAddressByIdAndUserNo", json.toJSONString());
 
     }
 
@@ -100,12 +119,14 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
      * @param userAddress 用户地址bean
      */
     @Override
-    public void updateUserAddressByIdAndUserNo(UserAddress userAddress) {
-        try{
-            userAddressDao.updateUserAddressByIdAndUserNo(userAddress);
-        }catch (Exception e) {
-            logger.error("{} updateUserAddressByIdAndUserNo param:{} error "+ e, BaseConstant.LOG_ERR_MSG, userAddress, e);
-        }
+    public CommonResult updateUserAddressByIdAndUserNo(final UserAddress userAddress) {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                userAddressDao.updateUserAddressByIdAndUserNo(userAddress);
+            }
+        }, "updateUserAddressByIdAndUserNo", JSON.toJSONString(userAddress));
 
     }
 
