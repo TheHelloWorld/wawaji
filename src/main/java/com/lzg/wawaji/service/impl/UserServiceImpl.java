@@ -247,6 +247,25 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         }, "userRegisterOrLogin", json.toJSONString());
     }
 
+    /**
+     * 根据用户编号获得用户信息
+     * @param userNo 用户编号
+     * @return
+     */
+    @Override
+    public CommonResult<User> getUserByUserNo(final String userNo) {
+        JSONObject json = new JSONObject();
+        json.put("userNo",userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userDao.getUserByUserNo(userNo));
+
+            }
+        }, "getUserByUserNo", json.toJSONString());
+    }
+
     @Override
     protected Logger getLogger() {
         return logger;

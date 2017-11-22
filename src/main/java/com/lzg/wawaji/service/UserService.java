@@ -34,4 +34,11 @@ public interface UserService {
      */
     CommonResult<String> sendMobileVerificationCode(String mobileNo);
 
+    /**
+     * 根据用户编号获得用户信息
+     * @param userNo 用户编号
+     * @return
+     */
+    CommonResult<User> getUserByUserNo(String userNo);
+
 }

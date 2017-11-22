@@ -14,6 +14,80 @@ $(function(){
 
 });
 
+// 用户自动登陆
+function userAutoLogin() {
+    $.ajax({
+        url:"/wawaji/user/autoLogin.action",
+        type:"POST",
+        async:false,
+        success:function(data) {
+            // 转换数据
+            if(typeof(data) == "string") {
+                data = eval("("+data+")");
+            }
+
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+            var result = data["result"];
+
+            // 判断是否成功获取用户信息
+            if(result == "fail") {
+                return false;
+            }
+
+            if(typeof(result) == "string") {
+                result = eval("("+result+")");
+            }
+
+        }
+    });
+}
+
+
+// 用户登陆或注册
+function userLoginOrRegister() {
+    $.ajax({
+        url:"/wawaji/user/registerOrLoginUser.action",
+        type:"POST",
+        async:false,
+        data:{
+            mobileNO:mobileNo,
+            ticket:ticket
+        },
+        success:function(data) {
+            // 转换数据
+            if(typeof(data) == "string") {
+                data = eval("("+data+")");
+            }
+
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+            var result = data["result"];
+
+            if(result == "验证码错误,请重试") {
+                alert(result);
+                return;
+            }
+
+            if(typeof(result) == "string") {
+                result = eval("("+result+")");
+            }
+
+            // 设置cookie
+            setCookie("wawaji_userNo", result["userNo"]);
+
+        }
+    });
+}
+
 function getAllMachineByPage(nowPage) {
     var startPage = (nowPage - 1) * pageSize;
 

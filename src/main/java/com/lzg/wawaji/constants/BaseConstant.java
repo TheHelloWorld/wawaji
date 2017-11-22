@@ -17,8 +17,6 @@ public class BaseConstant {
 
 	public static final String USER_INFO = "user_info";
 
-
-
 	/**
 	 * 管理员id
 	 */
