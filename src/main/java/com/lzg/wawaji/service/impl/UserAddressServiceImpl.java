@@ -89,7 +89,6 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
                 got(userAddressDao.countUserAddressByUserNo(userNo));
             }
         }, "countUserAddressByUserNo", json.toJSONString());
-
     }
 
     /**

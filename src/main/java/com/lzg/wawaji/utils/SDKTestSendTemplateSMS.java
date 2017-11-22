@@ -16,6 +16,7 @@ public class SDKTestSendTemplateSMS {
 
     }
 
+
     /**
      * 发送短信验证码
      * @param mobileNo 手机号

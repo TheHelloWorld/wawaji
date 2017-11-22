@@ -101,7 +101,6 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
                 got(userRechargeRecordDao.getUserRechargeRecordByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
         }, "getUserRechargeRecordByUserNo", json.toJSONString());
-
     }
 
     /**

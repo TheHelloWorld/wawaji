@@ -38,7 +38,6 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
                 toyDao.addToy(toy);
             }
         }, "addToy", JSON.toJSONString(toy));
-
     }
 
     /**

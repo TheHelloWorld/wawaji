@@ -52,7 +52,6 @@ public class UserAddressController {
     public String addUserAddress(UserAddress userAddress) {
 
         CommonResult result = userAddressService.addUserAddressService(userAddress);
-
         if(result.success()) {
             return BaseConstant.SUCCESS;
         }
@@ -72,13 +71,11 @@ public class UserAddressController {
         CommonResult<Integer> result = userAddressService.countUserAddressByUserNo(userNo);
 
         if(result.success()) {
-
             if(BaseConstant.MAX_USER_ADDRESS > result.getValue()) {
                 return BaseConstant.SUCCESS;
             }
         }
         return BaseConstant.FAIL;
-
     }
 
 }
