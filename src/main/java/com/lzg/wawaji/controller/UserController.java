@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RequestMapping("/wawaji/user")
@@ -26,7 +27,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    
     /**
      * 用户自动登陆
      *
@@ -34,10 +34,10 @@ public class UserController {
      */
     @RequestMapping(value = "/autoLogin", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String autoLogin() {
+    public String autoLogin(HttpServletRequest request, HttpServletResponse response) {
 
         // 从cookie中获取userNo
-        String userNo = CommonHandle.getCookieValue("userNo");
+        String userNo = CommonHandle.getCookieValue(request, "userNo");
 
         if(StringUtils.isBlank(userNo)) {
             JSONUtil.getSuccessReturnJSON(BaseConstant.FAIL);
@@ -51,6 +51,9 @@ public class UserController {
                 logger.warn("wawaji warn: 没有对应的用户编号 userNO:{}", userNo);
                 JSONUtil.getSuccessReturnJSON(BaseConstant.FAIL);
             }
+
+            // 将用户编号放入cookie中
+            setUserNoInCookie(response, result.getValue().getUserNo());
 
             return JSONUtil.getSuccessReturnJSON(result.getValue());
         }
@@ -67,7 +70,7 @@ public class UserController {
      */
     @RequestMapping(value = "/registerOrLoginUser", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String registerOrLoginUser(String ticket, String mobile) {
+    public String registerOrLoginUser(String ticket, String mobile, HttpServletResponse response) {
 
         CommonResult<String> verifyResult = userService.verifyCode(ticket, mobile);
 
@@ -88,7 +91,7 @@ public class UserController {
         if(result.success()) {
 
             // 将用户编号放入cookie中
-            setUserNoInCookie(result.getValue().getUserNo());
+            setUserNoInCookie(response, result.getValue().getUserNo());
 
             return JSONUtil.getSuccessReturnJSON(result.getValue());
         }
@@ -101,11 +104,9 @@ public class UserController {
      *
      * @param userNo 用户编号
      */
-    private void setUserNoInCookie(String userNo) {
+    private void setUserNoInCookie(HttpServletResponse response, String userNo) {
 
-        //将用户ID放入COOKIE中
-        HttpServletResponse response = CommonHandle.getResponse();
-
+        //将用户No放入COOKIE中
         Cookie passport = new Cookie("userNo", userNo);
         logger.info("用户userNo放入cookie中,userNo:{}", userNo);
         //设定有效时间  以秒(s)为单位

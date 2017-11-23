@@ -145,11 +145,11 @@ public class CommonHandle {
 	 * 获得cookie中的值
 	 *
 	 * @param key 存储的key
+	 * @param key 存储的key
 	 * @return String
 	 */
-	public static String getCookieValue(String key) {
-		Cookie[] cookies = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest()
-				.getCookies();
+	public static String getCookieValue(HttpServletRequest request, String key) {
+		Cookie[] cookies = request.getCookies();
 		if (null != cookies) {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals(key)) {
@@ -168,16 +168,6 @@ public class CommonHandle {
 	 */
 	public static void setManagerIdCookie(String managerId, int maxAge) {
 		setCookieValue(BaseConstant.MANAGER_ID, managerId, maxAge);
-	}
-
-
-	/**
-	 * 获得当前登录管理员的ID
-	 *
-	 * @return String
-	 */
-	public static String getManagerIdCookie() {
-		return getCookieValue(BaseConstant.MANAGER_ID);
 	}
 
 	/*********************************cookie操作 结束*********************************************/
