@@ -76,4 +76,9 @@
         where id = #{id} and user_no = #{userNo}
     </update>
 
+    <!-- 根据id和用户编号删除用户地址记录 -->
+    <delete id="deleteUserAddressByIdAndUserNo">
+        delete from user_address where user_no = #{userNo} and id = #{id}
+    </delete>
+
 </mapper>

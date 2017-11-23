@@ -2,6 +2,7 @@
 var userNo = "";
 
 $(function() {
+    // 获得用户编号
     userNo = getQueryString("userNo");
     // 判断当前用户是否看继续添加
     judeUserAddress(userNo);
@@ -9,34 +10,11 @@ $(function() {
     // 获得当前用户所有地址记录
     getAllUserAddressByUserNo(userNo);
 
-    // 初始化页码
-    initPage(totalPage,step);
 });
 
 
 
-function getPage(page) {
-    nowPage = getPageByNum(nowPage,page,totalPage,step);
-    getAllByPage(showUrl, nowPage);
-
-}
-
-function nextPage() {
-    nowPage = nextPageNum(nowPage,totalPage,step);
-    getAllByPage(showUrl, nowPage);
-
-}
-
-//上一页
-function lastPage() {
-    nowPage = lastPageNum(nowPage,totalPage,step);
-    getAllByPage(showUrl, nowPage);
-}
-
-function addToyPage() {
-    window.location.href="/wawaji/toy/toyDetailPage.jsp?type=save";
-}
-
+// 判断当前是否可以继续添加地址
 function judeUserAddress(userNo) {
     $.ajax({
         url:"/wawaji/userAddress/judgeUserAddressIsMaxNum.action",
@@ -46,8 +24,20 @@ function judeUserAddress(userNo) {
             userNo:userNo
         },
         success:function(data){
+
+            // 转换数据
+            if(typeof(data) == "string") {
+                data = eval("("+data+")");
+            }
+
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
             // 若后台操作成功则删除当前行
-            if(data == "fail") {
+            if(data["result"] == "fail") {
                $("#addUserAddress").attr("disable", true);
             }
         }
@@ -57,42 +47,44 @@ function judeUserAddress(userNo) {
 // 获得当前用户所有地址
 function getAllUserAddressByUserNo(userNo) {
 
-    dataParam = eval("(" + dataParam + ")");
-
-    var id = dataParam["id"];
-    var toyNo = dataParam["toyNo"];
-
     $.ajax({
-        url:"/wawaji/userAddress/getUserAddressByUserNo.action",
+        url:"/wawaji/userAddress/getUserAddressListByUserNo.action",
         type:"POST",
         async:false,
         data:{
-            id:id,
-            toyNo:toyNo
+            userNo:userNo
         },
         success:function(data){
-            $("#dataBody").html("");
 
-            if(typeof(data) == "string"){
+            // 转换数据
+            if(typeof(data) == "string") {
                 data = eval("("+data+")");
             }
 
-            if(totalPage == 0){
-                $("#dataDiv").hide();
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
                 return;
             }
 
-            var list = data["list"];
+            var list = data["result"];
             var str = "";
 
-            for(var i = 0;i<list.length;i++) {
+            for(var i = 0; i<list.length; i++) {
 
-
+                str += "<div class='row' style='margin-bottom: 5px'>";
+                str += "<div class='panel-body' style='background: #ffff99'>";
+                str += "<p>姓名:" + list[i]["userName"] + "</p>";
+                str += "<p>手机号:" + list[i]["mobileNo"] + "</p>";
+                str += "<p>地址:" + list[i]["address"] + "</p>";
+                str += "<p>操作:" + list[i]["address"] + "</p>";
+                str += "</div>";
+                str += "</div>"
             }
 
-            $("#dataBody").append(str);
-
+            $("#userAddress").append(str);
         }
+
     });
 }
 

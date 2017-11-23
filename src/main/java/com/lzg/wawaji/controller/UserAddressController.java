@@ -21,15 +21,30 @@ public class UserAddressController {
     private UserAddressService userAddressService;
 
     /**
-     * 根据用户编号获得用户地址
+     * 根据用户编号获得用户地址list
      * @param userNo 用户编号
      * @return
      */
-    @RequestMapping(value = "/getUserAddressByUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/getUserAddressListByUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String getUserAddressByUserNo(String userNo) {
+    public String getUserAddressListByUserNo(String userNo) {
 
-        CommonResult<List<UserAddress>> result = userAddressService.getUserAddressByUserNo(userNo);
+        CommonResult<List<UserAddress>> result = userAddressService.getUserAddressListByUserNo(userNo);
+
+        return JSONUtil.getReturnBeanString(result);
+    }
+
+    /**
+     * 根据id,用户编号获得用户地址
+     * @param id id
+     * @param userNo 用户编号
+     * @return
+     */
+    @RequestMapping(value = "/getUserAddressByIdAndUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getUserAddressByIdAndUserNo(Long id, String userNo) {
+
+        CommonResult<UserAddress> result = userAddressService.getUserAddressByIdAndUserNo(id, userNo);
 
         return JSONUtil.getReturnBeanString(result);
     }
@@ -68,6 +83,35 @@ public class UserAddressController {
             }
         }
         return JSONUtil.getErrorJson();
+    }
+
+    /**
+     * 根据id和用户编号删除用户地址记录
+     * @param id id
+     * @param userNo 机器编号
+     * @return
+     */
+    @RequestMapping(value = "/deleteUserAddressByIdAndUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String deleteUserAddressByIdAndUserNo(Long id, String userNo) {
+
+        CommonResult result =  userAddressService.deleteUserAddressByIdAndUserNo(id, userNo);
+
+        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
+    }
+
+    /**
+     * 根据id和用户编号修改用户地址
+     * @param userAddress 用户地址
+     * @return
+     */
+    @RequestMapping(value = "/updateUserAddressByIdAndUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String updateUserAddressByIdAndUserNo(UserAddress userAddress) {
+
+        CommonResult result =  userAddressService.updateUserAddressByIdAndUserNo(userAddress);
+
+        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 
 }

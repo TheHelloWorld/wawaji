@@ -11,6 +11,7 @@ $(function(){
     var url = "/wawaji/machine/getMachineTotalCountAndPageSize.action";
     getTotalCountAndPageSize(url);
     getAllMachineByPage(nowPage);
+    userAutoLogin();
 
 });
 
@@ -42,6 +43,7 @@ function userAutoLogin() {
             if(typeof(result) == "string") {
                 result = eval("("+result+")");
             }
+            console.info(result);
 
         }
     });
@@ -81,8 +83,8 @@ function userLoginOrRegister() {
                 result = eval("("+result+")");
             }
 
-            // 设置cookie
-            setCookie("wawaji_userNo", result["userNo"]);
+            console.info(result);
+
 
         }
     });
@@ -136,7 +138,7 @@ function getAllMachineByPage(nowPage) {
                 str += "</div>";
                 str += "<div class='panel-footer'></div>";
                 str += "</div>";
-                str += "</div>"
+                str += "</div>";
 
                 if(i % 2 != 0) {
                     str += "</div>";

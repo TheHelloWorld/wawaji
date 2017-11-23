@@ -59,7 +59,7 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
      * @return
      */
     @Override
-    public CommonResult<List<UserAddress>> getUserAddressByUserNo(final String userNo) {
+    public CommonResult<List<UserAddress>> getUserAddressListByUserNo(final String userNo) {
 
         JSONObject json = new JSONObject();
         json.put("userNo",userNo);
@@ -127,6 +127,26 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
             }
         }, "updateUserAddressByIdAndUserNo", JSON.toJSONString(userAddress));
 
+    }
+
+    /**
+     * 根据用户编号,id删除用户地址
+     * @param id id
+     * @param userNo 用户编号
+     */
+    @Override
+    public CommonResult deleteUserAddressByIdAndUserNo(final Long id, final String userNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("id",id);
+        json.put("userNo",userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                userAddressDao.deleteUserAddressByIdAndUserNo(id, userNo);
+            }
+        }, "deleteUserAddressByIdAndUserNo", json.toJSONString());
     }
 
     @Override

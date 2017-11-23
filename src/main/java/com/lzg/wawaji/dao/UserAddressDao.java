@@ -43,4 +43,11 @@ public interface UserAddressDao {
      */
     void updateUserAddressByIdAndUserNo(UserAddress userAddress);
 
+    /**
+     * 根据用户编号,id删除用户地址
+     * @param id id
+     * @param userNo 用户编号
+     */
+    void deleteUserAddressByIdAndUserNo(@Param("id") Long id, @Param("userNo") String userNo);
+
 }

@@ -99,7 +99,7 @@ public class MachineController {
     }
 
     /**
-     * 根据id和机器编号获得机器记录
+     * 根据id和机器编号修改机器记录
      * @param paramStr 机器记录
      * @return
      */

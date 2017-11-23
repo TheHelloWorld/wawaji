@@ -18,7 +18,7 @@ public interface UserAddressService {
      * @param userNo 用户编号
      * @return
      */
-    CommonResult<List<UserAddress>> getUserAddressByUserNo(String userNo);
+    CommonResult<List<UserAddress>> getUserAddressListByUserNo(String userNo);
 
     /**
      * 根据用户编号获得用户地址数量
@@ -40,4 +40,11 @@ public interface UserAddressService {
      * @param userAddress 用户地址bean
      */
     CommonResult updateUserAddressByIdAndUserNo(UserAddress userAddress);
+
+    /**
+     * 根据用户编号,id删除用户地址
+     * @param id id
+     * @param userNo 用户编号
+     */
+    CommonResult deleteUserAddressByIdAndUserNo(Long id, String userNo);
 }
