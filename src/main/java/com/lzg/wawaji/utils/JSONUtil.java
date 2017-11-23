@@ -1,12 +1,44 @@
 package com.lzg.wawaji.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 
 public class JSONUtil {
 
     private JSONUtil() {
 
+    }
+
+    /**
+     * 获得返回字符串
+     * @param result 执行结果
+     * @return
+     */
+    public static String getReturnBeanString(CommonResult result) {
+
+        if(result.success()) {
+
+            return JSONUtil.getSuccessReturnJSON(result.getValue());
+        }
+
+        return JSONUtil.getErrorJson();
+    }
+
+    /**
+     * 获得返回字符串
+     * @param result 执行结果
+     * @param str 字符串
+     * @return
+     */
+    public static String getReturnStrString(CommonResult result, String str) {
+
+        if(result.success()) {
+
+            return JSONUtil.getSuccessReturnJSON(str);
+        }
+
+        return JSONUtil.getErrorJson();
     }
 
     /**

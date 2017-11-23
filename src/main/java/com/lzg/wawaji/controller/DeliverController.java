@@ -1,7 +1,6 @@
 package com.lzg.wawaji.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.entity.Deliver;
@@ -33,12 +32,7 @@ public class DeliverController {
 
         CommonResult<List<Deliver>> result = deliverService.getAllDeliverByPage(startPage);
 
-        if(result.success()) {
-
-            return JSONUtil.getSuccessReturnJSON(result.getValue());
-        }
-
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnBeanString(result);
     }
 
 
@@ -70,11 +64,7 @@ public class DeliverController {
 
         CommonResult result = deliverService.addDeliver(JSON.parseObject(paramStr, Deliver.class));
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
-        }
-
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 
     /**
@@ -89,11 +79,7 @@ public class DeliverController {
 
         CommonResult<Deliver> result = deliverService.getDeliverByIdAndUserNo(id, dataNo);
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(String.valueOf(result.getValue()));
-        }
-
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnStrString(result, String.valueOf(result.getValue()));
     }
 
     /**
@@ -107,11 +93,7 @@ public class DeliverController {
 
         CommonResult result = deliverService.updateDeliverMsgByIdAndUserNo(JSON.parseObject(paramStr, Deliver.class));
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
-        }
-
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 
 }

@@ -34,11 +34,7 @@ public class MachineController {
 
         CommonResult<List<Machine>> result = machineService.getAllMachineByPage(startPage);
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(result.getValue());
-        }
-
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnBeanString(result);
     }
 
     /**
@@ -52,12 +48,7 @@ public class MachineController {
 
         CommonResult<List<UserMachine>> result = machineService.getUserAllMachineByPage(startPage);
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(result.getValue());
-        }
-
-        return JSONUtil.getErrorJson();
-
+        return JSONUtil.getReturnBeanString(result);
     }
 
 
@@ -89,11 +80,7 @@ public class MachineController {
 
         CommonResult result = machineService.addMachine(JSON.parseObject(paramStr, Machine.class));
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
-        }
-
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 
     /**
@@ -108,10 +95,7 @@ public class MachineController {
 
         CommonResult<Machine> result = machineService.getMachineByIdAndMachineNo(id, dataNo);
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(String.valueOf(result.getValue()));
-        }
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnStrString(result, String.valueOf(result.getValue()));
     }
 
     /**
@@ -125,10 +109,7 @@ public class MachineController {
 
         CommonResult result =  machineService.updateMachineByIdAndMachineNo(JSON.parseObject(paramStr, Machine.class));
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
-        }
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 
 
@@ -144,9 +125,6 @@ public class MachineController {
 
         CommonResult result =  machineService.deleteMachineByIdAndMachineNo(id, machineNo);
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
-        }
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 }

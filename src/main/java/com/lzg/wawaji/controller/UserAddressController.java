@@ -1,6 +1,5 @@
 package com.lzg.wawaji.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.entity.UserAddress;
@@ -32,10 +31,7 @@ public class UserAddressController {
 
         CommonResult<List<UserAddress>> result = userAddressService.getUserAddressByUserNo(userNo);
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(result.getValue());
-        }
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnBeanString(result);
     }
 
     /**
@@ -49,10 +45,7 @@ public class UserAddressController {
 
         CommonResult result = userAddressService.addUserAddressService(userAddress);
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
-        }
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 
     /**

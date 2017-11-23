@@ -33,10 +33,7 @@ public class ToyController {
 
         CommonResult<List<Toy>> result = toyService.getAllToyByPage(startPage);
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(result.getValue());
-        }
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnBeanString(result);
     }
 
     /**
@@ -66,10 +63,7 @@ public class ToyController {
 
         CommonResult result = toyService.addToy(JSON.parseObject(paramStr, Toy.class));
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
-        }
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 
     /**
@@ -84,10 +78,7 @@ public class ToyController {
 
         CommonResult<Toy> result = toyService.getToyByIdAndToyNo(id, dataNo);
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(String.valueOf(result.getValue()));
-        }
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnStrString(result, String.valueOf(result.getValue()));
     }
 
     /**
@@ -101,10 +92,7 @@ public class ToyController {
 
         CommonResult result = toyService.updateToyByIdAndToyNo(JSON.parseObject(paramStr, Toy.class));
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
-        }
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 
     /**
@@ -119,9 +107,6 @@ public class ToyController {
 
         CommonResult result = toyService.deleteToyByIdAndToyNo(id, toyNo);
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(BaseConstant.SUCCESS);
-        }
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 }

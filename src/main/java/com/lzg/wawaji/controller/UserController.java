@@ -86,7 +86,9 @@ public class UserController {
 
         if(result.success()) {
 
+            // 将用户编号放入cookie中
             setUserNoInCookie(result.getValue().getUserNo());
+
             return JSONUtil.getSuccessReturnJSON(result.getValue());
         }
 
@@ -143,10 +145,6 @@ public class UserController {
 
         CommonResult<String> result = userService.userPlay(userNo, machineNo);
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(result.getValue());
-        }
-
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnBeanString(result);
     }
 }
