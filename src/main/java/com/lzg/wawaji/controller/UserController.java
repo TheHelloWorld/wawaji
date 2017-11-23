@@ -26,6 +26,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    
     /**
      * 用户自动登陆
      *
