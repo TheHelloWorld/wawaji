@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.lzg.wawaji.bean.Callback;
 import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
+import com.lzg.wawaji.dao.RegionDao;
 import com.lzg.wawaji.dao.UserAddressDao;
+import com.lzg.wawaji.entity.Region;
 import com.lzg.wawaji.entity.UserAddress;
 import com.lzg.wawaji.service.UserAddressService;
 import com.alibaba.fastjson.JSONObject;
@@ -23,6 +25,9 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
 
     @Autowired
     private UserAddressDao userAddressDao;
+
+    @Autowired
+    private RegionDao regionDao;
 
     /**
      * 添加用户地址,若当前用户地址数量小于最大数量则添加否则不添加
@@ -147,6 +152,44 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
                 userAddressDao.deleteUserAddressByIdAndUserNo(id, userNo);
             }
         }, "deleteUserAddressByIdAndUserNo", json.toJSONString());
+    }
+
+    /**
+     * 根据父级地区编码获得子地区
+     * @param parentCode 父级地区编码
+     * @return
+     */
+    @Override
+    public CommonResult<List<Region>> getRegionByParentCode(final String parentCode) {
+
+        JSONObject json = new JSONObject();
+        json.put("parentCode",parentCode);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(regionDao.getRegionByParentCode(parentCode));
+            }
+        }, "getRegionByParentCode", json.toJSONString());
+    }
+
+    /**
+     * 根据父级地区编码获得子地区数量
+     * @param parentCode 父级地区编码
+     * @return
+     */
+    @Override
+    public CommonResult<Integer> countRegionByParentCode(final String parentCode) {
+
+        JSONObject json = new JSONObject();
+        json.put("parentCode",parentCode);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(regionDao.countRegionByParentCode(parentCode));
+            }
+        }, "countRegionByParentCode", json.toJSONString());
     }
 
     @Override

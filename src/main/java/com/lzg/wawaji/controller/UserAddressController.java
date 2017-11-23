@@ -1,7 +1,9 @@
 package com.lzg.wawaji.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
+import com.lzg.wawaji.entity.Region;
 import com.lzg.wawaji.entity.UserAddress;
 import com.lzg.wawaji.service.UserAddressService;
 import com.lzg.wawaji.utils.JSONUtil;
@@ -95,7 +97,7 @@ public class UserAddressController {
     @ResponseBody
     public String deleteUserAddressByIdAndUserNo(Long id, String userNo) {
 
-        CommonResult result =  userAddressService.deleteUserAddressByIdAndUserNo(id, userNo);
+        CommonResult result = userAddressService.deleteUserAddressByIdAndUserNo(id, userNo);
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
@@ -112,6 +114,38 @@ public class UserAddressController {
         CommonResult result =  userAddressService.updateUserAddressByIdAndUserNo(userAddress);
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
+    }
+
+    /**
+     * 根据地区编码获得子地区和数量
+     * @param parentCode 用户地址
+     * @return
+     */
+    @RequestMapping(value = "/getRegionByParentCode", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getRegionByParentCode(String parentCode) {
+
+        CommonResult<Integer> countResult = userAddressService.countRegionByParentCode(parentCode);
+
+        if(!countResult.success()) {
+            return JSONUtil.getErrorJson();
+        }
+
+        JSONObject json = new JSONObject();
+
+        if(countResult.getValue() > 0) {
+            CommonResult<List<Region>> result = userAddressService.getRegionByParentCode(parentCode);
+
+            if(!result.success()) {
+                return JSONUtil.getErrorJson();
+            }
+
+            json.put("is_success",BaseConstant.SUCCESS);
+            json.put("result",result.getValue());
+        }
+        json.put("region_count",countResult.getValue());
+
+        return json.toJSONString();
     }
 
 }
