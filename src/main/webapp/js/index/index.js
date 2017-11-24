@@ -37,7 +37,8 @@ function userAutoLogin() {
 
             // 判断是否成功获取用户信息
             if(result == "fail") {
-                return false;
+                console.info(result);
+                return;
             }
 
             if(typeof(result) == "string") {

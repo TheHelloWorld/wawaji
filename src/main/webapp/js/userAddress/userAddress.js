@@ -13,6 +13,29 @@ $(function() {
 });
 
 
+function getSelect() {
+    console.info($("#province").val());
+
+    console.info($("#city").val());
+
+    console.info($("#district").val());
+}
+
+function setSelect() {
+    // // console.info($("#province option[text='广西壮族自治区']"))
+    //
+    $('#province').find('option[value="广西壮族自治区"]').attr("selected",true);
+
+
+
+    // $("#province option[text='广西壮族自治区']").attr("selected", true);
+    //
+    // $("#province").val("广西壮族自治区");
+    //
+    // $("#city").val("贵港市");
+    //
+    // $("#district").val("覃塘区");
+}
 
 // 判断当前是否可以继续添加地址
 function judeUserAddress(userNo) {

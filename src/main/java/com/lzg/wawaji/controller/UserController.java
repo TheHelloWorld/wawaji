@@ -49,7 +49,7 @@ public class UserController {
 
             if(result.getValue() == null) {
                 logger.warn("wawaji warn: 没有对应的用户编号 userNO:{}", userNo);
-                JSONUtil.getSuccessReturnJSON(BaseConstant.FAIL);
+                return JSONUtil.getSuccessReturnJSON(BaseConstant.FAIL);
             }
 
             // 将用户编号放入cookie中

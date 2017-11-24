@@ -1,10 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+    <meta name="keywords" content="关键词" />
+    <meta name="description" content="描述" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <title>title</title>
+
+    <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css" >
+
+    <link rel="stylesheet" type="text/css" href="/css/index/index.css" >
+
+    <link rel="stylesheet" type="text/css" href="/dist/css/sb-admin-2.css" >
+    <!-- jQuery -->
+    <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script type="text/javascript" src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="/common/js/commonUtil.js"></script>
+
+    <script src="/dist/js/distpicker/distpicker.min.js"></script>
+
+    <script src="/js/userAddress/userAddress.js"></script>
 </head>
 <body>
+<div class="index-body-div">
+    <nav class = "index-header default-height" >
+        test header
+    </nav>
+    <div class="default-height">
+    </div>
+    <div class="form-control">
+        <div data-toggle="distpicker" class="form-group">         <!-- container -->
+            <select class="form-control" id="province"></select>      <!-- 省 -->
+            <select class="form-control" id="city"></select>          <!-- 市 -->
+            <select class="form-control" id="district"></select>      <!-- 区 -->
+        </div>
+        <button onclick="getSelect()">123123123123</button>
+        <button onclick="setSelect()">333333333333</button>
+    </div>
+    <div class="default-height">
+    </div>
+    <nav class = "index-footer default-height" >
+        <button id="addUserAddress" onclick="toAddUserAddressPage()" class="btn btn-outline btn-primary btn-lg btn-block">添加地址</button>
+    </nav>
+</div>
+
 
 </body>
 </html>
