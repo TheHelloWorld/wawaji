@@ -1,6 +1,9 @@
 // 每页数据数
 var userNo = "";
 
+// 是否可以添加标志位
+var canAdd = true;
+
 $(function() {
     // 获得用户编号
     userNo = getQueryString("userNo");
@@ -36,7 +39,7 @@ function judeUserAddress(userNo) {
 
             // 若后台操作成功则删除当前行
             if(data["result"] == "fail") {
-               $("#addUserAddress").attr("disable", true);
+                canAdd = false;
             }
         }
     });
@@ -90,8 +93,13 @@ function getAllUserAddressByUserNo(userNo) {
 
 // 添加元素
 function toAddUserAddressPage() {
+    if(canAdd) {
+        window.location.href = "/wawaji/userAddress/userAddressDetailPage.html?type=add&userNo="+userNo+"";
+    } else {
+        alert("最多只能有5个地址")
+    }
 
-    window.location.href = "/wawaji/userAddress/userAddressDetailPage.html?type=add&userNo="+userNo+"";
+
 }
 
 // 修改元素
@@ -129,6 +137,7 @@ function deleteUserAddress(id) {
             }
 
             $("#userAddress"+id).remove();
+            canAdd = true;
         }
     });
 
