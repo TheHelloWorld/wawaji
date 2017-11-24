@@ -12,31 +12,6 @@ $(function() {
 
 });
 
-
-function getSelect() {
-    console.info($("#province").val());
-
-    console.info($("#city").val());
-
-    console.info($("#district").val());
-}
-
-function setSelect() {
-    // // console.info($("#province option[text='广西壮族自治区']"))
-    //
-    $('#province').find('option[value="广西壮族自治区"]').attr("selected",true);
-
-
-
-    // $("#province option[text='广西壮族自治区']").attr("selected", true);
-    //
-    // $("#province").val("广西壮族自治区");
-    //
-    // $("#city").val("贵港市");
-    //
-    // $("#district").val("覃塘区");
-}
-
 // 判断当前是否可以继续添加地址
 function judeUserAddress(userNo) {
     $.ajax({
@@ -97,10 +72,11 @@ function getAllUserAddressByUserNo(userNo) {
 
                 str += "<div id='userAddress"+list[i]["id"]+"' class='row'>";
                 str += "<div class='panel-body' style='background: #ffff99'>";
-                str += "<p>姓名:" + list[i]["userName"] + "</p>";
+                str += "<p>收货人:" + list[i]["userName"] + "</p>";
                 str += "<p>手机号:" + list[i]["mobileNo"] + "</p>";
+                str += "<p>" + list[i]["province"] + " "+ list[i]["city"] +" "+ list[i]["district"] +"</p>";
                 str += "<p>地址:" + list[i]["address"] + "</p>";
-                str += "<p>操作:<a href='javascript:void(0);' onclick='toEditUserAddressPage(" + list[i]["id"] + ")'>修改</a>";
+                str += "<p>操作:<a href='javascript:void(0);' onclick='toEditUserAddressPage(" + list[i]["id"] + ")'>修改</a> | ";
                 str += "<a href='javascript:void(0);' onclick='deleteUserAddress(" + list[i]["id"] + ")'>删除</a></p>";
                 str += "</div>";
                 str += "</div>"
@@ -115,13 +91,13 @@ function getAllUserAddressByUserNo(userNo) {
 // 添加元素
 function toAddUserAddressPage() {
 
-    window.location.href = "/wawaji/userAddress/userAddressDetailPage.jsp?type=add&userNo="+userNo+"";
+    window.location.href = "/wawaji/userAddress/userAddressDetailPage.html?type=add&userNo="+userNo+"";
 }
 
 // 修改元素
 function toEditUserAddressPage(id) {
 
-    window.location.href = "/wawaji/userAddress/userAddressDetailPage.jsp?type=update&userNo="+userNo+"&id="+id;
+    window.location.href = "/wawaji/userAddress/userAddressDetailPage.html?type=update&userNo="+userNo+"&id="+id;
 }
 
 // 修改元素

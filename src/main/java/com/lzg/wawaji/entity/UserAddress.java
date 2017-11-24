@@ -25,6 +25,21 @@ public class UserAddress extends BaseEntity implements Serializable {
     private String mobileNo;
 
     /**
+     * 省市
+     */
+    private String province;
+
+    /**
+     * 城市
+     */
+    private String city;
+
+    /**
+     * 区域
+     */
+    private String district;
+
+    /**
      * 地址
      */
     private String address;
@@ -51,6 +66,30 @@ public class UserAddress extends BaseEntity implements Serializable {
 
     public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
     public String getAddress() {

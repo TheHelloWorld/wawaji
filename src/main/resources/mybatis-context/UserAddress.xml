@@ -12,6 +12,12 @@
         <result property="userName" column="user_name" jdbcType="VARCHAR"/>
         <!-- 手机号 -->
         <result property="mobileNo" column="mobile_no" jdbcType="VARCHAR"/>
+        <!-- 省市 -->
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <!-- 城市 -->
+        <result property="city" column="city" jdbcType="VARCHAR"/>
+        <!-- 区域 -->
+        <result property="district" column="district" jdbcType="VARCHAR"/>
         <!-- 地址 -->
         <result property="address" column="address" jdbcType="VARCHAR"/>
         <!-- 创建时间 -->
@@ -27,6 +33,9 @@
             user_no,
             user_name,
             mobile_no,
+            province,
+            city,
+            district,
             address
             )
         values
@@ -34,6 +43,9 @@
             #{userNo, jdbcType=VARCHAR},
             #{userName, jdbcType=VARCHAR},
             #{mobileNo, jdbcType=VARCHAR},
+            #{province, jdbcType=VARCHAR},
+            #{city, jdbcType=VARCHAR},
+            #{district, jdbcType=VARCHAR},
             #{address, jdbcType=VARCHAR}
             )
     </insert>
@@ -50,6 +62,9 @@
             user_no,
             user_name,
             mobile_no,
+            province,
+            city,
+            district,
             address
         from user_address
         where user_no = #{userNo}
@@ -62,6 +77,9 @@
             user_no,
             user_name,
             mobile_no,
+            province,
+            city,
+            district,
             address
         from user_address
         where user_no = #{userNo} and id = #{id}
@@ -70,8 +88,11 @@
     <!-- 根据id,用户编号修改用户地址 -->
     <update id="updateUserAddressByIdAndUserNo">
         update user_address set
-            mobile_no = #{mobileNo, jdbcType=VARCHAR},
             user_name = #{userName, jdbcType=VARCHAR},
+            mobile_no = #{mobileNo, jdbcType=VARCHAR},
+            province = #{province, jdbcType=VARCHAR},
+            city = #{city, jdbcType=VARCHAR},
+            district = #{district, jdbcType=VARCHAR},
             address = #{address, jdbcType=VARCHAR}
         where id = #{id} and user_no = #{userNo}
     </update>

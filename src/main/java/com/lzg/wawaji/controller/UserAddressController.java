@@ -1,9 +1,8 @@
 package com.lzg.wawaji.controller;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
 import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
-import com.lzg.wawaji.entity.Region;
 import com.lzg.wawaji.entity.UserAddress;
 import com.lzg.wawaji.service.UserAddressService;
 import com.lzg.wawaji.utils.JSONUtil;
@@ -53,14 +52,14 @@ public class UserAddressController {
 
     /**
      * 添加用户地址
-     * @param userAddress 用户地址
+     * @param paramStr 用户地址
      * @return
      */
     @RequestMapping(value = "/addUserAddress", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String addUserAddress(UserAddress userAddress) {
+    public String addUserAddress(String paramStr) {
 
-        CommonResult result = userAddressService.addUserAddressService(userAddress);
+        CommonResult result = userAddressService.addUserAddressService(JSON.parseObject(paramStr, UserAddress.class));
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
@@ -104,48 +103,16 @@ public class UserAddressController {
 
     /**
      * 根据id和用户编号修改用户地址
-     * @param userAddress 用户地址
+     * @param paramStr 用户地址
      * @return
      */
     @RequestMapping(value = "/updateUserAddressByIdAndUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String updateUserAddressByIdAndUserNo(UserAddress userAddress) {
+    public String updateUserAddressByIdAndUserNo(String paramStr) {
 
-        CommonResult result =  userAddressService.updateUserAddressByIdAndUserNo(userAddress);
+        CommonResult result =  userAddressService.updateUserAddressByIdAndUserNo(JSON.parseObject(paramStr, UserAddress.class));
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
-    }
-
-    /**
-     * 根据地区编码获得子地区和数量
-     * @param parentCode 用户地址
-     * @return
-     */
-    @RequestMapping(value = "/getRegionByParentCode", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    @ResponseBody
-    public String getRegionByParentCode(String parentCode) {
-
-        CommonResult<Integer> countResult = userAddressService.countRegionByParentCode(parentCode);
-
-        if(!countResult.success()) {
-            return JSONUtil.getErrorJson();
-        }
-
-        JSONObject json = new JSONObject();
-
-        if(countResult.getValue() > 0) {
-            CommonResult<List<Region>> result = userAddressService.getRegionByParentCode(parentCode);
-
-            if(!result.success()) {
-                return JSONUtil.getErrorJson();
-            }
-
-            json.put("is_success",BaseConstant.SUCCESS);
-            json.put("result",result.getValue());
-        }
-        json.put("region_count",countResult.getValue());
-
-        return json.toJSONString();
     }
 
 }

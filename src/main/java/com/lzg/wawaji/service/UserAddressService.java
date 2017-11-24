@@ -1,7 +1,6 @@
 package com.lzg.wawaji.service;
 
 import com.lzg.wawaji.bean.CommonResult;
-import com.lzg.wawaji.entity.Region;
 import com.lzg.wawaji.entity.UserAddress;
 
 import java.util.List;
@@ -48,18 +47,4 @@ public interface UserAddressService {
      * @param userNo 用户编号
      */
     CommonResult deleteUserAddressByIdAndUserNo(Long id, String userNo);
-
-    /**
-     * 根据父级地区编码获得子地区
-     * @param parentCode 父级地区编码
-     * @return
-     */
-    CommonResult<List<Region>> getRegionByParentCode(String parentCode);
-
-    /**
-     * 根据父级地区编码获得子地区数量
-     * @param parentCode 父级地区编码
-     * @return
-     */
-    CommonResult<Integer> countRegionByParentCode(String parentCode);
 }

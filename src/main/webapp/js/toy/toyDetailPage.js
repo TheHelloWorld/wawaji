@@ -1,4 +1,4 @@
-var returnUtl = "/wawaji/toy/toy.jsp";
+var returnUrl = "/wawaji/toy/toy.jsp";
 
 $(function(){
     // 判断当前类型为修改
@@ -16,14 +16,14 @@ function updateOrSaveToy() {
 
     if(getQueryString("type") == "save") {
         var saveUrl = "/wawaji/toy/addToy.action";
-        saveThis(saveUrl, returnUtl);
+        saveThis(saveUrl, returnUrl);
     } else {
         var updateUrl = "/wawaji/toy/updateToyByIdAndToyNo.action";
-        updateThis(updateUrl, returnUtl);
+        updateThis(updateUrl, returnUrl);
     }
 }
 
 // 返回玩具列表页
 function cancelThis() {
-    window.location.href = returnUtl;
+    window.location.href = returnUrl;
 }

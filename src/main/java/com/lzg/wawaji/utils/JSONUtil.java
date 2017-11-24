@@ -21,7 +21,6 @@ public class JSONUtil {
 
             return JSONUtil.getSuccessReturnJSON(result.getValue());
         }
-
         return JSONUtil.getErrorJson();
     }
 

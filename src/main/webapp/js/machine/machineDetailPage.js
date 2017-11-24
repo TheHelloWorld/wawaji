@@ -1,8 +1,8 @@
-var returnUtl = "/wawaji/machine/machine.jsp";
+var returnUrl = "/wawaji/machine/machine.jsp";
 
 // 返回玩具列表页
 function cancelThis() {
-    window.location.href = returnUtl;
+    window.location.href = returnUrl;
 }
 
 $(function(){
@@ -23,10 +23,10 @@ function updateOrSaveMachine() {
 
     if(getQueryString("type") == "save") {
         var saveUrl = "/wawaji/machine/addMachine.action";
-        saveThis(saveUrl, returnUtl);
+        saveThis(saveUrl, returnUrl);
     } else {
         var updateUrl = "/wawaji/machine/updateMachineByIdAndMachineNo.action";
-        updateThis(updateUrl, returnUtl);
+        updateThis(updateUrl, returnUrl);
     }
 
 }
