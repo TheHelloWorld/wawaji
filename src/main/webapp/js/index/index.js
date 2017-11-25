@@ -126,22 +126,21 @@ function getAllMachineByPage(nowPage) {
                 }
 
                 str += "<div class='machine-col-xs-6' >";
-                str += "<div class='machine-panel panel-info'>";
-                str += "<div class='panel-heading'></div>";
-                str += "<div class='panel-body' style='background: #ffff99'>";
-                str += "<img height='100px' width=100% src='" + list[i]["toyImg"] + "' />";
-                str += "<p>" + list[i]["toyName"] + "</p>";
-                str += "<p>围观:" + list[i]["viewer"] + "</p>";
-                str += "<p>游戏币:" + list[i]["toyNowCoin"] + "</p>";
-
+                str += "    <div class='machine-panel panel-info'>";
+                str += "        <div class='panel-body'>";
+                str += "            <div class='toy-img index-img'>"
+                str += "                <img height='100px' width=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
+                str += "            </div>";
+                str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
+                str += "            <div><span>围观:" + list[i]["viewer"] + "</span></div>"
+                str += "            <div><span style='margin-right: 15%'><img src='/image/background/coin.ico' />:" + list[i]["toyNowCoin"] + "</span>";
                 if(list[i]["available"] == "true") {
-                    str += "<p>空闲</p>";
+                    str += "        空闲</div>";
                 } else {
-                    str += "<p>使用中</p>";
+                    str += "        <span style='margin-left: 15%'><img src='/image/background/busy.ico' />使用中</span></div>";
                 }
-                str += "</div>";
-                str += "<div class='panel-footer'></div>";
-                str += "</div>";
+                str += "        </div>";
+                str += "    </div>";
                 str += "</div>";
 
                 if(i % 2 != 0) {
