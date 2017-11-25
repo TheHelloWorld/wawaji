@@ -19,9 +19,9 @@ public class JSONUtil {
 
         if(result.success()) {
 
-            return JSONUtil.getSuccessReturnJSON(result.getValue());
+            return getSuccessReturnJSON(result.getValue());
         }
-        return JSONUtil.getErrorJson();
+        return getErrorJson();
     }
 
     /**
@@ -34,10 +34,10 @@ public class JSONUtil {
 
         if(result.success()) {
 
-            return JSONUtil.getSuccessReturnJSON(str);
+            return getSuccessReturnJSON(str);
         }
 
-        return JSONUtil.getErrorJson();
+        return getErrorJson();
     }
 
     /**
@@ -57,20 +57,24 @@ public class JSONUtil {
 
     /**
      * 获得总数据数和每页数据数
-     * @param totalCount 总记录数
+     * @param result 总记录数
      * @param pageSize 每页数据数
      * @return
      */
-    public static String getTotalCountAndPageSize(int totalCount, int pageSize) {
+    public static String getTotalCountAndPageSize(CommonResult<Integer> result, int pageSize) {
 
-        JSONObject json = new JSONObject();
+        if(result.success()) {
 
-        json.put("is_success", BaseConstant.SUCCESS);
-        json.put("totalCount", totalCount);
-        json.put("pageSize", pageSize);
+            JSONObject json = new JSONObject();
 
-        return json.toJSONString();
+            json.put("is_success", BaseConstant.SUCCESS);
+            json.put("totalCount", result.getValue());
+            json.put("pageSize", pageSize);
 
+            return json.toJSONString();
+        }
+
+        return getErrorJson();
     }
 
     /**

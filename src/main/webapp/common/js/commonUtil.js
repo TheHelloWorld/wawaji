@@ -541,7 +541,6 @@ function getAllByPage(url, startPage) {
 
             $("#dataBody").append(str);
         }
-
     });
 }
 
@@ -557,19 +556,28 @@ function getTotalCountAndPageSize(url) {
                 data = eval("("+data+")");
             }
 
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
             totalCount = data["totalCount"];
 
             pageSize = data["pageSize"];
 
             if(totalCount <= pageSize) {
+
                 totalPage = 1;
+
             } else if(totalCount % pageSize == 0) {
+
                 totalPage = totalCount / pageSize;
+
             } else {
+
                 totalPage = parseInt(totalCount / pageSize);
             }
         }
-
     });
 }
 

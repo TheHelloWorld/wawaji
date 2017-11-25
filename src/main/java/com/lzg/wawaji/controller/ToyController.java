@@ -46,10 +46,7 @@ public class ToyController {
 
         CommonResult<Integer> result = toyService.countAllToy();
 
-        if(result.success()) {
-            return JSONUtil.getTotalCountAndPageSize(result.getValue(), BaseConstant.DEFAULT_PAGE_SIZE);
-        }
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getTotalCountAndPageSize(result, BaseConstant.DEFAULT_PAGE_SIZE);
     }
 
     /**

@@ -65,3 +65,7 @@
     height: 100%;
     position:absolute;
 }
+
+.nav-center {
+    text-align: center;
+}

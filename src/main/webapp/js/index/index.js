@@ -7,6 +7,8 @@ var showUrl = "/wawaji/machine/getAllMachineByPage.action";
 
 var width = $(window).width() / 2 - 20;
 
+var userNo = "";
+
 $(function(){
     var url = "/wawaji/machine/getMachineTotalCountAndPageSize.action";
     getTotalCountAndPageSize(url);
@@ -45,6 +47,7 @@ function userAutoLogin() {
                 result = eval("("+result+")");
             }
             console.info(result);
+            userNo = result["userNo"];
 
         }
     });
@@ -85,7 +88,7 @@ function userLoginOrRegister() {
             }
 
             console.info(result);
-
+            userNo = result["userNo"];
 
         }
     });
@@ -175,4 +178,16 @@ function nextPage() {
 function lastPage() {
     nowPage = lastPageNum(nowPage, totalPage, step);
     getAllByPage(showUrl, nowPage);
+}
+
+function toUserToy() {
+    window.location.href="/wawaji/userToy/userToy.html?userNo="+userNo;
+}
+
+function toRecharge() {
+    window.location.href="/wawaji/userToy/userToy.html?userNo="+userNo;
+}
+
+function toUserIndex() {
+    window.location.href="/wawaji/userToy/userToy.html?userNo="+userNo;
 }
