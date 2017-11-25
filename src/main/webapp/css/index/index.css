@@ -23,16 +23,15 @@
 
 .inner-div {
     overflow:hidden;
-    line-height:40px;
+    line-height:60px;
 }
 
 .default-height {
-    height:40px;
+    height:60px;
     width:100%;
 }
 
 .machine-panel {
-
     background-color: #fff;
     border: 1px solid #bce8f1;
     border-radius: 4px;

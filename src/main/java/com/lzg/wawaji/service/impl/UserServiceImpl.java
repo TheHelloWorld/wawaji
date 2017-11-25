@@ -152,14 +152,17 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 if(userCoin >= needCoin) {
 
                     try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                        String key = BaseConstant.MACHINE_IN_USE.replace("#{}", machineNo);
                         // 判断当前机器是否已有用户使用
-                        if(redisUtil.setnx(machineNo, userNo) == 0) {
+                        if(redisUtil.setnx(key, userNo) == 0) {
                             // 若当前机器已被占用
                             got(BaseConstant.MARCHINE_ALREADY_IN_UES);
                             return;
                         }
                     } catch (Exception e) {
-                        logger.error("{} redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                        logger.error("{} userPlay redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                        got(BaseConstant.MARCHINE_ALREADY_IN_UES);
+                        return;
                     }
 
                     // 添加用户消费记录
@@ -223,7 +226,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 String timeout = systemProperties.getProperty("sms_time_out");
 
                 // 获取redis链接
-                try(RedisUtil redisUtil = new RedisUtil("redis")) {
+                try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
                     String random = Random.getRandom();
 

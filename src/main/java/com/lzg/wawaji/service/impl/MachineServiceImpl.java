@@ -183,25 +183,6 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
     }
 
     /**
-     * 根据机器编号获得机器记录
-     * @param machineNo 机器编号
-     * @return
-     */
-    @Override
-    public CommonResult<Machine> getMachineByMachineNo(final String machineNo) {
-
-        JSONObject json = new JSONObject();
-        json.put("machineNo",machineNo);
-
-        return exec(new Callback() {
-            @Override
-            public void exec() {
-                got(machineDao.getMachineByMachineNo(machineNo));
-            }
-        }, "getMachineByMachineNo", json.toJSONString());
-    }
-
-    /**
      * 根据机器编号获得所需游戏币数
      * @param machineNo 机器编号
      * @return
@@ -218,6 +199,39 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
                 got(machineDao.getCoinByMachineNo(machineNo));
             }
         }, "getCoinByMachineNo", json.toJSONString());
+    }
+
+    /**
+     * 根据机器编号获得当前机器是否可用
+     * @param machineNo 机器编号
+     * @return
+     */
+    @Override
+    public CommonResult<String> getMachineInUse(final String machineNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("machineNo",machineNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                    String key = BaseConstant.MACHINE_IN_USE.replace("#{}", machineNo);
+                    // 获得当前机器锁
+                    String value = redisUtil.get(key);
+                    if(value == null) {
+                        got("true");
+                        return;
+                    }
+                    got("false");
+                    return;
+                } catch (Exception e) {
+                    logger.error("{} getMachineInUse redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                    got("false");
+                    return;
+                }
+            }
+        }, "getMachineInUse", json.toJSONString());
     }
 
     @Override

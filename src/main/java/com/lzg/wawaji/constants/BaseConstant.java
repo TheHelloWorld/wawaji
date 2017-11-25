@@ -114,4 +114,9 @@ public class BaseConstant {
 	 */
 	public static final String REDIS = "redis";
 
+	/**
+	 * 机器正在被使用key
+	 */
+	public static final String MACHINE_IN_USE = "#{}_in_use";
+
 }

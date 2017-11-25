@@ -109,7 +109,7 @@
             t.toy_img,
             t.toy_name
         from machine m, toy t
-        where m.toy_no = t.toy_no
+        where m.toy_no = t.toy_no and m.current_state = 1
           limit #{startPage}, #{pageSize}
     </select>
 

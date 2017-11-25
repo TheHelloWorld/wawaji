@@ -56,16 +56,18 @@ public interface MachineService {
     CommonResult deleteMachineByIdAndMachineNo(Long id, String machineNo);
 
     /**
-     * 根据机器编号获得机器信息
-     * @param machineNo 机器编号
-     * @return
-     */
-    CommonResult<Machine> getMachineByMachineNo(String machineNo);
-
-    /**
      * 根据机器编号获得所需游戏币数
      * @param machineNo 机器编号
      * @return
      */
     CommonResult<Integer> getCoinByMachineNo(String machineNo);
+
+    /**
+     * 根据机器编号获得当前机器是否可用
+     * @param machineNo 机器编号
+     * @return
+     */
+    CommonResult<String> getMachineInUse(String machineNo);
+
+
 }

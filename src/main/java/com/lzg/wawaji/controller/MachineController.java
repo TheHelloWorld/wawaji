@@ -107,7 +107,6 @@ public class MachineController {
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 
-
     /**
      * 根据id和机器编号删除机器记录
      * @param id id
@@ -121,5 +120,19 @@ public class MachineController {
         CommonResult result =  machineService.deleteMachineByIdAndMachineNo(id, machineNo);
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
+    }
+
+    /**
+     * 根据机器编号判断当前机器是否可用
+     * @param machineNo 机器编号
+     * @return
+     */
+    @RequestMapping(value = "/getMachineInUse", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getMachineInUse(String machineNo) {
+
+        CommonResult<String> result = machineService.getMachineInUse(machineNo);
+
+        return JSONUtil.getReturnBeanString(result);
     }
 }
