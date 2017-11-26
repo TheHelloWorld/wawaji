@@ -33,7 +33,7 @@
 </head>
 <body>
 <div class="index-body-div">
-    <nav class = "index-header default-height nav-center" >
+    <nav class = "index-default-header default-height nav-center" >
         地址详情
     </nav>
     <div class="default-height">
@@ -45,30 +45,46 @@
         <span name = "userNo">
             <input type="hidden" id = "userNo">
         </span>
-        收货人:
-        <span name = "userName">
-            <input class="form-control" id = "userName">
-        </span>
-        手机号:
-        <span name = "mobileNo">
-            <input class="form-control" id = "mobileNo">
-        </span>
-        <br/>
-        <div  data-toggle="distpicker" class="form-group">
-            <span name = "province">
-                <select class="form-control" id="province"></select>
-            </span>
-            <span name = "city">
-                <select class="form-control" id="city"></select>
-            </span>
-            <span name = "district">
-                <select class="form-control" id="district"></select>
-            </span>
+        <div class='my-bottom-line address-margin-bottom'>
+            <div class="address-margin-bottom">
+                <span>收货人:</span>
+                <span name = "userName" style="margin-bottom: 5px">
+                    <input class="my-form-control" id = "userName">
+                </span>
+            </div>
         </div>
-        详细住址:
-        <span name = "address">
-            <input class="form-control" id = "address">
-        </span>
+        <div class='my-bottom-line address-margin-bottom'>
+            <div class="address-margin-bottom">
+                <span>手机号:</span>
+                <span name = "mobileNo">
+                    <input class="my-form-control" id = "mobileNo">
+                </span>
+            </div>
+        </div>
+        <br/>
+        <div class='my-bottom-line address-margin-bottom'>
+            <div class="address-margin-bottom">
+                <div  data-toggle="distpicker" class="form-group">
+                    <span name = "province">
+                        <select class="my-select-form-control" id="province"></select>
+                    </span>
+                    <span name = "city">
+                        <select class="my-select-form-control" id="city"></select>
+                    </span>
+                    <span name = "district">
+                        <select class="my-select-form-control" id="district"></select>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class='my-bottom-line address-margin-bottom'>
+            <div class="address-margin-bottom">
+                <span>详细住址:</span>
+                <span name = "address">
+                    <input class="my-form-control" id = "address">
+                </span>
+            </div>
+        </div>
     </div>
     <div class="default-height">
     </div>
