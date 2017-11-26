@@ -28,11 +28,11 @@ public class UserToyController {
      * @param startPage 开始页
      * @return
      */
-    @RequestMapping(value = "/getUserToyByUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/getUserToyListByUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String getUserToyByUserNo(String userNo, int startPage) {
+    public String getUserToyListByUserNo(String userNo, int startPage) {
 
-        CommonResult<List<UserToy>> result = userToyService.getUserToyByUserNo(userNo, startPage);
+        CommonResult<List<UserToy>> result = userToyService.getUserToyListByUserNo(userNo, startPage);
 
         return JSONUtil.getReturnBeanString(result);
     }
@@ -65,6 +65,20 @@ public class UserToyController {
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 
+    /**
+     * 根据用户编号和id获得用户娃娃记录
+     * @param userNo 用户编号
+     * @param id id
+     * @return
+     */
+    @RequestMapping(value = "/getUserToyByUserNoAndId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getUserToyByUserNoAndId(String userNo, Long id) {
+
+        CommonResult<UserToy> result = userToyService.getUserToyByUserNoAndId(userNo, id);
+
+        return JSONUtil.getReturnStrString(result, String.valueOf(result.getValue()));
+    }
     /**
      * 根据用户编号.id修改战利品选择类型
      * @param choiceType 选择类型

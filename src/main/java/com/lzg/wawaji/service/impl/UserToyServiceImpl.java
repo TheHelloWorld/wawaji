@@ -67,7 +67,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
      * @return
      */
     @Override
-    public CommonResult<List<UserToy>> getUserToyByUserNo(final String userNo, final int startPage) {
+    public CommonResult<List<UserToy>> getUserToyListByUserNo(final String userNo, final int startPage) {
 
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
@@ -77,10 +77,29 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
         return exec(new Callback() {
             @Override
             public void exec() {
-                got(userToyDao.getUserToyByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
+                got(userToyDao.getUserToyListByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
         },"getUserToyByUserNo", json.toJSONString());
+    }
 
+    /**
+     * 根据用户编号和id获得用户娃娃记录
+     * @param userNo 用户编号
+     * @param id id
+     * @return
+     */
+    @Override
+    public CommonResult<UserToy> getUserToyByUserNoAndId(final String userNo, final Long id) {
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+        json.put("id", id);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userToyDao.getUserToyByUserNoAndId(userNo, id));
+            }
+        },"getUserToyByUserNoAndId", json.toJSONString());
     }
 
     /**

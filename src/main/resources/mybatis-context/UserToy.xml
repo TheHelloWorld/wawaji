@@ -22,6 +22,8 @@
         <!-- 链表查询用字段 toy -->
         <!-- 娃娃图片 -->
         <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
+        <!-- 娃娃图片 -->
+        <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!-- 添加用户娃娃记录 -->
@@ -43,17 +45,39 @@
     </insert>
 
     <!-- 根据用户编号分页获得所有用户娃娃记录 -->
-    <select id="getUserSpendRecordByUserNo" resultMap="userToyMap">
+    <select id="countUserToyByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from user_toy where user_no = #{userNo}
+    </select>
+
+    <!-- 根据用户编号分页获得所有用户娃娃记录 -->
+    <select id="getUserToyListByUserNo" resultMap="userToyMap">
         select
             u.id,
             u.user_no,
             u.toy_no,
             u.choice_type,
             u.handle_status,
-            t.toy_img
+            t.toy_img,
+            t.toy_name,
+            u.create_time
         from user_toy u,toy t
-        where u.toy_no = t.toy_no and user_no = #{userNo}
+        where u.toy_no = t.toy_no and u.user_no = #{userNo}
         limit #{startPage}, #{pageSize}
+    </select>
+
+    <!-- 根据用户编号和id获得用户娃娃记录 -->
+    <select id="getUserToyByUserNoAndId" resultMap="userToyMap">
+        select
+            u.id,
+            u.user_no,
+            u.toy_no,
+            u.choice_type,
+            u.handle_status,
+            t.toy_img,
+            t.toy_name,
+            u.create_time
+        from user_toy u,toy t
+        where u.toy_no = t.toy_no and u.user_no = #{userNo} and u.id = #{id}
     </select>
 
     <!-- 根据id,用户编号修改选择方式 -->

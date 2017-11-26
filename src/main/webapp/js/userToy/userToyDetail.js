@@ -1,72 +1,29 @@
 // 每页数据数
 var userNo = "";
 
-var nowPage = 1;
+var id = 0;
 
 $(function() {
 
     // 获得用户编号
     userNo = getQueryString("userNo");
 
-    // 获得总页数和总数量
-    getTotalCountAndPageSizeByUserNo();
+    id = getQueryString("id");
     
-    // 获得当前用户所有战利品
-    getAllUserToyByUserNo();
+    // 根据用户编号和id获得记录信息
+    getUserToyByUserNoAndId();
 
 });
 
-// 获得总页数和总数量
-function getTotalCountAndPageSizeByUserNo() {
+// 根据用户编号和id获得记录信息
+function getUserToyByUserNoAndId() {
+
     $.ajax({
-        url:"/wawaji/userToy/getMachineTotalCountAndPageSize.action",
+        url:"/wawaji/userToy/getUserToyByUserNoAndId.action",
         type:"POST",
         async:false,
         data:{
-            userNo:userNo
-        },
-        success:function(data){
-
-            if(typeof(data) == "string"){
-                data = eval("("+data+")");
-            }
-
-            if(data["is_success"] != "success") {
-                alert(data["result"]);
-                return;
-            }
-
-            totalCount = data["totalCount"];
-
-            pageSize = data["pageSize"];
-
-            if(totalCount <= pageSize) {
-
-                totalPage = 1;
-
-            } else if(totalCount % pageSize == 0) {
-
-                totalPage = totalCount / pageSize;
-
-            } else {
-
-                totalPage = parseInt(totalCount / pageSize);
-            }
-        }
-    });
-}
-
-// 获得当前用户所有战利品
-function getAllUserToyByUserNo() {
-
-    var startPage = (nowPage -1 ) * pageSize;
-
-    $.ajax({
-        url:"/wawaji/userToy/getUserToyByUserNo.action",
-        type:"POST",
-        async:false,
-        data:{
-            startPage:startPage,
+            id:id,
             userNo:userNo
         },
         success:function(data){
@@ -82,38 +39,26 @@ function getAllUserToyByUserNo() {
                 return;
             }
 
-            var list = data["result"];
-            var str = "";
+            var result = data["result"];
 
-            for(var i = 0; i<list.length; i++) {
-
-                if(i % 2 == 0) {
-                    str += "<div class='row' style='margin-bottom: 5px'>";
-                }
-
-                str += "<div class='machine-col-xs-6' onclick='toUserToyDetail("+list["id"]+")' >";
-                str += "    <div class='machine-panel panel-info'>";
-                str += "        <div class='panel-body'>";
-                str += "            <div class='toy-img index-img'>"
-                str += "                <img height='100px' width=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
-                str += "            </div>";
-                str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
-                str += "            <div style='margin-bottom: 2px'><span>" + list[i]["createTime"] + "</span></div>";
-                str += "        </div>";
-                str += "    </div>";
-                str += "</div>";
-
-                if(i % 2 != 0) {
-                    str += "</div>";
-                }
+            if(typeof(result) == "string") {
+                result = eval("("+result+")");
             }
-            $("#userAddress").append(str);
+
+            var str = " <div class='user-toy-div'>";
+            str += "<img class='user-toy-img toy-img index-img' src='" + result["toyImg"] + "'>";
+            str += "    </div>";
+
+
+
+            $("#userToy").append(str);
+
+            console.info(result);
         }
     });
 }
 
-// 修改元素
-function toUserToyDetail(id) {
-
-    window.location.href = "/wawaji/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
+// 返回用户战利品也
+function toUserToy() {
+    window.location.href = "/wawaji/userToy/userToy.html?userNo="+userNo;
 }

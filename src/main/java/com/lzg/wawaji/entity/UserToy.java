@@ -36,7 +36,10 @@ public class UserToy extends BaseEntity implements Serializable {
      */
     private String toyImg;
 
-
+    /**
+     * 娃娃名称
+     */
+    private String toyName;
 
     public String getUserNo() {
         return userNo;
@@ -76,5 +79,13 @@ public class UserToy extends BaseEntity implements Serializable {
 
     public void setHandleStatus(Integer handleStatus) {
         this.handleStatus = handleStatus;
+    }
+
+    public String getToyName() {
+        return toyName;
+    }
+
+    public void setToyName(String toyName) {
+        this.toyName = toyName;
     }
 }

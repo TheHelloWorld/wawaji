@@ -19,7 +19,7 @@ $(function() {
 // 获得总页数和总数量
 function getTotalCountAndPageSizeByUserNo() {
     $.ajax({
-        url:"/wawaji/userToy/getMachineTotalCountAndPageSize.action",
+        url:"/wawaji/userToy/countUserToyByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -62,7 +62,7 @@ function getAllUserToyByUserNo() {
     var startPage = (nowPage -1 ) * pageSize;
 
     $.ajax({
-        url:"/wawaji/userToy/getUserToyByUserNo.action",
+        url:"/wawaji/userToy/getUserToyListByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -91,14 +91,16 @@ function getAllUserToyByUserNo() {
                     str += "<div class='row' style='margin-bottom: 5px'>";
                 }
 
-                str += "<div class='machine-col-xs-6' onclick='toUserToyDetail("+list["id"]+")' >";
+                str += "<div class='machine-col-xs-6' onclick='toUserToyDetail("+list[i]["id"]+")' >";
                 str += "    <div class='machine-panel panel-info'>";
                 str += "        <div class='panel-body'>";
                 str += "            <div class='toy-img index-img'>"
                 str += "                <img height='100px' width=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
                 str += "            </div>";
                 str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
-                str += "            <div style='margin-bottom: 2px'><span>" + list[i]["createTime"] + "</span></div>";
+                var newDate = new Date();
+                newDate.setTime(list[i]["createTime"]);
+                str += "            <div style='margin-bottom: 2px'><span>" +newDate.format('yyyy-MM-dd h:m') + "</span></div>";
                 str += "        </div>";
                 str += "    </div>";
                 str += "</div>";
@@ -107,7 +109,7 @@ function getAllUserToyByUserNo() {
                     str += "</div>";
                 }
             }
-            $("#userAddress").append(str);
+            $("#userToy").append(str);
         }
     });
 }
