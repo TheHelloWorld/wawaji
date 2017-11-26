@@ -1,5 +1,4 @@
 .index-body-div {
-
     height:1000px;
     overflow:scroll;
 }
@@ -22,7 +21,10 @@
     background:#6DDBF6;
     border-radius: 15px;
     border: 1px solid saddlebrown;
+}
 
+.index-center {
+    text-align: center;
 }
 
 .inner-div {
@@ -41,7 +43,7 @@
 }
 
 .default-height {
-    height:60px;
+    height: 6%;
     width:100%;
 }
 
@@ -59,7 +61,6 @@
 }
 
 .machine-col-xs-6 {
-
     position: relative;
     min-height: 1px;
     padding-left: 5px;
@@ -88,6 +89,7 @@
 
 .nav-center {
     text-align: center;
+    vertical-align: middle;
 }
 
 .index-img {
@@ -99,3 +101,28 @@
     background: url('/image/button/user-toy.ico') no-repeat;
 }
 
+.my-inline-right {
+    margin-right: 10%
+}
+
+.my-inline-left {
+    margin-left: 10%
+}
+
+.my-bottom-line {
+    border-bottom: 1px solid grey;
+    margin-bottom: 1px;
+}
+
+.my-edit-right {
+    margin-left: 60%;
+    margin-right: 3%;
+}
+
+.my-margin-bottom {
+    margin-bottom: 5px;
+}
+
+.div-radius {
+    border-radius: 15px;
+}

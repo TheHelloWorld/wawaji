@@ -73,15 +73,19 @@ function getAllUserAddressByUserNo(userNo) {
 
             for(var i = 0; i<list.length; i++) {
 
-                str += "<div id='userAddress"+list[i]["id"]+"' class='row'>";
-                str += "<div class='panel-body' style='background: #ffff99'>";
-                str += "<p>收货人:" + list[i]["userName"] + "</p>";
-                str += "<p>手机号:" + list[i]["mobileNo"] + "</p>";
-                str += "<p>" + list[i]["province"] + " "+ list[i]["city"] +" "+ list[i]["district"] +"</p>";
-                str += "<p>地址:" + list[i]["address"] + "</p>";
-                str += "<p>操作:<a href='javascript:void(0);' onclick='toEditUserAddressPage(" + list[i]["id"] + ")'>修改</a> | ";
-                str += "<a href='javascript:void(0);' onclick='deleteUserAddress(" + list[i]["id"] + ")'>删除</a></p>";
-                str += "</div>";
+                str += "<div class='my-bottom-line div-radius' id='userAddress"+list[i]["id"]+"' class='row'>";
+                str += "    <div class='panel-body' >";
+                str += "        <div class='my-margin-bottom'>";
+                str += "            <span class='my-inline-right' >收货人:" + list[i]["userName"] + "</span>";
+                str += "            <span class='my-inline-left' >手机号:" + list[i]["mobileNo"] + "</span>";
+                str += "        </div>";
+                str += "        <div class='my-margin-bottom' >" + list[i]["province"] + "&nbsp;"+ list[i]["city"] +"&nbsp;"+ list[i]["district"] +"</div>";
+                str += "        <div class='my-margin-bottom' >地址:" + list[i]["address"] + "</div>";
+                str += "        <div>";
+                str += "            <a class='my-edit-right' href='javascript:void(0);' onclick='toEditUserAddressPage(" + list[i]["id"] + ")'><img src='/image/background/edit.ico' />修改</a>";
+                str += "            <a href='javascript:void(0);' onclick='deleteUserAddress(" + list[i]["id"] + ")'><img src='/image/background/remove.ico' />删除</a>";
+                str += "        </div>";
+                str += "    </div>";
                 str += "</div>"
             }
 
