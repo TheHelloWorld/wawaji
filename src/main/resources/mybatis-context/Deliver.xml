@@ -114,7 +114,7 @@
     </select>
 
     <!-- 根据id,用户编号修改用户地址及状态 -->
-    <update id="updateDeliverMsgByIdAndUserNo">
+    <update id="updateDeliverMsgByIdAndUserNo" parameterType="com.lzg.wawaji.entity.Deliver">
         update deliver set
             deliver_no = #{deliverNo, jdbcType=VARCHAR},
             company = #{company, jdbcType=VARCHAR},

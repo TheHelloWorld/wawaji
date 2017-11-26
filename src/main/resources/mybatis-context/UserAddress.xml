@@ -86,7 +86,7 @@
     </select>
 
     <!-- 根据id,用户编号修改用户地址 -->
-    <update id="updateUserAddressByIdAndUserNo">
+    <update id="updateUserAddressByIdAndUserNo" parameterType="com.lzg.wawaji.entity.UserAddress">
         update user_address set
             user_name = #{userName, jdbcType=VARCHAR},
             mobile_no = #{mobileNo, jdbcType=VARCHAR},
