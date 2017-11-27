@@ -90,6 +90,12 @@
     bottom: 3%;
 }
 
+.footer-text {
+    bottom: 0px;
+    padding: 0px;
+    margin: 0px
+}
+
 .banner-box {
     width: 100%;
     position:relative;

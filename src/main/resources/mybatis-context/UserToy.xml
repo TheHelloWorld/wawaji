@@ -24,6 +24,8 @@
         <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
         <!-- 娃娃图片 -->
         <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
+        <!-- 娃娃兑换游戏币数 -->
+        <result property="toyForCoin" column="toy_for_coin" jdbcType="INTEGER"/>
     </resultMap>
 
     <!-- 添加用户娃娃记录 -->
@@ -75,6 +77,7 @@
             u.handle_status,
             t.toy_img,
             t.toy_name,
+            t.toy_for_coin,
             u.create_time
         from user_toy u,toy t
         where u.toy_no = t.toy_no and u.user_no = #{userNo} and u.id = #{id}

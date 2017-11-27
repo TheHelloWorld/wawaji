@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.lzg.wawaji.bean.Callback;
 import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
+import com.lzg.wawaji.dao.DeliverDao;
 import com.lzg.wawaji.dao.UserToyDao;
+import com.lzg.wawaji.entity.Deliver;
 import com.lzg.wawaji.entity.UserToy;
 import com.lzg.wawaji.enums.ChoiceType;
 import com.lzg.wawaji.enums.HandleStatus;
@@ -25,6 +27,9 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
     @Autowired
     private UserToyDao userToyDao;
+
+    @Autowired
+    private DeliverDao deliverDao;
 
     /**
      * 添加用户娃娃记录
@@ -119,6 +124,12 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
         return exec(new Callback() {
             @Override
             public void exec() {
+                // TODO lzk 在琢磨琢磨选择发货后怎么办
+                if(ChoiceType.FOR_DELIVER.getStatus() == choiceType) {
+                    Deliver deliver = new Deliver();
+                    deliver.setUserNo(userNo);
+
+                }
                 userToyDao.updateChoiceTypeByIdAndUserNo(choiceType, id, userNo);
             }
         }, "updateChoiceTypeByIdAndUserNo", json.toJSONString());

@@ -10,8 +10,9 @@ public enum HandleStatus {
 
 
     INIT(0, "未处理"),
-    COIN(1, "已兑换"),
-    DELIVER(2,"已发货");
+    COIN(10, "已兑换"),
+    WAIT_DELIVER(20, "待发货"),
+    DELIVER(30,"已发货");
 
     /**
      * 状态
