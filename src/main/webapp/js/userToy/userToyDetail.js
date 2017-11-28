@@ -5,7 +5,13 @@ var id = 0;
 
 var toyForCoin = 0;
 
+var handleStatus = 0;
+
 var choiceTypeFlag = false;
+
+var userToyJson = {};
+
+var userAddressJson = {};
 
 $(function() {
 
@@ -50,6 +56,8 @@ function getUserToyByUserNoAndId() {
             }
 
             toyForCoin = result["toyForCoin"];
+
+            handleStatus = result["handleStatus"];
 
             var str = " <div class='row'>";
             str += "        <div class='user-toy-div'>";
@@ -143,17 +151,25 @@ function getAllUserAddressByUserNo(userNo) {
             var str = "";
 
             for(var i = 0; i<list.length; i++) {
+                str += "<label style='width: 100%;'>";
+                str += "<input type='radio' name='userAddress' value='"+list[i]["id"]+"' />";
 
                 str += "<div class='my-bottom-line div-radius' id='userAddress"+list[i]["id"]+"' class='row'>";
                 str += "    <div class='panel-body' >";
                 str += "        <div class='my-margin-bottom'>";
-                str += "            <span class='my-inline-right' >收货人:" + list[i]["userName"] + "</span>";
+                str += "            <input id = 'userName"+list[i]["id"]+"' type='hidden' value='" + list[i]["userName"] + "' >";
+                str += "            <span  class='my-inline-right' >收货人:" + list[i]["userName"] + "</span>";
+                str += "            <input id = 'mobileNo"+list[i]["id"]+"' type='hidden' value='" + list[i]["mobileNo"] + "' >";
                 str += "            <span class='my-inline-left' >手机号:" + list[i]["mobileNo"] + "</span>";
                 str += "        </div>";
+                str += "        <input id = 'province"+list[i]["id"]+"' type='hidden' value='" + list[i]["province"] + "&nbsp;"+ list[i]["city"] +"&nbsp;"+ list[i]["district"] +"' >";
                 str += "        <div class='my-margin-bottom' >" + list[i]["province"] + "&nbsp;"+ list[i]["city"] +"&nbsp;"+ list[i]["district"] +"</div>";
+                str += "        <input id = 'address"+list[i]["id"]+"' type='hidden' value='" + list[i]["address"] + "' >";
                 str += "        <div class='my-margin-bottom' >地址:" + list[i]["address"] + "</div>";
                 str += "    </div>";
                 str += "</div>"
+                str += "</label>";
+
             }
 
             $("#userAddress").append(str);
@@ -164,15 +180,31 @@ function getAllUserAddressByUserNo(userNo) {
 
 // 修改选择方式
 function updateChoiceType() {
+
+    userToyJson["id"] = id;
+    userToyJson["userNo"] = userNo;
+    userToyJson["choiceType"] = $("#choiceType").val();
+    userToyJson["toyForCoin"] = toyForCoin;
+    userToyJson["handleStatus"] = handleStatus;
+
+    var userToyStr = JSON.stringify(userToyJson);
+
+    if($("#choiceType").val() == 2) {
+        var userAddressId = $('input:radio:checked').val();
+        userAddressJson["userName"] = $("#userName"+userAddressId).val();
+        userAddressJson["mobileNo"] = $("#mobileNo"+userAddressId).val();
+        userAddressJson["address"] = $("#province"+userAddressId).val() + $("#address"+userAddressId).val();
+    }
+
+    var userAddressStr = JSON.stringify(userAddressJson);
+
     $.ajax({
         url:"/wawaji/userToy/updateChoiceTypeByIdAndUserNo.action",
         type:"POST",
         async:false,
         data:{
-            choiceType:$("#choiceType").val(),
-            id:id,
-            userNo:userNo,
-            toyForCoin:toyForCoin
+            userToyStr:userToyStr,
+            userAddressStr:userAddressStr
         },
         success:function (data) {
             // 转换数据

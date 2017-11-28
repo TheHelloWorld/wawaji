@@ -92,7 +92,8 @@
     <update id="updateChoiceTypeByIdAndUserNo" parameterType="com.lzg.wawaji.entity.UserToy">
         update user_toy set
           choice_type = #{choiceType, jdbcType=INTEGER},
-          deliver_id = #{deliverId, jdbcType=BIGINT}
+          deliver_id = #{deliverId, jdbcType=BIGINT},
+          handle_status = #{handleStatus, jdbcType=INTEGER}
         where id = #{id} and user_no = #{userNo}
     </update>
 

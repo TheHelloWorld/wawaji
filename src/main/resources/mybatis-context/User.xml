@@ -79,7 +79,7 @@
           user_name,
           user_img,
           user_coin
-        from `user` where user_no = #{userNo}
+        from `user` where user_no = #{userNo, jdbcType=VARCHAR}
     </select>
 
     <!-- 根据手机号获得用户记录 -->
@@ -91,21 +91,21 @@
           user_name,
           user_img,
           user_coin
-        from `user` where mobile_no = #{mobileNo}
+        from `user` where mobile_no = #{mobileNo, jdbcType=VARCHAR}
     </select>
 
     <!-- 根据用户编号修改用户游戏币数(用户操作 充值coin为正数,消费coin为负数) -->
     <update id="updateUserCoinByUserNo">
         update `user` set
-          user_coin += #{userCoin, jdbcType=INTEGER}
-        where user_no = #{userNo}
+          user_coin = user_coin + #{coin, jdbcType=INTEGER}
+        where user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
     <!-- 根据id修改用户游戏币数(后台操作) -->
     <update id="updateUserCoinByIdAndUserNo">
         update `user` set
         user_coin = #{userCoin, jdbcType=INTEGER}
-        where id = #{id} and user_no = #{userNo}
+        where id = #{id} and user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
 </mapper>

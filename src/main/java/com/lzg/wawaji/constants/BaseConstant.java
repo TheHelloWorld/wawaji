@@ -119,4 +119,6 @@ public class BaseConstant {
 	 */
 	public static final String MACHINE_IN_USE = "#{}_in_use";
 
+	public static final String COOKIE_USER_NO = "toilet_cat_user_no";
+
 }

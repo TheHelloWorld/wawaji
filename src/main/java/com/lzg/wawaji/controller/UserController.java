@@ -37,10 +37,10 @@ public class UserController {
     public String autoLogin(HttpServletRequest request, HttpServletResponse response) {
 
         // 从cookie中获取userNo
-        String userNo = CommonHandle.getCookieValue(request, "userNo");
+        String userNo = CommonHandle.getCookieValue(request, BaseConstant.COOKIE_USER_NO);
 
-        if(StringUtils.isBlank(userNo)) {
-            JSONUtil.getSuccessReturnJSON(BaseConstant.FAIL);
+        if(StringUtils.isBlank(userNo) || "null".equals(userNo)) {
+            return JSONUtil.getSuccessReturnJSON(BaseConstant.FAIL);
         }
 
         CommonResult<User> result = userService.getUserByUserNo(userNo);
@@ -107,7 +107,7 @@ public class UserController {
     private void setUserNoInCookie(HttpServletResponse response, String userNo) {
 
         //将用户No放入COOKIE中
-        Cookie passport = new Cookie("userNo", userNo);
+        Cookie passport = new Cookie(BaseConstant.COOKIE_USER_NO, userNo);
         logger.info("用户userNo放入cookie中,userNo:{}", userNo);
         //设定有效时间  以秒(s)为单位
         passport.setMaxAge(25920000);

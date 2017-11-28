@@ -12,6 +12,7 @@ import com.lzg.wawaji.entity.Deliver;
 import com.lzg.wawaji.entity.UserAddress;
 import com.lzg.wawaji.entity.UserToy;
 import com.lzg.wawaji.enums.ChoiceType;
+import com.lzg.wawaji.enums.DeliverStatus;
 import com.lzg.wawaji.enums.HandleStatus;
 import com.lzg.wawaji.service.UserToyService;
 import org.slf4j.Logger;
@@ -136,10 +137,12 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                     deliver.setAddress(userAddress.getAddress());
                     deliver.setMobileNo(userAddress.getMobileNo());
                     deliver.setUserName(userAddress.getUserName());
+                    deliver.setDeliverStatus(DeliverStatus.INIT.getStatus());
 
                     deliverDao.addDeliver(deliver);
 
                     userToy.setDeliverId(deliver.getId());
+                    userToy.setHandleStatus(HandleStatus.WAIT_DELIVER.getStatus());
 
                 } else if(ChoiceType.FOR_COIN.getStatus() == choiceType) {
                     // 添加相应的游戏币给用户
