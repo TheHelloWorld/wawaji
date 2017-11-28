@@ -41,13 +41,10 @@ public interface UserToyDao {
     UserToy getUserToyByUserNoAndId(@Param("userNo") String userNo, @Param("id") Long id);
 
     /**
-     * 根据id,用户编号修改选择方式
-     * @param choiceType 用户选择方式
-     * @param id id
-     * @param userNo 用户编号
+     * 根据id,用户编号修改选择方式及其送货编号
+     * @param userToy 用户娃娃
      */
-    void updateChoiceTypeByIdAndUserNo(@Param("choiceType") Integer choiceType, @Param("id") Long id,
-                                       @Param("userNo") String userNo);
+    void updateChoiceTypeByIdAndUserNo(UserToy userToy);
 
     /**
      * 根据用id,用户编号修改处理状态

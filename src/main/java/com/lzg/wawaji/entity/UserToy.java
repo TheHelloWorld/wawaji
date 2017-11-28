@@ -25,6 +25,11 @@ public class UserToy extends BaseEntity implements Serializable {
     private Integer choiceType;
 
     /**
+     * 发货记录id
+     */
+    private Long deliverId;
+
+    /**
      * 处理状态
      */
     private Integer handleStatus;
@@ -76,6 +81,14 @@ public class UserToy extends BaseEntity implements Serializable {
 
     public void setChoiceType(Integer choiceType) {
         this.choiceType = choiceType;
+    }
+
+    public Long getDeliverId() {
+        return deliverId;
+    }
+
+    public void setDeliverId(Long deliverId) {
+        this.deliverId = deliverId;
     }
 
     public Integer getHandleStatus() {

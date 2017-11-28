@@ -6,8 +6,10 @@ import com.lzg.wawaji.bean.Callback;
 import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.DeliverDao;
+import com.lzg.wawaji.dao.UserDao;
 import com.lzg.wawaji.dao.UserToyDao;
 import com.lzg.wawaji.entity.Deliver;
+import com.lzg.wawaji.entity.UserAddress;
 import com.lzg.wawaji.entity.UserToy;
 import com.lzg.wawaji.enums.ChoiceType;
 import com.lzg.wawaji.enums.HandleStatus;
@@ -30,6 +32,9 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
     @Autowired
     private DeliverDao deliverDao;
+
+    @Autowired
+    private UserDao userDao;
 
     /**
      * 添加用户娃娃记录
@@ -109,30 +114,42 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
     /**
      * 根据id,用户编号修改选择方式
-     * @param choiceType 用户选择方式
-     * @param id id
-     * @param userNo 用户编号
+     * @param userToy 用户玩具
+     * @param userAddress 用户地址
      */
     @Override
-    public CommonResult updateChoiceTypeByIdAndUserNo(final Integer choiceType, final Long id, final String userNo) {
-
-        JSONObject json = new JSONObject();
-        json.put("choiceType", ChoiceType.getValueMapByKey(choiceType).name());
-        json.put("id", id);
-        json.put("userNo", userNo);
+    public CommonResult updateChoiceTypeByIdAndUserNo(final UserToy userToy, final UserAddress userAddress) {
 
         return exec(new Callback() {
             @Override
             public void exec() {
                 // TODO lzk 在琢磨琢磨选择发货后怎么办
+                Integer choiceType = userToy.getChoiceType();
+
+                String userNo = userToy.getUserNo();
+
+
                 if(ChoiceType.FOR_DELIVER.getStatus() == choiceType) {
+
                     Deliver deliver = new Deliver();
                     deliver.setUserNo(userNo);
+                    deliver.setAddress(userAddress.getAddress());
+                    deliver.setMobileNo(userAddress.getMobileNo());
+                    deliver.setUserName(userAddress.getUserName());
 
+                    deliverDao.addDeliver(deliver);
+
+                    userToy.setDeliverId(deliver.getId());
+
+                } else if(ChoiceType.FOR_COIN.getStatus() == choiceType) {
+                    // 添加相应的游戏币给用户
+                    userDao.updateUserCoinByUserNo((userToy.getToyForCoin()), userNo);
                 }
-                userToyDao.updateChoiceTypeByIdAndUserNo(choiceType, id, userNo);
+
+                userToyDao.updateChoiceTypeByIdAndUserNo(userToy);
+
             }
-        }, "updateChoiceTypeByIdAndUserNo", json.toJSONString());
+        }, "updateChoiceTypeByIdAndUserNo", JSON.toJSONString(userToy));
     }
 
     /**

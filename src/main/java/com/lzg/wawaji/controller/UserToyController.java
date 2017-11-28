@@ -5,6 +5,7 @@ import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.entity.UserAddress;
 import com.lzg.wawaji.entity.UserToy;
+import com.lzg.wawaji.enums.ChoiceType;
 import com.lzg.wawaji.service.UserToyService;
 import com.lzg.wawaji.utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,16 +82,24 @@ public class UserToyController {
     }
     /**
      * 根据用户编号.id修改战利品选择类型
-     * @param choiceType 选择类型
-     * @param id id
-     * @param userNo 用户编号
+     * @param userToyStr 用户玩具str
+     * @param userAddressStr 用户地址str
      * @return
      */
     @RequestMapping(value = "/updateChoiceTypeByIdAndUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String updateChoiceTypeByIdAndUserNo(Integer choiceType, Long id, String userNo) {
+    public String updateChoiceTypeByIdAndUserNo(String userToyStr, String userAddressStr) {
 
-        CommonResult result =  userToyService.updateChoiceTypeByIdAndUserNo(choiceType, id, userNo);
+        UserToy userToy = JSON.parseObject(userToyStr, UserToy.class);
+
+        UserAddress userAddress = null;
+
+        // 若为选择寄送类型
+        if(ChoiceType.FOR_DELIVER.getStatus() == userToy.getChoiceType()) {
+            userAddress = JSON.parseObject(userAddressStr, UserAddress.class);
+        }
+
+        CommonResult result =  userToyService.updateChoiceTypeByIdAndUserNo(userToy, userAddress);
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }

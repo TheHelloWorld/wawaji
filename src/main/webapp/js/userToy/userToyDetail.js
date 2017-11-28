@@ -3,6 +3,8 @@ var userNo = "";
 
 var id = 0;
 
+var toyForCoin = 0;
+
 var choiceTypeFlag = false;
 
 $(function() {
@@ -46,6 +48,9 @@ function getUserToyByUserNoAndId() {
             if(typeof(result) == "string") {
                 result = eval("("+result+")");
             }
+
+            toyForCoin = result["toyForCoin"];
+
             var str = " <div class='row'>";
             str += "        <div class='user-toy-div'>";
             str += "            <img class='user-toy-img toy-img index-img' src='" + result["toyImg"] + "'>";
@@ -159,7 +164,6 @@ function getAllUserAddressByUserNo(userNo) {
 
 // 修改选择方式
 function updateChoiceType() {
-    console.info($("#choiceType").val())
     $.ajax({
         url:"/wawaji/userToy/updateChoiceTypeByIdAndUserNo.action",
         type:"POST",
@@ -167,7 +171,8 @@ function updateChoiceType() {
         data:{
             choiceType:$("#choiceType").val(),
             id:id,
-            userNo:userNo
+            userNo:userNo,
+            toyForCoin:toyForCoin
         },
         success:function (data) {
             // 转换数据

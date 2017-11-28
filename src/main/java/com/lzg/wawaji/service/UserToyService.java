@@ -1,6 +1,7 @@
 package com.lzg.wawaji.service;
 
 import com.lzg.wawaji.bean.CommonResult;
+import com.lzg.wawaji.entity.UserAddress;
 import com.lzg.wawaji.entity.UserToy;
 
 import java.util.List;
@@ -38,11 +39,10 @@ public interface UserToyService {
 
     /**
      * 根据id,用户编号修改选择方式
-     * @param choiceType 用户选择方式
-     * @param id id
-     * @param userNo 用户编号
+     * @param userToy 用户玩具
+     * @param userAddress 用户地址
      */
-    CommonResult updateChoiceTypeByIdAndUserNo(Integer choiceType, Long id, String userNo);
+    CommonResult updateChoiceTypeByIdAndUserNo(UserToy userToy, UserAddress userAddress);
 
     /**
      * 根据用id,用户编号修改处理状态

@@ -29,7 +29,7 @@
     </resultMap>
 
     <!-- 添加发货记录 -->
-    <insert id="addDeliver" parameterType="com.lzg.wawaji.entity.Deliver">
+    <insert id="addDeliver" useGeneratedKeys="true" keyProperty="id" parameterType="com.lzg.wawaji.entity.Deliver">
         insert into deliver
             (
             user_no,
