@@ -234,6 +234,25 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
         }, "getMachineInUse", json.toJSONString());
     }
 
+    /**
+     * 根据机器编号获得玩具编号和玩具图片地址
+     * @param machineNo 机器编号
+     * @return
+     */
+    @Override
+    public CommonResult<UserMachine> getToyNoAndToyImgByMachineNo(final String machineNo) {
+        JSONObject json = new JSONObject();
+        json.put("machineNo",machineNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                UserMachine userMachine = machineDao.getToyNoAndToyImgByMachineNo(machineNo);
+                got(userMachine);
+            }
+        }, "getToyNoAndToyImgByMachineNo", json.toJSONString());
+    }
+
     @Override
     protected Logger getLogger() {
         return logger;

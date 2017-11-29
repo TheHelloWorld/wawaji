@@ -69,5 +69,12 @@ public interface MachineService {
      */
     CommonResult<String> getMachineInUse(String machineNo);
 
+    /**
+     * 根据机器编号获得玩具编号和玩具图片地址
+     * @param machineNo 机器编号
+     * @return
+     */
+    CommonResult<UserMachine> getToyNoAndToyImgByMachineNo(String machineNo);
+
 
 }

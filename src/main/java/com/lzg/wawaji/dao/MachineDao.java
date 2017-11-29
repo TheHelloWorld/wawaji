@@ -17,6 +17,13 @@ public interface MachineDao {
     void addMachine(Machine machine);
 
     /**
+     * 根据机器编号获得玩具编号和玩具图片地址
+     * @param machineNo 机器编号
+     * @return
+     */
+    UserMachine getToyNoAndToyImgByMachineNo(String machineNo);
+
+    /**
      * 获得所有机器记录数
      * @return
      */
