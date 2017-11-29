@@ -7,19 +7,21 @@ import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.DeliverDao;
 import com.lzg.wawaji.dao.UserDao;
+import com.lzg.wawaji.dao.UserSpendRecordDao;
 import com.lzg.wawaji.dao.UserToyDao;
 import com.lzg.wawaji.entity.Deliver;
 import com.lzg.wawaji.entity.UserAddress;
+import com.lzg.wawaji.entity.UserSpendRecord;
 import com.lzg.wawaji.entity.UserToy;
-import com.lzg.wawaji.enums.ChoiceType;
-import com.lzg.wawaji.enums.DeliverStatus;
-import com.lzg.wawaji.enums.HandleStatus;
+import com.lzg.wawaji.enums.*;
 import com.lzg.wawaji.service.UserToyService;
+import com.lzg.wawaji.utils.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("all")
@@ -36,6 +38,9 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private UserSpendRecordDao userSpendRecordDao;
 
     /**
      * 添加用户娃娃记录
@@ -124,9 +129,10 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
         return exec(new Callback() {
             @Override
             public void exec() {
-                // TODO lzk 在琢磨琢磨选择发货后怎么办
-                Integer choiceType = userToy.getChoiceType();
 
+                // 选择类型
+                Integer choiceType = userToy.getChoiceType();
+                // 用户编号
                 String userNo = userToy.getUserNo();
 
 
@@ -147,6 +153,22 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                 } else if(ChoiceType.FOR_COIN.getStatus() == choiceType) {
                     // 添加相应的游戏币给用户
                     userDao.updateUserCoinByUserNo((userToy.getToyForCoin()), userNo);
+
+                    UserSpendRecord userSpendRecord = new UserSpendRecord();
+                    // 用户编号
+                    userSpendRecord.setUserNo(userNo);
+                    // 玩具兑换游戏币数
+                    userSpendRecord.setCoin(userToy.getToyForCoin());
+                    // 交易日期
+                    userSpendRecord.setTradeDate(DateUtil.getDate());
+                    // 交易时间
+                    userSpendRecord.setTradeTime(new Date());
+                    // 交易状态 成功
+                    userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
+                    // 交易类型 玩具兑换成游戏币
+                    userSpendRecord.setTradeType(TradeType.TOY_FOR_COIN.getType());
+
+                    userSpendRecordDao.addUserSpendRecord(userSpendRecord);
                 }
 
                 userToyDao.updateChoiceTypeByIdAndUserNo(userToy);
