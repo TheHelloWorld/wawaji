@@ -1,8 +1,8 @@
 package com.lzg.wawaji.service;
 
 import com.lzg.wawaji.bean.CommonResult;
+import com.lzg.wawaji.bean.UserMachine;
 import com.lzg.wawaji.entity.Machine;
-import com.lzg.wawaji.entity.UserMachine;
 
 import java.util.List;
 

@@ -26,7 +26,7 @@
     </resultMap>
 
     <!-- 用户查看机器表 -->
-    <resultMap type="com.lzg.wawaji.entity.UserMachine" id="userMachineMap">
+    <resultMap type="com.lzg.wawaji.bean.UserMachine" id="userMachineMap">
         <!-- 主键Id -->
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 机器编号 -->

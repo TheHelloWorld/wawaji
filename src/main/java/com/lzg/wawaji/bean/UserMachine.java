@@ -1,4 +1,6 @@
-package com.lzg.wawaji.entity;
+package com.lzg.wawaji.bean;
+
+import com.lzg.wawaji.entity.BaseEntity;
 
 import java.io.Serializable;
 

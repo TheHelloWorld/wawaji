@@ -49,3 +49,42 @@
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
+
+.zzc {
+    width: 100%;
+    position: fixed;
+    left: 0px;
+    top: 25%;
+    z-index: 92;
+}
+
+.resultMsgImg {
+    text-align: center;
+    margin-top: 10%;
+    font-size: 52px;
+    z-index: 90;
+    color: white
+}
+
+.resultMsg {
+    width: 100%;
+    position: fixed;
+    left: 0px;
+    top: 0;
+    opacity: 0.7;
+    z-index: 91
+}
+
+.resultMsgButton {
+    text-align:center;
+}
+
+.resultMsgButton button{
+    width: 35%;
+    height: 75px;
+    font-size: 52px;
+    margin-top: 3%;
+    background: #FEFE9E;
+    border: 0px;
+    border-radius: 20px;
+}

@@ -1,7 +1,7 @@
 package com.lzg.wawaji.dao;
 
+import com.lzg.wawaji.bean.UserMachine;
 import com.lzg.wawaji.entity.Machine;
-import com.lzg.wawaji.entity.UserMachine;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

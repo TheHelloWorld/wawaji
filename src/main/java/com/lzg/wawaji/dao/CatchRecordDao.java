@@ -1,5 +1,6 @@
 package com.lzg.wawaji.dao;
 
+import com.lzg.wawaji.bean.UserCatchRecord;
 import com.lzg.wawaji.entity.CatchRecord;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,12 @@ public interface CatchRecordDao {
      * @param catchRecord 抓取记录
      */
     void addCatchRecord(CatchRecord catchRecord);
+
+    /**
+     * 获得最近成功的抓取记录(10条)
+     * @return
+     */
+    List<UserCatchRecord> getLatelyCatchSuccessRecord();
 
     /**
      * 根据用户编号获得用户抓取记录数量
