@@ -34,6 +34,10 @@ var tableOrPicture = false;
 // 储存或修改用json
 var json = {};
 
+$(function(){
+    $(".index-body-div").height($(window).height());
+});
+
 //初始化页码
 function initPage(num, step){
 

@@ -125,7 +125,13 @@ function getAllMachineByPage(nowPage) {
                     str += "<div class='row' style='margin-bottom: 5px'>";
                 }
 
-                str += "<div class='machine-col-xs-6' >";
+                if(i % 2 == 0) {
+                    str += "<div class='machine-col-xs-6-left' >";
+                } else if(i % 2 != 0) {
+                    str += "<div class='machine-col-xs-6-right' >";
+                }
+
+
                 str += "    <div class='machine-panel panel-info'>";
                 str += "        <div class='panel-body'>";
                 str += "            <div class='toy-img index-img'>"

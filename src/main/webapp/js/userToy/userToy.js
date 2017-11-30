@@ -4,7 +4,6 @@ var userNo = "";
 var nowPage = 1;
 
 $(function() {
-
     // 获得用户编号
     userNo = getQueryString("userNo");
 
@@ -89,9 +88,15 @@ function getAllUserToyByUserNo() {
 
                 if(i % 2 == 0) {
                     str += "<div class='row' style='margin-bottom: 5px'>";
+
                 }
 
-                str += "<div class='machine-col-xs-6' onclick='toUserToyDetail("+list[i]["id"]+")' >";
+                if(i % 2 == 0) {
+                    str += "<div class='machine-col-xs-6-left' onclick='toUserToyDetail("+list[i]["id"]+")' >";
+                } else if(i % 2 != 0) {
+                    str += "<div class='machine-col-xs-6-right' onclick='toUserToyDetail("+list[i]["id"]+")' >";
+                }
+
                 str += "    <div class='machine-panel panel-info'>";
                 str += "        <div class='panel-body'>";
                 str += "            <div class='toy-img index-img'>"

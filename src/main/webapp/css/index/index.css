@@ -1,5 +1,5 @@
 .index-body-div {
-    height:1000px;
+
     overflow:scroll;
 }
 
@@ -71,7 +71,23 @@
 .machine-col-xs-6 {
     position: relative;
     min-height: 1px;
-    padding-left: 5px;
+    padding-left: 15px;
+    float: left;
+    width: 50%
+}
+
+.machine-col-xs-6-left {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    float: left;
+    width: 50%
+}
+
+.machine-col-xs-6-right {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
     float: left;
     width: 50%
 }
