@@ -52,10 +52,13 @@
 
 .zzc {
     width: 100%;
+    height: 100%;
     position: fixed;
+    background: snow;
+    overflow: auto;
     left: 0px;
-    top: 25%;
-    z-index: 92;
+    top: 0%;
+    z-index: 150;
 }
 
 .resultMsgImg {

@@ -14,6 +14,7 @@ var userToyJson = {};
 var userAddressJson = {};
 
 $(function() {
+    $("#zzc").hide();
 
     // 获得用户编号
     userNo = getQueryString("userNo");
@@ -22,6 +23,7 @@ $(function() {
     
     // 根据用户编号和id获得记录信息
     getUserToyByUserNoAndId();
+    console.info(123)
 
 });
 
@@ -110,7 +112,7 @@ function getUserToyByUserNoAndId() {
                 str += "</nav>";
             }
 
-            $("#userAddress").before(str);
+            $("#zzc").before(str);
         }
     });
 }
@@ -152,7 +154,7 @@ function getAllUserAddressByUserNo(userNo) {
 
             for(var i = 0; i<list.length; i++) {
                 str += "<label style='width: 100%;'>";
-                str += "<input type='radio' name='userAddress' value='"+list[i]["id"]+"' />";
+                str += "<input type='radio' name='userAddress' onclick='clickAddress(this)' value='"+list[i]["id"]+"' />";
 
                 str += "<div class='my-bottom-line div-radius' id='userAddress"+list[i]["id"]+"' class='row'>";
                 str += "    <div class='panel-body' >";
@@ -167,15 +169,30 @@ function getAllUserAddressByUserNo(userNo) {
                 str += "        <input id = 'address"+list[i]["id"]+"' type='hidden' value='" + list[i]["address"] + "' >";
                 str += "        <div class='my-margin-bottom' >地址:" + list[i]["address"] + "</div>";
                 str += "    </div>";
-                str += "</div>"
+                str += "</div>";
                 str += "</label>";
 
             }
 
             $("#userAddress").append(str);
+
+            $("#zzc").show();
         }
 
     });
+}
+
+// 点击地址
+function clickAddress(etc) {
+    $("#zzc").hide();
+    $("#choiceAddress").html("");
+    $("#choiceAddress").append($("#userAddress"+$(etc).val()).html());
+    $("#choiceAddress").append("<a href='javascript:void(0);' onclick='reChoiceAddress()'>重新选择>></a>");
+}
+
+// 重新选择地址
+function reChoiceAddress() {
+    $("#zzc").show();
 }
 
 // 修改选择方式
