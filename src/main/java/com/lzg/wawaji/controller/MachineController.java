@@ -64,6 +64,7 @@ public class MachineController {
 
         return JSONUtil.getTotalCountAndPageSize(result, BaseConstant.DEFAULT_PAGE_SIZE);
     }
+
     /**
      * 添加机器记录
      * @param paramStr 机器记录
