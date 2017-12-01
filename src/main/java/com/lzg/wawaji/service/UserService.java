@@ -41,4 +41,12 @@ public interface UserService {
      */
     CommonResult<User> getUserByUserNo(String userNo);
 
+    /**
+     * 根据用户编号修改用户名和用户头像
+     * @param userNo 用户编号
+     * @param userName 用户名
+     * @param userImg 用户头像
+     */
+    CommonResult updateUserInfoByIdAndUserNo(String userNo, String userName, String userImg);
+
 }

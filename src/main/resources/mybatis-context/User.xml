@@ -12,6 +12,8 @@
         <result property="mobileNo" column="mobile_no" jdbcType="VARCHAR"/>
         <!-- 用户名 -->
         <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <!-- 用户邀请码 -->
+        <result property="invitationCode" column="invitation_code" jdbcType="VARCHAR"/>
         <!-- 用户图片 -->
         <result property="userImg" column="user_img" jdbcType="VARCHAR"/>
         <!-- 用户游戏币数 -->
@@ -29,6 +31,7 @@
                 user_no,
                 mobile_no,
                 user_name,
+                invitation_code,
                 user_img,
                 user_coin
             )
@@ -37,6 +40,7 @@
                 #{userNo, jdbcType=VARCHAR},
                 #{mobileNo, jdbcType=VARCHAR},
                 #{userName, jdbcType=VARCHAR},
+                #{invitationCode, jdbcType=VARCHAR},
                 #{userImg, jdbcType=VARCHAR},
                 #{userCoin, jdbcType=INTEGER}
             )
@@ -59,6 +63,7 @@
             user_no,
             mobile_no,
             user_name,
+            invitation_code,
             user_img,
             user_coin
         from `user`
@@ -77,6 +82,7 @@
           user_no,
           mobile_no,
           user_name,
+          invitation_code,
           user_img,
           user_coin
         from `user` where user_no = #{userNo, jdbcType=VARCHAR}
@@ -89,6 +95,7 @@
           user_no,
           mobile_no,
           user_name,
+          invitation_code,
           user_img,
           user_coin
         from `user` where mobile_no = #{mobileNo, jdbcType=VARCHAR}
@@ -101,11 +108,19 @@
         where user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
-    <!-- 根据id修改用户游戏币数(后台操作) -->
+    <!-- 根据id和用户编号修改用户游戏币数(后台操作) -->
     <update id="updateUserCoinByIdAndUserNo">
         update `user` set
         user_coin = #{userCoin, jdbcType=INTEGER}
         where id = #{id} and user_no = #{userNo, jdbcType=VARCHAR}
+    </update>
+
+    <!-- 根据用户编号修改用户名和用户头像 -->
+    <update id="updateUserInfoByIdAndUserNo" >
+        update `user` set
+          user_name = #{userName, jdbcType=VARCHAR},
+          user_img = #{userImg, jdbcType=VARCHAR}
+        where user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
 </mapper>

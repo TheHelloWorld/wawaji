@@ -71,4 +71,13 @@ public interface UserDao {
      * @param userNo 用户编号
      */
     void updateUserCoinByIdAndUserNo(@Param("coin") Integer coin, @Param("id") Long id, @Param("userNo") String userNo);
+
+    /**
+     * 根据用户编号修改用户名和用户头像
+     * @param userNo 用户编号
+     * @param userName 用户名
+     * @param userImg 用户头像
+     */
+    void updateUserInfoByIdAndUserNo(@Param("userNo") String userNo, @Param("userName") String userName,
+                                     @Param("userImg") String userImg);
 }

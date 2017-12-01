@@ -64,13 +64,19 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     user = new User();
 
                     PropertiesUtil systemProperties = new PropertiesUtil("system");
-
+                    // 用户手机号
                     user.setMobileNo(mobileNo);
+                    // 用户游戏币数
                     user.setUserCoin(0);
+                    // 用户头像
                     user.setUserImg(systemProperties.getProperty("user_default_img"));
                     String userNo = UUIDUtil.generateUUID();
+                    // 用户编号
                     user.setUserNo(userNo);
+                    // 用户姓名
                     user.setUserName(Random.getRandomString(18));
+                    // 用户邀请码
+                    user.setInvitationCode(Random.getRandomString(8));
                     userDao.addUser(user);
 
                 } else {
@@ -315,6 +321,29 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
             }
         }, "getUserByUserNo", json.toJSONString());
+    }
+
+    /**
+     * 根据用户编号修改用户名和用户头像
+     * @param userNo 用户编号
+     * @param userName 用户名
+     * @param userImg 用户头像
+     */
+    @Override
+    public CommonResult updateUserInfoByIdAndUserNo(final String userNo, final String userName, final String userImg) {
+
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+        json.put("userName", userName);
+        json.put("userImg", userImg);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                userDao.updateUserInfoByIdAndUserNo(userNo, userName, userImg);
+
+            }
+        }, "updateUserInfoByIdAndUserNo", json.toJSONString());
     }
 
     @Override
