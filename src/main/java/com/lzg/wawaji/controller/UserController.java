@@ -149,4 +149,19 @@ public class UserController {
 
         return JSONUtil.getReturnBeanString(result);
     }
+
+    /**
+     * 根据用户编号修改用户名和用户头像
+     * @param userNo 用户编号
+     * @param userName 用户名
+     * @param userImg 用户头像
+     */
+    @RequestMapping(value = "/updateUserInfoByIdAndUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String updateUserInfoByIdAndUserNo(String userNo,String userName, String userImg) {
+
+        CommonResult result = userService.updateUserInfoByIdAndUserNo(userNo, userName, userImg);
+
+        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
+    }
 }
