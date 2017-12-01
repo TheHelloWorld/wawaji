@@ -108,11 +108,15 @@ public class UserController {
 
         //将用户No放入COOKIE中
         Cookie passport = new Cookie(BaseConstant.COOKIE_USER_NO, userNo);
+
         logger.info("用户userNo放入cookie中,userNo:{}", userNo);
+
         //设定有效时间  以秒(s)为单位
         passport.setMaxAge(25920000);
+
         //设置Cookie路径和域名
         passport.setPath("/");
+
         response.addCookie(passport);
     }
 
