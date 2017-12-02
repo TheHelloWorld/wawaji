@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzg.wawaji.dao.GameRoomDao">
+
+    <!-- 游戏房间表 -->
+    <resultMap type="com.lzg.wawaji.entity.GameRoom" id="gameRoomMap">
+        <!-- 主键id -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <!-- 游戏房间编号 -->
+        <result property="gameRomeNo" column="game_rome_no" jdbcType="VARCHAR"/>
+        <!-- 房间幸运值 -->
+        <result property="roomLuckyNum" column="room_lucky_num" jdbcType="INTEGER"/>
+        <!-- 房间当前幸运值 -->
+        <result property="roomNowLuckyNum" column="room_now_lucky_num" jdbcType="INTEGER"/>
+        <!-- 创建时间 -->
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <!-- 最后修改时间 -->
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 添加发货记录 -->
+    <insert id="addDeliver" useGeneratedKeys="true" keyProperty="id" parameterType="com.lzg.wawaji.entity.Deliver">
+        insert into deliver
+            (
+            user_no,
+            user_name,
+            mobile_no,
+            address,
+            deliver_no,
+            company,
+            deliver_msg,
+            deliver_status
+            )
+        values
+            (
+            #{userNo, jdbcType=VARCHAR},
+            #{userName, jdbcType=VARCHAR},
+            #{mobileNo, jdbcType=VARCHAR},
+            #{address, jdbcType=VARCHAR},
+            #{deliverNo, jdbcType=VARCHAR},
+            #{company, jdbcType=VARCHAR},
+            #{deliverMsg, jdbcType=VARCHAR},
+            #{deliverStatus, jdbcType=INTEGER}
+            )
+    </insert>
+
+    <!-- 根据用户编号获得用户发货记录数量 -->
+    <select id="countDeliverByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from deliver  where user_no = #{userNo}
+    </select>
+
+    <!-- 获得所有用户发货数量 -->
+    <select id="countAllDeliver" resultType="java.lang.Integer">
+        select count(*) from deliver
+    </select>
+
+    <!-- 根据用户编号分页获得用户发货记录集合 -->
+    <select id="getDeliverByUserNo" resultMap="deliverMap">
+        select
+            id,
+            user_no,
+            user_name,
+            mobile_no,
+            address,
+            deliver_no,
+            company,
+            deliver_msg,
+            deliver_status
+        from deliver
+        where user_no = #{userNo} order by create_time desc
+        limit #{startPage}, #{pageSize}
+    </select>
+
+    <!-- 分页获得用户发货记录集合 -->
+    <select id="getAllDeliverByPage" resultMap="deliverMap">
+        select
+            id,
+            user_no,
+            user_name,
+            mobile_no,
+            address,
+            deliver_no,
+            company,
+            deliver_msg,
+            deliver_status
+        from deliver order by create_time desc
+        limit #{startPage}, #{pageSize}
+    </select>
+
+    <!-- 根据id,用户编号获得用户地址 -->
+    <select id="getDeliverByIdAndUserNo" resultMap="deliverMap">
+        select
+            id,
+            user_no,
+            user_name,
+            mobile_no,
+            address,
+            deliver_no,
+            company,
+            deliver_msg,
+            deliver_status
+        from deliver
+        where user_no = #{userNo} and id = #{id}
+    </select>
+
+    <!-- 根据id,用户编号修改用户地址及状态 -->
+    <update id="updateDeliverMsgByIdAndUserNo" parameterType="com.lzg.wawaji.entity.Deliver">
+        update deliver set
+            deliver_no = #{deliverNo, jdbcType=VARCHAR},
+            company = #{company, jdbcType=VARCHAR},
+            deliver_msg = #{deliverMsg, jdbcType=VARCHAR},
+            deliver_status = #{deliverStatus, jdbcType=INTEGER}
+        where id = #{id} and user_no = #{userNo}
+    </update>
+
+</mapper>
