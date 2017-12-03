@@ -74,7 +74,7 @@
     </select>
 
     <!-- 分页获得所有游戏房间 -->
-    <select id="getGameRoomeListByPage" resultMap="gameRoomMap">
+    <select id="getGameRoomListByPage" resultMap="gameRoomMap">
         select
             id,
             game_room_no,
@@ -86,12 +86,12 @@
         limit #{startPage}, #{pageSize}
     </select>
 
-    <!-- 获得所有用户发货数量 -->
+    <!-- 获得所有用户可见游戏房间数量 -->
     <select id="countAllUserSeeGamRoom" resultType="java.lang.Integer">
         select count(*) from game_room where current_state = 1
     </select>
 
-    <!-- 分页获得用户发货记录集合 -->
+    <!-- 分页获得所有用户可见的游戏房间 -->
     <select id="getUserSeeGameRoomListByPage" resultMap="userSeeGameRoomMap">
         select
             g.id,
@@ -105,6 +105,28 @@
             g.current_state
         from game_room g, toy t where g.toy_no = t.toy_no and g.current_state = 1
         limit #{startPage}, #{pageSize}
+    </select>
+
+    <!-- 根据游戏房间号码获得用户可见游戏房间 -->
+    <select id="getUserSeeGameRoomListByPage" parameterType="java.lang.String" resultMap="userSeeGameRoomMap">
+        select
+            g.id,
+            g.game_room_no,
+            g.toy_no,
+            t.toy_img,
+            t.toy_now_coin,
+            t.toy_origin_coin,
+            g.room_lucky_num,
+            g.room_now_lucky_num,
+            g.current_state
+        from game_room g, toy t where g.toy_no = t.toy_no and g.game_room_no = #{gameRoomNo, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据游戏房间编号获得所需游戏币数 -->
+    <select id="getCoinByGameRoomNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+          t.toy_now_coin
+        from game_room g, toy t where g.toy_no = t.toy_no and g.game_room_no = #{gameRoomNo}
     </select>
 
     <!-- 根据游戏房间编号和id获得游戏房间数据 -->

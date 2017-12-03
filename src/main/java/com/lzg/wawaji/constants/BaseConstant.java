@@ -105,9 +105,25 @@ public class BaseConstant {
 	 */
 	public static final Integer MAX_USER_ADDRESS = 5;
 
+	/**
+	 * 地址过多提示语
+	 */
 	public static final String OVER_MAX_USER_ADDRESS = "地址最多只能填5个";
 
-	public static final String MARCHINE_ALREADY_IN_UES = "机器已被占用";
+	/**
+	 * 机器被占用提示语
+	 */
+	public static final String MACHINE_ALREADY_IN_UES = "机器已被占用";
+
+	/**
+	 * 游戏房间被占用提示语
+	 */
+	public static final String GAME_ROOM_ALREADY_IN_UES = "游戏房间已被占用";
+
+	/**
+	 * 用户游戏房间最大幸运值
+	 */
+	public static final Integer MAX_USER_ROOM_LUCKY_NUM = 50;
 
 	/**
 	 * redis配置文件名
@@ -117,7 +133,12 @@ public class BaseConstant {
 	/**
 	 * 机器正在被使用key
 	 */
-	public static final String MACHINE_IN_USE = "#{}_in_use";
+	public static final String MACHINE_IN_USE = "machine_#{}_in_use";
+
+	/**
+	 * 游戏房间正在被使用key
+	 */
+	public static final String GAME_ROOM_IN_USE = "game_room_#{}_in_use";
 
 	public static final String COOKIE_USER_NO = "toilet_cat_user_no";
 

@@ -39,13 +39,21 @@
         select count(*) from user_game_room  where user_no = #{userNo} and game_room_no = #{gameRoomNo}
     </select>
 
-    <!-- 根据用户编号获得用户游戏房间 -->
-    <select id="getUserGameRoomByUserNo" resultMap="deliverMap">
+    <!-- 根据用户编号和房间编号获得用户游戏房间 -->
+    <select id="getUserGameRoomByUserNoAndGameRoomNo" resultMap="deliverMap">
         select
             id,
             user_no,
             game_room_no,
             user_room_lucky_num
+        from user_game_room
+        where user_no = #{userNo} and game_room_no = #{gameRoomNo}
+    </select>
+
+    <!-- 根据用户编号和房间编号获得用户游戏房间幸运值 -->
+    <select id="getUserGameRoomLuckyNumByUserNo" resultType="java.lang.Integer">
+        select
+          user_room_lucky_num
         from user_game_room
         where user_no = #{userNo} and game_room_no = #{gameRoomNo}
     </select>

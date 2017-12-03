@@ -25,7 +25,15 @@ public interface UserService {
      * @param machineNo 娃娃机编号
      * @return
      */
-    CommonResult<String> userPlay(String userNo, String machineNo);
+    CommonResult<String> userPlayMachine(String userNo, String machineNo);
+
+    /**
+     * 根据用户编号,游戏房间编号判断用户是否可以进行游戏若可以则直接扣除相应游戏币数
+     * @param userNo 用户编号
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    CommonResult<String> userPlayGame(String userNo, String gameRoomNo);
 
     /**
      * 用户登录或注册方法

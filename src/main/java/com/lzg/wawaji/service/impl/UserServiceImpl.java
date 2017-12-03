@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.lzg.wawaji.bean.Callback;
 import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.bean.UserMachine;
+import com.lzg.wawaji.bean.UserSeeGameRoom;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.CatchRecordDao;
 import com.lzg.wawaji.dao.UserDao;
@@ -13,6 +14,7 @@ import com.lzg.wawaji.entity.UserSpendRecord;
 import com.lzg.wawaji.enums.CatchStatus;
 import com.lzg.wawaji.enums.TradeStatus;
 import com.lzg.wawaji.enums.TradeType;
+import com.lzg.wawaji.service.GameRoomService;
 import com.lzg.wawaji.service.MachineService;
 import com.lzg.wawaji.service.UserService;
 import com.lzg.wawaji.service.UserSpendRecordService;
@@ -39,6 +41,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     @Autowired
     private MachineService machineService;
+
+    @Autowired
+    private GameRoomService gameRoomService;
 
     @Autowired
     private UserSpendRecordService userSpendRecordService;
@@ -138,7 +143,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      */
     @Override
     @Transactional
-    public CommonResult<String> userPlay(final String userNo, final String machineNo) {
+    public CommonResult<String> userPlayMachine(final String userNo, final String machineNo) {
 
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
@@ -176,12 +181,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     // 判断当前机器是否已有用户使用
                     if (redisUtil.setnx(key, userNo) == 0) {
                         // 若当前机器已被占用
-                        got(BaseConstant.MARCHINE_ALREADY_IN_UES);
+                        got(BaseConstant.MACHINE_ALREADY_IN_UES);
                         return;
                     }
                 } catch (Exception e) {
-                    logger.error("{} userPlay redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
-                    got(BaseConstant.MARCHINE_ALREADY_IN_UES);
+                    logger.error("{} userPlayMachine redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                    got(BaseConstant.MACHINE_ALREADY_IN_UES);
                     return;
                 }
 
@@ -253,7 +258,133 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     return;
                 }
             }
-        }, "userPlay", json.toJSONString());
+        }, "userPlayMachine", json.toJSONString());
+    }
+
+    /**
+     * 根据用户编号,游戏房间编号判断用户是否可以进行游戏若可以则直接扣除相应游戏币数
+     * @param userNo 用户编号
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    @Override
+    @Transactional
+    public CommonResult<String> userPlayGame(final String userNo, final String gameRoomNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+        json.put("gameRoomNo", gameRoomNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                // 获得用户当前游戏币数
+                Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+                // 获得机器信息
+                CommonResult<Integer> needCoinResult = gameRoomService.getCoinByGameRoomNo(gameRoomNo);
+
+                Integer needCoin;
+
+                if (needCoinResult.success()) {
+
+                    needCoin = needCoinResult.getValue();
+                } else {
+                    logger.error("{} getCoinByGameRoomNo error:", BaseConstant.LOG_ERR_MSG);
+                    got(BaseConstant.DEDUCTION_COIN_FAIL);
+                    return;
+                }
+
+                // 判断用户游戏币是否足够
+                if (userCoin < needCoin) {
+                    logger.info("{} 用户游戏币不足,用户游戏币数:{},所需游戏币数:{}", BaseConstant.LOG_MSG, userCoin, needCoin);
+                    got(BaseConstant.NOT_ENOUGH_COIN);
+                    return;
+                }
+
+                try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                    String key = BaseConstant.GAME_ROOM_IN_USE.replace("#{}", gameRoomNo);
+                    // 判断当前机器是否已有用户使用
+                    if (redisUtil.setnx(key, userNo) == 0) {
+                        // 若当前机器已被占用
+                        got(BaseConstant.GAME_ROOM_ALREADY_IN_UES);
+                        return;
+                    }
+                } catch (Exception e) {
+                    logger.error("{} userPlayGame redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                    got(BaseConstant.GAME_ROOM_ALREADY_IN_UES);
+                    return;
+                }
+
+                // 获得玩具编号和玩具图片地址
+                CommonResult<UserSeeGameRoom> userSeeGameRoomCommonResult =
+                        gameRoomService.getUserSeeGameRoomByGameRoomNo(gameRoomNo);
+
+                if(!userSeeGameRoomCommonResult.success()) {
+                    got(BaseConstant.DEDUCTION_COIN_FAIL);
+                    return;
+                }
+
+                UserSeeGameRoom userSeeGameRoom = userSeeGameRoomCommonResult.getValue();
+
+                // 添加用户消费记录
+                UserSpendRecord userSpendRecord = new UserSpendRecord();
+
+                Date date = new Date();
+                // 用户编号
+                userSpendRecord.setUserNo(userNo);
+                // 消费游戏币数
+                userSpendRecord.setCoin(needCoin);
+                // 消费类型
+                userSpendRecord.setTradeType(TradeType.SPEND.getType());
+                // 消费日期
+                userSpendRecord.setTradeDate(DateUtil.getDateByTime(date));
+                // 消费时间
+                userSpendRecord.setTradeTime(date);
+
+                try {
+                    // 扣除用户游戏币
+                    userDao.updateUserCoinByUserNo(-needCoin, userNo);
+
+                    userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
+                    userSpendRecordService.addUserSpendRecord(userSpendRecord);
+
+                    // 添加娃娃抓取记录
+                    CatchRecord catchRecord = new CatchRecord();
+                    // 抓取id
+                    String catchId = UUIDUtil.generateUUID();
+                    catchRecord.setCatchId(catchId);
+                    // 用户编号
+                    catchRecord.setUserNo(userNo);
+                    // 玩具编号
+                    catchRecord.setToyNo(userSeeGameRoom.getToyNo());
+                    // 玩具图片
+                    catchRecord.setToyImg(userSeeGameRoom.getToyImg());
+                    // 抓取状态 默认为等待
+                    catchRecord.setCatchStatus(CatchStatus.CATCH_WAIT.getStatus());
+
+                    catchRecordDao.addCatchRecord(catchRecord);
+
+                    // 构建返回字符串
+                    JSONObject returnJson = new JSONObject();
+
+                    returnJson.put("catchId", catchId);
+                    returnJson.put("result", BaseConstant.SUCCESS);
+
+                    logger.info("{} 成功扣除用户:{} 游戏币数:{} 结果{}", BaseConstant.LOG_MSG, userNo, needCoin,
+                            returnJson.toJSONString());
+
+                    got(returnJson.toJSONString());
+                    return;
+                } catch (Exception e) {
+                    logger.error("{} 扣除用户游戏币失败" + e, BaseConstant.LOG_ERR_MSG, e);
+                    userSpendRecord.setTradeStatus(TradeStatus.FAIL.getStatus());
+                    userSpendRecordService.addUserSpendRecord(userSpendRecord);
+                    got(BaseConstant.DEDUCTION_COIN_FAIL);
+                    return;
+                }
+            }
+        }, "userPlayGame", json.toJSONString());
     }
 
     /**

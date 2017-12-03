@@ -1,0 +1,223 @@
+package com.lzg.wawaji.service.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.lzg.wawaji.bean.Callback;
+import com.lzg.wawaji.bean.CommonResult;
+import com.lzg.wawaji.bean.UserSeeGameRoom;
+import com.lzg.wawaji.constants.BaseConstant;
+import com.lzg.wawaji.dao.GameRoomDao;
+import com.lzg.wawaji.entity.GameRoom;
+import com.lzg.wawaji.service.GameRoomService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@SuppressWarnings("all")
+@Service("gameRoomService")
+public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomService {
+
+    private static final Logger logger = LoggerFactory.getLogger(GameRoomServiceImpl.class);
+
+    @Autowired
+    private GameRoomDao gameRoomDao;
+
+    /**
+     * 添加游戏房间
+     * @param gameRoom 游戏房间
+     */
+    @Override
+    public CommonResult addGameRoom(final GameRoom gameRoom) {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                gameRoomDao.addGameRoom(gameRoom);
+            }
+        }, "addGameRoom", JSON.toJSONString(gameRoom));
+    }
+
+    /**
+     * 获得所有游戏房间的数量
+     * @return
+     */
+    @Override
+    public CommonResult<Integer> countAllGameRoom() {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                gameRoomDao.countAllGameRoom();
+            }
+        }, "countAllGameRoom", new JSONObject().toJSONString());
+    }
+
+    /**
+     * 分页获得所有游戏房间
+     * @param startPage 开始页
+     * @param pageSize 每页数据数
+     * @return
+     */
+    @Override
+    public CommonResult<List<GameRoom>> getGameRoomeListByPage(final int startPage) {
+        JSONObject json = new JSONObject();
+        json.put("startPage",startPage);
+        json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(gameRoomDao.getGameRoomeListByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
+            }
+        }, "getGameRoomeListByPage", json.toJSONString());
+    }
+
+    /**
+     * 获得所有用户可见游戏房间数量
+     * @return
+     */
+    @Override
+    public CommonResult<Integer> countAllUserSeeGamRoom() {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(gameRoomDao.countAllUserSeeGamRoom());
+            }
+        }, "countAllUserSeeGamRoom", new JSONObject().toJSONString());
+    }
+
+    /**
+     * 分页获得所有用户可见的游戏房间
+     * @param startPage 开始页
+     * @return
+     */
+    @Override
+    public CommonResult<List<UserSeeGameRoom>> getUserSeeGameRoomListByPage(final int startPage) {
+        JSONObject json = new JSONObject();
+        json.put("startPage",startPage);
+        json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(gameRoomDao.getUserSeeGameRoomListByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
+            }
+        }, "getUserSeeGameRoomListByPage", json.toJSONString());
+    }
+
+    /**
+     * 根据游戏房间号码获得用户可见游戏房间
+     * @param gameRoomNo 游戏房间号码
+     * @return
+     */
+    @Override
+    public CommonResult<UserSeeGameRoom> getUserSeeGameRoomByGameRoomNo(final String gameRoomNo) {
+        JSONObject json = new JSONObject();
+        json.put("gameRoomNo",gameRoomNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(gameRoomDao.getUserSeeGameRoomByGameRoomNo(gameRoomNo));
+            }
+        }, "getUserSeeGameRoomByGameRoomNo", json.toJSONString());
+    }
+
+    /**
+     * 根据游戏房间编号获得所需游戏币数
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    @Override
+    public CommonResult<Integer> getCoinByGameRoomNo(final String gameRoomNo) {
+        JSONObject json = new JSONObject();
+        json.put("gameRoomNo",gameRoomNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(gameRoomDao.getCoinByGameRoomNo(gameRoomNo));
+            }
+        }, "getCoinByGameRoomNo", json.toJSONString());
+    }
+
+    /**
+     * 根据游戏房间编号和id获得游戏房间数据
+     * @param gameRoomNo 游戏房间编号
+     * @param id id
+     * @return
+     */
+    @Override
+    public CommonResult<GameRoom> getGameRoomByGameRoomNoAndId(final String gameRoomNo, final Long id) {
+        JSONObject json = new JSONObject();
+        json.put("gameRoomNo",gameRoomNo);
+        json.put("id",id);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(gameRoomDao.getGameRoomByGameRoomNoAndId(gameRoomNo, id));
+            }
+        }, "getGameRoomByGameRoomNoAndId", json.toJSONString());
+    }
+
+    /**
+     * 根据游戏房间编号和id修改游戏房间
+     * @param gameRoom 游戏房间
+     */
+    @Override
+    public CommonResult updateGameRoomeByGameRoomNoAndId(final GameRoom gameRoom) {
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                gameRoomDao.updateGameRoomeByGameRoomNoAndId(gameRoom);
+            }
+        }, "updateGameRoomeByGameRoomNoAndId", JSON.toJSONString(gameRoom));
+    }
+
+    /**
+     * 游戏房间幸运值加一
+     * @param gameRoomNo 游戏房间编号
+     */
+    @Override
+    public CommonResult addRoomLuckyNumByGameRoomNo(final String gameRoomNo) {
+        JSONObject json = new JSONObject();
+        json.put("gameRoomNo",gameRoomNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                gameRoomDao.addRoomLuckyNumByGameRoomNo(gameRoomNo);
+            }
+        }, "addRoomLuckyNumByGameRoomNo", json.toJSONString());
+    }
+
+    /**
+     * 重置游戏房间幸运值
+     * @param gameRoomNo 游戏房间编号
+     * @param roomLuckyNum 房间幸运值
+     */
+    @Override
+    public CommonResult resetRoomLuckyNumByGameRoomNo(final String gameRoomNo, final Integer roomLuckyNum) {
+        JSONObject json = new JSONObject();
+        json.put("gameRoomNo",gameRoomNo);
+        json.put("roomLuckyNum",roomLuckyNum);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                gameRoomDao.resetRoomLuckyNumByGameRoomNo(gameRoomNo, roomLuckyNum);
+            }
+        }, "resetRoomLuckyNumByGameRoomNo", json.toJSONString());
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return logger;
+    }
+}
