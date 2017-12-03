@@ -2,6 +2,9 @@ package com.lzg.wawaji.entity;
 
 import java.io.Serializable;
 
+/**
+ * 用户游戏房间
+ */
 public class UserGameRoom extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -4954366162493302680L;

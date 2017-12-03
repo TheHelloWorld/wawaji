@@ -1,11 +1,13 @@
-package com.lzg.wawaji.entity;
+package com.lzg.wawaji.bean;
+
+import com.lzg.wawaji.entity.BaseEntity;
 
 import java.io.Serializable;
 
 /**
- * 游戏房间
+ * 用户可见游戏房间
  */
-public class GameRoom extends BaseEntity implements Serializable {
+public class UserSeeGameRoom extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -4954366162493302680L;
 
@@ -18,6 +20,21 @@ public class GameRoom extends BaseEntity implements Serializable {
      * 玩具编号
      */
     private String toyNo;
+
+    /**
+     * 娃娃图片地址
+     */
+    private String toyImg;
+
+    /**
+     * 娃娃当前游戏币数
+     */
+    private Integer toyNowCoin;
+
+    /**
+     * 娃娃原本游戏币数
+     */
+    private Integer toyOriginCoin;
 
     /**
      * 房间幸运值
@@ -48,6 +65,30 @@ public class GameRoom extends BaseEntity implements Serializable {
 
     public void setToyNo(String toyNo) {
         this.toyNo = toyNo;
+    }
+
+    public String getToyImg() {
+        return toyImg;
+    }
+
+    public void setToyImg(String toyImg) {
+        this.toyImg = toyImg;
+    }
+
+    public Integer getToyNowCoin() {
+        return toyNowCoin;
+    }
+
+    public void setToyNowCoin(Integer toyNowCoin) {
+        this.toyNowCoin = toyNowCoin;
+    }
+
+    public Integer getToyOriginCoin() {
+        return toyOriginCoin;
+    }
+
+    public void setToyOriginCoin(Integer toyOriginCoin) {
+        this.toyOriginCoin = toyOriginCoin;
     }
 
     public Integer getRoomLuckyNum() {

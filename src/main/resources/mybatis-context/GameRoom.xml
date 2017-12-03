@@ -8,109 +8,141 @@
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 游戏房间编号 -->
         <result property="gameRomeNo" column="game_rome_no" jdbcType="VARCHAR"/>
+        <!-- 玩具编号 -->
+        <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
         <!-- 房间幸运值 -->
         <result property="roomLuckyNum" column="room_lucky_num" jdbcType="INTEGER"/>
         <!-- 房间当前幸运值 -->
         <result property="roomNowLuckyNum" column="room_now_lucky_num" jdbcType="INTEGER"/>
+        <!-- 当前状态 -->
+        <result property="currentState" column="current_state" jdbcType="INTEGER"/>
         <!-- 创建时间 -->
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <!-- 最后修改时间 -->
         <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <!-- 添加发货记录 -->
-    <insert id="addDeliver" useGeneratedKeys="true" keyProperty="id" parameterType="com.lzg.wawaji.entity.Deliver">
-        insert into deliver
+    <!-- 用户可见游戏房间表 -->
+    <resultMap type="com.lzg.wawaji.bean.UserSeeGameRoom" id="userSeeGameRoomMap">
+        <!-- 主键id -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <!-- 游戏房间编号 -->
+        <result property="gameRoomNo" column="game_room_no" jdbcType="VARCHAR"/>
+        <!-- 玩具编号 -->
+        <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
+        <!-- 娃娃图片地址 -->
+        <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
+        <!-- 娃娃当前游戏币数 -->
+        <result property="toyNowCoin" column="toy_now_coin" jdbcType="INTEGER"/>
+        <!-- 娃娃原本游戏币数 -->
+        <result property="toyOriginCoin" column="toy_origin_coin" jdbcType="INTEGER"/>
+        <!-- 房间幸运值 -->
+        <result property="roomLuckyNum" column="room_lucky_num" jdbcType="INTEGER"/>
+        <!-- 房间当前幸运值 -->
+        <result property="roomNowLuckyNum" column="room_now_lucky_num" jdbcType="INTEGER"/>
+        <!-- 当前状态 -->
+        <result property="currentState" column="current_state" jdbcType="INTEGER"/>
+        <!-- 创建时间 -->
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <!-- 最后修改时间 -->
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 添加游戏房间 -->
+    <insert id="addGameRoom" useGeneratedKeys="true" keyProperty="id" parameterType="com.lzg.wawaji.entity.GameRoom">
+        insert into game_room
             (
-            user_no,
-            user_name,
-            mobile_no,
-            address,
-            deliver_no,
-            company,
-            deliver_msg,
-            deliver_status
+            game_room_no,
+            toy_no,
+            room_lucky_num,
+            room_now_lucky_num,
+            current_state
             )
         values
             (
-            #{userNo, jdbcType=VARCHAR},
-            #{userName, jdbcType=VARCHAR},
-            #{mobileNo, jdbcType=VARCHAR},
-            #{address, jdbcType=VARCHAR},
-            #{deliverNo, jdbcType=VARCHAR},
-            #{company, jdbcType=VARCHAR},
-            #{deliverMsg, jdbcType=VARCHAR},
-            #{deliverStatus, jdbcType=INTEGER}
+            #{gameRoomNo, jdbcType=VARCHAR},
+            #{toyNo, jdbcType=VARCHAR},
+            #{roomLuckyNum, jdbcType=INTEGER},
+            #{roomNowLuckyNum, jdbcType=INTEGER},
+            #{currentState, jdbcType=INTEGER}
             )
     </insert>
 
-    <!-- 根据用户编号获得用户发货记录数量 -->
-    <select id="countDeliverByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select count(*) from deliver  where user_no = #{userNo}
+    <!-- 获得所有游戏房间的数量 -->
+    <select id="countAllGameRoom" resultType="java.lang.Integer">
+        select count(*) from game_room
+    </select>
+
+    <!-- 分页获得所有游戏房间 -->
+    <select id="getGameRoomeListByPage" resultMap="gameRoomMap">
+        select
+            id,
+            game_room_no,
+            toy_no,
+            room_lucky_num,
+            room_now_lucky_num,
+            current_state
+        from game_room
+        limit #{startPage}, #{pageSize}
     </select>
 
     <!-- 获得所有用户发货数量 -->
-    <select id="countAllDeliver" resultType="java.lang.Integer">
-        select count(*) from deliver
-    </select>
-
-    <!-- 根据用户编号分页获得用户发货记录集合 -->
-    <select id="getDeliverByUserNo" resultMap="deliverMap">
-        select
-            id,
-            user_no,
-            user_name,
-            mobile_no,
-            address,
-            deliver_no,
-            company,
-            deliver_msg,
-            deliver_status
-        from deliver
-        where user_no = #{userNo} order by create_time desc
-        limit #{startPage}, #{pageSize}
+    <select id="countAllUserSeeGamRoom" resultType="java.lang.Integer">
+        select count(*) from game_room where current_state = 1
     </select>
 
     <!-- 分页获得用户发货记录集合 -->
-    <select id="getAllDeliverByPage" resultMap="deliverMap">
+    <select id="getUserSeeGameRoomListByPage" resultMap="userSeeGameRoomMap">
         select
-            id,
-            user_no,
-            user_name,
-            mobile_no,
-            address,
-            deliver_no,
-            company,
-            deliver_msg,
-            deliver_status
-        from deliver order by create_time desc
+            g.id,
+            g.game_room_no,
+            g.toy_no,
+            t.toy_img,
+            t.toy_now_coin,
+            t.toy_origin_coin,
+            g.room_lucky_num,
+            g.room_now_lucky_num,
+            g.current_state
+        from game_room g, toy t where g.toy_no = t.toy_no and g.current_state = 1
         limit #{startPage}, #{pageSize}
     </select>
 
-    <!-- 根据id,用户编号获得用户地址 -->
-    <select id="getDeliverByIdAndUserNo" resultMap="deliverMap">
+    <!-- 根据游戏房间编号和id获得游戏房间数据 -->
+    <select id="getGameRoomByGameRoomNoAndId" resultMap="gameRoomMap">
         select
             id,
-            user_no,
-            user_name,
-            mobile_no,
-            address,
-            deliver_no,
-            company,
-            deliver_msg,
-            deliver_status
-        from deliver
-        where user_no = #{userNo} and id = #{id}
+            game_room_no,
+            toy_no,
+            room_lucky_num,
+            room_now_lucky_num,
+            current_state
+        from game_room
+        where game_room_no = #{gameRoomNo} and id = #{id}
     </select>
 
-    <!-- 根据id,用户编号修改用户地址及状态 -->
-    <update id="updateDeliverMsgByIdAndUserNo" parameterType="com.lzg.wawaji.entity.Deliver">
-        update deliver set
-            deliver_no = #{deliverNo, jdbcType=VARCHAR},
-            company = #{company, jdbcType=VARCHAR},
-            deliver_msg = #{deliverMsg, jdbcType=VARCHAR},
-            deliver_status = #{deliverStatus, jdbcType=INTEGER}
-        where id = #{id} and user_no = #{userNo}
+    <!-- 根据游戏房间编号和id修改游戏房间 -->
+    <update id="updateGameRoomeByGameRoomNoAndId" parameterType="com.lzg.wawaji.entity.GameRoom">
+        update game_room set
+            toy_no = #{toyNo, jdbcType=VARCHAR},
+            room_lucky_num = #{roomLuckyNum, jdbcType=INTEGER},
+            room_now_lucky_num = #{roomNowLuckyNum, jdbcType=INTEGER},
+            current_state = #{currentState, jdbcType=INTEGER}
+        where id = #{id} and game_room_no = #{gameRoomNo}
+    </update>
+
+    <!-- 游戏房间幸运值加一 -->
+    <update id="addRoomLuckyNumByGameRoomNo" parameterType="java.lang.String">
+        update game_room set
+        room_lucky_num = room_lucky_num + 1
+        where game_room_no = #{gameRoomNo}
+    </update>
+
+    <!-- 重置游戏房间幸运值 -->
+    <update id="resetRoomLuckyNumByGameRoomNo">
+        update game_room set
+            room_lucky_num = #{roomLuckyNum, jdbcType=INTEGER},
+            room_now_lucky_num = 0
+        where game_room_no = #{gameRoomNo}
     </update>
 
 </mapper>
