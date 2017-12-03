@@ -8,9 +8,9 @@
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 用户编号 -->
         <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
-        <!-- 用户房间幸运值 -->
+        <!-- 游戏房间编号 -->
         <result property="gameRoomNo" column="game_room_no" jdbcType="VARCHAR"/>
-        <!-- 手机号 -->
+        <!-- 用户房间幸运值 -->
         <result property="userRoomLuckyNum" column="user_room_lucky_num" jdbcType="INTEGER"/>
         <!-- 创建时间 -->
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
@@ -18,99 +18,50 @@
         <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <!-- 添加发货记录 -->
-    <insert id="addDeliver" useGeneratedKeys="true" keyProperty="id" parameterType="com.lzg.wawaji.entity.Deliver">
-        insert into deliver
+    <!-- 添加用户游戏房间记录 -->
+    <insert id="addUserGameRoom" useGeneratedKeys="true" keyProperty="id" parameterType="com.lzg.wawaji.entity.UserGameRoom">
+        insert into user_game_room
             (
             user_no,
-            user_name,
-            mobile_no,
-            address,
-            deliver_no,
-            company,
-            deliver_msg,
-            deliver_status
+            game_room_no,
+            user_room_lucky_num
             )
         values
             (
             #{userNo, jdbcType=VARCHAR},
-            #{userName, jdbcType=VARCHAR},
-            #{mobileNo, jdbcType=VARCHAR},
-            #{address, jdbcType=VARCHAR},
-            #{deliverNo, jdbcType=VARCHAR},
-            #{company, jdbcType=VARCHAR},
-            #{deliverMsg, jdbcType=VARCHAR},
-            #{deliverStatus, jdbcType=INTEGER}
+            #{gameRoomNo, jdbcType=VARCHAR},
+            #{userRoomLuckyNum, jdbcType=INTEGER}
             )
     </insert>
 
-    <!-- 根据用户编号获得用户发货记录数量 -->
-    <select id="countDeliverByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select count(*) from deliver  where user_no = #{userNo}
+    <!-- 根据用户编号获得用户用户游戏房间数量 -->
+    <select id="countUserGameRoomByUserNo" resultType="java.lang.Integer">
+        select count(*) from user_game_room  where user_no = #{userNo} and game_room_no = #{gameRoomNo}
     </select>
 
-    <!-- 获得所有用户发货数量 -->
-    <select id="countAllDeliver" resultType="java.lang.Integer">
-        select count(*) from deliver
-    </select>
-
-    <!-- 根据用户编号分页获得用户发货记录集合 -->
-    <select id="getDeliverByUserNo" resultMap="deliverMap">
+    <!-- 根据用户编号获得用户游戏房间 -->
+    <select id="getUserGameRoomByUserNo" resultMap="deliverMap">
         select
             id,
             user_no,
-            user_name,
-            mobile_no,
-            address,
-            deliver_no,
-            company,
-            deliver_msg,
-            deliver_status
-        from deliver
-        where user_no = #{userNo} order by create_time desc
-        limit #{startPage}, #{pageSize}
+            game_room_no,
+            user_room_lucky_num
+        from user_game_room
+        where user_no = #{userNo} and game_room_no = #{gameRoomNo}
     </select>
 
-    <!-- 分页获得用户发货记录集合 -->
-    <select id="getAllDeliverByPage" resultMap="deliverMap">
-        select
-            id,
-            user_no,
-            user_name,
-            mobile_no,
-            address,
-            deliver_no,
-            company,
-            deliver_msg,
-            deliver_status
-        from deliver order by create_time desc
-        limit #{startPage}, #{pageSize}
-    </select>
+    <!-- 根据用户编号和游戏房间编号累加用户房间幸运值 -->
+    <update id="addUserRoomLuckyNumByUserNoAndGameRoomNo">
+        update user_game_room set
+          user_room_lucky_num = user_room_lucky_num + #{userRoomLuckyNum, jdbcType=INTEGER}
+        where user_no = #{userNo} and game_room_no = #{gameRoomNo}
+    </update>
 
-    <!-- 根据id,用户编号获得用户地址 -->
-    <select id="getDeliverByIdAndUserNo" resultMap="deliverMap">
-        select
-            id,
-            user_no,
-            user_name,
-            mobile_no,
-            address,
-            deliver_no,
-            company,
-            deliver_msg,
-            deliver_status
-        from deliver
-        where user_no = #{userNo} and id = #{id}
-    </select>
-
-    <!-- 根据id,用户编号修改用户地址及状态 -->
-    <update id="updateDeliverMsgByIdAndUserNo" parameterType="com.lzg.wawaji.entity.Deliver">
-        update deliver set
-            deliver_no = #{deliverNo, jdbcType=VARCHAR},
-            company = #{company, jdbcType=VARCHAR},
-            deliver_msg = #{deliverMsg, jdbcType=VARCHAR},
-            deliver_status = #{deliverStatus, jdbcType=INTEGER}
-        where id = #{id} and user_no = #{userNo}
+    <!-- 重置用户游戏房间幸运值 -->
+    <update id="resetUserRoomLuckyNum">
+        update user_game_room set
+          user_room_lucky_num = 0
+        where user_no = #{userNo} and game_room_no = #{gameRoomNo}
     </update>
 
 </mapper>
