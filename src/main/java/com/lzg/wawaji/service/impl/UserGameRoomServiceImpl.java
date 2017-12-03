@@ -8,6 +8,7 @@ import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.UserGameRoomDao;
 import com.lzg.wawaji.entity.UserGameRoom;
 import com.lzg.wawaji.service.UserGameRoomService;
+import com.lzg.wawaji.utils.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,8 +86,39 @@ public class UserGameRoomServiceImpl extends BaseServiceImpl implements UserGame
      * @param userRoomLuckyNum 用户房间幸运值
      */
     @Override
-    public CommonResult addUserRoomLuckyNumByUserNoAndGameRoomNo(String userNo, String gameRoomNo, Integer userRoomLuckyNum) {
-        return null;
+    public CommonResult addUserRoomLuckyNumByUserNoAndGameRoomNo(final String userNo, final String gameRoomNo,
+                                                                 final Integer userRoomLuckyNum) {
+        JSONObject json = new JSONObject();
+        json.put("userNo",userNo);
+        json.put("gameRoomNo",gameRoomNo);
+        json.put("userRoomLuckyNum",userRoomLuckyNum);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                userGameRoomDao.addUserRoomLuckyNumByUserNoAndGameRoomNo(userNo, gameRoomNo, userRoomLuckyNum);
+            }
+        }, "addUserRoomLuckyNumByUserNoAndGameRoomNo", json.toJSONString());
+    }
+
+    /**
+     * 根据用户编号和房间编号获得用户游戏房间幸运值
+     * @param userNo 用户编号
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    @Override
+    public CommonResult<Integer> getUserGameRoomLuckyNumByUserNo(final String userNo, final String gameRoomNo) {
+        JSONObject json = new JSONObject();
+        json.put("userNo",userNo);
+        json.put("gameRoomNo",gameRoomNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userGameRoomDao.getUserGameRoomLuckyNumByUserNo(userNo, gameRoomNo));
+            }
+        }, "getUserGameRoomLuckyNumByUserNo", json.toJSONString());
     }
 
     /**

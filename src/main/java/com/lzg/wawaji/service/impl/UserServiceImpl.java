@@ -8,16 +8,11 @@ import com.lzg.wawaji.bean.UserSeeGameRoom;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.CatchRecordDao;
 import com.lzg.wawaji.dao.UserDao;
-import com.lzg.wawaji.entity.CatchRecord;
-import com.lzg.wawaji.entity.User;
-import com.lzg.wawaji.entity.UserSpendRecord;
+import com.lzg.wawaji.entity.*;
 import com.lzg.wawaji.enums.CatchStatus;
 import com.lzg.wawaji.enums.TradeStatus;
 import com.lzg.wawaji.enums.TradeType;
-import com.lzg.wawaji.service.GameRoomService;
-import com.lzg.wawaji.service.MachineService;
-import com.lzg.wawaji.service.UserService;
-import com.lzg.wawaji.service.UserSpendRecordService;
+import com.lzg.wawaji.service.*;
 import com.lzg.wawaji.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +42,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     @Autowired
     private UserSpendRecordService userSpendRecordService;
+
+    @Autowired
+    private UserGameRoomService userGameRoomService;
 
     /**
      * 用户注册或登录
@@ -79,9 +77,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     // 用户编号
                     user.setUserNo(userNo);
                     // 用户姓名
-                    user.setUserName(Random.getRandomString(18));
+                    user.setUserName(RandomUtil.getRandomString(18));
                     // 用户邀请码
-                    user.setInvitationCode(Random.getRandomString(8));
+                    user.setInvitationCode(RandomUtil.getRandomString(8));
                     userDao.addUser(user);
 
                 } else {
@@ -412,7 +410,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 获取redis链接
                 try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
-                    String random = Random.getRandom();
+                    String random = RandomUtil.getRandom();
 
                     if (SDKTestSendTemplateSMS.sendMobileVerificationCode(mobileNo, random, timeout)) {
 
@@ -475,6 +473,139 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
             }
         }, "updateUserInfoByIdAndUserNo", json.toJSONString());
+    }
+
+    /**
+     * 根据用户编号和游戏房间号获得游戏抓取结果
+     * @param userNo 用户编号
+     * @param gameRoomNo 游戏房间号
+     * @return
+     */
+    @Override
+    public CommonResult<String> getGameCatchResultByUserNoAndGameRoomNo(final String userNo, final String gameRoomNo) {
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+        json.put("gameRoomNo", gameRoomNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                JSONObject json = new JSONObject();
+
+                // 判断当前用户是否在此房间有幸运值
+                CommonResult<Integer> userGameRoomCount = userGameRoomService
+                        .countUserGameRoomByUserNo(userNo, gameRoomNo);
+
+                Boolean userGameRoomExist = true;
+
+                Integer userNowLuckyNum = null;
+
+                if(!userGameRoomCount.success()) {
+                    got(BaseConstant.FAIL);
+                }
+
+                Integer userLucKyNum = RandomUtil.getRandomNum(0);
+
+                // 若用户第一次来此房间
+                if(userGameRoomCount.getValue() == 0) {
+
+                    UserGameRoom userGameRoom = new UserGameRoom();
+
+                    // 游戏房间编号
+                    userGameRoom.setGameRoomNo(gameRoomNo);
+                    // 用户编号
+                    userGameRoom.setUserNo(userNo);
+                    // 用户幸运值
+                    userGameRoom.setUserRoomLuckyNum(userLucKyNum);
+
+                    // 添加用户游戏房间记录
+                    userGameRoomService.addUserGameRoom(userGameRoom);
+
+                    userNowLuckyNum = 0;
+                }
+
+                if(userNowLuckyNum == null) {
+                    // 获得用户游戏房间当前幸运值
+                    CommonResult<Integer> userGameLucyNumResult = userGameRoomService.
+                            getUserGameRoomLuckyNumByUserNo(userNo, gameRoomNo);
+
+                    if(!userGameLucyNumResult.success()) {
+                        json.put("catch_result", BaseConstant.CATCH_FAIL);
+                        json.put("addNum", BaseConstant.GAME_ROOM_LUCKY_ADD_NUM);
+                        got(json.toJSONString());
+                        return;
+                    }
+
+                    userNowLuckyNum = userGameLucyNumResult.getValue();
+                }
+
+                // 用户房间幸运值大于等于最大用户房间幸运值
+                if(userLucKyNum + userNowLuckyNum >= BaseConstant.MAX_USER_ROOM_LUCKY_NUM) {
+                    // 重置用户房间幸运值
+                    CommonResult resetUserRoom = userGameRoomService.resetUserRoomLuckyNum(userNo, gameRoomNo);
+                    // 重置当前房间幸运值
+                    CommonResult resetGameRoom = gameRoomService.resetRoomLuckyNumByGameRoomNo(gameRoomNo);
+
+                    if(resetUserRoom.success() && resetGameRoom.success()) {
+
+                        json.put("catch_result", BaseConstant.CATCH_SUCCESS);
+                        got(json.toJSONString());
+                        return;
+
+                    } else {
+                        json.put("catch_result", BaseConstant.CATCH_FAIL);
+                        json.put("addNum", BaseConstant.GAME_ROOM_LUCKY_ADD_NUM);
+                        got(json.toJSONString());
+                        return;
+                    }
+                }
+
+                CommonResult<GameRoom> gameRoomLuckyNum = gameRoomService.getLuckyNumByGameRoomNo(gameRoomNo);
+
+                if(!gameRoomLuckyNum.success()) {
+                    json.put("catch_result", BaseConstant.CATCH_FAIL);
+                    json.put("addNum", BaseConstant.GAME_ROOM_LUCKY_ADD_NUM);
+                    got(json.toJSONString());
+                    return;
+                }
+
+                GameRoom gameRoom = gameRoomLuckyNum.getValue();
+
+                // 若房间幸运值大于等于最大房间幸运值
+                if(gameRoom.getRoomNowLuckyNum() + BaseConstant.GAME_ROOM_LUCKY_ADD_NUM >= gameRoom.getRoomLuckyNum()) {
+
+                    // 重置用户房间幸运值
+                    CommonResult resetUserRoom = userGameRoomService.resetUserRoomLuckyNum(userNo, gameRoomNo);
+                    // 重置当前房间幸运值
+                    CommonResult resetGameRoom = gameRoomService.resetRoomLuckyNumByGameRoomNo(gameRoomNo);
+
+                    if(resetUserRoom.success() && resetGameRoom.success()) {
+
+                        json.put("catch_result", BaseConstant.CATCH_SUCCESS);
+                        got(json.toJSONString());
+                        return;
+
+                    } else {
+                        json.put("catch_result", BaseConstant.CATCH_FAIL);
+                        json.put("addNum", BaseConstant.GAME_ROOM_LUCKY_ADD_NUM);
+                        got(json.toJSONString());
+                        return;
+                    }
+                }
+
+                // 累加用户房间幸运值
+                userGameRoomService.addUserRoomLuckyNumByUserNoAndGameRoomNo(userNo, gameRoomNo, userLucKyNum);
+
+                // 累加游戏房间幸运值
+                gameRoomService.addRoomLuckyNumByGameRoomNo(gameRoomNo);
+
+                json.put("catch_result", BaseConstant.CATCH_FAIL);
+                json.put("addNum", BaseConstant.GAME_ROOM_LUCKY_ADD_NUM);
+                got(json.toJSONString());
+                return;
+
+            }
+        }, "getGameCatchResultByUserNoAndGameRoomNo", json.toJSONString());
     }
 
     @Override

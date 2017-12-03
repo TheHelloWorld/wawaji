@@ -57,4 +57,11 @@ public interface UserService {
      */
     CommonResult updateUserInfoByIdAndUserNo(String userNo, String userName, String userImg);
 
+    /**
+     * 根据用户编号和游戏房间号获得游戏抓取结果
+     * @param userNo 用户编号
+     * @param gameRoomNo 游戏房间号
+     * @return
+     */
+    CommonResult<String> getGameCatchResultByUserNoAndGameRoomNo(String userNo, String gameRoomNo);
 }

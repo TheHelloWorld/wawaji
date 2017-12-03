@@ -9,6 +9,7 @@ import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.GameRoomDao;
 import com.lzg.wawaji.entity.GameRoom;
 import com.lzg.wawaji.service.GameRoomService;
+import com.lzg.wawaji.utils.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
         return exec(new Callback() {
             @Override
             public void exec() {
-                gameRoomDao.countAllGameRoom();
+                got(gameRoomDao.countAllGameRoom());
             }
         }, "countAllGameRoom", new JSONObject().toJSONString());
     }
@@ -62,7 +63,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
      * @return
      */
     @Override
-    public CommonResult<List<GameRoom>> getGameRoomeListByPage(final int startPage) {
+    public CommonResult<List<GameRoom>> getGameRoomListByPage(final int startPage) {
         JSONObject json = new JSONObject();
         json.put("startPage",startPage);
         json.put("pageSize",BaseConstant.DEFAULT_PAGE_SIZE);
@@ -70,9 +71,9 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
         return exec(new Callback() {
             @Override
             public void exec() {
-                got(gameRoomDao.getGameRoomeListByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
+                got(gameRoomDao.getGameRoomListByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        }, "getGameRoomeListByPage", json.toJSONString());
+        }, "getGameRoomListByPage", json.toJSONString());
     }
 
     /**
@@ -170,29 +171,30 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
      * @param gameRoom 游戏房间
      */
     @Override
-    public CommonResult updateGameRoomeByGameRoomNoAndId(final GameRoom gameRoom) {
+    public CommonResult updateGameRoomByGameRoomNoAndId(final GameRoom gameRoom) {
 
         return exec(new Callback() {
             @Override
             public void exec() {
-                gameRoomDao.updateGameRoomeByGameRoomNoAndId(gameRoom);
+                gameRoomDao.updateGameRoomByGameRoomNoAndId(gameRoom);
             }
-        }, "updateGameRoomeByGameRoomNoAndId", JSON.toJSONString(gameRoom));
+        }, "updateGameRoomByGameRoomNoAndId", JSON.toJSONString(gameRoom));
     }
 
     /**
-     * 游戏房间幸运值加一
+     * 累加游戏房间幸运值
      * @param gameRoomNo 游戏房间编号
      */
     @Override
     public CommonResult addRoomLuckyNumByGameRoomNo(final String gameRoomNo) {
         JSONObject json = new JSONObject();
         json.put("gameRoomNo",gameRoomNo);
+        json.put("addNum",BaseConstant.GAME_ROOM_LUCKY_ADD_NUM);
 
         return exec(new Callback() {
             @Override
             public void exec() {
-                gameRoomDao.addRoomLuckyNumByGameRoomNo(gameRoomNo);
+                gameRoomDao.addRoomLuckyNumByGameRoomNo(gameRoomNo, BaseConstant.GAME_ROOM_LUCKY_ADD_NUM);
             }
         }, "addRoomLuckyNumByGameRoomNo", json.toJSONString());
     }
@@ -200,12 +202,14 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
     /**
      * 重置游戏房间幸运值
      * @param gameRoomNo 游戏房间编号
-     * @param roomLuckyNum 房间幸运值
      */
     @Override
-    public CommonResult resetRoomLuckyNumByGameRoomNo(final String gameRoomNo, final Integer roomLuckyNum) {
+    public CommonResult resetRoomLuckyNumByGameRoomNo(final String gameRoomNo) {
         JSONObject json = new JSONObject();
         json.put("gameRoomNo",gameRoomNo);
+
+        final Integer roomLuckyNum = RandomUtil.getRandomNum(40);
+
         json.put("roomLuckyNum",roomLuckyNum);
 
         return exec(new Callback() {
@@ -214,6 +218,19 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
                 gameRoomDao.resetRoomLuckyNumByGameRoomNo(gameRoomNo, roomLuckyNum);
             }
         }, "resetRoomLuckyNumByGameRoomNo", json.toJSONString());
+    }
+
+    @Override
+    public CommonResult<GameRoom> getLuckyNumByGameRoomNo(final String gameRoomNo) {
+        JSONObject json = new JSONObject();
+        json.put("gameRoomNo",gameRoomNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(gameRoomDao.getLuckyNumByGameRoomNo(gameRoomNo));
+            }
+        }, "getLuckyNumByGameRoomNo", json.toJSONString());
     }
 
     @Override

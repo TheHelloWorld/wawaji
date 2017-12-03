@@ -139,17 +139,33 @@ public class UserController {
     }
 
     /**
-     * 用户玩游戏
+     * 用户玩游戏(娃娃机)
      *
      * @param userNo    用户编号
      * @param machineNo 机器编号
      * @return
      */
-    @RequestMapping(value = "/userPlay", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/userPlayMachine", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String userPlay(String userNo,String machineNo) {
+    public String userPlayMachine(String userNo, String machineNo) {
 
-        CommonResult<String> result = userService.userPlay(userNo, machineNo);
+        CommonResult<String> result = userService.userPlayMachine(userNo, machineNo);
+
+        return JSONUtil.getReturnBeanString(result);
+    }
+
+    /**
+     * 用户玩游戏(游戏)
+     *
+     * @param userNo    用户编号
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    @RequestMapping(value = "/userPlayGame", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String userPlayGame(String userNo, String gameRoomNo) {
+
+        CommonResult<String> result = userService.userPlayGame(userNo, gameRoomNo);
 
         return JSONUtil.getReturnBeanString(result);
     }
@@ -168,4 +184,6 @@ public class UserController {
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
+
+
 }

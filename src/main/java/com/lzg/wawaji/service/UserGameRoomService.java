@@ -36,6 +36,14 @@ public interface UserGameRoomService {
     CommonResult addUserRoomLuckyNumByUserNoAndGameRoomNo(String userNo, String gameRoomNo, Integer userRoomLuckyNum);
 
     /**
+     * 根据用户编号和房间编号获得用户游戏房间幸运值
+     * @param userNo 用户编号
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    CommonResult<Integer> getUserGameRoomLuckyNumByUserNo(String userNo, String gameRoomNo);
+
+    /**
      * 重置用户游戏房间幸运值
      * @param userNo 用户编号
      * @param gameRoomNo 游戏房间编号

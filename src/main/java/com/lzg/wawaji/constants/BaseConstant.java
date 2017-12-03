@@ -64,6 +64,16 @@ public class BaseConstant {
 	public static final String FAIL = "fail";
 
 	/**
+	 * 抓取失败
+	 */
+	public static final String CATCH_FAIL = "catch fail";
+
+	/**
+	 * 抓取成功
+	 */
+	public static final String CATCH_SUCCESS = "catch success";
+
+	/**
 	 * 系统错误
 	 */
 	public static final String SYSTEM_ERROR = "系统升级维护中,请稍候";
@@ -124,6 +134,11 @@ public class BaseConstant {
 	 * 用户游戏房间最大幸运值
 	 */
 	public static final Integer MAX_USER_ROOM_LUCKY_NUM = 50;
+
+	/**
+	 * 游戏房间幸运累加值
+	 */
+	public static Integer GAME_ROOM_LUCKY_ADD_NUM = 1;
 
 	/**
 	 * redis配置文件名

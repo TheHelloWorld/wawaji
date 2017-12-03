@@ -28,7 +28,7 @@ public interface GameRoomDao {
      * @param pageSize 每页数据数
      * @return
      */
-    List<GameRoom> getGameRoomeListByPage(@Param("startPage") int startPage,@Param("pageSize") int pageSize);
+    List<GameRoom> getGameRoomListByPage(@Param("startPage") int startPage,@Param("pageSize") int pageSize);
 
     /**
      * 获得所有用户可见游戏房间数量
@@ -59,6 +59,13 @@ public interface GameRoomDao {
     Integer getCoinByGameRoomNo(String gameRoomNo);
 
     /**
+     * 根据游戏房间编号获得房间幸运值及当前幸运值
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    GameRoom getLuckyNumByGameRoomNo(String gameRoomNo);
+
+    /**
      * 根据游戏房间编号和id获得游戏房间数据
      * @param gameRomNo 游戏房间编号
      * @param id id
@@ -70,13 +77,13 @@ public interface GameRoomDao {
      * 根据游戏房间编号和id修改游戏房间
      * @param gameRoom 游戏房间
      */
-    void updateGameRoomeByGameRoomNoAndId(GameRoom gameRoom);
+    void updateGameRoomByGameRoomNoAndId(GameRoom gameRoom);
 
     /**
-     * 游戏房间幸运值加一
+     * 累加游戏房间幸运值
      * @param gameRoomNo 游戏房间编号
      */
-    void addRoomLuckyNumByGameRoomNo(String gameRoomNo);
+    void addRoomLuckyNumByGameRoomNo(@Param("gameRoomNo") String gameRoomNo, @Param("addNum")  Integer addNum);
 
     /**
      * 重置游戏房间幸运值

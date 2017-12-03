@@ -25,7 +25,7 @@ public interface GameRoomService {
      * @param startPage 开始页
      * @return
      */
-    CommonResult<List<GameRoom>> getGameRoomeListByPage(int startPage);
+    CommonResult<List<GameRoom>> getGameRoomListByPage(int startPage);
 
     /**
      * 获得所有用户可见游戏房间数量
@@ -66,10 +66,10 @@ public interface GameRoomService {
      * 根据游戏房间编号和id修改游戏房间
      * @param gameRoom 游戏房间
      */
-    CommonResult updateGameRoomeByGameRoomNoAndId(GameRoom gameRoom);
+    CommonResult updateGameRoomByGameRoomNoAndId(GameRoom gameRoom);
 
     /**
-     * 游戏房间幸运值加一
+     * 累加游戏房间幸运值
      * @param gameRoomNo 游戏房间编号
      */
     CommonResult addRoomLuckyNumByGameRoomNo(String gameRoomNo);
@@ -77,7 +77,13 @@ public interface GameRoomService {
     /**
      * 重置游戏房间幸运值
      * @param gameRoomNo 游戏房间编号
-     * @param roomLuckyNum 房间幸运值
      */
-    CommonResult resetRoomLuckyNumByGameRoomNo(String gameRoomNo, Integer roomLuckyNum);
+    CommonResult resetRoomLuckyNumByGameRoomNo(String gameRoomNo);
+
+    /**
+     * 根据游戏房间编号获得房间幸运值及当前幸运值
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    CommonResult<GameRoom> getLuckyNumByGameRoomNo(String gameRoomNo);
 }
