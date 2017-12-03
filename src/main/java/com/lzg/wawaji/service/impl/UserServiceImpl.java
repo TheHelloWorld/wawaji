@@ -77,9 +77,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     // 用户编号
                     user.setUserNo(userNo);
                     // 用户姓名
-                    user.setUserName(RandomUtil.getRandomString(18));
+                    user.setUserName(RandomIntUtil.getRandomString(18));
                     // 用户邀请码
-                    user.setInvitationCode(RandomUtil.getRandomString(8));
+                    user.setInvitationCode(RandomIntUtil.getRandomString(8));
                     userDao.addUser(user);
 
                 } else {
@@ -410,7 +410,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 获取redis链接
                 try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
-                    String random = RandomUtil.getRandom();
+                    String random = RandomIntUtil.getRandom();
 
                     if (SDKTestSendTemplateSMS.sendMobileVerificationCode(mobileNo, random, timeout)) {
 
@@ -504,7 +504,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     got(BaseConstant.FAIL);
                 }
 
-                Integer userLucKyNum = RandomUtil.getRandomNum(0);
+                Integer userLucKyNum = RandomIntUtil.getRandomNum(0);
 
                 // 若用户第一次来此房间
                 if(userGameRoomCount.getValue() == 0) {
