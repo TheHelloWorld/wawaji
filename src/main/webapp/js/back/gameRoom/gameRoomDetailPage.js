@@ -1,4 +1,4 @@
-var returnUrl = "/wawaji/back/machine/machine.jsp";
+var returnUrl = "/wawaji/back/gameRoom/gameRoom.jsp";
 
 // 返回玩具列表页
 function cancelThis() {
@@ -11,21 +11,21 @@ $(function(){
 
         var id = getQueryString("id");
         console.info(id);
-        var machineNo = getQueryString("machineNo");
+        var gameRoomNo = getQueryString("gameRoomNo");
 
-        var getUrl = "/wawaji/machine/getMachineByIdAndMachineNo.action";
-        getDataByInfo(getUrl, id, machineNo);
+        var getUrl = "/wawaji/gameRoom/getGameRoomByGameRoomNoAndId.action";
+        getDataByInfo(getUrl, id, gameRoomNo);
     }
 });
 
 // 储存或修改
-function updateOrSaveMachine() {
+function updateOrSaveGameRoom() {
 
     if(getQueryString("type") == "add") {
-        var saveUrl = "/wawaji/machine/addMachine.action";
+        var saveUrl = "/wawaji/gameRoom/addGameRoom.action";
         saveThis(saveUrl, returnUrl);
     } else {
-        var updateUrl = "/wawaji/machine/updateMachineByIdAndMachineNo.action";
+        var updateUrl = "/wawaji/gameRoom/updateGameRoomByGameRoomNoAndId.action";
         updateThis(updateUrl, returnUrl);
     }
 

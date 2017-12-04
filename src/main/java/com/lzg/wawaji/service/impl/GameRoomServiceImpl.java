@@ -10,6 +10,7 @@ import com.lzg.wawaji.dao.GameRoomDao;
 import com.lzg.wawaji.entity.GameRoom;
 import com.lzg.wawaji.service.GameRoomService;
 import com.lzg.wawaji.utils.RandomIntUtil;
+import com.lzg.wawaji.utils.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -230,6 +231,39 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
                 got(gameRoomDao.getLuckyNumByGameRoomNo(gameRoomNo));
             }
         }, "getLuckyNumByGameRoomNo", json.toJSONString());
+    }
+
+    /**
+     * 根据游戏房间编号获得当前游戏房间是否可用
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    @Override
+    public CommonResult<String> getGameRoomInUse(final String gameRoomNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("gameRoomNo",gameRoomNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                    String key = BaseConstant.GAME_ROOM_IN_USE.replace("#{}", gameRoomNo);
+                    // 获得当前机器锁
+                    String value = redisUtil.get(key);
+                    if(value == null) {
+                        got("true");
+                        return;
+                    }
+                    got("false");
+                    return;
+                } catch (Exception e) {
+                    logger.error("{} getGameRoomInUse redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                    got("false");
+                    return;
+                }
+            }
+        }, "getGameRoomInUse", json.toJSONString());
     }
 
     @Override

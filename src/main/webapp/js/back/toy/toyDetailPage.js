@@ -14,7 +14,7 @@ $(function(){
 // 保存或修改
 function updateOrSaveToy() {
 
-    if(getQueryString("type") == "save") {
+    if(getQueryString("type") == "add") {
         var saveUrl = "/wawaji/toy/addToy.action";
         saveThis(saveUrl, returnUrl);
     } else {

@@ -86,4 +86,11 @@ public interface GameRoomService {
      * @return
      */
     CommonResult<GameRoom> getLuckyNumByGameRoomNo(String gameRoomNo);
+
+    /**
+     * 根据游戏房间编号获得当前游戏房间是否可用
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    CommonResult<String> getGameRoomInUse(String gameRoomNo);
 }

@@ -41,7 +41,7 @@ function lastPage() {
 }
 
 function addToyPage() {
-    window.location.href="/wawaji/machine/machineDetailPage.jsp?type=save";
+    window.location.href="/wawaji/back/machine/machineDetailPage.jsp?type=add";
 }
 
 // 删除行元素
@@ -84,5 +84,5 @@ function updateThis(dataParam) {
     var id = dataParam["id"];
     var machineNo = dataParam["machineNo"];
 
-    window.location.href = "/wawaji/machine/machineDetailPage.jsp?type=update&id="+id+"&machineNo="+machineNo+"";
+    window.location.href = "/wawaji/back/machine/machineDetailPage.jsp?type=update&id="+id+"&machineNo="+machineNo+"";
 }

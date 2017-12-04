@@ -121,5 +121,5 @@ function updateThis(dataParam) {
     var id = dataParam["id"];
     var userNo = dataParam["userNo"];
 
-    window.location.href = "/wawaji/deliver/deliverDetailPage.jsp?id="+id+"&userNo="+userNo+"";
+    window.location.href = "/wawaji/back/deliver/deliverDetailPage.jsp?id="+id+"&userNo="+userNo+"";
 }

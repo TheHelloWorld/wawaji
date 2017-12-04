@@ -552,7 +552,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 }
 
                 // 若房间幸运值大于等于最大房间幸运值
-                if(gameRoom.getRoomNowLuckyNum() + gameRoom.getAddLuckyNum() >= gameRoom.getRoomLuckyNum()) {
+                if(gameRoom.getRoomNowLuckyNum() + roomAddLuckyNum >= gameRoom.getRoomLuckyNum()) {
                     // 重置房间和用户房间幸运值
                     got(resetLuckyNum(userNo, gameRoomNo, roomAddLuckyNum));
                     return;

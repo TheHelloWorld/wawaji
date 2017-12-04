@@ -41,7 +41,7 @@ function lastPage() {
 }
 
 function addToyPage() {
-    window.location.href="/wawaji/toy/toyDetailPage.jsp?type=save";
+    window.location.href="/wawaji/back/toy/toyDetailPage.jsp?type=add";
 }
 
 // 删除行元素
@@ -84,5 +84,5 @@ function updateThis(dataParam) {
     var id = dataParam["id"];
     var toyNo = dataParam["toyNo"];
 
-    window.location.href = "/wawaji/toy/toyDetailPage.jsp?type=update&id="+id+"&toyNo="+toyNo+"";
+    window.location.href = "/wawaji/back/toy/toyDetailPage.jsp?type=update&id="+id+"&toyNo="+toyNo+"";
 }
