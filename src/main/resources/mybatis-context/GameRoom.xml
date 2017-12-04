@@ -122,7 +122,7 @@
     </select>
 
     <!-- 根据游戏房间号码获得用户可见游戏房间 -->
-    <select id="getUserSeeGameRoomListByPage" parameterType="java.lang.String" resultMap="userSeeGameRoomMap">
+    <select id="getUserSeeGameRoomByGameRoomNo" parameterType="java.lang.String" resultMap="userSeeGameRoomMap">
         select
             g.id,
             g.game_room_no,

@@ -49,7 +49,7 @@ public interface GameRoomDao {
      * @param gameRoomNo 游戏房间号码
      * @return
      */
-    UserSeeGameRoom getUserSeeGameRoomByGameRoomNo(String  gameRoomNo);
+    UserSeeGameRoom getUserSeeGameRoomByGameRoomNo(String gameRoomNo);
 
     /**
      * 根据游戏房间编号获得所需游戏币数

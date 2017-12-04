@@ -40,7 +40,7 @@
     </select>
 
     <!-- 根据用户编号和房间编号获得用户游戏房间 -->
-    <select id="getUserGameRoomByUserNoAndGameRoomNo" resultMap="deliverMap">
+    <select id="getUserGameRoomByUserNoAndGameRoomNo" resultMap="userGameRoomMap">
         select
             id,
             user_no,

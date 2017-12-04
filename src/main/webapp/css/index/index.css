@@ -79,7 +79,7 @@
 .machine-col-xs-6-left {
     position: relative;
     min-height: 1px;
-    padding-left: 15px;
+    padding-left: 5%;
     float: left;
     width: 50%
 }
@@ -87,7 +87,7 @@
 .machine-col-xs-6-right {
     position: relative;
     min-height: 1px;
-    padding-right: 15px;
+    padding-right: 5%;
     float: left;
     width: 50%
 }
