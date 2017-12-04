@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!-- Navigation -->
-<%@ include file="../../include/nav.jsp"%>
+<%@ include file="../../../include/nav.jsp"%>
 
 <!-- 该页面功能js -->
 <script type="text/javascript" src="../../js/deliver/deliver.js"></script>

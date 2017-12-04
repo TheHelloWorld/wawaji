@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!-- Navigation -->
-<%@ include file="../../include/nav.jsp"%>
+<%@ include file="../../../include/nav.jsp"%>
 
 <!-- 公共样式css -->
 <link href="${staticFilePath}${pageContext.request.contextPath}/css/commonUtil.css" rel="stylesheet">

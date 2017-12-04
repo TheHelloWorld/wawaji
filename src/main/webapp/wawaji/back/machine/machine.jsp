@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!-- Navigation -->
-<%@ include file="../../include/nav.jsp"%>
+<%@ include file="../../../include/nav.jsp"%>
 
 <!-- 该页面功能js -->
-<script type="text/javascript" src="../../js/toy/toy.js"></script>
+<script type="text/javascript" src="../../js/machine/machine.js"></script>
 
 <!-- <div id="page-wrapper"> -->
 <%--<input type="hidden" id="num" value="${num}">--%>
@@ -14,7 +14,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default" >
                 <div class="panel-heading" id="ph">
-                    <strong>玩具管理</strong>
+                    <strong>机器管理</strong>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body" id="row1">
@@ -28,14 +28,11 @@
                             <table class="table table-striped table-bordered table-hover" id="dataTable">
                                 <thead>
                                 <tr id="titleColumn">
-                                    <th><lable name="toyNo">玩具编号</lable></th>
-                                    <th><lable name="toyName">玩具名称</lable></th>
-                                    <th><lable name="toyForCoin">娃娃兑换游戏币数</lable></th>
-                                    <th><lable name="toyImg">娃娃图片地址</lable></th>
-                                    <th><lable name="toyDesc">娃娃描述</lable></th>
-                                    <th><lable name="toyNowCoin">娃娃当前游戏币数</lable></th>
-                                    <th><lable name="toyOriginCoin">娃娃原本游戏币数</lable></th>
-                                    <th><lable name="toyCost">娃娃成本</lable></th>
+                                    <th><lable name="machineNo">机器编号</lable></th>
+                                    <th><lable name="toyNo">娃娃编号</lable></th>
+                                    <th><lable name="frontUrl">正面直播地址</lable></th>
+                                    <th><lable name="sideUrl">侧面直播地址</lable></th>
+                                    <th><lable name="usePort">占用端口号</lable></th>
                                     <th><lable name="currentState">是否可用</lable></th>
                                     <th><lable name="operation">操作</lable></th>
                                 </tr>
