@@ -14,6 +14,8 @@
         <result property="roomLuckyNum" column="room_lucky_num" jdbcType="INTEGER"/>
         <!-- 房间当前幸运值 -->
         <result property="roomNowLuckyNum" column="room_now_lucky_num" jdbcType="INTEGER"/>
+        <!-- 每次累加幸运值 -->
+        <result property="addLuckyNum" column="add_lucky_num" jdbcType="INTEGER"/>
         <!-- 当前状态 -->
         <result property="currentState" column="current_state" jdbcType="INTEGER"/>
         <!-- 创建时间 -->
@@ -56,6 +58,7 @@
             toy_no,
             room_lucky_num,
             room_now_lucky_num,
+            add_lucky_num,
             current_state
             )
         values
@@ -64,6 +67,7 @@
             #{toyNo, jdbcType=VARCHAR},
             #{roomLuckyNum, jdbcType=INTEGER},
             #{roomNowLuckyNum, jdbcType=INTEGER},
+            #{addLuckyNum, jdbcType=INTEGER},
             #{currentState, jdbcType=INTEGER}
             )
     </insert>
@@ -81,6 +85,7 @@
             toy_no,
             room_lucky_num,
             room_now_lucky_num,
+            add_lucky_num,
             current_state
         from game_room
         limit #{startPage}, #{pageSize}
@@ -95,7 +100,8 @@
     <select id="getLuckyNumByGameRoomNo" parameterType="java.lang.String" resultMap="userSeeGameRoomMap">
         select
           room_lucky_num,
-          room_now_lucky_num
+          room_now_lucky_num,
+          add_lucky_num
         from game_room where game_room_no = #{gameRoomNo, jdbcType=VARCHAR}
     </select>
 
@@ -145,6 +151,7 @@
             toy_no,
             room_lucky_num,
             room_now_lucky_num,
+            add_lucky_num,
             current_state
         from game_room
         where game_room_no = #{gameRoomNo, jdbcType=VARCHAR} and id = #{id}
@@ -156,14 +163,15 @@
             toy_no = #{toyNo, jdbcType=VARCHAR},
             room_lucky_num = #{roomLuckyNum, jdbcType=INTEGER},
             room_now_lucky_num = #{roomNowLuckyNum, jdbcType=INTEGER},
+            add_lucky_num = #{addLuckyNum, jdbcType=INTEGER},
             current_state = #{currentState, jdbcType=INTEGER}
         where id = #{id} and game_room_no = #{gameRoomNo}
     </update>
 
     <!-- 累加游戏房间幸运值 -->
-    <update id="addRoomLuckyNumByGameRoomNo">
+    <update id="addRoomLuckyNumByGameRoomNo" parameterType="java.lang.String">
         update game_room set
-        room_lucky_num = room_lucky_num + #{addNum, jdbcType=INTEGER}
+          room_lucky_num = room_lucky_num + add_lucky_num
         where game_room_no = #{gameRoomNo, jdbcType=VARCHAR}
     </update>
 

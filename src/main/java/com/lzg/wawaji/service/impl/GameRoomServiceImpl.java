@@ -189,12 +189,11 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
     public CommonResult addRoomLuckyNumByGameRoomNo(final String gameRoomNo) {
         JSONObject json = new JSONObject();
         json.put("gameRoomNo",gameRoomNo);
-        json.put("addNum",BaseConstant.GAME_ROOM_LUCKY_ADD_NUM);
 
         return exec(new Callback() {
             @Override
             public void exec() {
-                gameRoomDao.addRoomLuckyNumByGameRoomNo(gameRoomNo, BaseConstant.GAME_ROOM_LUCKY_ADD_NUM);
+                gameRoomDao.addRoomLuckyNumByGameRoomNo(gameRoomNo);
             }
         }, "addRoomLuckyNumByGameRoomNo", json.toJSONString());
     }

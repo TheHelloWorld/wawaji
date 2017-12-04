@@ -30,6 +30,11 @@ public class GameRoom extends BaseEntity implements Serializable {
     private Integer roomNowLuckyNum;
 
     /**
+     * 房间每次累加幸运值
+     */
+    private Integer addLuckyNum;
+
+    /**
      * 是否可用 可用 禁用
      */
     private Integer currentState;
@@ -64,6 +69,14 @@ public class GameRoom extends BaseEntity implements Serializable {
 
     public void setRoomNowLuckyNum(Integer roomNowLuckyNum) {
         this.roomNowLuckyNum = roomNowLuckyNum;
+    }
+
+    public Integer getAddLuckyNum() {
+        return addLuckyNum;
+    }
+
+    public void setAddLuckyNum(Integer addLuckyNum) {
+        this.addLuckyNum = addLuckyNum;
     }
 
     public Integer getCurrentState() {

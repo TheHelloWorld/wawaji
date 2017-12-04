@@ -160,11 +160,11 @@ function getAllMachineByPage(nowPage) {
 }
 
 function toIndex() {
-    window.location.href="/wawaji/index/index.html";
+    window.location.href="/wawaji/index/machineRoom.html";
 }
 
 function clickBanner() {
-    window.location.href="/wawaji/index/index.html";
+    window.location.href="/wawaji/index/machineRoom.html";
 }
 
 function getPage(page) {

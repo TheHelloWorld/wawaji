@@ -83,7 +83,7 @@ public interface GameRoomDao {
      * 累加游戏房间幸运值
      * @param gameRoomNo 游戏房间编号
      */
-    void addRoomLuckyNumByGameRoomNo(@Param("gameRoomNo") String gameRoomNo, @Param("addNum")  Integer addNum);
+    void addRoomLuckyNumByGameRoomNo(@Param("gameRoomNo") String gameRoomNo);
 
     /**
      * 重置游戏房间幸运值
