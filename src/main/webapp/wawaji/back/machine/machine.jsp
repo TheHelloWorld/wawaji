@@ -21,7 +21,6 @@
                     <div class="dataTable_wrapper" id="tableDiv">
                         <div id="searchDiv" class="input-group custom-search-form">
                             <button type="button" id="addToy" onclick="addToyPage()" class="btn btn-primary">添加记录</button>
-
                         </div>
 
                         <div style="float:left;width:100%;" id="dataDiv">

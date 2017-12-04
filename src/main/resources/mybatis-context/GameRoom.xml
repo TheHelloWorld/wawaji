@@ -7,7 +7,7 @@
         <!-- 主键id -->
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 游戏房间编号 -->
-        <result property="gameRomeNo" column="game_rome_no" jdbcType="VARCHAR"/>
+        <result property="gameRoomNo" column="game_room_no" jdbcType="VARCHAR"/>
         <!-- 玩具编号 -->
         <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
         <!-- 房间幸运值 -->

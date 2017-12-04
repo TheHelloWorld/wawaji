@@ -17,7 +17,9 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body" id="row1">
                     <div class="dataTable_wrapper" id="tableDiv">
-
+                        <div id="searchDiv" class="input-group custom-search-form">
+                            <button type="button" id="addToy" onclick="addGameRoomPage()" class="btn btn-primary">添加记录</button>
+                        </div>
                         <div style="float:left;width:100%;" id="dataDiv">
                             <table class="table table-striped table-bordered table-hover" id="dataTable">
                                 <thead>

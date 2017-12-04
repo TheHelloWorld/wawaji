@@ -20,7 +20,9 @@ $(function(){
     initPage(totalPage, step);
 });
 
-
+function addGameRoomPage() {
+    window.location.href="/wawaji/back/gameRoom/gameRoomDetailPage.jsp?type=add";
+}
 
 function getPage(page) {
     nowPage = getPageByNum(nowPage, page, totalPage, step);
