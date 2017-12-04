@@ -171,6 +171,22 @@ public class UserController {
     }
 
     /**
+     * 获得游戏抓取结果
+     *
+     * @param userNo    用户编号
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    @RequestMapping(value = "/getGameCatchResultByUserNoAndGameRoomNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getGameCatchResultByUserNoAndGameRoomNo(String userNo, String gameRoomNo) {
+
+        CommonResult<String> result = userService.getGameCatchResultByUserNoAndGameRoomNo(userNo, gameRoomNo);
+
+        return JSONUtil.getReturnBeanString(result);
+    }
+
+    /**
      * 根据用户编号修改用户名和用户头像
      * @param userNo 用户编号
      * @param userName 用户名

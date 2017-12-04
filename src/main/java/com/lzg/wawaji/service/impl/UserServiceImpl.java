@@ -530,9 +530,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                             getUserGameRoomLuckyNumByUserNo(userNo, gameRoomNo);
 
                     if(!userGameLucyNumResult.success()) {
-                        json.put("catch_result", BaseConstant.CATCH_FAIL);
-                        json.put("addNum", BaseConstant.GAME_ROOM_LUCKY_ADD_NUM);
-                        got(json.toJSONString());
+
+                        got(getCatchFailReturn());
                         return;
                     }
 
@@ -541,31 +540,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 // 用户房间幸运值大于等于最大用户房间幸运值
                 if(userLucKyNum + userNowLuckyNum >= BaseConstant.MAX_USER_ROOM_LUCKY_NUM) {
-                    // 重置用户房间幸运值
-                    CommonResult resetUserRoom = userGameRoomService.resetUserRoomLuckyNum(userNo, gameRoomNo);
-                    // 重置当前房间幸运值
-                    CommonResult resetGameRoom = gameRoomService.resetRoomLuckyNumByGameRoomNo(gameRoomNo);
 
-                    if(resetUserRoom.success() && resetGameRoom.success()) {
-
-                        json.put("catch_result", BaseConstant.CATCH_SUCCESS);
-                        got(json.toJSONString());
-                        return;
-
-                    } else {
-                        json.put("catch_result", BaseConstant.CATCH_FAIL);
-                        json.put("addNum", BaseConstant.GAME_ROOM_LUCKY_ADD_NUM);
-                        got(json.toJSONString());
-                        return;
-                    }
+                    got(resetLuckyNum(userNo, gameRoomNo));
+                    return;
                 }
 
                 CommonResult<GameRoom> gameRoomLuckyNum = gameRoomService.getLuckyNumByGameRoomNo(gameRoomNo);
 
                 if(!gameRoomLuckyNum.success()) {
-                    json.put("catch_result", BaseConstant.CATCH_FAIL);
-                    json.put("addNum", BaseConstant.GAME_ROOM_LUCKY_ADD_NUM);
-                    got(json.toJSONString());
+
+                    got(getCatchFailReturn());
                     return;
                 }
 
@@ -574,23 +558,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 若房间幸运值大于等于最大房间幸运值
                 if(gameRoom.getRoomNowLuckyNum() + BaseConstant.GAME_ROOM_LUCKY_ADD_NUM >= gameRoom.getRoomLuckyNum()) {
 
-                    // 重置用户房间幸运值
-                    CommonResult resetUserRoom = userGameRoomService.resetUserRoomLuckyNum(userNo, gameRoomNo);
-                    // 重置当前房间幸运值
-                    CommonResult resetGameRoom = gameRoomService.resetRoomLuckyNumByGameRoomNo(gameRoomNo);
-
-                    if(resetUserRoom.success() && resetGameRoom.success()) {
-
-                        json.put("catch_result", BaseConstant.CATCH_SUCCESS);
-                        got(json.toJSONString());
-                        return;
-
-                    } else {
-                        json.put("catch_result", BaseConstant.CATCH_FAIL);
-                        json.put("addNum", BaseConstant.GAME_ROOM_LUCKY_ADD_NUM);
-                        got(json.toJSONString());
-                        return;
-                    }
+                    got(resetLuckyNum(userNo, gameRoomNo));
+                    return;
                 }
 
                 // 累加用户房间幸运值
@@ -606,6 +575,48 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
             }
         }, "getGameCatchResultByUserNoAndGameRoomNo", json.toJSONString());
+    }
+
+    /**
+     * 获得抓取失败返回值
+     * @return
+     */
+    private String getCatchFailReturn() {
+
+        JSONObject json = new JSONObject();
+        // 抓取失败
+        json.put("catch_result", BaseConstant.CATCH_FAIL);
+        //
+        json.put("addNum", BaseConstant.GAME_ROOM_LUCKY_ADD_NUM);
+
+        return json.toJSONString();
+    }
+
+    /**
+     * 重置用户及游戏房间幸运值
+     * @param userNo 用户编号
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    private String resetLuckyNum(String userNo, String gameRoomNo) {
+
+        // 重置用户房间幸运值
+        CommonResult resetUserRoom = userGameRoomService.resetUserRoomLuckyNum(userNo, gameRoomNo);
+        // 重置当前房间幸运值
+        CommonResult resetGameRoom = gameRoomService.resetRoomLuckyNumByGameRoomNo(gameRoomNo);
+
+        if(resetUserRoom.success() && resetGameRoom.success()) {
+
+            JSONObject json = new JSONObject();
+
+            json.put("catch_result", BaseConstant.CATCH_SUCCESS);
+
+            return json.toJSONString();
+
+        } else {
+
+            return getCatchFailReturn();
+        }
     }
 
     @Override
