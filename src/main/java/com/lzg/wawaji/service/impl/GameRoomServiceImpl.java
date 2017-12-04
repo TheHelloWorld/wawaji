@@ -9,7 +9,7 @@ import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.GameRoomDao;
 import com.lzg.wawaji.entity.GameRoom;
 import com.lzg.wawaji.service.GameRoomService;
-import com.lzg.wawaji.utils.RandomUtil;
+import com.lzg.wawaji.utils.RandomIntUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -208,7 +208,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
         JSONObject json = new JSONObject();
         json.put("gameRoomNo",gameRoomNo);
 
-        final Integer roomLuckyNum = RandomUtil.getRandomNum(40);
+        final Integer roomLuckyNum = RandomIntUtil.getRandomNum(40);
 
         json.put("roomLuckyNum",roomLuckyNum);
 
