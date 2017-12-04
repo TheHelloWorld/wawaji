@@ -4,7 +4,7 @@
 <%@ include file="../../../include/nav.jsp"%>
 
 <!-- 该页面功能js -->
-<script type="text/javascript" src="../../js/toy/toy.js"></script>
+<script type="text/javascript" src="/js/back/toy/toy.js"></script>
 
 <!-- <div id="page-wrapper"> -->
 <%--<input type="hidden" id="num" value="${num}">--%>

@@ -1,4 +1,5 @@
-var returnUtl = "/wawaji/deliver/deliver.jsp";
+// 返回Url
+var returnUtl = "/wawaji/back/deliver/deliver.jsp";
 
 $(function(){
     // 判断当前类型为修改

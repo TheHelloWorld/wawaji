@@ -1,4 +1,4 @@
-var returnUrl = "/wawaji/machine/machine.jsp";
+var returnUrl = "/wawaji/back/machine/machine.jsp";
 
 // 返回玩具列表页
 function cancelThis() {

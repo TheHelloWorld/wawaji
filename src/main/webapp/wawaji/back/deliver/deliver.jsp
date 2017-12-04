@@ -4,7 +4,7 @@
 <%@ include file="../../../include/nav.jsp"%>
 
 <!-- 该页面功能js -->
-<script type="text/javascript" src="../../js/deliver/deliver.js"></script>
+<script type="text/javascript" src="/js/back/deliver/deliver.js"></script>
 
 <!-- /.row -->
 <div id="page-wrapper">

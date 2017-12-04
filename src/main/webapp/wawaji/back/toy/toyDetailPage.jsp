@@ -19,7 +19,7 @@
 
     <script src="/dist/js/fileInput/locales/zh.js" type="text/javascript"></script>
 
-    <script type="text/javascript" src="/js/toy/toyDetailPage.js"></script>
+    <script type="text/javascript" src="/js/back/toy/toyDetailPage.js"></script>
 </head>
 <body>
     <div id="dataInfo">

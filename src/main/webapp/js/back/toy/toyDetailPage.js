@@ -1,4 +1,4 @@
-var returnUrl = "/wawaji/toy/toy.jsp";
+var returnUrl = "/wawaji/back/toy/toy.jsp";
 
 $(function(){
     // 判断当前类型为修改

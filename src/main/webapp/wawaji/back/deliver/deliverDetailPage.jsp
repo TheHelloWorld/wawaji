@@ -12,7 +12,7 @@
 
     <%@ include file="../../../include/header.jsp"%>
 
-    <script type="text/javascript" src="/js/deliver/deliverDetailPage.js"></script>
+    <script type="text/javascript" src="/js/back/deliver/deliverDetailPage.js"></script>
 </head>
 <body>
 <div id="dataInfo">

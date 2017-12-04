@@ -5,42 +5,43 @@ var step = 5;
 
 var nowPage = 1;
 
-var showUrl = "/wawaji/machine/getAllMachineByPage.action";
+// 展示url
+var showUrl = "/wawaji/toy/getAllToyByPage.action";
 
-$(function(){
+$(function() {
     // 获得总页数和总数量
-    var countAndPageSizeUrl = "/wawaji/machine/getMachineTotalCountAndPageSize.action";
+    var countAndPageSizeUrl = "/wawaji/toy/getTotalCountAndPageSize.action";
     getTotalCountAndPageSize(countAndPageSizeUrl);
 
     // 分页获得所有记录
     getAllByPage(showUrl, nowPage);
 
     // 初始化页码
-    initPage(totalPage, step);
+    initPage(totalPage,step);
 });
 
 
 
 function getPage(page) {
-    nowPage = getPageByNum(nowPage, page, totalPage, step);
+    nowPage = getPageByNum(nowPage,page,totalPage,step);
     getAllByPage(showUrl, nowPage);
 
 }
 
 function nextPage() {
-    nowPage = nextPageNum(nowPage, totalPage, step);
+    nowPage = nextPageNum(nowPage,totalPage,step);
     getAllByPage(showUrl, nowPage);
 
 }
 
 //上一页
 function lastPage() {
-    nowPage = lastPageNum(nowPage, totalPage, step);
+    nowPage = lastPageNum(nowPage,totalPage,step);
     getAllByPage(showUrl, nowPage);
 }
 
 function addToyPage() {
-    window.location.href="/wawaji/machine/machineDetailPage.jsp?type=save";
+    window.location.href="/wawaji/toy/toyDetailPage.jsp?type=save";
 }
 
 // 删除行元素
@@ -49,15 +50,15 @@ function deleteThis(dataParam) {
     dataParam = eval("(" + dataParam + ")");
 
     var id = dataParam["id"];
-    var machineNo = dataParam["machineNo"];
+    var toyNo = dataParam["toyNo"];
 
     $.ajax({
-        url:"/wawaji/machine/deleteMachineByIdAndToyNo.action",
+        url:"/wawaji/toy/deleteToyByIdAndToyNo.action",
         type:"POST",
         async:false,
         data:{
             id:id,
-            machineNo:machineNo
+            toyNo:toyNo
         },
         success:function(data){
 
@@ -81,7 +82,7 @@ function updateThis(dataParam) {
     dataParam = eval("(" + dataParam + ")");
 
     var id = dataParam["id"];
-    var machineNo = dataParam["machineNo"];
+    var toyNo = dataParam["toyNo"];
 
-    window.location.href = "/wawaji/machine/machineDetailPage.jsp?type=update&id="+id+"&machineNo="+machineNo+"";
+    window.location.href = "/wawaji/toy/toyDetailPage.jsp?type=update&id="+id+"&toyNo="+toyNo+"";
 }
