@@ -18,7 +18,7 @@ public final class ExecTemplate {
      * @return
      */
     public static CommonResult exec(Callback callback, Logger logger, String method, String params) {
-        logger.info(method + " start");
+        logger.info(method + " start params:" + params);
 
         CommonResult commonResult = new CommonResult();
 

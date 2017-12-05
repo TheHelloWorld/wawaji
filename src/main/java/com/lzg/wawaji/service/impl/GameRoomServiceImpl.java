@@ -162,6 +162,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
         return exec(new Callback() {
             @Override
             public void exec() {
+
                 got(gameRoomDao.getGameRoomByGameRoomNoAndId(gameRoomNo, id));
             }
         }, "getGameRoomByGameRoomNoAndId", json.toJSONString());

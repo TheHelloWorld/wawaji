@@ -82,14 +82,14 @@ public class GameRoomController {
     /**
      * 根据id和游戏房间编号获得游戏房间记录
      * @param id id
-     * @param gameRoomNo 游戏房间编号
+     * @param dataNo 游戏房间编号
      * @return
      */
     @RequestMapping(value = "/getGameRoomByGameRoomNoAndId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String getGameRoomByGameRoomNoAndId(Long id, String gameRoomNo) {
+    public String getGameRoomByGameRoomNoAndId(Long id, String dataNo) {
 
-        CommonResult<GameRoom> result = gameRoomService.getGameRoomByGameRoomNoAndId(gameRoomNo, id);
+        CommonResult<GameRoom> result = gameRoomService.getGameRoomByGameRoomNoAndId(dataNo, id);
 
         return JSONUtil.getReturnStrString(result, String.valueOf(result.getValue()));
     }
