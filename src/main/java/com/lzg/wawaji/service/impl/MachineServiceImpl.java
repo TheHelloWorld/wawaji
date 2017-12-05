@@ -10,6 +10,7 @@ import com.lzg.wawaji.dao.MachineDao;
 import com.lzg.wawaji.entity.Machine;
 import com.lzg.wawaji.service.MachineService;
 import com.lzg.wawaji.utils.RedisUtil;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,26 +97,40 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
                 List<UserMachine> userMachineList = machineDao.getUserAllMachineByPage(startPage,
                         BaseConstant.DEFAULT_PAGE_SIZE);
 
-//                if(userMachineList != null && userMachineList.size() >0) {
-//                    try(RedisUtil redisUtil = new RedisUtil("redis")) {
+//                if(userMachineList != null && userMachineList.size() > 0) {
+//
+//                    try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+//
 //                        for(UserMachine userMachine : userMachineList) {
-//                            String viewerNum = redisUtil.hget(userMachine.getMachineNo(), "viewer");
+//
+//                            // 获得当前机器围观人数
+//                            String machineKey = BaseConstant.MACHINE_ROOM.replace("#{}", userMachine.getMachineNo());
+//
+//                            String viewerNum = redisUtil.hget(machineKey, "viewer");
 //
 //                            if(StringUtils.isBlank(viewerNum)) {
 //                                viewerNum = "0";
 //                            }
+//
 //                            userMachine.setViewer(Integer.valueOf(viewerNum));
 //
-//                            String isUse = redisUtil.get(userMachine.getMachineNo());
+//                            // 当前机器被占用的锁
+//                            String machineLockKey = BaseConstant.MACHINE_IN_USE.replace("#{}", userMachine.getMachineNo());
+//
+//                            String isUse = redisUtil.get(machineLockKey);
 //
 //                            boolean available = false;
+//
 //                            if(StringUtils.isBlank(isUse)) {
+//
 //                                available = true;
 //                            }
+//
+//                            // 设置当前机器是否可用
 //                            userMachine.setAvailable(available);
 //                        }
 //                    } catch (Exception e) {
-//                        logger.error("{} redis error " + e, BaseConstant.LOG_ERR_MSG);
+//                        logger.error("{} getUserAllMachineByPage redis error " + e, BaseConstant.LOG_ERR_MSG);
 //                    }
 //                }
 

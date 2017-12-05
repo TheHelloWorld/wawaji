@@ -11,6 +11,7 @@ import com.lzg.wawaji.entity.GameRoom;
 import com.lzg.wawaji.service.GameRoomService;
 import com.lzg.wawaji.utils.RandomIntUtil;
 import com.lzg.wawaji.utils.RedisUtil;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,7 +107,49 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
         return exec(new Callback() {
             @Override
             public void exec() {
-                got(gameRoomDao.getUserSeeGameRoomListByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
+
+                List<UserSeeGameRoom> userSeeGameRoomList =
+                        gameRoomDao.getUserSeeGameRoomListByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE);
+
+//                if(userSeeGameRoomList != null && userSeeGameRoomList.size() >0) {
+//
+//                    try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+//
+//                        for(UserSeeGameRoom userSeeGameRoom : userSeeGameRoomList) {
+//
+//                            String gameRoomkey = BaseConstant.GAME_ROOM.
+//                                    replace("#{}", userSeeGameRoom.getGameRoomNo());
+//
+//                            String viewerNum = redisUtil.hget(gameRoomkey, "viewer");
+//
+//                            if(StringUtils.isBlank(viewerNum)) {
+//                                viewerNum = "0";
+//                            }
+//
+//                            // 当前游戏房间观看人数
+//                            userSeeGameRoom.setViewer(Integer.valueOf(viewerNum));
+//
+//                            // 获得当前游戏房间锁key
+//                            String gameRoomLockkey = BaseConstant.GAME_ROOM_IN_USE.
+//                                    replace("#{}", userSeeGameRoom.getGameRoomNo());
+//
+//                            String isUse = redisUtil.get(gameRoomLockkey);
+//
+//                            boolean available = false;
+//
+//                            if(StringUtils.isBlank(isUse)) {
+//                                available = true;
+//                            }
+//
+//                            // 当前游戏房间是否空闲
+//                            userSeeGameRoom.setAvailable(available);
+//                        }
+//                    } catch (Exception e) {
+//                        logger.error("{} getUserSeeGameRoomListByPage redis error " + e, BaseConstant.LOG_ERR_MSG);
+//                    }
+//                }
+
+                got(userSeeGameRoomList);
             }
         }, "getUserSeeGameRoomListByPage", json.toJSONString());
     }

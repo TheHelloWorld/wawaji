@@ -3,7 +3,7 @@ var pageSize = 0;
 
 var nowPage = 1;
 
-var showUrl = "/wawaji/machine/getAllMachineByPage.action";
+var showUrl = "/wawaji/gameRoom/getAllGameRoomByPage.action";
 
 var width = $(window).width() / 2 - 20;
 
@@ -11,15 +11,22 @@ var userNo = "";
 
 
 $(function(){
-    var url = "/wawaji/machine/getMachineTotalCountAndPageSize.action";
+    var url = "/wawaji/gameRoom/getUserSeeGameRoomTotalCountAndPageSize.action";
+
+    // 获得所有用户可见游戏房间数量及分页
     getTotalCountAndPageSize(url);
-    getAllMachineByPage(nowPage);
+
+    // 分页获得所有用户可见游戏房间并展示
+    getUserSeeGameRoomListByPage(nowPage);
+
+    // 用户自动登陆
     userAutoLogin();
 
 });
 
 // 用户自动登陆
 function userAutoLogin() {
+
     $.ajax({
         url:"/wawaji/user/autoLogin.action",
         type:"POST",
@@ -57,6 +64,7 @@ function userAutoLogin() {
 
 // 用户登陆或注册
 function userLoginOrRegister() {
+
     $.ajax({
         url:"/wawaji/user/registerOrLoginUser.action",
         type:"POST",
@@ -95,11 +103,12 @@ function userLoginOrRegister() {
     });
 }
 
-function getAllMachineByPage(nowPage) {
+function getUserSeeGameRoomListByPage(nowPage) {
+
     var startPage = (nowPage - 1) * pageSize;
 
     $.ajax({
-        url:"/wawaji/machine/getUserAllMachineByPage.action",
+        url:"/wawaji/gameRoom/getUserSeeGameRoomListByPage.action",
         type:"POST",
         async:false,
         data:{

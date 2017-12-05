@@ -66,6 +66,19 @@ public class GameRoomController {
     }
 
     /**
+     * 获得用户可见总记录数和每页数据数
+     * @return
+     */
+    @RequestMapping(value = "/getUserSeeGameRoomTotalCountAndPageSize", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getUserSeeGameRoomTotalCountAndPageSize() {
+
+        CommonResult<Integer> result = gameRoomService.countAllUserSeeGamRoom();
+
+        return JSONUtil.getTotalCountAndPageSize(result, BaseConstant.DEFAULT_PAGE_SIZE);
+    }
+
+    /**
      * 添加游戏房间记录
      * @param paramStr 机器记录
      * @return

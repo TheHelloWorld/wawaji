@@ -51,6 +51,16 @@ public class UserSeeGameRoom extends BaseEntity implements Serializable {
      */
     private Integer currentState;
 
+    /**
+     * 围观人数
+     */
+    private Integer viewer;
+
+    /**
+     * 是否空闲
+     */
+    private boolean available;
+
     public String getGameRoomNo() {
         return gameRoomNo;
     }
@@ -113,5 +123,21 @@ public class UserSeeGameRoom extends BaseEntity implements Serializable {
 
     public void setCurrentState(Integer currentState) {
         this.currentState = currentState;
+    }
+
+    public Integer getViewer() {
+        return viewer;
+    }
+
+    public void setViewer(Integer viewer) {
+        this.viewer = viewer;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }
