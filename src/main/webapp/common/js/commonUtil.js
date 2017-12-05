@@ -19,13 +19,17 @@ var nowMonth = now.getMonth();
 
 //当前年
 var nowYear = now.getYear();
+
 nowYear += (nowYear < 2000) ? 1900 : 0;
 
 //上月日期
 var lastMonthDate = new Date();
+
 lastMonthDate.setDate(1);
 lastMonthDate.setMonth(lastMonthDate.getMonth()-1);
+
 var lastYear = lastMonthDate.getYear();
+
 var lastMonth = lastMonthDate.getMonth();
 
 //显示图表或表格的标志位
@@ -35,7 +39,12 @@ var tableOrPicture = false;
 var json = {};
 
 $(function(){
+
+	// 设置div为屏幕高度
     $(".index-body-div").height($(window).height());
+
+    // 设置div为屏幕宽度
+    $(".index-body-div").width($(window).width());
 });
 
 //初始化页码
