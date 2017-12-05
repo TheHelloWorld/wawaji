@@ -96,7 +96,8 @@
 .footer-button {
     float: left;
     text-align: center;
-    margin: 2px 10%;
+    margin-left: 8%;
+    margin-right: 25%;
     height: 60px;
     margin-inside: 5%;
 }
@@ -104,7 +105,7 @@
 .footer-img {
     z-index: 999;
     position: fixed;
-    bottom: 3%;
+    bottom: 1%;
 }
 
 .footer-text {
