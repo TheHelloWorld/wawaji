@@ -3,6 +3,7 @@ package com.lzg.wawaji.service;
 import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.bean.UserMachine;
 import com.lzg.wawaji.entity.Machine;
+import com.lzg.wawaji.enums.HandleType;
 
 import java.util.List;
 
@@ -76,5 +77,12 @@ public interface MachineService {
      */
     CommonResult<UserMachine> getToyNoAndToyImgByMachineNo(String machineNo);
 
+    /**
+     * 操作娃娃机围观人数
+     * @param machineNo 娃娃机编号
+     * @param handleType 操作类型
+     * @return
+     */
+    CommonResult<Long> handleMachineViewer(String machineNo, HandleType handleType);
 
 }

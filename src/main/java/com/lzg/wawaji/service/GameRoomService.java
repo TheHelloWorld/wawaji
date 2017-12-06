@@ -3,6 +3,7 @@ package com.lzg.wawaji.service;
 import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.bean.UserSeeGameRoom;
 import com.lzg.wawaji.entity.GameRoom;
+import com.lzg.wawaji.enums.HandleType;
 
 import java.util.List;
 
@@ -100,4 +101,12 @@ public interface GameRoomService {
      * @return
      */
     CommonResult<String> getToyNameByGameRoomNo(String gameRoomNo);
+
+    /**
+     * 操作游戏房间围观人数
+     * @param gameRoomNo 游戏房间编号
+     * @param handleType 操作类型
+     * @return
+     */
+    CommonResult<Long> handleGameRoomViewer(String gameRoomNo, HandleType handleType);
 }

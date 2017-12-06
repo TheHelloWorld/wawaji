@@ -8,6 +8,7 @@ import com.lzg.wawaji.bean.UserSeeGameRoom;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.GameRoomDao;
 import com.lzg.wawaji.entity.GameRoom;
+import com.lzg.wawaji.enums.HandleType;
 import com.lzg.wawaji.service.GameRoomService;
 import com.lzg.wawaji.utils.RandomIntUtil;
 import com.lzg.wawaji.utils.RedisUtil;
@@ -330,7 +331,47 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 got(gameRoomDao.getToyNameByGameRoomNo(gameRoomNo));
             }
-        }, "getLuckyNumByGameRoomNo", json.toJSONString());
+        }, "getToyNameByGameRoomNo", json.toJSONString());
+    }
+
+    /**
+     * 操作游戏房间围观人数
+     * @param gameRoomNo 游戏房间编号
+     * @param handleType 操作类型
+     * @return
+     */
+    @Override
+    public CommonResult<Long> handleGameRoomViewer(final String gameRoomNo, final HandleType handleType) {
+        JSONObject json = new JSONObject();
+        json.put("gameRoomNo",gameRoomNo);
+        json.put("handleType",handleType.name());
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+
+                    // 当前游戏房间围观人数key
+                    String gameRoomkey = BaseConstant.GAME_ROOM_VIEWER.replace("#{}", gameRoomNo);
+
+                    if(HandleType.CONNECT == handleType) {
+                        // 围观人数+1
+                        got(redisUtil.incr(gameRoomkey));
+                        return;
+
+                    } else {
+                        // 围观人数-1
+                        got(redisUtil.decr(gameRoomkey));
+                        return;
+                    }
+
+                } catch (Exception e) {
+                    logger.error("{} handleGameRoomViewer redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                    got(1000L);
+                    return;
+                }
+            }
+        }, "handleGameRoomViewer", json.toJSONString());
     }
 
     @Override

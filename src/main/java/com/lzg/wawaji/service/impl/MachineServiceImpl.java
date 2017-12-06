@@ -8,6 +8,7 @@ import com.lzg.wawaji.bean.UserMachine;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.MachineDao;
 import com.lzg.wawaji.entity.Machine;
+import com.lzg.wawaji.enums.HandleType;
 import com.lzg.wawaji.service.MachineService;
 import com.lzg.wawaji.utils.RedisUtil;
 import org.apache.commons.lang.StringUtils;
@@ -266,6 +267,46 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
                 got(userMachine);
             }
         }, "getToyNoAndToyImgByMachineNo", json.toJSONString());
+    }
+
+    /**
+     * 操作娃娃机围观人数
+     * @param machineNo 娃娃机编号
+     * @param handleType 操作类型
+     * @return
+     */
+    @Override
+    public CommonResult<Long> handleMachineViewer(final String machineNo, final HandleType handleType) {
+        JSONObject json = new JSONObject();
+        json.put("machineNo",machineNo);
+        json.put("handleType",handleType.name());
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+
+                    // 当前娃娃机房间围观人数key
+                    String machineRoomKey = BaseConstant.MACHINE_ROOM_VIEWER.replace("#{}", machineNo);
+
+                    if(HandleType.CONNECT == handleType) {
+                        // 围观人数+1
+                        got(redisUtil.incr(machineRoomKey));
+                        return;
+
+                    } else {
+                        // 围观人数-1
+                        got(redisUtil.decr(machineRoomKey));
+                        return;
+                    }
+
+                } catch (Exception e) {
+                    logger.error("{} handleMachineViewer redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                    got(1000L);
+                    return;
+                }
+            }
+        }, "handleMachineViewer", json.toJSONString());
     }
 
     @Override
