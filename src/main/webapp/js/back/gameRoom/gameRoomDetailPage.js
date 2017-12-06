@@ -10,7 +10,7 @@ $(function(){
     if(getQueryString("type") == "update") {
 
         var id = getQueryString("id");
-        console.info(id);
+
         var gameRoomNo = getQueryString("gameRoomNo");
 
         var getUrl = "/wawaji/gameRoom/getGameRoomByGameRoomNoAndId.action";
