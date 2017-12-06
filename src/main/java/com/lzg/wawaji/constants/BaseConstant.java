@@ -150,14 +150,32 @@ public class BaseConstant {
 	 */
 	public static final String MACHINE_IN_USE = "machine_#{}_in_use";
 
+
+
+	/**
+	 * 娃娃机房间围观人数
+	 */
+	public static final String MACHINE_ROOM_VIEWER = "machine_room_viewer_#{}";
+
+	/**
+	 * 娃娃机房间锁key
+	 */
+	public static final String MACHINE_ROOM = "machine_room_#{}";
+
 	/**
 	 * 游戏房间正在被使用key
 	 */
 	public static final String GAME_ROOM_IN_USE = "game_room_#{}_in_use";
 
-	public static final String MACHINE_ROOM = "machine_room_#{}";
-
+	/**
+	 * 游戏房间锁key
+	 */
 	public static final String GAME_ROOM = "game_room_#{}";
+
+	/**
+	 * 游戏房间围观人数
+	 */
+	public static final String GAME_ROOM_VIEWER = "game_room_viewer_#{}";
 
 	public static final String COOKIE_USER_NO = "toilet_cat_user_no";
 

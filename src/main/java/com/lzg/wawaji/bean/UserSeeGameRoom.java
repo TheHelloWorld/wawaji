@@ -22,6 +22,11 @@ public class UserSeeGameRoom extends BaseEntity implements Serializable {
     private String toyNo;
 
     /**
+     * 玩具名称
+     */
+    private String toyName;
+
+    /**
      * 娃娃图片地址
      */
     private String toyImg;
@@ -75,6 +80,14 @@ public class UserSeeGameRoom extends BaseEntity implements Serializable {
 
     public void setToyNo(String toyNo) {
         this.toyNo = toyNo;
+    }
+
+    public String getToyName() {
+        return toyName;
+    }
+
+    public void setToyName(String toyName) {
+        this.toyName = toyName;
     }
 
     public String getToyImg() {

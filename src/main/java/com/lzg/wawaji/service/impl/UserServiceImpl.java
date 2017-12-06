@@ -607,6 +607,24 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
             json.put("catch_result", BaseConstant.CATCH_SUCCESS);
 
+            // 获得用户名
+            String userName = userDao.getUserNameByUserNo(userNo);
+
+            // 获得玩具名
+            String toyName = gameRoomService.getToyNameByGameRoomNo(gameRoomNo).getValue();
+
+            JSONObject msg = new JSONObject();
+
+            msg.put("userNo", userNo);
+
+            msg.put("userName", userName);
+
+            msg.put("gameRoomNo", gameRoomNo);
+
+            msg.put("toyName", toyName);
+
+            // 发送抓取成功的通知
+            SocketUtil.sendMsg(msg.toJSONString());
             return json.toJSONString();
 
         } else {

@@ -23,6 +23,13 @@ public interface GameRoomDao {
     Integer countAllGameRoom();
 
     /**
+     * 根据游戏房间编号获得玩具名称
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    String getToyNameByGameRoomNo(String gameRoomNo);
+
+    /**
      * 分页获得所有游戏房间
      * @param startPage 开始页
      * @param pageSize 每页数据数

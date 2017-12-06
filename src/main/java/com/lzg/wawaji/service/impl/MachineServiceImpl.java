@@ -104,9 +104,10 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
 //                        for(UserMachine userMachine : userMachineList) {
 //
 //                            // 获得当前机器围观人数
-//                            String machineKey = BaseConstant.MACHINE_ROOM.replace("#{}", userMachine.getMachineNo());
+//                            String machineKey = BaseConstant.MACHINE_ROOM_VIEWER.
+//                                    replace("#{}", userMachine.getMachineNo());
 //
-//                            String viewerNum = redisUtil.hget(machineKey, "viewer");
+//                            String viewerNum = redisUtil.get(machineKey);
 //
 //                            if(StringUtils.isBlank(viewerNum)) {
 //                                viewerNum = "0";

@@ -93,4 +93,11 @@ public interface GameRoomService {
      * @return
      */
     CommonResult<String> getGameRoomInUse(String gameRoomNo);
+
+    /**
+     * 根据游戏房间编号获得玩具名称
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    CommonResult<String> getToyNameByGameRoomNo(String gameRoomNo);
 }

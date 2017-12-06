@@ -37,6 +37,13 @@ public interface UserDao {
     User getUserByUserNo(String userNo);
 
     /**
+     * 根据用户编号获得用户名称
+     * @param userNo 用户编号
+     * @return
+     */
+    String getUserNameByUserNo(String userNo);
+
+    /**
      * 根据手机号获得用户记录
      * @param mobileNo 手机号
      * @return

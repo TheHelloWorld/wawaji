@@ -12,6 +12,9 @@ import redis.clients.jedis.JedisSentinelPool;
  */
 public class RedisUtil implements AutoCloseable {
 
+    /**
+     * redis pool map
+     */
     private static Map<String, JedisSentinelPool> poolMap = new HashMap<>();
 
     private Jedis jedis;

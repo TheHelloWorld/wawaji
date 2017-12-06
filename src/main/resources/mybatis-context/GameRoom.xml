@@ -32,6 +32,8 @@
         <result property="gameRoomNo" column="game_room_no" jdbcType="VARCHAR"/>
         <!-- 玩具编号 -->
         <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
+        <!-- 玩具编号 -->
+        <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
         <!-- 娃娃图片地址 -->
         <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
         <!-- 娃娃当前游戏币数 -->
@@ -112,6 +114,7 @@
             g.game_room_no,
             g.toy_no,
             t.toy_img,
+            t.toy_name,
             t.toy_now_coin,
             t.toy_origin_coin,
             g.room_lucky_num,
@@ -128,6 +131,7 @@
             g.game_room_no,
             g.toy_no,
             t.toy_img,
+            t.toy_name,
             t.toy_now_coin,
             t.toy_origin_coin,
             g.room_lucky_num,
@@ -140,6 +144,13 @@
     <select id="getCoinByGameRoomNo" parameterType="java.lang.String" resultType="java.lang.Integer">
         select
           t.toy_now_coin
+        from game_room g, toy t where g.toy_no = t.toy_no and g.game_room_no = #{gameRoomNo, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据游戏房间编号获得玩具名称 -->
+    <select id="getToyNameByGameRoomNo" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+          t.toy_name
         from game_room g, toy t where g.toy_no = t.toy_no and g.game_room_no = #{gameRoomNo, jdbcType=VARCHAR}
     </select>
 

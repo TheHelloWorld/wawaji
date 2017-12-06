@@ -117,10 +117,10 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 //
 //                        for(UserSeeGameRoom userSeeGameRoom : userSeeGameRoomList) {
 //
-//                            String gameRoomkey = BaseConstant.GAME_ROOM.
+//                            String gameRoomkey = BaseConstant.GAME_ROOM_VIEWER.
 //                                    replace("#{}", userSeeGameRoom.getGameRoomNo());
 //
-//                            String viewerNum = redisUtil.hget(gameRoomkey, "viewer");
+//                            String viewerNum = redisUtil.get(gameRoomkey);
 //
 //                            if(StringUtils.isBlank(viewerNum)) {
 //                                viewerNum = "0";
@@ -264,6 +264,11 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
         }, "resetRoomLuckyNumByGameRoomNo", json.toJSONString());
     }
 
+    /**
+     * 根据游戏房间编号获得房间幸运值及当前幸运值
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
     @Override
     public CommonResult<GameRoom> getLuckyNumByGameRoomNo(final String gameRoomNo) {
         JSONObject json = new JSONObject();
@@ -308,6 +313,24 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
                 }
             }
         }, "getGameRoomInUse", json.toJSONString());
+    }
+
+    /**
+     * 根据游戏房间编号获得玩具名称
+     * @param gameRoomNo 游戏房间编号
+     * @return
+     */
+    @Override
+    public CommonResult<String> getToyNameByGameRoomNo(final String gameRoomNo) {
+        JSONObject json = new JSONObject();
+        json.put("gameRoomNo",gameRoomNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(gameRoomDao.getToyNameByGameRoomNo(gameRoomNo));
+            }
+        }, "getLuckyNumByGameRoomNo", json.toJSONString());
     }
 
     @Override
