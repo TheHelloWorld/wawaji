@@ -11,10 +11,10 @@ var userNo = "";
 
 var bannerType = 1;
 
-
-$(function(){
+$(function() {
     var url = "/wawaji/gameRoom/getUserSeeGameRoomTotalCountAndPageSize.action";
 
+    // 获取banner图
     getBannerByType(bannerType);
 
     // 获得所有用户可见游戏房间数量及分页

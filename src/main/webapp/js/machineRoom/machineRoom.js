@@ -9,12 +9,22 @@ var width = $(window).width() / 2 - 20;
 
 var userNo = "";
 
-$(function(){
-    var url = "/wawaji/machine/getMachineTotalCountAndPageSize.action";
-    getTotalCountAndPageSize(url);
-    getAllMachineByPage(nowPage);
-    userAutoLogin();
+var bannerType = 0;
 
+$(function() {
+    var url = "/wawaji/machine/getMachineTotalCountAndPageSize.action";
+
+    // 获取banner图
+    getBannerByType(bannerType);
+
+    // 获得数据量
+    getTotalCountAndPageSize(url);
+
+    // 获得数据
+    getAllMachineByPage(nowPage);
+
+    // 自动登陆
+    userAutoLogin();
 });
 
 // 用户自动登陆
