@@ -10,3 +10,34 @@ $(function (){
         activeClass: "active",//小的控制按钮激活的样式，不包括作用两边，默认active
     });
 });
+
+// 根据类型获得banner图
+function getBannerByType(type) {
+
+    $.ajax({
+        url:"/wawaji/bannerImg/getBannerImgByBannerType.action",
+        type:"POST",
+        async:false,
+        data:{
+          bannerType : type
+        },
+        success:function(data){
+
+            if(typeof(data) == "string"){
+                data = eval("("+data+")");
+            }
+
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+            var list = data["result"];
+            var str = "";
+
+            for(var i = 0; i<list.length; i++) {
+
+            }
+        }
+    });
+}
