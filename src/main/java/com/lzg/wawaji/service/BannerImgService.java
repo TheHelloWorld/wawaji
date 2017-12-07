@@ -2,6 +2,7 @@ package com.lzg.wawaji.service;
 
 import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.entity.BannerImg;
+import com.lzg.wawaji.enums.BannerType;
 
 import java.util.List;
 
@@ -38,5 +39,12 @@ public interface BannerImgService {
      * @param bannerImg bean
      */
     CommonResult updateBannerImg(BannerImg bannerImg);
+
+    /**
+     * 根据banner类型获得banner图
+     * @param bannerType banner类型
+     * @return
+     */
+    CommonResult<List<BannerImg>> getBannerImgByBannerType(BannerType bannerType);
 
 }

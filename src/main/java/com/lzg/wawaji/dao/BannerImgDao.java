@@ -42,4 +42,11 @@ public interface BannerImgDao {
      */
     void updateBannerImg(BannerImg bannerImg);
 
+    /**
+     * 根据banner类型获得banner图
+     * @param bannerType banner类型
+     * @return
+     */
+    List<BannerImg> getBannerImgByBannerType(Integer bannerType);
+
 }

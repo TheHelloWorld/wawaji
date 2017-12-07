@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.entity.BannerImg;
+import com.lzg.wawaji.enums.BannerType;
 import com.lzg.wawaji.service.BannerImgService;
 import com.lzg.wawaji.utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +87,20 @@ public class BannerImgController {
     public String updateBannerImg(String paramStr) {
 
         CommonResult result = bannerImgService.updateBannerImg(JSON.parseObject(paramStr, BannerImg.class));
+
+        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
+    }
+
+    /**
+     * 根据banner类型获得banner图
+     * @param bannerType banner类型
+     * @return
+     */
+    @RequestMapping(value = "/getBannerImgByBannerType", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getBannerImgByBannerType(Integer bannerType) {
+
+        CommonResult result = bannerImgService.getBannerImgByBannerType(BannerType.getValueMapByKey(bannerType));
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }

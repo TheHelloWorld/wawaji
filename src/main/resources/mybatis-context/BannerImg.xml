@@ -75,4 +75,15 @@
         where id = #{id}
     </update>
 
+    <!-- 根据banner类型获得banner图 -->
+    <select id="getBannerImgByBannerType" parameterType="java.lang.Integer" resultMap="bannerImgMap">
+        select
+            id,
+            img_url,
+            banner_order,
+            click_url,
+            banner_type
+        from banner_img where banner_type = #{bannerType, jdbcType=INTEGER}
+    </select>
+
 </mapper>

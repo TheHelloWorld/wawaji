@@ -7,6 +7,7 @@ import com.lzg.wawaji.bean.CommonResult;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.dao.BannerImgDao;
 import com.lzg.wawaji.entity.BannerImg;
+import com.lzg.wawaji.enums.BannerType;
 import com.lzg.wawaji.service.BannerImgService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,6 +103,25 @@ public class BannerImgServiceImpl extends BaseServiceImpl implements BannerImgSe
                 bannerImgDao.updateBannerImg(bannerImg);
             }
         }, "updateBannerImg", JSON.toJSONString(bannerImg));
+    }
+
+    /**
+     * 根据banner类型获得banner图
+     * @param bannerType banner类型
+     * @return
+     */
+    @Override
+    public CommonResult<List<BannerImg>> getBannerImgByBannerType(final BannerType bannerType) {
+
+        JSONObject json = new JSONObject();
+        json.put("bannerType",bannerType.name());
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                bannerImgDao.getBannerImgByBannerType(bannerType.getStatus());
+            }
+        }, "getBannerImgByBannerType", json.toJSONString());
     }
 
     @Override
