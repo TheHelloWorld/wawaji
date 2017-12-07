@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzg.wawaji.dao.BannerImgDao">
+
+    <!-- 抓取记录表 -->
+    <resultMap type="com.lzg.wawaji.entity.BannerImg" id="bannerImgMap">
+        <!-- 主键id -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <!-- 图片地址 -->
+        <result property="imgUrl" column="img_url" jdbcType="VARCHAR"/>
+        <!-- 轮播顺序 -->
+        <result property="bannerOrder" column="banner_order" jdbcType="INTEGER"/>
+        <!-- 点击url -->
+        <result property="clickUrl" column="click_url" jdbcType="VARCHAR"/>
+        <!-- banner类型 娃娃机房间/游戏房间 -->
+        <result property="bannerType" column="banner_type" jdbcType="INTEGER"/>
+        <!-- 创建时间 -->
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <!-- 最后修改时间 -->
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 添加抓取记录 -->
+    <insert id="addBannerImg" parameterType="com.lzg.wawaji.entity.BannerImg">
+        insert into banner_img
+            (
+            img_url,
+            banner_order,
+            click_url,
+            banner_type
+            )
+        values
+            (
+            #{imgUrl, jdbcType=VARCHAR},
+            #{bannerOrder, jdbcType=INTEGER},
+            #{clickUrl, jdbcType=VARCHAR},
+            #{bannerType, jdbcType=INTEGER}
+            )
+    </insert>
+
+    <!-- 分页获得所有banner图片记录 -->
+    <select id="getBannerImgByPage" resultMap="bannerImgMap">
+        select
+            id,
+            img_url,
+            banner_order,
+            click_url,
+            banner_type
+        from banner_img limit #{startPage, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </select>
+
+    <!-- 获得所有banner图片记录数量 -->
+    <select id="countAllBannerImg" resultType="java.lang.Integer">
+        select count(*) from banner_img
+    </select>
+
+    <!-- 根据banner图片id获得数据信息 -->
+    <select id="getBannerImgById" parameterType="java.lang.Long" resultMap="userCatchRecordMap">
+        select
+            id,
+            img_url,
+            banner_order,
+            click_url,
+            banner_type
+        from banner_img where id = #{id}
+    </select>
+
+    <!-- 修改banner图片 -->
+    <update id="updateBannerImg" parameterType="com.lzg.wawaji.entity.BannerImg">
+        update banner_img set
+            img_url = #{imgUrl, jdbcType=VARCHAR},
+            banner_order = #{imgUrl, jdbcType=VARCHAR},
+            click_url = #{imgUrl, jdbcType=VARCHAR},
+            banner_type = #{imgUrl, jdbcType=VARCHAR}
+        where id = #{id}
+    </update>
+
+</mapper>

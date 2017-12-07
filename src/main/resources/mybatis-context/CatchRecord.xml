@@ -74,9 +74,10 @@
             c.catch_time,
             c.catch_result,
             c.catch_status
-        from catch_record c, user u
-        where c.user_no = u.user_no and c.catch_status = 1 order by c.create_time limit 0,10
+        from catch_record c, `user` u
+        where c.user_no = u.user_no and c.catch_status = 1 order by c.create_time desc limit 0,10
     </select>
+
     <!-- 根据用户编号获得用户抓取记录数量 -->
     <select id="countCatchRecordByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
         select count(*) from catch_record  where user_no = #{userNo}
