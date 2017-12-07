@@ -100,9 +100,9 @@ public class BannerImgController {
     @ResponseBody
     public String getBannerImgByBannerType(Integer bannerType) {
 
-        CommonResult result = bannerImgService.getBannerImgByBannerType(BannerType.getValueMapByKey(bannerType));
+        CommonResult<List<BannerImg>> result = bannerImgService.getBannerImgByBannerType(BannerType.getValueMapByKey(bannerType));
 
-        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
+        return JSONUtil.getReturnBeanString(result);
     }
 
 }

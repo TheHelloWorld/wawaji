@@ -119,7 +119,7 @@ public class BannerImgServiceImpl extends BaseServiceImpl implements BannerImgSe
         return exec(new Callback() {
             @Override
             public void exec() {
-                bannerImgDao.getBannerImgByBannerType(bannerType.getStatus());
+                got(bannerImgDao.getBannerImgByBannerType(bannerType.getStatus()));
             }
         }, "getBannerImgByBannerType", json.toJSONString());
     }

@@ -78,12 +78,9 @@
     <!-- 根据banner类型获得banner图 -->
     <select id="getBannerImgByBannerType" parameterType="java.lang.Integer" resultMap="bannerImgMap">
         select
-            id,
             img_url,
-            banner_order,
-            click_url,
-            banner_type
-        from banner_img where banner_type = #{bannerType, jdbcType=INTEGER}
+            click_url
+        from banner_img where banner_type = #{bannerType, jdbcType=INTEGER} order by banner_order asc
     </select>
 
 </mapper>
