@@ -637,6 +637,8 @@ function updateThis(updateUrl, returnUrl) {
         var col = $(this).attr("name");
         json[col] = $("#"+col).val();
     });
+
+    // 将json转换为字符串
     var paramStr = JSON.stringify(json);
 
     $.ajax({

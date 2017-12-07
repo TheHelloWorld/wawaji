@@ -19,21 +19,21 @@
 
     <script src="/dist/js/fileInput/locales/zh.js" type="text/javascript"></script>
 
-    <script type="text/javascript" src="/js/back/toy/toyDetailPage.js"></script>
+    <script type="text/javascript" src="/js/back/bannerImg/bannerImgDetailPage.js"></script>
 </head>
 <body>
     <div id="dataInfo">
-        <div id="toyDefine">
+        <div id="bannerImgDefine">
             <div class="modal-header">
                 <h4 class="modal-title">
-                    玩具页
+                    Banner图页
                 </h4>
             </div>
-            <div id="toy-body" class="modal-body">
+            <div id="bannerImg-body" class="modal-body">
                 <span name = "id">
                     <input type = 'hidden' id = "id" />
                 </span>
-                <span name = "toyImg">
+                <span name = "imgUrl">
                     <input type = 'hidden' id = "imgUrl" />
                 </span>
                 <div class="row">

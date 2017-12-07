@@ -69,9 +69,9 @@
     <update id="updateBannerImg" parameterType="com.lzg.wawaji.entity.BannerImg">
         update banner_img set
             img_url = #{imgUrl, jdbcType=VARCHAR},
-            banner_order = #{imgUrl, jdbcType=VARCHAR},
-            click_url = #{imgUrl, jdbcType=VARCHAR},
-            banner_type = #{imgUrl, jdbcType=VARCHAR}
+            banner_order = #{bannerOrder, jdbcType=INTEGER},
+            click_url = #{clickUrl, jdbcType=VARCHAR},
+            banner_type = #{bannerType, jdbcType=INTEGER}
         where id = #{id}
     </update>
 

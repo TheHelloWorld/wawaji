@@ -72,7 +72,10 @@
                             <a href="/wawaji/back/deliver/deliver.jsp"><i class="fa fa-truck fa-fw"></i> 快递管理</a>
                         </li>
                         <li>
-                            <a href="/wawaji/back/gameRoom/gameRoom.jsp"><i class="fa fa-signal fa-fw"></i>游戏房间管理</a>
+                            <a href="/wawaji/back/gameRoom/gameRoom.jsp"><i class="fa fa-gamepad fa-fw"></i>游戏房间管理</a>
+                        </li>
+                        <li>
+                            <a href="/wawaji/back/bannerImg/bannerImg.jsp"><i class="fa fa-image fa-fw"></i>Banner图管理</a>
                         </li>
                     </ul>
                 </div>
