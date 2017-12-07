@@ -55,7 +55,7 @@
     </select>
 
     <!-- 根据banner图片id获得数据信息 -->
-    <select id="getBannerImgById" parameterType="java.lang.Long" resultMap="userCatchRecordMap">
+    <select id="getBannerImgById" parameterType="java.lang.Long" resultMap="bannerImgMap">
         select
             id,
             img_url,
