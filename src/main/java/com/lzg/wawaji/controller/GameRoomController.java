@@ -2,7 +2,6 @@ package com.lzg.wawaji.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.lzg.wawaji.bean.CommonResult;
-import com.lzg.wawaji.bean.UserMachine;
 import com.lzg.wawaji.bean.UserSeeGameRoom;
 import com.lzg.wawaji.constants.BaseConstant;
 import com.lzg.wawaji.entity.GameRoom;
