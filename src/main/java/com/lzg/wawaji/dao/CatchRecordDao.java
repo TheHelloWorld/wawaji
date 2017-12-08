@@ -17,10 +17,11 @@ public interface CatchRecordDao {
     void addCatchRecord(CatchRecord catchRecord);
 
     /**
-     * 获得最近成功的抓取记录(10条)
+     * 根据玩具编号获得最近成功的抓取记录(10条)
+     * @param toyNo 玩具编号
      * @return
      */
-    List<UserCatchRecord> getLatelyCatchSuccessRecord();
+    List<UserCatchRecord> getLatelyCatchSuccessRecordByToyNo(String toyNo);
 
     /**
      * 根据用户编号获得用户抓取记录数量

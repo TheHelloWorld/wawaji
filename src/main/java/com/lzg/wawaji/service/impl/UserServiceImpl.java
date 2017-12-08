@@ -230,6 +230,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     catchRecord.setUserNo(userNo);
                     // 玩具编号
                     catchRecord.setToyNo(userMachine.getToyNo());
+                    // 玩具名称
+                    catchRecord.setToyName(userMachine.getToyName());
                     // 玩具图片
                     catchRecord.setToyImg(userMachine.getToyImg());
                     // 抓取状态 默认为等待
@@ -300,20 +302,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     return;
                 }
 
-                try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
-                    String key = BaseConstant.GAME_ROOM_IN_USE.replace("#{}", gameRoomNo);
-                    // 判断当前机器是否已有用户使用
-                    if (redisUtil.setnx(key, userNo) == 0) {
-                        // 若当前机器已被占用
-                        got(BaseConstant.GAME_ROOM_ALREADY_IN_UES);
-                        return;
-                    }
-                } catch (Exception e) {
-                    logger.error("{} userPlayGame redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
-                    got(BaseConstant.GAME_ROOM_ALREADY_IN_UES);
-                    return;
-                }
-
                 // 获得玩具编号和玩具图片地址
                 CommonResult<UserSeeGameRoom> userSeeGameRoomCommonResult =
                         gameRoomService.getUserSeeGameRoomByGameRoomNo(gameRoomNo);
@@ -356,6 +344,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     catchRecord.setUserNo(userNo);
                     // 玩具编号
                     catchRecord.setToyNo(userSeeGameRoom.getToyNo());
+                    // 玩具名称
+                    catchRecord.setToyName(userSeeGameRoom.getToyName());
                     // 玩具图片
                     catchRecord.setToyImg(userSeeGameRoom.getToyImg());
                     // 抓取状态 默认为等待

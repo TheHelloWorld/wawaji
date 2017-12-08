@@ -10,6 +10,8 @@
         <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
         <!-- 玩具编号 -->
         <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
+        <!-- 玩具名称 -->
+        <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
         <!-- 抓取Id -->
         <result property="catchId" column="catch_id" jdbcType="VARCHAR"/>
         <!-- 抓取结果 -->
@@ -34,6 +36,8 @@
         <result property="userName" column="user_name" jdbcType="VARCHAR"/>
         <!-- 玩具编号 -->
         <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
+        <!-- 玩具名称 -->
+        <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
         <!-- 抓取结果 -->
         <result property="catchResult" column="catch_result" jdbcType="INTEGER"/>
         <!-- 抓取时间 -->
@@ -64,18 +68,14 @@
             )
     </insert>
 
-    <!-- 获得最近成功的抓取记录 -->
-    <select id="getLatelyCatchSuccessRecord" resultMap="userCatchRecordMap">
+    <!-- 根据玩具编号获得最近成功的抓取记录(10条) -->
+    <select id="getLatelyCatchSuccessRecordByToyNo" parameterType="java.lang.String" resultMap="userCatchRecordMap">
         select
-            c.user_no,
-            u.user_name,
             u.user_img,
-            c.toy_no,
-            c.catch_time,
-            c.catch_result,
-            c.catch_status
+            c.toy_name,
+            c.catch_time
         from catch_record c, `user` u
-        where c.user_no = u.user_no and c.catch_status = 1 order by c.create_time desc limit 0,10
+        where c.toy_no = #{toyNo, jdbcType=VARCHAR} and c.catch_status = 1 and c.user_no = u.user_no order by c.create_time desc limit 0,10
     </select>
 
     <!-- 根据用户编号获得用户抓取记录数量 -->

@@ -79,10 +79,9 @@
     <select id="getToyNoAndToyImgByMachineNo" parameterType="java.lang.String" resultMap="userMachineMap">
         select
           m.toy_no,
-          t.toy_img
-        from machine m, toy t
-        where m.toy_no = t.toy_no
-        and m.machine_no = #{machineNo, jdbcType=VARCHAR}
+          t.toy_img,
+          t.toy_name
+        from machine m, toy t where m.toy_no = t.toy_no and m.machine_no = #{machineNo, jdbcType=VARCHAR}
     </select>
 
     <!-- 获得所有机器记录数 -->

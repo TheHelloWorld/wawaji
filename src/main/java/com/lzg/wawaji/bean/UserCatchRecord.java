@@ -25,6 +25,11 @@ public class UserCatchRecord {
     private String toyNo;
 
     /**
+     * 玩具名称
+     */
+    private String toyName;
+
+    /**
      * 抓取结果
      */
     private Integer catchResult;
@@ -69,6 +74,14 @@ public class UserCatchRecord {
 
     public void setToyNo(String toyNo) {
         this.toyNo = toyNo;
+    }
+
+    public String getToyName() {
+        return toyName;
+    }
+
+    public void setToyName(String toyName) {
+        this.toyName = toyName;
     }
 
     public Integer getCatchStatus() {
