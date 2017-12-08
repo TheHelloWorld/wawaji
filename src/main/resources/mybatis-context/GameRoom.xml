@@ -38,6 +38,8 @@
         <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
         <!-- 娃娃房间中图片 -->
         <result property="toyRoomImg" column="toy_room_img" jdbcType="VARCHAR"/>
+        <!-- 娃娃描述 -->
+        <result property="toyDesc" column="toy_desc" jdbcType="VARCHAR"/>
         <!-- 娃娃当前游戏币数 -->
         <result property="toyNowCoin" column="toy_now_coin" jdbcType="INTEGER"/>
         <!-- 娃娃原本游戏币数 -->
@@ -112,17 +114,12 @@
     <!-- 分页获得所有用户可见的游戏房间 -->
     <select id="getUserSeeGameRoomListByPage" resultMap="userSeeGameRoomMap">
         select
-            g.id,
             g.game_room_no,
             g.toy_no,
             t.toy_img,
-            t.toy_room_img,
             t.toy_name,
             t.toy_now_coin,
-            t.toy_origin_coin,
-            g.room_lucky_num,
-            g.room_now_lucky_num,
-            g.current_state
+            t.toy_origin_coin
         from game_room g, toy t where g.toy_no = t.toy_no and g.current_state = 1
         limit #{startPage}, #{pageSize}
     </select>
@@ -130,16 +127,15 @@
     <!-- 根据游戏房间号码获得用户可见游戏房间 -->
     <select id="getUserSeeGameRoomByGameRoomNo" parameterType="java.lang.String" resultMap="userSeeGameRoomMap">
         select
-            g.id,
             g.game_room_no,
-            g.toy_no,
+            t.toy_no,
             t.toy_img,
+            t.toy_room_img,
             t.toy_name,
+            t.toy_desc,
             t.toy_now_coin,
-            t.toy_origin_coin,
             g.room_lucky_num,
-            g.room_now_lucky_num,
-            g.current_state
+            g.room_now_lucky_num
         from game_room g, toy t where g.toy_no = t.toy_no and g.game_room_no = #{gameRoomNo, jdbcType=VARCHAR}
     </select>
 

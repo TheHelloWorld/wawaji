@@ -46,7 +46,7 @@ public interface GameRoomService {
      * @param gameRoomNo 游戏房间号码
      * @return
      */
-    CommonResult<UserSeeGameRoom> getUserSeeGameRoomByGameRoomNo(String  gameRoomNo);
+    CommonResult<UserSeeGameRoom> getUserSeeGameRoomByGameRoomNo(String gameRoomNo);
 
     /**
      * 根据游戏房间编号获得所需游戏币数

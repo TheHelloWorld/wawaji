@@ -119,4 +119,18 @@ public class GameRoomController {
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
+
+    /**
+     * 根据游戏房间号码获得用户可见游戏房间
+     * @param gameRoomNo 游戏房间号码
+     * @return
+     */
+    @RequestMapping(value = "/getUserSeeGameRoomByGameRoomNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getUserSeeGameRoomByGameRoomNo(String gameRoomNo) {
+
+        CommonResult<UserSeeGameRoom> result =  gameRoomService.getUserSeeGameRoomByGameRoomNo(gameRoomNo);
+
+        return JSONUtil.getReturnBeanString(result);
+    }
 }
