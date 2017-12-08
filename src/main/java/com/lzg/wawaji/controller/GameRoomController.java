@@ -120,18 +120,4 @@ public class GameRoomController {
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
-
-    /**
-     * 根据游戏房间编号判断当前游戏房间是否可用
-     * @param gameRoomNo 游戏房间编号
-     * @return
-     */
-    @RequestMapping(value = "/getGameRoomInUse", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    @ResponseBody
-    public String getGameRoomInUse(String gameRoomNo) {
-
-        CommonResult<String> result = gameRoomService.getGameRoomInUse(gameRoomNo);
-
-        return JSONUtil.getReturnBeanString(result);
-    }
 }
