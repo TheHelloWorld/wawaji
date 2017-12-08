@@ -28,7 +28,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">娃娃机管理后台</a>
+                <a class="navbar-brand" href="#">马桶猫管理后台</a>
             </div>
             <!-- /.navbar-header -->
 
