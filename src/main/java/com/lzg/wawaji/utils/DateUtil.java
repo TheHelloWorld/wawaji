@@ -1,6 +1,8 @@
 package com.lzg.wawaji.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil {
@@ -14,6 +16,8 @@ public class DateUtil {
     private static final String fullFormat = "yyyy-MM-dd HH:mm:ss";
 
     private static final String secondFormat = "yyyyMMddHHmmss";
+
+    private static final SimpleDateFormat daySdf = new SimpleDateFormat("yyyyMMdd");
 
     /**
      * 获取日期
@@ -64,5 +68,37 @@ public class DateUtil {
     public static String getFormatTiem(String formatStr) {
         SimpleDateFormat sdf = new SimpleDateFormat(formatStr);
         return sdf.format(new Date());
+    }
+
+    /**
+     * 获得上一日日期
+     * @param day 日期数字
+     * @return
+     */
+    public static Integer getBeforeDate(Integer day) {
+
+        if(day == null) {
+            return null;
+        }
+
+
+
+        String dayTime = String.valueOf(day);
+
+        try {
+            // 得到日历
+            Calendar calendar = Calendar.getInstance();
+            Date date = daySdf.parse(dayTime);
+            // 把当前时间赋给日历
+            calendar.setTime(date);
+            // 设置为前一天
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
+
+            // 得到前一天的时间并返回
+            return Integer.valueOf(daySdf.format(calendar.getTime()));
+        } catch(ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
