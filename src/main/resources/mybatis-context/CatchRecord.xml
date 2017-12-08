@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lzg.wawaji.dao.CatchRecordDao">
+<mapper namespace="com.toiletCat.dao.CatchRecordDao">
 
     <!-- 抓取记录表 -->
-    <resultMap type="com.lzg.wawaji.entity.CatchRecord" id="catchRecordMap">
+    <resultMap type="com.toiletCat.entity.CatchRecord" id="catchRecordMap">
         <!-- 主键id -->
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 用户编号 -->
@@ -27,7 +27,7 @@
     </resultMap>
 
     <!-- 抓取记录表 -->
-    <resultMap type="com.lzg.wawaji.bean.UserCatchRecord" id="userCatchRecordMap">
+    <resultMap type="com.toiletCat.bean.UserCatchRecord" id="userCatchRecordMap">
         <!-- 用户编号 -->
         <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
         <!-- 用户头像 -->
@@ -47,7 +47,7 @@
     </resultMap>
 
     <!-- 添加抓取记录 -->
-    <insert id="addCatchRecord" parameterType="com.lzg.wawaji.entity.CatchRecord">
+    <insert id="addCatchRecord" parameterType="com.toiletCat.entity.CatchRecord">
         insert into catch_record
             (
             user_no,

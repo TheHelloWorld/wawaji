@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lzg.wawaji.dao.UserToyDao">
+<mapper namespace="com.toiletCat.dao.UserToyDao">
 
     <!-- 用户消费记录表 -->
-    <resultMap type="com.lzg.wawaji.entity.UserToy" id="userToyMap">
+    <resultMap type="com.toiletCat.entity.UserToy" id="userToyMap">
         <!-- 主键id -->
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 用户编号 -->
@@ -31,7 +31,7 @@
     </resultMap>
 
     <!-- 添加用户娃娃记录 -->
-    <insert id="addUserToy" parameterType="com.lzg.wawaji.entity.UserToy">
+    <insert id="addUserToy" parameterType="com.toiletCat.entity.UserToy">
         insert into user_toy
             (
                 user_no,
@@ -89,7 +89,7 @@
     </select>
 
     <!-- 根据id,用户编号修改选择方式 -->
-    <update id="updateChoiceTypeByIdAndUserNo" parameterType="com.lzg.wawaji.entity.UserToy">
+    <update id="updateChoiceTypeByIdAndUserNo" parameterType="com.toiletCat.entity.UserToy">
         update user_toy set
           choice_type = #{choiceType, jdbcType=INTEGER},
           deliver_id = #{deliverId, jdbcType=BIGINT},

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lzg.wawaji.dao.ToyDao">
+<mapper namespace="com.toiletCat.dao.ToyDao">
 
 
     <!-- 娃娃表 -->
-    <resultMap type="com.lzg.wawaji.entity.Toy" id="toyMap">
+    <resultMap type="com.toiletCat.entity.Toy" id="toyMap">
         <!-- 主键Id -->
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 娃娃编号 -->
@@ -32,7 +32,7 @@
     </resultMap>
 
     <!-- 添加娃娃记录 -->
-    <insert id="addToy" parameterType="com.lzg.wawaji.entity.Toy">
+    <insert id="addToy" parameterType="com.toiletCat.entity.Toy">
         insert into toy
             (
                 toy_no,
@@ -98,7 +98,7 @@
     </select>
 
     <!-- 根据id,娃娃机编号修改娃娃机记录 -->
-    <update id="updateToyByIdAndToyNo" parameterType="com.lzg.wawaji.entity.Toy">
+    <update id="updateToyByIdAndToyNo" parameterType="com.toiletCat.entity.Toy">
         update toy set
             toy_name = #{toyName, jdbcType=VARCHAR},
             toy_for_coin = #{toyForCoin, jdbcType=INTEGER},

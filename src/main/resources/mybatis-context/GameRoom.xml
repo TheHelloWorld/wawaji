@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lzg.wawaji.dao.GameRoomDao">
+<mapper namespace="com.toiletCat.dao.GameRoomDao">
 
     <!-- 游戏房间表 -->
-    <resultMap type="com.lzg.wawaji.entity.GameRoom" id="gameRoomMap">
+    <resultMap type="com.toiletCat.entity.GameRoom" id="gameRoomMap">
         <!-- 主键id -->
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 游戏房间编号 -->
@@ -25,7 +25,7 @@
     </resultMap>
 
     <!-- 用户可见游戏房间表 -->
-    <resultMap type="com.lzg.wawaji.bean.UserSeeGameRoom" id="userSeeGameRoomMap">
+    <resultMap type="com.toiletCat.bean.UserSeeGameRoom" id="userSeeGameRoomMap">
         <!-- 主键id -->
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 游戏房间编号 -->
@@ -53,7 +53,7 @@
     </resultMap>
 
     <!-- 添加游戏房间 -->
-    <insert id="addGameRoom" useGeneratedKeys="true" keyProperty="id" parameterType="com.lzg.wawaji.entity.GameRoom">
+    <insert id="addGameRoom" useGeneratedKeys="true" keyProperty="id" parameterType="com.toiletCat.entity.GameRoom">
         insert into game_room
             (
             game_room_no,
@@ -169,7 +169,7 @@
     </select>
 
     <!-- 根据游戏房间编号和id修改游戏房间 -->
-    <update id="updateGameRoomByGameRoomNoAndId" parameterType="com.lzg.wawaji.entity.GameRoom">
+    <update id="updateGameRoomByGameRoomNoAndId" parameterType="com.toiletCat.entity.GameRoom">
         update game_room set
             toy_no = #{toyNo, jdbcType=VARCHAR},
             room_lucky_num = #{roomLuckyNum, jdbcType=INTEGER},

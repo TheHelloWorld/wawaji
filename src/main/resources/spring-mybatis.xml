@@ -97,12 +97,12 @@
         <property name="dataSource">
             <ref bean="dataSource" />
         </property>
-        <property name="typeAliasesPackage" value="com.lzg.wawaji.entity" />
+        <property name="typeAliasesPackage" value="com.toiletCat.entity" />
     </bean>
 
     <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.lzg.wawaji.dao" />
+        <property name="basePackage" value="com.toiletCat.dao" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
 
@@ -135,8 +135,8 @@
 
 
     <!-- 自动扫描 -->
-    <context:component-scan base-package="com.lzg.wawaji.dao" />
-    <context:component-scan base-package="com.lzg.wawaji.entity" />
-    <context:component-scan base-package="com.lzg.wawaji.service" />
+    <context:component-scan base-package="com.toiletCat.dao" />
+    <context:component-scan base-package="com.toiletCat.entity" />
+    <context:component-scan base-package="com.toiletCat.service" />
 
 </beans>

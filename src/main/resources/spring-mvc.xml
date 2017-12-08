@@ -32,7 +32,7 @@
             <list >
                 <ref bean="mappingJacksonHttpMessageConverter" />
                 <!--  本地化UTF-8编码StringHttpMessageConverter  -->
-                <bean id="stringHttpMessageConverter" class="com.lzg.wawaji.utils.Utf8StringHttpMessageConverter">
+                <bean id="stringHttpMessageConverter" class="com.toiletCat.utils.Utf8StringHttpMessageConverter">
                     <property name = "supportedMediaTypes">
                         <list>
                             <value>application/json; charset=UTF-8</value>
@@ -58,5 +58,5 @@
 
     <context:annotation-config />
     <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
-    <context:component-scan base-package="com.lzg.wawaji.controller" />
+    <context:component-scan base-package="com.toiletCat.controller" />
 </beans>

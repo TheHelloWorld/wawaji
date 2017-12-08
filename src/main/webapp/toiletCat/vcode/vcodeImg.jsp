@@ -1,7 +1,7 @@
 <%@ page contentType="image/jpeg" session="false" import="java.awt.*,java.awt.image.*,java.util.*,javax.imageio.*"  pageEncoding="UTF-8"%>
 <%@page import="java.io.OutputStream"%>
 <%@page import="java.util.List"%>  
-<%@page import="com.lzg.wawaji.utils.FontHandle"%>
+<%@page import="com.toiletCat.utils.FontHandle"%>
 <%!
 // 生成随机颜色方法定义 
 Color getRandColor(Random random,int fc,int bc) 

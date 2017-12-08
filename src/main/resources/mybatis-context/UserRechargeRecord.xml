@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lzg.wawaji.dao.UserRechargeRecordDao">
+<mapper namespace="com.toiletCat.dao.UserRechargeRecordDao">
 
     <!-- 用户充值记录表 -->
-    <resultMap type="com.lzg.wawaji.entity.UserRechargeRecord" id="userRechargeRecordMap">
+    <resultMap type="com.toiletCat.entity.UserRechargeRecord" id="userRechargeRecordMap">
         <!-- 主键id -->
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 用户编号 -->
@@ -25,7 +25,7 @@
     </resultMap>
 
     <!-- 添加用户充值记录 -->
-    <insert id="addUserRechargeRecord" parameterType="com.lzg.wawaji.entity.UserRechargeRecord">
+    <insert id="addUserRechargeRecord" parameterType="com.toiletCat.entity.UserRechargeRecord">
         insert into user_recharge_record
             (
                 user_no,
