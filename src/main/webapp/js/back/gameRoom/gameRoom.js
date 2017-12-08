@@ -6,11 +6,11 @@ var step = 5;
 var nowPage = 1;
 
 // 展示url
-var showUrl = "/wawaji/gameRoom/getAllGameRoomByPage.action";
+var showUrl = "/toiletCat/gameRoom/getAllGameRoomByPage.action";
 
 $(function(){
     // 获得总页数和总数量
-    var countAndPageSizeUrl = "/wawaji/gameRoom/getGameRoomTotalCountAndPageSize.action";
+    var countAndPageSizeUrl = "/toiletCat/gameRoom/getGameRoomTotalCountAndPageSize.action";
     getTotalCountAndPageSize(countAndPageSizeUrl);
 
     // 分页获得所有记录
@@ -21,7 +21,7 @@ $(function(){
 });
 
 function addGameRoomPage() {
-    window.location.href="/wawaji/back/gameRoom/gameRoomDetailPage.jsp?type=add";
+    window.location.href="/toiletCat/back/gameRoom/gameRoomDetailPage.jsp?type=add";
 }
 
 function getPage(page) {
@@ -43,7 +43,7 @@ function lastPage() {
 }
 
 function addToyPage() {
-    window.location.href="/wawaji/back/gameRoom/gameRoomDetailPage.jsp?type=add";
+    window.location.href="/toiletCat/back/gameRoom/gameRoomDetailPage.jsp?type=add";
 }
 
 
@@ -55,5 +55,5 @@ function updateThis(dataParam) {
     var id = dataParam["id"];
     var gameRoomNo = dataParam["gameRoomNo"];
 
-    window.location.href = "/wawaji/back/gameRoom/gameRoomDetailPage.jsp?type=update&id="+id+"&gameRoomNo="+gameRoomNo+"";
+    window.location.href = "/toiletCat/back/gameRoom/gameRoomDetailPage.jsp?type=update&id="+id+"&gameRoomNo="+gameRoomNo+"";
 }

@@ -3,7 +3,7 @@ var pageSize = 0;
 
 var nowPage = 1;
 
-var showUrl = "/wawaji/gameRoom/getAllGameRoomByPage.action";
+var showUrl = "/toiletCat/gameRoom/getAllGameRoomByPage.action";
 
 var width = $(window).width() / 2 - 20;
 
@@ -12,7 +12,7 @@ var userNo = "";
 var bannerType = 1;
 
 $(function() {
-    var url = "/wawaji/gameRoom/getUserSeeGameRoomTotalCountAndPageSize.action";
+    var url = "/toiletCat/gameRoom/getUserSeeGameRoomTotalCountAndPageSize.action";
 
     // 获取banner图
     getBannerByType(bannerType);
@@ -32,7 +32,7 @@ $(function() {
 function userAutoLogin() {
 
     $.ajax({
-        url:"/wawaji/user/autoLogin.action",
+        url:"/toiletCat/user/autoLogin.action",
         type:"POST",
         async:false,
         success:function(data) {
@@ -70,7 +70,7 @@ function userAutoLogin() {
 function userLoginOrRegister() {
 
     $.ajax({
-        url:"/wawaji/user/registerOrLoginUser.action",
+        url:"/toiletCat/user/registerOrLoginUser.action",
         type:"POST",
         async:false,
         data:{
@@ -112,7 +112,7 @@ function getUserSeeGameRoomListByPage(nowPage) {
     var startPage = (nowPage - 1) * pageSize;
 
     $.ajax({
-        url:"/wawaji/gameRoom/getUserSeeGameRoomListByPage.action",
+        url:"/toiletCat/gameRoom/getUserSeeGameRoomListByPage.action",
         type:"POST",
         async:false,
         data:{
@@ -174,11 +174,11 @@ function getUserSeeGameRoomListByPage(nowPage) {
 }
 
 function toIndex() {
-    window.location.href="/wawaji/index/machineRoom.html";
+    window.location.href="/toiletCat/index/machineRoom.html";
 }
 
 function clickBanner() {
-    window.location.href="/wawaji/index/machineRoom.html";
+    window.location.href="/toiletCat/index/machineRoom.html";
 }
 
 function getPage(page) {
@@ -200,13 +200,13 @@ function lastPage() {
 }
 
 function toUserToy() {
-    window.location.href="/wawaji/userToy/userToy.html?userNo="+userNo;
+    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo;
 }
 
 function toRecharge() {
-    window.location.href="/wawaji/userToy/userToy.html?userNo="+userNo;
+    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo;
 }
 
 function toUserIndex() {
-    window.location.href="/wawaji/userToy/userToy.html?userNo="+userNo;
+    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo;
 }

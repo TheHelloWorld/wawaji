@@ -18,7 +18,7 @@ $(function() {
 // 获得总页数和总数量
 function getTotalCountAndPageSizeByUserNo() {
     $.ajax({
-        url:"/wawaji/userToy/countUserToyByUserNo.action",
+        url:"/toiletCat/userToy/countUserToyByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -61,7 +61,7 @@ function getAllUserToyByUserNo() {
     var startPage = (nowPage -1 ) * pageSize;
 
     $.ajax({
-        url:"/wawaji/userToy/getUserToyListByUserNo.action",
+        url:"/toiletCat/userToy/getUserToyListByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -122,5 +122,5 @@ function getAllUserToyByUserNo() {
 // 修改元素
 function toUserToyDetail(id) {
 
-    window.location.href = "/wawaji/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
+    window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
 }

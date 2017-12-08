@@ -6,11 +6,11 @@ var step = 5;
 var nowPage = 1;
 
 // 展示url
-var showUrl = "/wawaji/bannerImg/getBannerImgByPage.action";
+var showUrl = "/toiletCat/bannerImg/getBannerImgByPage.action";
 
 $(function() {
     // 获得总页数和总数量
-    var countAndPageSizeUrl = "/wawaji/bannerImg/getBannerImgTotalCountAndPageSize.action";
+    var countAndPageSizeUrl = "/toiletCat/bannerImg/getBannerImgTotalCountAndPageSize.action";
     getTotalCountAndPageSize(countAndPageSizeUrl);
 
     // 分页获得所有记录
@@ -117,7 +117,7 @@ function lastPage() {
 }
 
 function addToyPage() {
-    window.location.href="/wawaji/back/bannerImg/bannerImgDetailPage.jsp?type=add";
+    window.location.href="/toiletCat/back/bannerImg/bannerImgDetailPage.jsp?type=add";
 }
 
 
@@ -128,5 +128,5 @@ function updateThis(dataParam) {
 
     var id = dataParam["id"];
 
-    window.location.href = "/wawaji/back/bannerImg/bannerImgDetailPage.jsp?type=update&id="+id;
+    window.location.href = "/toiletCat/back/bannerImg/bannerImgDetailPage.jsp?type=update&id="+id;
 }

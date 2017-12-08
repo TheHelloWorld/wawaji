@@ -6,11 +6,11 @@ var step = 5;
 var nowPage = 1;
 
 // 展示url
-var showUrl = "/wawaji/toy/getAllToyByPage.action";
+var showUrl = "/toiletCat/toy/getAllToyByPage.action";
 
 $(function() {
     // 获得总页数和总数量
-    var countAndPageSizeUrl = "/wawaji/toy/getTotalCountAndPageSize.action";
+    var countAndPageSizeUrl = "/toiletCat/toy/getTotalCountAndPageSize.action";
     getTotalCountAndPageSize(countAndPageSizeUrl);
 
     // 分页获得所有记录
@@ -41,7 +41,7 @@ function lastPage() {
 }
 
 function addToyPage() {
-    window.location.href="/wawaji/back/toy/toyDetailPage.jsp?type=add";
+    window.location.href="/toiletCat/back/toy/toyDetailPage.jsp?type=add";
 }
 
 // 删除行元素
@@ -53,7 +53,7 @@ function deleteThis(dataParam) {
     var toyNo = dataParam["toyNo"];
 
     $.ajax({
-        url:"/wawaji/toy/deleteToyByIdAndToyNo.action",
+        url:"/toiletCat/toy/deleteToyByIdAndToyNo.action",
         type:"POST",
         async:false,
         data:{
@@ -84,5 +84,5 @@ function updateThis(dataParam) {
     var id = dataParam["id"];
     var toyNo = dataParam["toyNo"];
 
-    window.location.href = "/wawaji/back/toy/toyDetailPage.jsp?type=update&id="+id+"&toyNo="+toyNo+"";
+    window.location.href = "/toiletCat/back/toy/toyDetailPage.jsp?type=update&id="+id+"&toyNo="+toyNo+"";
 }

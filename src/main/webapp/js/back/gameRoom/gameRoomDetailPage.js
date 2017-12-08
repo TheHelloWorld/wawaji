@@ -1,4 +1,4 @@
-var returnUrl = "/wawaji/back/gameRoom/gameRoom.jsp";
+var returnUrl = "/toiletCat/back/gameRoom/gameRoom.jsp";
 
 // 返回玩具列表页
 function cancelThis() {
@@ -13,7 +13,7 @@ $(function(){
 
         var gameRoomNo = getQueryString("gameRoomNo");
 
-        var getUrl = "/wawaji/gameRoom/getGameRoomByGameRoomNoAndId.action";
+        var getUrl = "/toiletCat/gameRoom/getGameRoomByGameRoomNoAndId.action";
         getDataByInfo(getUrl, id, gameRoomNo);
     }
 });
@@ -22,10 +22,10 @@ $(function(){
 function updateOrSaveGameRoom() {
 
     if(getQueryString("type") == "add") {
-        var saveUrl = "/wawaji/gameRoom/addGameRoom.action";
+        var saveUrl = "/toiletCat/gameRoom/addGameRoom.action";
         saveThis(saveUrl, returnUrl);
     } else {
-        var updateUrl = "/wawaji/gameRoom/updateGameRoomByGameRoomNoAndId.action";
+        var updateUrl = "/toiletCat/gameRoom/updateGameRoomByGameRoomNoAndId.action";
         updateThis(updateUrl, returnUrl);
     }
 

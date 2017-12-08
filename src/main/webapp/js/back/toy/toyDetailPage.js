@@ -1,4 +1,4 @@
-var returnUrl = "/wawaji/back/toy/toy.jsp";
+var returnUrl = "/toiletCat/back/toy/toy.jsp";
 
 $(function(){
     // 判断当前类型为修改
@@ -6,7 +6,7 @@ $(function(){
 
         var id = getQueryString("id");
         var toyNo = getQueryString("toyNo");
-        var getUrl = "/wawaji/toy/getToyByIdAndToyNo.action";
+        var getUrl = "/toiletCat/toy/getToyByIdAndToyNo.action";
         getDataByInfo(getUrl, id, toyNo);
     }
 });
@@ -15,10 +15,10 @@ $(function(){
 function updateOrSaveToy() {
 
     if(getQueryString("type") == "add") {
-        var saveUrl = "/wawaji/toy/addToy.action";
+        var saveUrl = "/toiletCat/toy/addToy.action";
         saveThis(saveUrl, returnUrl);
     } else {
-        var updateUrl = "/wawaji/toy/updateToyByIdAndToyNo.action";
+        var updateUrl = "/toiletCat/toy/updateToyByIdAndToyNo.action";
         updateThis(updateUrl, returnUrl);
     }
 }

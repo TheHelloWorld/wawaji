@@ -3,7 +3,7 @@ var pageSize = 0;
 
 var nowPage = 1;
 
-var showUrl = "/wawaji/machine/getAllMachineByPage.action";
+var showUrl = "/toiletCat/machine/getAllMachineByPage.action";
 
 var width = $(window).width() / 2 - 20;
 
@@ -12,7 +12,7 @@ var userNo = "";
 var bannerType = 0;
 
 $(function() {
-    var url = "/wawaji/machine/getMachineTotalCountAndPageSize.action";
+    var url = "/toiletCat/machine/getMachineTotalCountAndPageSize.action";
 
     // 获取banner图
     getBannerByType(bannerType);
@@ -30,7 +30,7 @@ $(function() {
 // 用户自动登陆
 function userAutoLogin() {
     $.ajax({
-        url:"/wawaji/user/autoLogin.action",
+        url:"/toiletCat/user/autoLogin.action",
         type:"POST",
         async:false,
         success:function(data) {
@@ -67,7 +67,7 @@ function userAutoLogin() {
 // 用户登陆或注册
 function userLoginOrRegister() {
     $.ajax({
-        url:"/wawaji/user/registerOrLoginUser.action",
+        url:"/toiletCat/user/registerOrLoginUser.action",
         type:"POST",
         async:false,
         data:{
@@ -108,7 +108,7 @@ function getAllMachineByPage(nowPage) {
     var startPage = (nowPage - 1) * pageSize;
 
     $.ajax({
-        url:"/wawaji/machine/getUserAllMachineByPage.action",
+        url:"/toiletCat/machine/getUserAllMachineByPage.action",
         type:"POST",
         async:false,
         data:{
@@ -170,11 +170,11 @@ function getAllMachineByPage(nowPage) {
 }
 
 function toIndex() {
-    window.location.href="/wawaji/index/machineRoom.html";
+    window.location.href="/toiletCat/index/machineRoom.html";
 }
 
 function clickBanner() {
-    window.location.href="/wawaji/index/machineRoom.html";
+    window.location.href="/toiletCat/index/machineRoom.html";
 }
 
 function getPage(page) {
@@ -196,13 +196,13 @@ function lastPage() {
 }
 
 function toUserToy() {
-    window.location.href="/wawaji/userToy/userToy.html?userNo="+userNo;
+    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo;
 }
 
 function toRecharge() {
-    window.location.href="/wawaji/userToy/userToy.html?userNo="+userNo;
+    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo;
 }
 
 function toUserIndex() {
-    window.location.href="/wawaji/userToy/userToy.html?userNo="+userNo;
+    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo;
 }

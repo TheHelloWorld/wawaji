@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@RequestMapping("/wawaji/userToy")
+@RequestMapping("/toiletCat/userToy")
 @Controller
 public class UserToyController {
 

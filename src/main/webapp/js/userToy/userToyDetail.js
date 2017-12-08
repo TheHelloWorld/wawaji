@@ -31,7 +31,7 @@ $(function() {
 function getUserToyByUserNoAndId() {
 
     $.ajax({
-        url:"/wawaji/userToy/getUserToyByUserNoAndId.action",
+        url:"/toiletCat/userToy/getUserToyByUserNoAndId.action",
         type:"POST",
         async:false,
         data:{
@@ -130,7 +130,7 @@ function choiceDeliver() {
 function getAllUserAddressByUserNo(userNo) {
 
     $.ajax({
-        url:"/wawaji/userAddress/getUserAddressListByUserNo.action",
+        url:"/toiletCat/userAddress/getUserAddressListByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -216,7 +216,7 @@ function updateChoiceType() {
     var userAddressStr = JSON.stringify(userAddressJson);
 
     $.ajax({
-        url:"/wawaji/userToy/updateChoiceTypeByIdAndUserNo.action",
+        url:"/toiletCat/userToy/updateChoiceTypeByIdAndUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -235,12 +235,12 @@ function updateChoiceType() {
                 return;
             }
 
-            window.location.href = "/wawaji/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
+            window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
         }
     });
 }
 
 // 返回用户战利品也
 function toUserToy() {
-    window.location.href = "/wawaji/userToy/userToy.html?userNo="+userNo;
+    window.location.href = "/toiletCat/userToy/userToy.html?userNo="+userNo;
 }

@@ -7,7 +7,7 @@ $(function() {
     // 获得用户编号
     userNo = getQueryString("userNo");
     $("#userNo").val(userNo);
-    returnUrl = "/wawaji/userAddress/userAddress.html?userNo="+userNo;
+    returnUrl = "/toiletCat/userAddress/userAddress.html?userNo="+userNo;
     if(getQueryString("type") == "update") {
         var id = getQueryString("id");
         getUserAddress(id, userNo);
@@ -17,7 +17,7 @@ $(function() {
 // 根据id和用户编号获得用户地址
 function getUserAddress(id, userNo) {
     $.ajax({
-        url:"/wawaji/userAddress/getUserAddressByIdAndUserNo.action",
+        url:"/toiletCat/userAddress/getUserAddressByIdAndUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -62,10 +62,10 @@ function getUserAddress(id, userNo) {
 function saveOrUpdate() {
 
     if(getQueryString("type") == "add") {
-        var saveUrl = "/wawaji/userAddress/addUserAddress.action";
+        var saveUrl = "/toiletCat/userAddress/addUserAddress.action";
         saveThis(saveUrl, returnUrl);
     } else {
-        var updateUrl = "/wawaji/userAddress/updateUserAddressByIdAndUserNo.action";
+        var updateUrl = "/toiletCat/userAddress/updateUserAddressByIdAndUserNo.action";
         updateThis(updateUrl, returnUrl);
     }
 

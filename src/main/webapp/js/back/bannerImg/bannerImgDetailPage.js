@@ -1,11 +1,11 @@
-var returnUrl = "/wawaji/back/bannerImg/bannerImg.jsp";
+var returnUrl = "/toiletCat/back/bannerImg/bannerImg.jsp";
 
 $(function(){
     // 判断当前类型为修改
     if(getQueryString("type") == "update") {
 
         var id = getQueryString("id");
-        var getUrl = "/wawaji/bannerImg/getBannerImgById.action";
+        var getUrl = "/toiletCat/bannerImg/getBannerImgById.action";
         getDataByInfo(getUrl, id, "");
     }
 });
@@ -14,10 +14,10 @@ $(function(){
 function updateOrSaveBannerImg() {
 
     if(getQueryString("type") == "add") {
-        var saveUrl = "/wawaji/bannerImg/addBannerImg.action";
+        var saveUrl = "/toiletCat/bannerImg/addBannerImg.action";
         saveThis(saveUrl, returnUrl);
     } else {
-        var updateUrl = "/wawaji/bannerImg/updateBannerImg.action";
+        var updateUrl = "/toiletCat/bannerImg/updateBannerImg.action";
         updateThis(updateUrl, returnUrl);
     }
 }

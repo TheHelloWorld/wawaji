@@ -6,11 +6,11 @@ var step = 5;
 var nowPage = 1;
 
 // 展示url
-var showUrl = "/wawaji/machine/getAllMachineByPage.action";
+var showUrl = "/toiletCat/machine/getAllMachineByPage.action";
 
 $(function(){
     // 获得总页数和总数量
-    var countAndPageSizeUrl = "/wawaji/machine/getMachineTotalCountAndPageSize.action";
+    var countAndPageSizeUrl = "/toiletCat/machine/getMachineTotalCountAndPageSize.action";
     getTotalCountAndPageSize(countAndPageSizeUrl);
 
     // 分页获得所有记录
@@ -41,7 +41,7 @@ function lastPage() {
 }
 
 function addToyPage() {
-    window.location.href="/wawaji/back/machine/machineDetailPage.jsp?type=add";
+    window.location.href="/toiletCat/back/machine/machineDetailPage.jsp?type=add";
 }
 
 // 删除行元素
@@ -53,7 +53,7 @@ function deleteThis(dataParam) {
     var machineNo = dataParam["machineNo"];
 
     $.ajax({
-        url:"/wawaji/machine/deleteMachineByIdAndToyNo.action",
+        url:"/toiletCat/machine/deleteMachineByIdAndToyNo.action",
         type:"POST",
         async:false,
         data:{
@@ -84,5 +84,5 @@ function updateThis(dataParam) {
     var id = dataParam["id"];
     var machineNo = dataParam["machineNo"];
 
-    window.location.href = "/wawaji/back/machine/machineDetailPage.jsp?type=update&id="+id+"&machineNo="+machineNo+"";
+    window.location.href = "/toiletCat/back/machine/machineDetailPage.jsp?type=update&id="+id+"&machineNo="+machineNo+"";
 }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@RequestMapping("/wawaji/bannerImg")
+@RequestMapping("/toiletCat/bannerImg")
 @Controller
 public class BannerImgController {
 

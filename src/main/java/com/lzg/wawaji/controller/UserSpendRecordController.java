@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@RequestMapping("/wawaji/userSpendRecord")
+@RequestMapping("/toiletCat/userSpendRecord")
 @Controller
 public class UserSpendRecordController {
 

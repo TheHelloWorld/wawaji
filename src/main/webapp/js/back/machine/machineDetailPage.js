@@ -1,4 +1,4 @@
-var returnUrl = "/wawaji/back/machine/machine.jsp";
+var returnUrl = "/toiletCat/back/machine/machine.jsp";
 
 // 返回玩具列表页
 function cancelThis() {
@@ -13,7 +13,7 @@ $(function(){
         console.info(id);
         var machineNo = getQueryString("machineNo");
 
-        var getUrl = "/wawaji/machine/getMachineByIdAndMachineNo.action";
+        var getUrl = "/toiletCat/machine/getMachineByIdAndMachineNo.action";
         getDataByInfo(getUrl, id, machineNo);
     }
 });
@@ -22,10 +22,10 @@ $(function(){
 function updateOrSaveMachine() {
 
     if(getQueryString("type") == "add") {
-        var saveUrl = "/wawaji/machine/addMachine.action";
+        var saveUrl = "/toiletCat/machine/addMachine.action";
         saveThis(saveUrl, returnUrl);
     } else {
-        var updateUrl = "/wawaji/machine/updateMachineByIdAndMachineNo.action";
+        var updateUrl = "/toiletCat/machine/updateMachineByIdAndMachineNo.action";
         updateThis(updateUrl, returnUrl);
     }
 

@@ -18,7 +18,7 @@ $(function() {
 // 判断当前是否可以继续添加地址
 function judeUserAddress(userNo) {
     $.ajax({
-        url:"/wawaji/userAddress/judgeUserAddressIsMaxNum.action",
+        url:"/toiletCat/userAddress/judgeUserAddressIsMaxNum.action",
         type:"POST",
         async:false,
         data:{
@@ -49,7 +49,7 @@ function judeUserAddress(userNo) {
 function getAllUserAddressByUserNo(userNo) {
 
     $.ajax({
-        url:"/wawaji/userAddress/getUserAddressListByUserNo.action",
+        url:"/toiletCat/userAddress/getUserAddressListByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -98,7 +98,7 @@ function getAllUserAddressByUserNo(userNo) {
 // 添加元素
 function toAddUserAddressPage() {
     if(canAdd) {
-        window.location.href = "/wawaji/userAddress/userAddressDetailPage.html?type=add&userNo="+userNo+"";
+        window.location.href = "/toiletCat/userAddress/userAddressDetailPage.html?type=add&userNo="+userNo+"";
     } else {
         alert("最多只能有5个地址")
     }
@@ -109,7 +109,7 @@ function toAddUserAddressPage() {
 // 修改元素
 function toEditUserAddressPage(id) {
 
-    window.location.href = "/wawaji/userAddress/userAddressDetailPage.html?type=update&userNo="+userNo+"&id="+id;
+    window.location.href = "/toiletCat/userAddress/userAddressDetailPage.html?type=update&userNo="+userNo+"&id="+id;
 }
 
 // 修改元素
@@ -120,7 +120,7 @@ function deleteUserAddress(id) {
     }
 
     $.ajax({
-        url:"/wawaji/userAddress/deleteUserAddressByIdAndUserNo.action",
+        url:"/toiletCat/userAddress/deleteUserAddressByIdAndUserNo.action",
         type:"POST",
         async:false,
         data:{

@@ -1,17 +1,17 @@
 // 返回Url
-var returnUtl = "/wawaji/back/deliver/deliver.jsp";
+var returnUtl = "/toiletCat/back/deliver/deliver.jsp";
 
 $(function(){
     // 判断当前类型为修改
     var id = getQueryString("id");
     var userNo = getQueryString("userNo");
-    var getUrl = "/wawaji/deliver/getDeliverByIdAndUserNo.action";
+    var getUrl = "/toiletCat/deliver/getDeliverByIdAndUserNo.action";
     getDataByInfo(getUrl, id, userNo);
 });
 
 // 修改
 function updateDeliver() {
-    var updateUrl = "/wawaji/deliver/updateDeliverMsgByIdAndUserNo.action";
+    var updateUrl = "/toiletCat/deliver/updateDeliverMsgByIdAndUserNo.action";
     updateThis(updateUrl, returnUtl);
 }
 
