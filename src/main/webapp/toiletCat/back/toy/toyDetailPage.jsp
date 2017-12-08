@@ -19,7 +19,11 @@
 
     <script src="/dist/js/fileInput/locales/zh.js" type="text/javascript"></script>
 
+    <script src="/common/js/fileUpload.js" type="text/javascript"></script>
+
     <script type="text/javascript" src="/js/back/toy/toyDetailPage.js"></script>
+
+
 </head>
 <body>
     <div id="dataInfo">
@@ -35,6 +39,9 @@
                 </span>
                 <span name = "toyImg">
                     <input type = 'hidden' id = "toyImg" />
+                </span>
+                <span name = "toyRoomImg">
+                    <input type="hidden" id="toyRoomImg" />
                 </span>
                 <span name = "toyDesc">
                     <input type="hidden" id="toyDesc" value="null" />
@@ -105,57 +112,48 @@
 
                         <script type="text/javascript">
 
-                                var url = "/toiletCat/fileUpload/uploadFile.action";
-                                var inputId = "uploadToyImg";
-                                // 玩具主图片上传
-                                toyImgUpload(inputId,url);
+                            // 上传图片处理controller
+                            var url = "/toiletCat/fileUpload/uploadFile.action";
 
-                                // 玩具主图片上传
-                                function toyImgUpload(inputId, uploadUrl) {
-                                    $("#"+inputId).fileinput({
-                                        language: 'zh', //设置语言
-                                        uploadUrl:uploadUrl, //上传的地址
-                                        allowedFileExtensions: ['jpg','jpeg', 'gif', 'png','doc','docx','xls','xlsx','pdf'],//接收的文件后缀
-                                        //uploadExtraData:{"id": 1, "fileName":'123.mp3'},
-                                        uploadAsync: true, //默认异步上传
-                                        showUpload:true, //是否显示上传按钮
-                                        showRemove :true, //显示移除按钮
-                                        showPreview :true, //是否显示预览
-                                        showCaption:false,//是否显示标题
-                                        browseClass:"btn btn-primary", //按钮样式
-                                        dropZoneEnabled: false,//是否显示拖拽区域
-                                        //minImageWidth: 50, //图片的最小宽度
-                                        //minImageHeight: 50,//图片的最小高度
-                                        //maxImageWidth: 1000,//图片的最大宽度
-                                        //maxImageHeight: 1000,//图片的最大高度
-                                        //maxFileSize:0,//单位为kb，如果为0表示不限制文件大小
-                                        //minFileCount: 0,
-                                        maxFileCount:10, //表示允许同时上传的最大文件个数
-                                        enctype:'multipart/form-data',
-                                        validateInitialCount:true,
-                                        previewFileIcon: "<i class='glyphicon glyphicon-file'></i>",
-                                        msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-                                    }).on('filepreupload', function(event, data, previewId, index) {     //上传中
-                                        var form = data.form;
-                                        var files = data.files;
-                                        var extra = data.extra;
-                                        var response = data.response;
-                                        var reader = data.reader;
+                            // input file id
+                            var inputId = "uploadToyImg";
 
-                                    }).on("fileuploaded", function (event, data, previewId, index) {    //一个文件上传成功
-                                        console.info(data);
-                                        var res = data.response;
-                                        if(typeof(res) == "string") {
-                                            res = eval("("+res+")");
-                                        }
-                                        var fileName = res["fileName"];
-                                        $("#toyImg").val(fileName);
+                            // 要保存返回值的元素id
+                            var toyImg = "toyImg";
 
+                            // 类型
+                            var type = "normal";
 
-                                    }).on('fileerror', function(event, data, msg) {  //一个文件上传失败
-                                        alert("上传图片失败")
-                                    });
-                                }
+                            // 玩具主图片上传
+                            imgUpload(inputId, url, toyImg, type);
+
+                        </script>
+                    </form>
+                </div>
+                <div class="row">
+                    <form id="uploadToyRoomImgForm" method="post" enctype="multipart/form-data">
+                        <div class="col-xs-5">
+                            玩具房间图片上传:
+                            <input id="uploadToyRoomImg" name="file" multiple type="file" data-show-caption="true">
+                        </div>
+
+                        <script type="text/javascript">
+
+                            // 上传图片处理controller
+                            var url = "/toiletCat/fileUpload/uploadFile.action";
+
+                            // input file id
+                            var inputId = "uploadToyRoomImg";
+
+                            // 要保存返回值的元素id
+                            var toyRoomImg = "toyRoomImg";
+
+                            // 类型
+                            var type = "normal";
+
+                            // 玩具房间图片上传
+                            imgUpload(inputId, url, toyRoomImg, type);
+
                         </script>
                     </form>
                 </div>
@@ -168,67 +166,23 @@
 
                         <script type="text/javascript">
 
+                            // 上传图片处理controller
                             var url = "/toiletCat/fileUpload/uploadFile.action";
+
+                            // input file id
                             var inputId = "uploadToyDescImg";
-                            // 玩具描述图片上传
-                            toyDescUpload(inputId,url);
+
+                            // 要保存返回值的元素id
+                            var toyDesc = "toyDesc";
+
+                            // 类型
+                            var type = "add";
 
                             // 玩具描述图片上传
-                            function toyDescUpload(inputId, uploadUrl) {
-                                $("#"+inputId).fileinput({
-                                    language: 'zh', //设置语言
-                                    uploadUrl:uploadUrl, //上传的地址
-                                    allowedFileExtensions: ['jpg','jpeg', 'gif', 'png','doc','docx','xls','xlsx','pdf'],//接收的文件后缀
-                                    //uploadExtraData:{"id": 1, "fileName":'123.mp3'},
-                                    uploadAsync: true, //默认异步上传
-                                    showUpload:true, //是否显示上传按钮
-                                    showRemove :true, //显示移除按钮
-                                    showPreview :true, //是否显示预览
-                                    showCaption:false,//是否显示标题
-                                    browseClass:"btn btn-primary", //按钮样式
-                                    dropZoneEnabled: false,//是否显示拖拽区域
-                                    //minImageWidth: 50, //图片的最小宽度
-                                    //minImageHeight: 50,//图片的最小高度
-                                    //maxImageWidth: 1000,//图片的最大宽度
-                                    //maxImageHeight: 1000,//图片的最大高度
-                                    //maxFileSize:0,//单位为kb，如果为0表示不限制文件大小
-                                    //minFileCount: 0,
-                                    maxFileCount:10, //表示允许同时上传的最大文件个数
-                                    enctype:'multipart/form-data',
-                                    validateInitialCount:true,
-                                    previewFileIcon: "<i class='glyphicon glyphicon-file'></i>",
-                                    msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-                                }).on('filepreupload', function(event, data, previewId, index) {     //上传中
-                                    var form = data.form;
-                                    var files = data.files;
-                                    var extra = data.extra;
-                                    var response = data.response;
-                                    var reader = data.reader;
+                            imgUpload(inputId, url, toyDesc, type);
 
-                                }).on("fileuploaded", function (event, data, previewId, index) {    //一个文件上传成功
-                                    console.info(data);
-                                    var res = data.response;
-                                    if(typeof(res) == "string") {
-                                        res = eval("("+res+")");
-                                    }
-                                    var fileName = res["fileName"];
-
-                                    var toyDesc = $("#toyDesc").val();
-
-                                    if(toyDesc == "null") {
-                                        toyDesc = "";
-                                    }
-
-                                    toyDesc += fileName + ";";
-
-                                    $("#toyDesc").val(toyDesc);
-
-
-                                }).on('fileerror', function(event, data, msg) {  //一个文件上传失败
-                                    alert("上传图片失败")
-                                });
-                            }
                         </script>
+
                     </form>
                 </div>
             </div>

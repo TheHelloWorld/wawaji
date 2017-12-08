@@ -17,7 +17,7 @@
                     <strong>玩具管理</strong>
                 </div>
                 <!-- /.panel-heading -->
-                <div class="panel-body" id="row1">
+                <div class="panel-body" id="row1" style="overflow: scroll">
                     <div class="dataTable_wrapper" id="tableDiv">
                         <div id="searchDiv" class="input-group custom-search-form">
                             <button type="button" id="addToy" onclick="addToyPage()" class="btn btn-primary">添加记录</button>
@@ -32,6 +32,7 @@
                                     <th><lable name="toyName">玩具名称</lable></th>
                                     <th><lable name="toyForCoin">娃娃兑换游戏币数</lable></th>
                                     <th><lable name="toyImg">娃娃图片地址</lable></th>
+                                    <th><lable name="toyRoomImg">娃娃房间中图片</lable></th>
                                     <th><lable name="toyDesc">娃娃描述</lable></th>
                                     <th><lable name="toyNowCoin">娃娃当前游戏币数</lable></th>
                                     <th><lable name="toyOriginCoin">娃娃原本游戏币数</lable></th>

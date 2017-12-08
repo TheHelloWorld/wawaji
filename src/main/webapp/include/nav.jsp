@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>娃娃机管理后台</title>
+    <title>马桶猫管理后台</title>
 
     <%@ include file="header.jsp"%>
 
