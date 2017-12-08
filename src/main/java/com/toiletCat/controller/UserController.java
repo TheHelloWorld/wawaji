@@ -4,7 +4,6 @@ import com.toiletCat.bean.CommonResult;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.entity.User;
 import com.toiletCat.service.UserService;
-import com.lzg.wawaji.utils.*;
 import com.toiletCat.utils.CommonHandle;
 import com.toiletCat.utils.JSONUtil;
 import org.apache.commons.lang.StringUtils;
@@ -50,7 +49,7 @@ public class UserController {
         if(result.success()) {
 
             if(result.getValue() == null) {
-                logger.warn("wawaji warn: 没有对应的用户编号 userNO:{}", userNo);
+                logger.warn("toiletCat warn: 没有对应的用户编号 userNO:{}", userNo);
                 return JSONUtil.getSuccessReturnJSON(BaseConstant.FAIL);
             }
 

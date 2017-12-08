@@ -17,7 +17,7 @@ function bannerSilder() {
 function getBannerByType(type) {
 
     $.ajax({
-        url:"/wawaji/bannerImg/getBannerImgByBannerType.action",
+        url:"/toiletCat/bannerImg/getBannerImgByBannerType.action",
         type:"POST",
         async:false,
         data:{

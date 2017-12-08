@@ -81,12 +81,12 @@ public class BaseConstant {
 	/**
 	 * 普通log
 	 **/
-	public static final String LOG_MSG = "wawaji msg:";
+	public static final String LOG_MSG = "toiletCat msg:";
 
 	/**
 	 * 异常日志log key
 	 **/
-	public static final String LOG_ERR_MSG = "wawaji errMsg:";
+	public static final String LOG_ERR_MSG = "toiletCat errMsg:";
 
 	/**
 	 * 验证码异常信息

@@ -72,7 +72,7 @@
 
                         <script type="text/javascript">
 
-                                var url = "/wawaji/fileUpload/uploadFile.action";
+                                var url = "/toiletCat/fileUpload/uploadFile.action";
                                 var inputId = "uploadToyImg";
                                 // 玩具主图片上传
                                 toyImgUpload(inputId,url);

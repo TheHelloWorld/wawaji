@@ -60,22 +60,22 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="/wawaji/back/user/user.jsp"><i class="fa fa-group fa-fw"></i> 用户管理</a>
+                            <a href="/toiletCat/back/user/user.jsp"><i class="fa fa-group fa-fw"></i> 用户管理</a>
                         </li>
                         <li>
-                            <a href="/wawaji/back/machine/machine.jsp"><i class="fa fa-gear fa-fw"></i> 娃娃机管理</a>
+                            <a href="/toiletCat/back/machine/machine.jsp"><i class="fa fa-gear fa-fw"></i> 娃娃机管理</a>
                         </li>
                         <li>
-                            <a href="/wawaji/back/toy/toy.jsp"><i class="fa fa-paw fa-fw"></i> 玩具管理</a>
+                            <a href="/toiletCat/back/toy/toy.jsp"><i class="fa fa-paw fa-fw"></i> 玩具管理</a>
                         </li>
                         <li>
-                            <a href="/wawaji/back/deliver/deliver.jsp"><i class="fa fa-truck fa-fw"></i> 快递管理</a>
+                            <a href="/toiletCat/back/deliver/deliver.jsp"><i class="fa fa-truck fa-fw"></i> 快递管理</a>
                         </li>
                         <li>
-                            <a href="/wawaji/back/gameRoom/gameRoom.jsp"><i class="fa fa-gamepad fa-fw"></i>游戏房间管理</a>
+                            <a href="/toiletCat/back/gameRoom/gameRoom.jsp"><i class="fa fa-gamepad fa-fw"></i>游戏房间管理</a>
                         </li>
                         <li>
-                            <a href="/wawaji/back/bannerImg/bannerImg.jsp"><i class="fa fa-image fa-fw"></i>Banner图管理</a>
+                            <a href="/toiletCat/back/bannerImg/bannerImg.jsp"><i class="fa fa-image fa-fw"></i>Banner图管理</a>
                         </li>
                     </ul>
                 </div>
