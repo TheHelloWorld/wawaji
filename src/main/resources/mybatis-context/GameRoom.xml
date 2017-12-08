@@ -36,6 +36,8 @@
         <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
         <!-- 娃娃图片地址 -->
         <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
+        <!-- 娃娃房间中图片 -->
+        <result property="toyRoomImg" column="toy_room_img" jdbcType="VARCHAR"/>
         <!-- 娃娃当前游戏币数 -->
         <result property="toyNowCoin" column="toy_now_coin" jdbcType="INTEGER"/>
         <!-- 娃娃原本游戏币数 -->
@@ -114,6 +116,7 @@
             g.game_room_no,
             g.toy_no,
             t.toy_img,
+            t.toy_room_img,
             t.toy_name,
             t.toy_now_coin,
             t.toy_origin_coin,

@@ -15,6 +15,8 @@
         <result property="toyForCoin" column="toy_for_coin" jdbcType="INTEGER"/>
         <!-- 娃娃图片地址 -->
         <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
+        <!-- 娃娃房间中图片 -->
+        <result property="toyRoomImg" column="toy_room_img" jdbcType="VARCHAR"/>
         <!-- 娃娃描述 -->
         <result property="toyDesc" column="toy_desc" jdbcType="VARCHAR"/>
         <!-- 娃娃当前游戏币 -->
@@ -39,6 +41,7 @@
                 toy_name,
                 toy_for_coin,
                 toy_img,
+                toy_room_img,
                 toy_desc,
                 toy_now_coin,
                 toy_origin_coin,
@@ -51,6 +54,7 @@
                 #{toyName, jdbcType=VARCHAR},
                 #{toyForCoin, jdbcType=INTEGER},
                 #{toyImg, jdbcType=VARCHAR},
+                #{toyRoomImg, jdbcType=VARCHAR},
                 #{toyDesc, jdbcType=VARCHAR},
                 #{toyNowCoin, jdbcType=INTEGER},
                 #{toyOriginCoin, jdbcType=INTEGER},
@@ -72,6 +76,7 @@
             toy_name,
             toy_for_coin,
             toy_img,
+            toy_room_img,
             toy_desc,
             toy_now_coin,
             toy_origin_coin,
@@ -89,6 +94,7 @@
           toy_name,
           toy_for_coin,
           toy_img,
+          toy_room_img,
           toy_desc,
           toy_now_coin,
           toy_origin_coin,
@@ -103,6 +109,7 @@
             toy_name = #{toyName, jdbcType=VARCHAR},
             toy_for_coin = #{toyForCoin, jdbcType=INTEGER},
             toy_img = #{toyImg, jdbcType=VARCHAR},
+            toy_room_img = #{toyRoomImg, jdbcType=VARCHAR},
             toy_desc = #{toyDesc, jdbcType=VARCHAR},
             toy_now_coin = #{toyNowCoin, jdbcType=INTEGER},
             toy_origin_coin = #{toyOriginCoin, jdbcType=INTEGER},

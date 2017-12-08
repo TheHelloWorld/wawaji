@@ -31,6 +31,11 @@ public class Toy extends BaseEntity implements Serializable {
     private String toyImg;
 
     /**
+     * 娃娃房间中图片
+     */
+    private String toyRoomImg;
+
+    /**
      * 娃娃描述
      */
     private String toyDesc;
@@ -85,6 +90,14 @@ public class Toy extends BaseEntity implements Serializable {
 
     public void setToyImg(String toyImg) {
         this.toyImg = toyImg;
+    }
+
+    public String getToyRoomImg() {
+        return toyRoomImg;
+    }
+
+    public void setToyRoomImg(String toyRoomImg) {
+        this.toyRoomImg = toyRoomImg;
     }
 
     public String getToyDesc() {

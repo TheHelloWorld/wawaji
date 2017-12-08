@@ -27,9 +27,19 @@ public class UserSeeGameRoom extends BaseEntity implements Serializable {
     private String toyName;
 
     /**
-     * 娃娃图片地址
+     * 玩具图片地址
      */
     private String toyImg;
+
+    /**
+     * 玩具房间中图片
+     */
+    private String toyRoomImg;
+
+    /**
+     * 玩具描述
+     */
+    private String toyDesc;
 
     /**
      * 娃娃当前游戏币数
@@ -96,6 +106,22 @@ public class UserSeeGameRoom extends BaseEntity implements Serializable {
 
     public void setToyImg(String toyImg) {
         this.toyImg = toyImg;
+    }
+
+    public String getToyRoomImg() {
+        return toyRoomImg;
+    }
+
+    public void setToyRoomImg(String toyRoomImg) {
+        this.toyRoomImg = toyRoomImg;
+    }
+
+    public String getToyDesc() {
+        return toyDesc;
+    }
+
+    public void setToyDesc(String toyDesc) {
+        this.toyDesc = toyDesc;
     }
 
     public Integer getToyNowCoin() {
