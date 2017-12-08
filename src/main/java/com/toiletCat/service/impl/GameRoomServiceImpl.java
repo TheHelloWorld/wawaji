@@ -30,7 +30,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
     /**
      * 添加游戏房间
-     * @param gameRoom 游戏房间
+     * @param gameRoom 游戏房间`
      */
     @Override
     public CommonResult addGameRoom(final GameRoom gameRoom) {
@@ -129,20 +129,6 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 //                            // 当前游戏房间观看人数
 //                            userSeeGameRoom.setViewer(Integer.valueOf(viewerNum));
 //
-//                            // 获得当前游戏房间锁key
-//                            String gameRoomLockkey = BaseConstant.GAME_ROOM_IN_USE.
-//                                    replace("#{}", userSeeGameRoom.getGameRoomNo());
-//
-//                            String isUse = redisUtil.get(gameRoomLockkey);
-//
-//                            boolean available = false;
-//
-//                            if(StringUtils.isBlank(isUse)) {
-//                                available = true;
-//                            }
-//
-//                            // 当前游戏房间是否空闲
-//                            userSeeGameRoom.setAvailable(available);
 //                        }
 //                    } catch (Exception e) {
 //                        logger.error("{} getUserSeeGameRoomListByPage redis error " + e, BaseConstant.LOG_ERR_MSG);
