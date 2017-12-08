@@ -30,7 +30,6 @@ public final class ExecTemplate {
             callback.setCodeMessage(CommonCodeMessage.SYSTEM_ERROR);
         }
 
-        logger.info("exec return:" + JSON.toJSONString(commonResult));
         logger.info(method + " end");
 
         return callback.getResult();

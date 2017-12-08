@@ -23,6 +23,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
 
     @Autowired
     private DeliverDao deliverDao;
+
     /**
      * 添加发货记录
      * @param deliver 发货记录
