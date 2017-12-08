@@ -1,6 +1,5 @@
 package com.toiletCat.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.UserCatchRecord;
 import com.toiletCat.constants.BaseConstant;
