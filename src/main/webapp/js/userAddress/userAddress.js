@@ -102,8 +102,6 @@ function toAddUserAddressPage() {
     } else {
         alert("最多只能有5个地址")
     }
-
-
 }
 
 // 修改元素
@@ -144,5 +142,8 @@ function deleteUserAddress(id) {
             canAdd = true;
         }
     });
+}
 
+function returnMethod() {
+    window.location.href="#";
 }

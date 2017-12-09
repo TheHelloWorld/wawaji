@@ -3,7 +3,14 @@ var userNo = "";
 
 var nowPage = 1;
 
+// 类型
+var type= "";
+
 $(function() {
+
+    // 获得类型
+    type = getQueryString("type");
+
     // 获得用户编号
     userNo = getQueryString("userNo");
 
@@ -123,4 +130,17 @@ function getAllUserToyByUserNo() {
 function toUserToyDetail(id) {
 
     window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
+}
+
+function returnMethod() {
+    // 根据类型返回不同的首页
+    if(type= "gameRoom") {
+
+        window.location.href = "/toiletCat/gameRoom/gameRoom.html";
+
+    } else if(type= "machineRoom"){
+
+        window.location.href = "/toiletCat/machineRoom/machineRoom.html";
+
+    }
 }

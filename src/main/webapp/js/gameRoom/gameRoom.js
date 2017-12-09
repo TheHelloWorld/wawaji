@@ -195,13 +195,13 @@ function lastPage() {
 }
 
 function toUserToy() {
-    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo;
+    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo + "&type=gameRoom";
 }
 
 function toRecharge() {
-    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo;
+    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo + "&type=gameRoom";
 }
 
 function toUserIndex() {
-    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo;
+    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo + "&type=gameRoom";
 }

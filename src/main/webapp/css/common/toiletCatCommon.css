@@ -118,7 +118,6 @@
     width: 100%;
     position:relative;
     overflow:hidden;
-
 }
 
 .banner {
@@ -210,4 +209,14 @@
 
 .address-margin-bottom {
     margin-bottom: 6px;
+}
+
+.return-button {
+    float: left;
+    margin-left: 2%;
+}
+
+.nav-text {
+    float: left;
+    margin-left: 33%;
 }

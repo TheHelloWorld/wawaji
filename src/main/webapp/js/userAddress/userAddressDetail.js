@@ -71,3 +71,7 @@ function saveOrUpdate() {
 
 }
 
+function returnMethod() {
+    window.location.href="/toiletCat/userAddress/userAddress.html?userNo="+userNo;
+}
+
