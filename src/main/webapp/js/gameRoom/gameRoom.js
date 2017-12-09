@@ -163,29 +163,27 @@ function getUserSeeGameRoomListByPage(nowPage) {
                 }
             }
             $("#main").append(str);
-
         }
     });
+}
+
+// 跳转到登录页
+function toLoginPage() {
+    window.location.href="";
 }
 
 function toIndex() {
     window.location.href="/toiletCat/index/machineRoom.html";
 }
 
-function clickBanner() {
-    window.location.href="/toiletCat/index/machineRoom.html";
-}
-
 function getPage(page) {
     nowPage = getPageByNum(nowPage, page, totalPage, step);
     getAllByPage(showUrl, nowPage);
-
 }
 
 function nextPage() {
     nowPage = nextPageNum(nowPage, totalPage, step);
     getAllByPage(showUrl, nowPage);
-
 }
 
 //上一页
