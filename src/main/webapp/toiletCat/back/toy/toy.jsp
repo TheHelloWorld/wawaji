@@ -31,9 +31,6 @@
                                     <th><lable name="toyNo">玩具编号</lable></th>
                                     <th><lable name="toyName">玩具名称</lable></th>
                                     <th><lable name="toyForCoin">娃娃兑换游戏币数</lable></th>
-                                    <th><lable name="toyImg">娃娃图片地址</lable></th>
-                                    <th><lable name="toyRoomImg">娃娃房间中图片</lable></th>
-                                    <th><lable name="toyDesc">娃娃描述</lable></th>
                                     <th><lable name="toyNowCoin">娃娃当前游戏币数</lable></th>
                                     <th><lable name="toyOriginCoin">娃娃原本游戏币数</lable></th>
                                     <th><lable name="toyCost">娃娃成本</lable></th>
