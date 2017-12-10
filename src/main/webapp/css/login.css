@@ -1,4 +1,5 @@
 body {
+    background:#6DDBFD;
     width: 100%;
     font-size: 22px;
     margin-top: 0px;
@@ -13,8 +14,8 @@ body {
 
 .background-div {
     background: url("/image/background/background-img.png");
-    background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
+    background-size: 35% 35%;
+    -moz-background-size: 30% 30%;
 }
 
 .login-content {

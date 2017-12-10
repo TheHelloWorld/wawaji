@@ -169,7 +169,7 @@ function getUserSeeGameRoomListByPage(nowPage) {
 
 // 跳转到登录页
 function toLoginPage() {
-    window.location.href="";
+    window.location.href="/toiletCat/user/login.html";
 }
 
 function toIndex() {
