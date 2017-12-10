@@ -32,9 +32,9 @@ body {
     color:black
 }
 
-.login-safe{
-    height: 80px;
-    line-height: 80px;
+.login-check-code{
+    height: 5%;
+    line-height: 5%;
     font-size: 55px;
     border-radius: 20px;
 }
@@ -64,4 +64,15 @@ body {
     font-size:45px;
     background:#539CD2;
     border-radius:30px;
+}
+
+.checkCode {
+    background: white;
+    font-family: Arial;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 55px;
+    border: 0;
+    letter-spacing: 2px;
+    color: darkred;
 }

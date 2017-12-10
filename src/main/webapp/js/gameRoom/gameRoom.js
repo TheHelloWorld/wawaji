@@ -145,14 +145,13 @@ function getUserSeeGameRoomListByPage(nowPage) {
                     str += "<div class='machine-col-xs-6-right' >";
                 }
 
-
                 str += "    <div class='machine-panel panel-info'>";
                 str += "        <div class='panel-body'>";
                 str += "            <div class='toy-img index-img'>"
                 str += "                <img height='100px' width=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
                 str += "            </div>";
                 str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
-                str += "            <div><span>围观:" + list[i]["viewer"] + "</span></div>";
+                str += "            <div><span>在线人数:" + list[i]["viewer"] + "</span></div>";
                 str += "            <div><span class='my-inline-right' ><img src='/image/background/coin.ico' />:" + list[i]["toyNowCoin"] + "</span></div>";
                 str += "        </div>";
                 str += "    </div>";
@@ -169,7 +168,7 @@ function getUserSeeGameRoomListByPage(nowPage) {
 
 // 跳转到登录页
 function toLoginPage() {
-    window.location.href="/toiletCat/user/login.html";
+    window.location.href="/toiletCat/user/login.html?checkType=checkCode";
 }
 
 function toIndex() {
