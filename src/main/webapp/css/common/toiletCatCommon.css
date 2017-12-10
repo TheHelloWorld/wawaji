@@ -1,5 +1,8 @@
-.index-body-div {
+body {
+    background: silver;
+}
 
+.index-body-div {
     overflow:scroll;
 }
 
