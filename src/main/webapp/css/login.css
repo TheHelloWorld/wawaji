@@ -1,0 +1,66 @@
+body {
+    width: 100%;
+    font-size: 22px;
+    margin-top: 0px;
+    margin-left: 0px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.background-div {
+    background: url("/image/background/background-img.png");
+    background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+}
+
+.login-content {
+    position:fixed;
+    top:60%;
+    width:100%;
+}
+
+.login-mobile {
+    height:80px;
+    line-height:80px;
+    font-size:55px;
+    border-radius:20px;
+    color:black
+}
+
+.login-safe{
+    height: 80px;
+    line-height: 80px;
+    font-size: 55px;
+    border-radius: 20px;
+}
+
+.safe-img {
+    height:80px;
+    line-height:80px;
+}
+
+.login-code {
+    height:80px;
+    line-height:80px;
+    font-size:55px;
+    border-radius:20px;
+}
+
+.login-get-code {
+    height:80px;
+    line-height:80px;
+    font-size:35px;
+    background:#6DDBFD
+}
+
+.login {
+    height:80px;
+    line-height:80px;
+    font-size:45px;
+    background:#539CD2;
+    border-radius:30px;
+}

@@ -73,7 +73,7 @@ function getAllUserAddressByUserNo(userNo) {
 
             for(var i = 0; i<list.length; i++) {
 
-                str += "<div class='my-bottom-line div-radius' id='userAddress"+list[i]["id"]+"' class='row'>";
+                str += "<div id='userAddress"+list[i]["id"]+"' class='row'>";
                 str += "    <div class='panel-body' >";
                 str += "        <div class='my-margin-bottom'>";
                 str += "            <span class='my-inline-right' >收货人:" + list[i]["userName"] + "</span>";
@@ -82,11 +82,20 @@ function getAllUserAddressByUserNo(userNo) {
                 str += "        <div class='my-margin-bottom' >" + list[i]["province"] + "&nbsp;"+ list[i]["city"] +"&nbsp;"+ list[i]["district"] +"</div>";
                 str += "        <div class='my-margin-bottom' >地址:" + list[i]["address"] + "</div>";
                 str += "        <div>";
-                str += "            <a class='my-edit-right' href='javascript:void(0);' onclick='toEditUserAddressPage(" + list[i]["id"] + ")'><img src='/image/background/edit.ico' />修改</a>";
-                str += "            <a href='javascript:void(0);' onclick='deleteUserAddress(" + list[i]["id"] + ")'><img src='/image/background/remove.ico' />删除</a>";
+                str += "            <a class='my-edit-right' href='javascript:void(0);' onclick='toEditUserAddressPage(" + list[i]["id"] + ")'><img src='/image/background/edit.png' />修改</a>";
+                str += "            <a href='javascript:void(0);' onclick='deleteUserAddress(" + list[i]["id"] + ")'><img src='/image/background/remove.png' />删除</a>";
                 str += "        </div>";
                 str += "    </div>";
                 str += "</div>"
+                str += "<div style='text-align: center'>";
+
+                if(i%2 == 0) {
+                    str += "<img width='100%' src='/image/line-left.png'>";
+                } else {
+                    str += "<img width='100%' src='/image/line-right.png'>";
+                }
+
+                str += "</div>";
             }
 
             $("#userAddress").append(str);

@@ -156,7 +156,7 @@ function getAllUserAddressByUserNo(userNo) {
                 str += "<label style='width: 100%;'>";
                 str += "<input type='radio' name='userAddress' onclick='clickAddress(this)' value='"+list[i]["id"]+"' />";
 
-                str += "<div class='my-bottom-line div-radius' id='userAddress"+list[i]["id"]+"' class='row'>";
+                str += "<div id='userAddress"+list[i]["id"]+"' class='row'>";
                 str += "    <div class='panel-body' >";
                 str += "        <div class='my-margin-bottom'>";
                 str += "            <input id = 'userName"+list[i]["id"]+"' type='hidden' value='" + list[i]["userName"] + "' >";
@@ -169,6 +169,15 @@ function getAllUserAddressByUserNo(userNo) {
                 str += "        <input id = 'address"+list[i]["id"]+"' type='hidden' value='" + list[i]["address"] + "' >";
                 str += "        <div class='my-margin-bottom' >地址:" + list[i]["address"] + "</div>";
                 str += "    </div>";
+                str += "</div>";
+                str += "<div style='text-align: center'>";
+
+                if(i%2 == 0) {
+                    str += "<img width='100%' src='/image/line-left.png'>";
+                } else {
+                    str += "<img width='100%' src='/image/line-right.png'>";
+                }
+
                 str += "</div>";
                 str += "</label>";
 

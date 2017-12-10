@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>登陆/注册</title>
+	<link href="/css/login.css" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+
+	<script type="text/javascript" src="/js/user/login.js"></script>
+</head>
+<body>
+	<div class="background-div">
+		<div style="width:100%;;text-align:center;padding-top:200px;">
+			<img src="/image/logo.png" class="logo"/>
+		</div>
+		<div class="login-content">
+			<div style="height:100px;text-align:center;">
+				<input type="text" name="mobile" id="mobile" class="login-mobile" placeholder="请输入手机号"/>
+			</div>
+			<div style="height:100px;text-align:center;">
+				<div>
+					<input type="text" name="safe-code" id="code1" class="login-safe" placeholder="安全码"/>
+					<img src="/image1/left.png" class="safe-img"/>
+				</div>
+			</div>
+			
+			<div style="height:100px;text-align:center;display:none" >
+				<div>
+					<input type="text" name="code" id="code2" class="login-code" placeholder="验证码"/>
+					<button type="button" class="login-get-code">获取验证码</button>
+				</div>
+			</div>
+			<div style="height:100px;text-align:center;margin-top:30px;" >
+				<div>
+					<button type="button" class="login">登录</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
