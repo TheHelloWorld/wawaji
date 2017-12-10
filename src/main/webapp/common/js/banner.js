@@ -40,10 +40,6 @@ function getBannerByType(type) {
                 return;
             }
 
-            console.info("11111:"+list.length);
-
-            console.info(list);
-
             var str = " <div class='banner'>";
             str += "        <div class='js-silder'>";
             str += "            <div class='silder-scroll'>";
