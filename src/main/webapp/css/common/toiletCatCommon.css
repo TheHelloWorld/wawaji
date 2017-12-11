@@ -215,14 +215,12 @@ body {
 }
 
 .return-button {
-
     transform: rotate(-90deg);
     float: left;
     margin-left: 2%;
 }
 
 .login-button {
-
     float: left;
     margin-left: 2%;
 }
