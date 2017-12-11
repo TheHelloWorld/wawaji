@@ -76,3 +76,20 @@ body {
     letter-spacing: 2px;
     color: darkred;
 }
+
+.login-div {
+    width:100%;
+    height: 45%;
+    text-align: center;
+    padding-top: 20%;
+}
+
+.login-div img {
+    width: 100%;
+    height: 100%;
+}
+
+.login-content-div {
+    height: 100px;
+    text-align: center;
+}

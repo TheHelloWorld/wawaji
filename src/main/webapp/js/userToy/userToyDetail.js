@@ -100,6 +100,8 @@ function getUserToyByUserNoAndId() {
                 } else if (result["handleStatus"] == 30) {
 
                     str += "<span>已发货</span>";
+                    str += getDeliverByIdAndUserNo(str, result["deliverId"]);
+
                 }
             }
             str += "        </div>";
@@ -113,6 +115,40 @@ function getUserToyByUserNoAndId() {
             }
 
             $("#zzc").before(str);
+        }
+    });
+}
+
+function getDeliverByIdAndUserNo(str,id) {
+    $.ajax({
+        url:"/toiletCat/deliver/getUserToyByUserNoAndId.action",
+        type:"POST",
+        async:false,
+        data:{
+            id:id,
+            userNo:userNo
+        },
+        success:function(data){
+
+            // 转换数据
+            if(typeof(data) == "string") {
+                data = eval("("+data+")");
+            }
+
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+            var result = data["result"];
+
+            str += "<div>";
+            str += "<div class='col-xs-5 user-toy-left user-toy-text-status'>发货单号:"+result["deliverNo"]+"</div>";
+            str += "<div class='col-xs-5 user-toy-right user-toy-text-status'>快递公司:"+result["company"]+"</div>";
+            str += "</div>";
+
+            return str;
         }
     });
 }

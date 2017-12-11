@@ -9,7 +9,7 @@ public interface UserService {
      * 添加用户
      * @param mobileNo 手机号
      */
-    CommonResult<User> registerOrLoginUser(String mobileNo);
+    CommonResult<String> registerOrLoginUser(String mobileNo);
 
     /**
      * 校验短信验证码

@@ -452,7 +452,6 @@ function sleep(numberMillis) {
 	}
 }
 
-
 // 获取URL参数
 function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");

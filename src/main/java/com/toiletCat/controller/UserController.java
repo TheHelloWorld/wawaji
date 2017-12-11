@@ -86,13 +86,13 @@ public class UserController {
             return JSONUtil.getSuccessReturnJSON(verifyResult.getValue());
         }
 
-        // 获取用户信息并返回
-        CommonResult<User> result = userService.registerOrLoginUser(mobile);
+        // 获取用户编号并返回
+        CommonResult<String> result = userService.registerOrLoginUser(mobile);
 
         if(result.success()) {
 
             // 将用户编号放入cookie中
-            setUserNoInCookie(response, result.getValue().getUserNo());
+            setUserNoInCookie(response, result.getValue());
 
             return JSONUtil.getSuccessReturnJSON(result.getValue());
         }
@@ -119,6 +119,24 @@ public class UserController {
         passport.setPath("/");
 
         response.addCookie(passport);
+    }
+
+    /**
+     * 根据用户编号获得用户信息
+     * @param userNo 用户编号
+     * @return
+     */
+    @RequestMapping(value = "/getUserByUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getUserByUserNo(String userNo) {
+
+        CommonResult<User> result = userService.getUserByUserNo(userNo);
+
+        if(result.success()) {
+            return JSONUtil.getSuccessReturnJSON(result.getValue());
+        }
+
+        return JSONUtil.getErrorJson();
     }
 
     /**
@@ -195,7 +213,7 @@ public class UserController {
      */
     @RequestMapping(value = "/updateUserInfoByIdAndUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String updateUserInfoByIdAndUserNo(String userNo,String userName, String userImg) {
+    public String updateUserInfoByIdAndUserNo(String userNo, String userName, String userImg) {
 
         CommonResult result = userService.updateUserInfoByIdAndUserNo(userNo, userName, userImg);
 

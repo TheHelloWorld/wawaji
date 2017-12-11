@@ -4,7 +4,13 @@ var code;
 // 当前方式
 var checkType = "";
 
+var wait=60;
+
+var type = "";
+
 $(function() {
+
+    type = getQueryString("type");
 
     checkType = getQueryString("checkType");
 
@@ -52,10 +58,9 @@ $(function() {
         $("#checkCodeDiv").hide();
         $("#checkTextDiv").show();
     }
-
-
 });
 
+// 产生验证码
 function createCode() {
     code = "";
     // 验证码的长度
@@ -74,7 +79,19 @@ function createCode() {
     $("#checkCode").val(code);
 }
 
+// 点击登陆按钮方法
 function login() {
+
+    if(!isNotNull("mobile")) {
+        alert("手机号不能为空");
+        return;
+    }
+
+    if(!checkMobileNo()) {
+        alert("请填入正确的手机号");
+        return;
+    }
+
     if(checkType = "checkCode") {
         validate();
     } else {
@@ -116,7 +133,110 @@ function validate() {
     }
 }
 
-function changeURL(){
-    var url = document.getElementById('url').value;
-    window.history.pushState({},0,'http://'+window.location.host+'/'+url);
+function sendTextCode(o) {
+
+    if(!isNotNull("mobile")) {
+        alert("手机号不能为空");
+        return;
+    }
+
+    if(!checkMobileNo()) {
+        alert("请填入正确的手机号");
+        return;
+    }
+
+    $.ajax({
+        url:"/toiletCat/user/sendMobileVerificationCode.action",
+        type:"POST",
+        async:false,
+        data:{
+            mobileNo:$("#mobile").val()
+        },
+        success:function(data){
+
+            // 转换数据
+            if(typeof(data) == "string") {
+                data = eval("("+data+")");
+            }
+
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+            sendTextWaitTime(o);
+        }
+
+    });
+}
+
+function checkMobileNo() {
+
+    var numbers = /^1\d{10}$/;
+    //获取输入手机号码
+    var val = $('#mobile').val().replace(/\s+/g,"");
+
+    if(!numbers.test(val) || val.length ==0) {
+        return false;
+    }
+
+    return true;
+}
+
+// 按钮倒计时
+function sendTextWaitTime(o) {
+
+    if (wait == 0) {
+        o.removeAttribute("disabled");
+        o.value="免费获取验证码";
+        wait = 10;
+    } else {
+
+        o.setAttribute("disabled", true);
+        o.value="重新发送(" + wait + ")";
+        wait--;
+        setTimeout(
+            function() {
+                sendTextWaitTime(o)
+            }, 1000);
+    }
+}
+
+// 登陆或注册
+function loginOrRegister() {
+
+    $.ajax({
+        url:"/toiletCat/user/registerOrLoginUser.action",
+        type:"POST",
+        async:false,
+        data:{
+            mobileNo:$("#mobile").val(),
+
+        },
+        success:function(data){
+
+            // 转换数据
+            if(typeof(data) == "string") {
+                data = eval("("+data+")");
+            }
+
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+            var url = "";
+            if(type="gameRoom") {
+                url = "/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+data["result"];
+
+            } else {
+                url = "/toiletCat/machineRoom/machineRoom.html?nowType=login&userNo="+data["result"];
+            }
+
+            window.location.href = url;
+        }
+
+    });
 }

@@ -11,7 +11,12 @@ var userNo = "";
 
 var bannerType = 1;
 
+var nowType = "";
+
 $(function() {
+
+    nowType = getQueryString("nowType");
+
     var url = "/toiletCat/gameRoom/getUserSeeGameRoomTotalCountAndPageSize.action";
 
     // 获取banner图
@@ -23,9 +28,13 @@ $(function() {
     // 分页获得所有用户可见游戏房间并展示
     getUserSeeGameRoomListByPage(nowPage);
 
-    // 用户自动登陆
-    userAutoLogin();
-
+    if(nowType == "login") {
+        userNo = getQueryString("userNo");
+        getUserInfoByUserNo();
+    } else {
+        // 用户自动登陆
+        userAutoLogin();
+    }
 });
 
 // 用户自动登陆
@@ -60,22 +69,19 @@ function userAutoLogin() {
             }
             console.info(result);
             userNo = result["userNo"];
-
         }
     });
 }
 
-
-// 用户登陆或注册
-function userLoginOrRegister() {
+// 根据用户编号获得用户信息
+function getUserInfoByUserNo() {
 
     $.ajax({
-        url:"/toiletCat/user/registerOrLoginUser.action",
+        url:"/toiletCat/user/getUserByUserNo.action",
         type:"POST",
         async:false,
         data:{
-            mobileNO:mobileNo,
-            ticket:ticket
+            userNo:userNo
         },
         success:function(data) {
             // 转换数据
@@ -91,18 +97,8 @@ function userLoginOrRegister() {
 
             var result = data["result"];
 
-            if(result == "验证码错误,请重试") {
-                alert(result);
-                return;
-            }
-
-            if(typeof(result) == "string") {
-                result = eval("("+result+")");
-            }
-
             console.info(result);
             userNo = result["userNo"];
-
         }
     });
 }

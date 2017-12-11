@@ -52,7 +52,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      * @param mobileNo 手机号
      */
     @Override
-    public CommonResult<User> registerOrLoginUser(final String mobileNo) {
+    public CommonResult<String> registerOrLoginUser(final String mobileNo) {
 
         JSONObject json = new JSONObject();
         json.put("mobileNo", mobileNo);
@@ -86,7 +86,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     user = userDao.getUserByMobileNo(mobileNo);
                 }
 
-                got(user);
+                got(user.getUserNo());
                 return;
             }
         }, "registerOrLoginUser", json.toJSONString());

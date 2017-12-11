@@ -1,44 +1,52 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>登陆/注册</title>
-	<link href="/css/login.css" rel="stylesheet" type="text/css">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+		<meta name="keywords" content="关键词" />
+		<meta name="description" content="描述" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no" />
+		<title>登陆/注册</title>
 
-	<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/user/login.css" >
 
-	<script type="text/javascript" src="/common/js/commonUtil.js"></script>
+		<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 
-	<script type="text/javascript" src="/js/user/login.js"></script>
-</head>
-<body>
-	<div class="background-div">
-		<div style="width:100%; height: 45%; text-align:center;padding-top:20%;">
-			<img height="100%" width="100%" src="/image/logo.png" class="logo"/>
+		<script type="text/javascript" src="/common/js/commonUtil.js"></script>
+
+		<script type="text/javascript" src="/js/user/login.js"></script>
+	</head>
+	<body>
+		<div class="background-div">
+			<div class="login-div">
+				<img src="/image/logo.png" class="logo"/>
+			</div>
+			<div class="login-content">
+				<div class="login-content-div" >
+					<input type="text" name="mobile" id="mobile" class="login-mobile" placeholder="请输入手机号"/>
+				</div>
+				<div id="checkCodeDiv" class="login-content-div" >
+					<div>
+						<input type="text" name="check-code" id="checkCodeText" class="login-check-code" placeholder="图片验证码"/>
+						<input type="button" id="checkCode" class="checkCode" onclick="createCode()" />
+					</div>
+				</div>
+
+				<div id="checkTextDiv" class="login-content-div" >
+					<div>
+						<input type="text" name="code" id="code2" class="login-code" placeholder="短信验证码"/>
+						<button type="button" id="sendTextCode" class="login-get-code" onclick="sendTextCode(this)">获取短信验证码</button>
+					</div>
+				</div>
+				<div class="login-content-div" style="margin-top:30px;" >
+					<div>
+						<button id="login" type="button" class="login" onclick="login()">提交</button>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="login-content">
-			<div style="height:100px;text-align:center;">
-				<input type="text" name="mobile" id="mobile" class="login-mobile" placeholder="请输入手机号"/>
-			</div>
-			<div id="checkCodeDiv" style="height:100px;text-align:center;">
-				<div>
-					<input type="text" name="check-code" id="checkCodeText" class="login-check-code" placeholder="图片验证码"/>
-					<input type="button" id="checkCode" class="checkCode" onclick="createCode()" />
-				</div>
-			</div>
-			
-			<div id="checkTextDiv" style="height:100px;text-align:center;display:none" >
-				<div>
-					<input type="text" name="code" id="code2" class="login-code" placeholder="短信验证码"/>
-					<button type="button" class="login-get-code">获取短信验证码</button>
-				</div>
-			</div>
-			<div style="height:100px;text-align:center;margin-top:30px;" >
-				<div>
-					<button id="login" type="button" class="login" onclick="login()">提交</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</body>
+	</body>
 </html>
