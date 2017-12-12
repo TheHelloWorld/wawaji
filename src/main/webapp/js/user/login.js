@@ -35,7 +35,7 @@ $(function() {
     );
 
     $(".login-get-code").css(
-        'width',wc*0.2
+        'width',wc*0.3
     );
 
     $(".login").css(
@@ -133,6 +133,7 @@ function validate() {
     }
 }
 
+// 法送短信验证码
 function sendTextCode(o) {
 
     if(!isNotNull("mobile")) {
@@ -189,12 +190,12 @@ function sendTextWaitTime(o) {
 
     if (wait == 0) {
         o.removeAttribute("disabled");
-        o.value="免费获取验证码";
-        wait = 10;
+        o.innerText="获取短信验证码";
+        wait = 60;
     } else {
 
         o.setAttribute("disabled", true);
-        o.value="重新发送(" + wait + ")";
+        o.innerText="重新发送(" + wait + ")";
         wait--;
         setTimeout(
             function() {
