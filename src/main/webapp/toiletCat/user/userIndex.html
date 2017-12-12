@@ -11,6 +11,8 @@
     <meta name="format-detection" content="telephone=no" />
     <title>个人中心</title>
 
+    <link rel="stylesheet" type="text/css" href="/css/common/toiletCatCommon.css" >
+
     <link rel="stylesheet" type="text/css" href="/css/user/userIndex.css" >
 
     <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
@@ -21,18 +23,22 @@
 
 </head>
 <body>
+
 <div class="background-div">
-    <div style="width:100%;padding-top:5%;height:80px;">
-        <div style="margin-left:50px;width:30%;float:left;">
-            <img style="-webkit-transform:rotate(-90deg);" src="/image1/cat_track.net.ico" />
+    <nav class = "index-header default-height nav-center" >
+        <img class="return-button" id="returnButton" src="/image/background/returnButton.ico" onclick="returnMethod()" />
+    </nav>
+    <div class="default-height">
+    </div>
+    <div style="width:100%;padding-top:5%;height:10%;">
+        <div style="margin-left:10%;width:25%;float:left;">
+            <img style="-webkit-transform:rotate(-90deg);" src="/image1/cat_track.net.ico" width=40% />
         </div>
-        <div style="float:left;width:33%;background:#B1ED0A;color:white;font-size:40px;height:80px;border-radius:40px;padding-left:10px;">
-            <div style="float:left;">
-                <img src="/image1/coint.ico" width=80px height=80px />
+        <div style="float:left;width:33%;background:#B1ED0A;color:white;font-size:20px;height:70%;border-radius:40px;">
+            <div style="float:left;margin-top:10%;margin-left:10%;">
+                <img src="/image/background/coin.ico" width=100% height=100% />
             </div>
-            <div style="float:left;margin-top:15px;margin-left:15px;">
-                1289
-            </div>
+            <div style="float:left;margin-top:10%;margin-left:15px;">1289</div>
             <div style='clear:both'></div>
         </div>
         <div></div>
@@ -44,47 +50,52 @@
                 <img src="/image1/cat_track.net.ico"  />
             </div>
             <div class="center-title">
-                <div class="centerName">名字</div>
-                <div class="centerName">我的邀请码:</div>
+                <div class="center-name">名字</div>
+                <div class="center-name">我的邀请码:</div>
             </div>
         </div>
     </div>
 
-    <div class="center-other" style="margin-top:100px;">
+    <div class="center-other" style="margin-top:15%;">
         <div style="height:100%;">
-            <div style="float:left;margin-top:20px;margin-left:30px;">
-                <img src="/image1/coint.ico" width=80px height=80px />
+            <div style="float:left;margin-top:3%;margin-left:5%;">
+                <img src="/image1/coint.ico" width=100% height=100% />
             </div>
-            <div style="color:#666615;font-weight:bold;height:120px;line-height:120px;float:left;text-align:center;width:80%;">
-                我要充值
-            </div>
+            <div style="color:#666615;margin-top:3%;font-weight:bold;float:left;margin-left:15%;">我要充值</div>
             <div style="clear:both"></div>
         </div>
     </div>
     <div class="center-other">
         <div style="height:100%;">
-            <div style="float:left;margin-top:20px;margin-left:30px;">
-                <img src="/image1/coint.ico" width=80px height=80px />
-            </div>
-            <div style="color:#666615;font-weight:bold;height:120px;line-height:120px;float:left;text-align:center;width:80%;">
-                地址管理
-            </div>
+            <div style="float:left;margin-top:3%;margin-left:5%;">
+                <img src="/image1/coint.ico" width=100% height=100% /></div>
+            <div style="color:#666615;margin-top:3%;font-weight:bold;float:left;margin-left:15%;">地址管理</div>
             <div style="clear:both"></div>
         </div>
     </div>
     <div class="center-other">
         <div style="height:100%;">
-            <div style="float:left;margin-top:20px;margin-left:30px;">
-                <img src="/image1/coint.ico" width=80px height=80px />
-            </div>
-            <div style="color:#666615;font-weight:bold;height:120px;line-height:120px;float:left;text-align:center;width:80%;">
-                抓取记录
-            </div>
+            <div style="float:left;margin-top:3%;margin-left:5%;">
+                <img src="/image1/coint.ico" width=100% height=100% /></div>
+            <div style="color:#666615;margin-top:3%;font-weight:bold;float:left;margin-left:15%;">抓取记录</div>
             <div style="clear:both"></div>
         </div>
     </div>
 
 </div>
+<div class="default-height">
+</div>
+<nav class = "index-footer default-height" >
+    <div class="footer-button" >
+        <img class="footer-img" src="/image/button/cat_phone_48_text.png" onclick="toUserToy()" />
+    </div>
+    <div class="footer-button" >
+        <img class="footer-img" src="/image/button/cat_wizard_48_text.png" onclick="toUserToy()" />
+    </div>
+    <div class="footer-button" >
+        <img class="footer-img" src="/image/button/cat_laptop_origin_48_text.png" />
+    </div>
+</nav>
 </body>
 
 </html>

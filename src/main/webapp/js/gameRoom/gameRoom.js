@@ -168,7 +168,7 @@ function toLoginPage() {
 }
 
 function toIndex() {
-    window.location.href="/toiletCat/index/machineRoom.html";
+    window.location.href="/toiletCat/gameRoom/gameRoom.html";
 }
 
 function getPage(page) {
@@ -196,5 +196,5 @@ function toRecharge() {
 }
 
 function toUserIndex() {
-    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo + "&type=gameRoom";
+    window.location.href="/toiletCat/user/userIndex.html?userNo="+userNo + "&type=gameRoom";
 }

@@ -17,3 +17,7 @@ $(function(){
         'height',hc*0.1
     );
 });
+
+function returnMethod() {
+    window.location.href="/toiletCat/gameRoom/gameRoom.html";
+}
