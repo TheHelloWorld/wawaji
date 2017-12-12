@@ -237,3 +237,14 @@
     float: left;
     margin-left: 33%;
 }
+
+.user-info-div {
+    float: left;
+    margin-left: 5%;
+}
+
+.user-img {
+    border-radius: 50%;
+    margin-top: 2%;
+    border: 1px solid white;
+}

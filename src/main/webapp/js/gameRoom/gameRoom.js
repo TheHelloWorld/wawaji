@@ -7,11 +7,24 @@ var showUrl = "/toiletCat/gameRoom/getAllGameRoomByPage.action";
 
 var width = $(window).width() / 2 - 20;
 
-var userNo = "";
-
 var bannerType = 1;
 
 var nowType = "";
+
+// 用户编号
+var userNo = "";
+
+// 用户名
+var userName = "";
+
+// 用户游戏币数
+var userCoin = "";
+
+// 用户头像
+var userImg = "";
+
+// 用户邀请码
+var invitationCode = "";
 
 $(function() {
 
@@ -29,8 +42,19 @@ $(function() {
     getUserSeeGameRoomListByPage(nowPage);
 
     if(nowType == "login") {
+        // 用户编号
         userNo = getQueryString("userNo");
-        getUserInfoByUserNo();
+        // 用户名
+        userName = getQueryString("userName");
+        // 用户游戏币数
+        userCoin = getQueryString("userCoin");
+        // 用户头像
+        userImg = getQueryString("userImg");
+        // 用户邀请码
+        invitationCode = getQueryString("invitationCode");
+
+        setUserInfo();
+
     } else {
         // 用户自动登陆
         userAutoLogin();
@@ -56,53 +80,33 @@ function userAutoLogin() {
                 return;
             }
 
-            var result = data["result"];
+            var user = data["result"];
 
             // 判断是否成功获取用户信息
-            if(result == "fail") {
-                console.info(result);
+            if(user == "fail") {
+                console.info(user);
                 return;
             }
 
-            if(typeof(result) == "string") {
-                result = eval("("+result+")");
+            if(typeof(user) == "string") {
+                user = eval("("+user+")");
             }
-            console.info(result);
-            userNo = result["userNo"];
+
+            // 用户编号
+            userNo = user["userNo"];
+            // 用户名
+            userName = user["userName"];
+            // 用户游戏币数
+            userCoin = user["userCoin"];
+            // 用户头像
+            userImg = user["userImg"];
+
+            setUserInfo();
         }
     });
 }
 
-// 根据用户编号获得用户信息
-function getUserInfoByUserNo() {
-
-    $.ajax({
-        url:"/toiletCat/user/getUserByUserNo.action",
-        type:"POST",
-        async:false,
-        data:{
-            userNo:userNo
-        },
-        success:function(data) {
-            // 转换数据
-            if(typeof(data) == "string") {
-                data = eval("("+data+")");
-            }
-
-            // 判断是否成功
-            if(data["is_success"] != "success") {
-                alert(data["result"]);
-                return;
-            }
-
-            var result = data["result"];
-
-            console.info(result);
-            userNo = result["userNo"];
-        }
-    });
-}
-
+// 分页获得游戏房间数据
 function getUserSeeGameRoomListByPage(nowPage) {
 
     var startPage = (nowPage - 1) * pageSize;
@@ -147,8 +151,8 @@ function getUserSeeGameRoomListByPage(nowPage) {
                 str += "                <img height='100px' width=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
                 str += "            </div>";
                 str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
-                str += "            <div><span>在线人数:" + list[i]["viewer"] + "</span></div>";
                 str += "            <div><span class='my-inline-right' ><img src='/image/background/coin.ico' />:" + list[i]["toyNowCoin"] + "</span></div>";
+                str += "            <div><span>在线人数:" + list[i]["viewer"] + "</span></div>";
                 str += "        </div>";
                 str += "    </div>";
                 str += "</div>";
@@ -160,6 +164,16 @@ function getUserSeeGameRoomListByPage(nowPage) {
             $("#main").append(str);
         }
     });
+}
+
+// 设置用户信息
+function setUserInfo() {
+    $("#userInfo").html("");
+    var str = "<div class='user-info-div'><img src='"+userImg+"' class='user-img'></div>";
+    str += "<div class='user-info-div'>"+userName+"</div>";
+    str += "<div class='user-info-div'><img src='/image/background/coin.ico' />"+userCoin+"</div>";
+
+    $("#userInfo").append(str);
 }
 
 // 跳转到登录页
@@ -187,14 +201,17 @@ function lastPage() {
     getAllByPage(showUrl, nowPage);
 }
 
+// 跳转到战利品页
 function toUserToy() {
     window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo + "&type=gameRoom";
 }
 
+// 跳转到充值页面
 function toRecharge() {
-    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo + "&type=gameRoom";
+    window.location.href="/toiletCat/user/recharge.html?userNo="+userNo + "&type=gameRoom";
 }
 
+// 跳转到用户主页
 function toUserIndex() {
-    window.location.href="/toiletCat/user/userIndex.html?userNo="+userNo + "&type=gameRoom";
+    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom&userNo="+userNo + "&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
 }

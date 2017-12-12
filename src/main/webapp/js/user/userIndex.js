@@ -1,6 +1,33 @@
+// 用户编号
+var userNo = "";
 
+// 用户名
+var userName = "";
+
+// 用户游戏币数
+var userCoin = "";
+
+// 用户头像
+var userImg = "";
+
+// 用户邀请码
+var invitationCode = "";
 
 $(function(){
+
+    // 用户编号
+    userNo = getQueryString("userNo");
+    // 用户名
+    userName = getQueryString("userName");
+    // 用户游戏币数
+    userCoin = getQueryString("userCoin");
+    // 用户头像
+    userImg = getQueryString("userImg");
+    // 用户邀请码
+    invitationCode = getQueryString("invitationCode");
+
+    setUserInfo();
+
     var hc = $(window).height();
 
     $(".background-div").css(
