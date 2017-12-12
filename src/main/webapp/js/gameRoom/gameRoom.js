@@ -164,7 +164,7 @@ function getUserSeeGameRoomListByPage(nowPage) {
 
 // 跳转到登录页
 function toLoginPage() {
-    window.location.href="/toiletCat/user/login.html?checkType=checkCode";
+    window.location.href="/toiletCat/user/login.html?from=gameIndex&type=gameRoom&checkType=checkCode";
 }
 
 function toIndex() {

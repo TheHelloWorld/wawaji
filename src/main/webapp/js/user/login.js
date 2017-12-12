@@ -8,7 +8,11 @@ var wait=60;
 
 var type = "";
 
+var from = "";
+
 $(function() {
+
+    from = getQueryString("from");
 
     type = getQueryString("type");
 
@@ -95,7 +99,7 @@ function login() {
     if(checkType = "checkCode") {
         validate();
     } else {
-
+        loginOrRegister();
     }
 }
 
@@ -172,6 +176,7 @@ function sendTextCode(o) {
     });
 }
 
+// 检查手机号
 function checkMobileNo() {
 
     var numbers = /^1\d{10}$/;
@@ -228,12 +233,36 @@ function loginOrRegister() {
                 return;
             }
 
-            var url = "";
-            if(type="gameRoom") {
-                url = "/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+data["result"];
+            var user = data["result"];
 
+            // 转换数据
+            if(typeof(user) == "string") {
+                user = eval("("+user+")");
+            }
+
+            var url = "";
+
+            // 根据来源跳转不同页面
+            // 游戏主页
+            if(from == "gameIndex") {
+
+                url = "/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+user["userNo"]+"&userName="+user["userName"]+"&userImg="+user["userImg"]+"&userCoin="+user["userCoin"]+"&invitationCode="+user["invitationCode"];
+            // 用户主页
+            } else if(from == "userIndex") {
+
+                url = "/toiletCat/user/userIndex.html?type="+type+"&userNo="+user["userNo"]+"&userName="+user["userName"]+"&userImg="+user["userImg"]+"&userCoin="+user["userCoin"]+"&invitationCode="+user["invitationCode"];
+            // 充值页面
+            } else if(from == "recharge") {
+                url = "/toiletCat/gameRoom/gameRoom.html?type="+type+"&userNo="+user["userNo"];
+            // 战利品页
+            } else if(from == "userToy") {
+
+                url = "/toiletCat/userToy/userToy.html?type="+type+"&userNo="+user["userNo"];
+            // 机器主页
             } else {
-                url = "/toiletCat/machineRoom/machineRoom.html?nowType=login&userNo="+data["result"];
+
+                url = "/toiletCat/machineRoom/machineRoom.html?nowType=login&userNo="+user["userNo"]+"&userName="+user["userName"]+"&userImg="+user["userImg"]+"&userCoin="+user["userCoin"]+"&invitationCode="+user["invitationCode"];
+
             }
 
             window.location.href = url;

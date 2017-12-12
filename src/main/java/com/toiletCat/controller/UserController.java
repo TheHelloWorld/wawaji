@@ -87,12 +87,12 @@ public class UserController {
         }
 
         // 获取用户编号并返回
-        CommonResult<String> result = userService.registerOrLoginUser(mobile);
+        CommonResult<User> result = userService.registerOrLoginUser(mobile);
 
         if(result.success()) {
 
             // 将用户编号放入cookie中
-            setUserNoInCookie(response, result.getValue());
+            setUserNoInCookie(response, result.getValue().getUserNo());
 
             return JSONUtil.getSuccessReturnJSON(result.getValue());
         }
