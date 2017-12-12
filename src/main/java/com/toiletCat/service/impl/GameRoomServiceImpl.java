@@ -12,6 +12,7 @@ import com.toiletCat.enums.HandleType;
 import com.toiletCat.service.GameRoomService;
 import com.toiletCat.utils.RandomIntUtil;
 import com.toiletCat.utils.RedisUtil;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,29 +112,29 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
                 List<UserSeeGameRoom> userSeeGameRoomList =
                         gameRoomDao.getUserSeeGameRoomListByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE);
 
-//                if(userSeeGameRoomList != null && userSeeGameRoomList.size() >0) {
-//
-//                    try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
-//
-//                        for(UserSeeGameRoom userSeeGameRoom : userSeeGameRoomList) {
-//
-//                            String gameRoomkey = BaseConstant.GAME_ROOM_VIEWER.
-//                                    replace("#{}", userSeeGameRoom.getGameRoomNo());
-//
-//                            String viewerNum = redisUtil.get(gameRoomkey);
-//
-//                            if(StringUtils.isBlank(viewerNum)) {
-//                                viewerNum = "0";
-//                            }
-//
-//                            // 当前游戏房间观看人数
-//                            userSeeGameRoom.setViewer(Integer.valueOf(viewerNum));
-//
-//                        }
-//                    } catch (Exception e) {
-//                        logger.error("{} getUserSeeGameRoomListByPage redis error " + e, BaseConstant.LOG_ERR_MSG);
-//                    }
-//                }
+                if(userSeeGameRoomList != null && userSeeGameRoomList.size() >0) {
+
+                    try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+
+                        for(UserSeeGameRoom userSeeGameRoom : userSeeGameRoomList) {
+
+                            String gameRoomkey = BaseConstant.GAME_ROOM_VIEWER.
+                                    replace("#{}", userSeeGameRoom.getGameRoomNo());
+
+                            String viewerNum = redisUtil.get(gameRoomkey);
+
+                            if(StringUtils.isBlank(viewerNum)) {
+                                viewerNum = "0";
+                            }
+
+                            // 当前游戏房间观看人数
+                            userSeeGameRoom.setViewer(Integer.valueOf(viewerNum));
+
+                        }
+                    } catch (Exception e) {
+                        logger.error("{} getUserSeeGameRoomListByPage redis error " + e, BaseConstant.LOG_ERR_MSG);
+                    }
+                }
 
                 got(userSeeGameRoomList);
             }

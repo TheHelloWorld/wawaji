@@ -38,8 +38,6 @@ public class RedisUtil implements AutoCloseable {
 
             String host = propertiesUtil.getProperty("redis.host");
 
-            System.out.println("123123123123123123123:"+host);
-
             String port = propertiesUtil.getProperty("redis.port");
 
             String masterName = propertiesUtil.getProperty("redis.master.name");
