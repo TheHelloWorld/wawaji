@@ -25,11 +25,13 @@
 
     <script type="text/javascript" src="/js/userAddress/userAddress.js"></script>
 </head>
-    <body>
+    <body class="my-body">
         <div class="index-body-div">
             <nav class = "index-default-header default-height nav-center" >
-                <img class="return-button" id="returnButton" src="/image/background/returnButton.ico" onclick="returnMethod()" />
-                <span class="nav-text">我的地址</span>
+                <div class="background-img">
+                    <img class="return-button" id="returnButton" src="/image/background/returnButton.ico" onclick="returnMethod()" />
+                    <span class="nav-text">我的地址</span>
+                </div>
             </nav>
             <div class="default-height">
             </div>
@@ -39,8 +41,10 @@
             <div class="default-height">
             </div>
             <nav class = "index-footer default-height nav-center" onclick="toAddUserAddressPage()" >
-                <img style="height: 100%" src="/image/background/add-address-button.ico" />
-                <span>添加新地址</span>
+                <div class="background-img">
+                    <img style="height: 100%" src="/image/background/add-address-button.ico" />
+                    <span>添加新地址</span>
+                </div>
             </nav>
         </div>
     </body>

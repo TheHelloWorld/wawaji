@@ -25,11 +25,13 @@
 
     <script type="text/javascript" src="/js/userToy/userToy.js"></script>
 </head>
-    <body >
+    <body class="my-body">
         <div class="index-body-div">
             <nav class = "index-header default-height nav-center" >
-                <img class="return-button" id="returnButton" src="/image/background/returnButton.ico" onclick="returnMethod()" />
-                <span style="float: left; margin-left: 30%">我的战利品</span>
+                <div class="background-img">
+                    <img class="return-button" id="returnButton" src="/image/background/returnButton.ico" onclick="returnMethod()" />
+                    <span style="float: left; margin-left: 30%">我的战利品</span>
+                </div>
             </nav>
             <div class="default-height">
             </div>
@@ -40,14 +42,16 @@
             </div>
             <nav class = "index-footer default-height" >
                 <div class="background-img">
-                    <div class="footer-button" >
-                        <img class="footer-img" src="/image/button/cat_phone_origin_48_text.png" />
-                    </div>
-                    <div class="footer-button" >
-                        <img class="footer-img" src="/image/button/cat_wizard_48_text.png" onclick="toUserToy()" />
-                    </div>
-                    <div class="footer-button" >
-                        <img class="footer-img" src="/image/button/cat_laptop_48_text.png" onclick="toUserToy()" />
+                    <div class="background-img">
+                        <div class="footer-button" >
+                            <img class="footer-img" src="/image/button/cat_phone_origin_48_text.png" />
+                        </div>
+                        <div class="footer-button" >
+                            <img class="footer-img" src="/image/button/cat_wizard_48_text.png" onclick="toUserToy()" />
+                        </div>
+                        <div class="footer-button" >
+                            <img class="footer-img" src="/image/button/cat_laptop_48_text.png" onclick="toUserToy()" />
+                        </div>
                     </div>
                 </div>
             </nav>
