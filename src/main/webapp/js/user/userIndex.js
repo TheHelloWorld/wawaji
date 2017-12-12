@@ -1,3 +1,5 @@
+
+
 $(function(){
     var hc = $(window).height();
 
@@ -20,4 +22,12 @@ $(function(){
 
 function returnMethod() {
     window.location.href="/toiletCat/gameRoom/gameRoom.html";
+}
+
+function toUserAddress() {
+    window.location.href="/toiletCat/userAddress/userAddress.html?userNo=";
+}
+
+function toUserCatch() {
+    window.location.href="/toiletCat/userCatch/userCatch.html?userNo=";
 }
