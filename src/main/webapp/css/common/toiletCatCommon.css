@@ -1,8 +1,11 @@
-body {
-    background: silver;
+.my-body {
+    background: #FEFE9E;
 }
 
 .index-body-div {
+    background: url("/image/background/background-img.png");
+    background-size: 35% 35%;
+    -moz-background-size: 30% 30%;
     overflow:scroll;
 }
 
