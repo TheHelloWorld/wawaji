@@ -169,9 +169,9 @@ function getUserSeeGameRoomListByPage(nowPage) {
 // 设置用户信息
 function setUserInfo() {
     $("#userInfo").html("");
-    var str = "<div class='user-info-div'><img src='"+userImg+"' class='user-img'></div>";
-    str += "<div class='user-info-div'>"+userName+"</div>";
-    str += "<div class='user-info-div'><img src='/image/background/coin.ico' />"+userCoin+"</div>";
+    var str = "<div class='user-info-div-img'><img src='"+userImg+"' class='user-img'></div>";
+    str += "<div class='user-info-div-text'>"+userName+"</div>";
+    str += "<div class='user-info-div-user-coin'><img src='/image/background/coin.ico' />"+userCoin+"</div>";
 
     $("#userInfo").append(str);
 }
