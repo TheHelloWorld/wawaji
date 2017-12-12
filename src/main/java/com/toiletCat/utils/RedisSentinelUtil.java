@@ -1,17 +1,21 @@
 package com.toiletCat.utils;
 
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-
 import java.util.*;
 
-public class RedisUtil implements AutoCloseable {
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisSentinelPool;
+
+/**
+ * 封装Redis操作
+ */
+public class RedisSentinelUtil implements AutoCloseable {
 
     /**
      * redis pool map
      */
-    private static Map<String, JedisPool> poolMap = new HashMap<>();
+    private static Map<String, JedisSentinelPool> poolMap = new HashMap<>();
 
     private Jedis jedis;
 
@@ -19,8 +23,8 @@ public class RedisUtil implements AutoCloseable {
      * 根据传入的properties文件名称获得或创建相应jedis链接池并获得链接
      * @param propertiesName properties文件名
      */
-    public RedisUtil(String propertiesName) {
-        JedisPool pool = initPool(propertiesName);
+    public RedisSentinelUtil(String propertiesName) {
+        JedisSentinelPool pool = initPool(propertiesName);
         jedis = pool.getResource();
     }
 
@@ -32,15 +36,11 @@ public class RedisUtil implements AutoCloseable {
      * 初始化Jedis连接池
      * @param propertiesName properties文件名
      */
-    public static JedisPool initPool(String propertiesName) {
+    public static JedisSentinelPool initPool(String propertiesName) {
         if (poolMap.get(propertiesName) == null) {
             PropertiesUtil propertiesUtil = PropertiesUtil.getInstance(propertiesName);
 
             String host = propertiesUtil.getProperty("redis.host");
-
-            System.out.println("123123123123123123123:"+host);
-
-            String port = propertiesUtil.getProperty("redis.port");
 
             String masterName = propertiesUtil.getProperty("redis.master.name");
 
@@ -58,16 +58,26 @@ public class RedisUtil implements AutoCloseable {
 
             String testOnBorrow = propertiesUtil.getProperty("redis.pool.testOnBorrow");
 
+            // redis sentinel链接
+            Set<String> sentinels = new HashSet<>();
+            // 将配置文件中的梁洁地址放入
+            sentinels.addAll(Arrays.asList(host.split(",")));
 
-            JedisPoolConfig config = new JedisPoolConfig();
+            GenericObjectPoolConfig config = new GenericObjectPoolConfig();
+            // 如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
             config.setMaxTotal(Integer.valueOf(maxTotal));
+            // 控制一个pool最多有多少个状态为idle(空闲的)的jedis实例。
             config.setMaxIdle(Integer.valueOf(maxIdle));
+            // 表示当borrow(引入)一个jedis实例时，最大的等待时间，如果超过等待时间，则直接抛出JedisConnectionException；
             config.setMaxWaitMillis(Long.valueOf(maxWaitMillis));
+            // 在borrow一个jedis实例时，是否提前进行validate操作；如果为true，则得到的jedis实例均是可用的；
             config.setTestOnBorrow(Boolean.valueOf(testOnBorrow));
-            JedisPool jedisPool = new JedisPool(config, host, Integer.valueOf(port), Integer.valueOf(timeout), password);
+            // 获取连接池
+            JedisSentinelPool pool = new JedisSentinelPool(masterName, sentinels, config, Integer.valueOf(timeout),
+                    password, Integer.valueOf(dbIndex));
             // 将jedis连接池保存至静态变量中
-            poolMap.put(propertiesName, jedisPool);
-            return jedisPool;
+            poolMap.put(propertiesName, pool);
+            return pool;
         } else {
             return poolMap.get(propertiesName);
         }
@@ -520,5 +530,4 @@ public class RedisUtil implements AutoCloseable {
     public long ttl(String key) {
         return jedis.ttl(key);
     }
-
 }
