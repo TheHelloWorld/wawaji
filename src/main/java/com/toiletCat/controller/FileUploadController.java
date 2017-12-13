@@ -26,8 +26,11 @@ public class FileUploadController {
 
         PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
 
-        // 获取项目目录
-        String rootPath = systemProperties.getProperty("toy_img_path");
+        // 获取图片储存目录
+        String savePath = systemProperties.getProperty("toy_img_save_path");
+
+        // 获取图片展示目录
+        String showPath = systemProperties.getProperty("toy_img_show_path");
 
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
         String key = null;
@@ -46,16 +49,13 @@ public class FileUploadController {
         fileName += prefix;
         try {
             // 写文件
-            FileOutputStream fos = new FileOutputStream(new File(rootPath,fileName));
+            FileOutputStream fos = new FileOutputStream(new File(savePath, fileName));
             fos.write(multipartFile.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        String showPath = systemProperties.getProperty("toy_img_show_path");
-
         fileName = showPath + fileName;
-        System.out.println(fileName);
         JSONObject json = new JSONObject();
         json.put("fileName", fileName);
         return json.toJSONString();
