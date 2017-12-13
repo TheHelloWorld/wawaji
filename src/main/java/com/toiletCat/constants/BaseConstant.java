@@ -101,7 +101,7 @@ public class BaseConstant {
 	/**
 	 * 默认每页数据数
 	 */
-	public static final Integer DEFAULT_PAGE_SIZE = 15;
+	public static final Integer DEFAULT_PAGE_SIZE = 10;
 
 	/**
 	 * 用户游戏币提示
