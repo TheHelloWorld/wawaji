@@ -128,7 +128,7 @@ function validate() {
 
         var url = window.location.href;
 
-        url = url.split("=")[0] + "=" + checkType;
+        url = url.split("checkType=")[0] + "checkType=" + checkType;
 
         window.history.pushState({},0,url);
 
@@ -150,6 +150,8 @@ function sendTextCode(o) {
         return;
     }
 
+    sendTextWaitTime(o);
+
     $.ajax({
         url:"/toiletCat/user/sendMobileVerificationCode.action",
         type:"POST",
@@ -167,12 +169,8 @@ function sendTextCode(o) {
             // 判断是否成功
             if(data["is_success"] != "success") {
                 alert(data["result"]);
-                return;
             }
-
-            sendTextWaitTime(o);
         }
-
     });
 }
 
@@ -218,7 +216,7 @@ function loginOrRegister() {
         async:false,
         data:{
             mobileNo:$("#mobile").val(),
-
+            ticket:$("#textCode").val()
         },
         success:function(data){
 

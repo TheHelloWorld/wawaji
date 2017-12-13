@@ -75,7 +75,7 @@
                         <script type="text/javascript">
 
                                 // 上传图片处理controller
-                                var url = "/toiletCat/fileUpload/uploadFile.action";
+                                var url = "/toiletCat/fileUpload/bannerImgUpload.action";
 
                                 // input file id
                                 var inputId = "uploadBannerImg";

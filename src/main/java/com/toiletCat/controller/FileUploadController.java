@@ -19,9 +19,14 @@ import java.util.Map;
 @Controller
 public class FileUploadController {
 
-    @RequestMapping(value = "uploadFile",method= RequestMethod.POST)
+    /**
+     * 玩具图片上传
+     * @param request 请求
+     * @return
+     */
+    @RequestMapping(value = "toyImgUpload",method= RequestMethod.POST)
     @ResponseBody
-    public String uploadFile(HttpServletRequest request) {
+    public String toyImgUpload(HttpServletRequest request) {
 
         PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
 
@@ -31,7 +36,38 @@ public class FileUploadController {
         // 获取图片展示目录
         String showPath = systemProperties.getProperty("toy_img_show_path");
 
-        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
+        return commonImgUpload(request, savePath, showPath);
+    }
+
+    /**
+     * banner图片上传
+     * @param request 请求
+     * @return
+     */
+    @RequestMapping(value = "bannerImgUpload",method= RequestMethod.POST)
+    @ResponseBody
+    public String bannerImgUpload(HttpServletRequest request) {
+
+        PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
+
+        // 获取图片储存目录
+        String savePath = systemProperties.getProperty("banner_img_save_path");
+
+        // 获取图片展示目录
+        String showPath = systemProperties.getProperty("banner_img_show_path");
+
+        return commonImgUpload(request, savePath, showPath);
+    }
+
+    /**
+     * 公共图片上传方法
+     * @param request 图片上传请求
+     * @param savePath 图片储存路径
+     * @param showPath 图片展示路径
+     * @return
+     */
+    private String commonImgUpload(HttpServletRequest request, String savePath, String showPath) {
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         String key = null;
         // 目前只有一个文件所以可以这样，多文件需要将读写逻辑写入for循环
         for(Map.Entry<String,MultipartFile> entry : multipartRequest.getFileMap().entrySet()) {
