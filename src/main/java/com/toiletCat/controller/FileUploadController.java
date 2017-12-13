@@ -1,8 +1,11 @@
 package com.toiletCat.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.utils.DateUtil;
 import com.toiletCat.utils.PropertiesUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +22,8 @@ import java.util.Map;
 @Controller
 public class FileUploadController {
 
+    private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
+    
     /**
      * 玩具图片上传
      * @param request 请求
@@ -27,6 +32,8 @@ public class FileUploadController {
     @RequestMapping(value = "toyImgUpload",method= RequestMethod.POST)
     @ResponseBody
     public String toyImgUpload(HttpServletRequest request) {
+
+        logger.info(BaseConstant.LOG_MSG + " toyImgUpload start");
 
         PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
 
@@ -48,6 +55,8 @@ public class FileUploadController {
     @ResponseBody
     public String bannerImgUpload(HttpServletRequest request) {
 
+        logger.info(BaseConstant.LOG_MSG + " bannerImgUpload start");
+
         PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
 
         // 获取图片储存目录
@@ -67,8 +76,11 @@ public class FileUploadController {
      * @return
      */
     private String commonImgUpload(HttpServletRequest request, String savePath, String showPath) {
+
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+
         String key = null;
+
         // 目前只有一个文件所以可以这样，多文件需要将读写逻辑写入for循环
         for(Map.Entry<String,MultipartFile> entry : multipartRequest.getFileMap().entrySet()) {
             key = entry.getKey();
@@ -81,16 +93,19 @@ public class FileUploadController {
         String prefix = originFileName.substring(originFileName.lastIndexOf("."));
 
         String fileName = DateUtil.getSecondDate();
+
         fileName += prefix;
-        try {
+
+        try (FileOutputStream fos = new FileOutputStream(new File(savePath, fileName))){
             // 写文件
-            FileOutputStream fos = new FileOutputStream(new File(savePath, fileName));
             fos.write(multipartFile.getBytes());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(BaseConstant.LOG_ERR_MSG + " commonImgUpload error:" + e, e);
         }
 
         fileName = showPath + fileName;
+
+        logger.info(BaseConstant.LOG_MSG + " commonImgUpload fileName:" + fileName);
         JSONObject json = new JSONObject();
         json.put("fileName", fileName);
         return json.toJSONString();
