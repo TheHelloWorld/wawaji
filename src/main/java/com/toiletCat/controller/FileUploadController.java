@@ -23,7 +23,7 @@ import java.util.Map;
 public class FileUploadController {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
-    
+
     /**
      * 玩具图片上传
      * @param request 请求
