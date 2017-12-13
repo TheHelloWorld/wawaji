@@ -48,13 +48,21 @@ $(function(){
 });
 
 function returnMethod() {
-    window.location.href="/toiletCat/gameRoom/gameRoom.html";
+    window.location.href="/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+userNo+"&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
 }
 
 function toUserAddress() {
-    window.location.href="/toiletCat/userAddress/userAddress.html?userNo=";
+    window.location.href="/toiletCat/userAddress/userAddress.html?type=gameRoom&userNo="+userNo;
 }
 
 function toUserCatch() {
-    window.location.href="/toiletCat/userCatch/userCatch.html?userNo=";
+    window.location.href="/toiletCat/userCatch/userCatch.html?type=gameRoom&userNo="+userNo;
+}
+
+// 设置用户信息
+function setUserInfo() {
+    $("#userCoin").html(userCoin);
+    $("#userImg").append("<img src='"+userImg+"' />");
+    $("#userName").html(userName);
+    $("#invitationCode").html(invitationCode);
 }
