@@ -163,6 +163,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     needCoin = needCoinResult.getValue();
                 } else {
                     logger.error("{} getCoinByMachineNo error:", BaseConstant.LOG_ERR_MSG);
+                    respondSysError();
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
                     return;
                 }
@@ -170,6 +171,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 判断用户游戏币是否足够
                 if (userCoin < needCoin) {
                     logger.info("{} 用户游戏币不足,用户游戏币数:{},所需游戏币数:{}", BaseConstant.LOG_MSG, userCoin, needCoin);
+                    respondSysError();
                     got(BaseConstant.NOT_ENOUGH_COIN);
                     return;
                 }
@@ -178,12 +180,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     String key = BaseConstant.MACHINE_IN_USE.replace("#{}", machineNo);
                     // 判断当前机器是否已有用户使用
                     if (redisUtil.setnx(key, userNo) == 0) {
+                        respondSysError();
                         // 若当前机器已被占用
                         got(BaseConstant.MACHINE_ALREADY_IN_UES);
                         return;
                     }
                 } catch (Exception e) {
                     logger.error("{} userPlayMachine redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                    respondSysError();
                     got(BaseConstant.MACHINE_ALREADY_IN_UES);
                     return;
                 }
@@ -193,6 +197,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                         machineService.getToyNoAndToyImgByMachineNo(machineNo);
 
                 if(!userMachineCommonResult.success()) {
+                    respondSysError();
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
                     return;
                 }
@@ -254,6 +259,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     logger.error("{} 扣除用户游戏币失败" + e, BaseConstant.LOG_ERR_MSG, e);
                     userSpendRecord.setTradeStatus(TradeStatus.FAIL.getStatus());
                     userSpendRecordService.addUserSpendRecord(userSpendRecord);
+                    respondSysError();
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
                     return;
                 }
@@ -291,6 +297,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     needCoin = needCoinResult.getValue();
                 } else {
                     logger.error("{} getCoinByGameRoomNo error:", BaseConstant.LOG_ERR_MSG);
+                    respondSysError();
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
                     return;
                 }
@@ -298,6 +305,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 判断用户游戏币是否足够
                 if (userCoin < needCoin) {
                     logger.info("{} 用户游戏币不足,用户游戏币数:{},所需游戏币数:{}", BaseConstant.LOG_MSG, userCoin, needCoin);
+                    respondSysError();
                     got(BaseConstant.NOT_ENOUGH_COIN);
                     return;
                 }
@@ -307,6 +315,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                         gameRoomService.getUserSeeGameRoomByGameRoomNo(gameRoomNo);
 
                 if(!userSeeGameRoomCommonResult.success()) {
+                    respondSysError();
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
                     return;
                 }
@@ -368,6 +377,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     logger.error("{} 扣除用户游戏币失败" + e, BaseConstant.LOG_ERR_MSG, e);
                     userSpendRecord.setTradeStatus(TradeStatus.FAIL.getStatus());
                     userSpendRecordService.addUserSpendRecord(userSpendRecord);
+                    respondSysError();
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
                     return;
                 }
