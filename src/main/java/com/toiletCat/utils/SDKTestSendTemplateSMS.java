@@ -16,7 +16,6 @@ public class SDKTestSendTemplateSMS {
 
     }
 
-
     /**
      * 发送短信验证码
      * @param mobileNo 手机号
@@ -84,7 +83,7 @@ public class SDKTestSendTemplateSMS {
         //*********************************************************************************************************************
         result = restAPI.sendTemplateSMS(mobileNo, templateId, new String[]{verificationCode, timeOut});
 
-        System.out.println("SDKTestGetSubAccounts result=" + result);
+        logger.info("sendMobileVerificationCode result=" + result);
         if ("000000".equals(result.get("statusCode"))) {
             //正常返回输出data包体信息（map）
             HashMap<String, Object> data = (HashMap<String, Object>) result.get("data");
