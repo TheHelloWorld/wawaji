@@ -52,11 +52,11 @@ function returnMethod() {
 }
 
 function toUserAddress() {
-    window.location.href="/toiletCat/userAddress/userAddress.html?type=gameRoom&userNo="+userNo;
+    window.location.href="/toiletCat/userAddress/userAddress.html?type=gameRoom&userNo="+userNo+"&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
 }
 
 function toUserCatch() {
-    window.location.href="/toiletCat/userCatch/userCatch.html?type=gameRoom&userNo="+userNo;
+    window.location.href="/toiletCat/userCatch/userCatch.html?type=gameRoom&userNo="+userNo+"&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
 }
 
 // 设置用户信息

@@ -162,4 +162,8 @@ public class BaseConstant {
 
 	public static final String COOKIE_USER_NO = "toilet_cat_user_no";
 
+	/**
+	 * 用户邀请码redis key
+	 */
+	public static final String USER_INVITATION_CODE = "user_invitation_code";
 }

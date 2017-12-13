@@ -2,7 +2,9 @@ package com.toiletCat.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class RandomIntUtil {
 
@@ -31,7 +33,7 @@ public class RandomIntUtil {
     public static Integer getRandomNum(int bound) {
         Random random = new Random();
 
-        return random.nextInt(10) + 1 + bound;
+        return random.nextInt(9) + 1 + bound;
     }
 
     /**
@@ -56,7 +58,7 @@ public class RandomIntUtil {
     public static String getRandomString(int length) {
 
         String val = "";
-        java.util.Random random = new java.util.Random();
+        Random random = new Random();
 
         //参数length，表示生成几位随机数
         for (int i = 0; i < length; i++) {
@@ -72,10 +74,6 @@ public class RandomIntUtil {
             }
         }
         return val;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(getRandomString(18));
     }
 
 }

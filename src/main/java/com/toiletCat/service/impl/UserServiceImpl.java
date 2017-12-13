@@ -69,17 +69,46 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     PropertiesUtil systemProperties = new PropertiesUtil("system");
                     // 用户手机号
                     user.setMobileNo(mobileNo);
+
+                    Integer defaultUserCoin = Integer.valueOf(Integer.valueOf(
+                            systemProperties.getProperty("user_default_coin")));
+
                     // 用户游戏币数
-                    user.setUserCoin(0);
+                    user.setUserCoin(defaultUserCoin);
+
+                    String defaultUserImg = systemProperties.getProperty("user_default_img")
+                            + "defaultHead" + RandomIntUtil.getRandomNum(0) + ".png";
+
                     // 用户头像
-                    user.setUserImg(systemProperties.getProperty("user_default_img"));
+                    user.setUserImg(defaultUserImg);
+
                     String userNo = UUIDUtil.generateUUID();
                     // 用户编号
                     user.setUserNo(userNo);
-                    // 用户姓名
-                    user.setUserName(RandomIntUtil.getRandomString(18));
+                    // 用户名
+                    user.setUserName(RandomIntUtil.getRandomString(10));
+
+                    String invitationCode = "";
+
+                    try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+
+                        while (true) {
+                            // 生成用户邀请码
+                            invitationCode = RandomIntUtil.getRandomString(5);
+
+                            // 判断邀请码是否重复
+                            if(redisUtil.sadd(BaseConstant.USER_INVITATION_CODE, invitationCode) == 1L) {
+                                // 若不重复则跳出
+                                break;
+                            }
+                        }
+
+                    } catch(Exception e) {
+                        logger.error("{} registerOrLoginUser redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                    }
+
                     // 用户邀请码
-                    user.setInvitationCode(RandomIntUtil.getRandomString(8));
+                    user.setInvitationCode(invitationCode);
                     userDao.addUser(user);
 
                 } else {
@@ -116,6 +145,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     // 若验证码不对
                     if (!ticket.equals(verifyCode)) {
+                        respondSysError();
                         got(BaseConstant.VCODE_ERR_MSG);
                         return;
                     }
@@ -124,7 +154,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     return;
 
                 } catch (Exception e) {
-                    logger.error("{} registerOrLoginUser redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                    logger.error("{} verifyCode redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
                     got(BaseConstant.VCODE_ERR_MSG);
                     return;
                 }
