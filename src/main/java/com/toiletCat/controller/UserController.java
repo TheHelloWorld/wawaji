@@ -76,14 +76,13 @@ public class UserController {
         CommonResult<String> verifyResult = userService.verifyCode(ticket, mobile);
 
         // 系统异常
-        if(!verifyResult.success()) {
+        if(verifyResult.isSysError()) {
             return JSONUtil.getErrorJson();
         }
 
         // 若短信验证码不通过
-        if(!BaseConstant.SUCCESS.equals(verifyResult.getValue())) {
-            // 此处前端需特殊判断
-            return JSONUtil.getSuccessReturnJSON(verifyResult.getValue());
+        if(verifyResult.otherMsg()) {
+            return JSONUtil.getOtherMsgJson(verifyResult.getValue());
         }
 
         // 获取用户编号并返回
@@ -132,11 +131,7 @@ public class UserController {
 
         CommonResult<User> result = userService.getUserByUserNo(userNo);
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(result.getValue());
-        }
-
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnBeanString(result);
     }
 
     /**
@@ -150,11 +145,7 @@ public class UserController {
 
         CommonResult<String> result = userService.sendMobileVerificationCode(mobileNo);
 
-        if(result.success()) {
-            return JSONUtil.getSuccessReturnJSON(result.getValue());
-        }
-
-        return JSONUtil.getErrorJson();
+        return JSONUtil.getReturnBeanString(result);
     }
 
     /**

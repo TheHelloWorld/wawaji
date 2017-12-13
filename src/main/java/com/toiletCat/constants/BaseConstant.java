@@ -166,4 +166,9 @@ public class BaseConstant {
 	 * 用户邀请码redis key
 	 */
 	public static final String USER_INVITATION_CODE = "user_invitation_code";
+
+	/**
+	 * 短信验证相关
+	 */
+	public static final String SMS_MOBILE_NO = "sms_#{}";
 }

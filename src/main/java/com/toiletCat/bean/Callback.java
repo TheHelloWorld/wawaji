@@ -26,6 +26,10 @@ public abstract class Callback<T> {
         setCodeMessage(CommonCodeMessage.SYSTEM_ERROR);
     }
 
+    public void setOtherMsg() {
+        setCodeMessage(CommonCodeMessage.OTHER_MESSAGE);
+    }
+
 
     public void got(T obj) {
         result.setValue(obj);

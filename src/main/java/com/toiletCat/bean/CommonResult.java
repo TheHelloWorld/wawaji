@@ -7,21 +7,17 @@ import org.apache.commons.lang.StringUtils;
 import java.io.Serializable;
 
 /**
- * @author ChenCe
+ * @author lzk
  */
 public class CommonResult<T>  implements ICodeMessage, Serializable {
 
     private static final long serialVersionUID = 1L;
-
-
-    // FIELDS
+    
     private String code = CommonCodeMessage.SUCCESS.code;
 
     private String message = "操作成功";
 
-
     public T value;
-
 
     // CONSTRUCTORS
     public CommonResult() {
@@ -46,7 +42,11 @@ public class CommonResult<T>  implements ICodeMessage, Serializable {
         return codeEquals(CommonCodeMessage.SUCCESS);
     }
 
-    public boolean codeEquals(ICodeMessage codeMessage) {
+    public boolean otherMsg() {
+        return codeEquals(CommonCodeMessage.OTHER_MESSAGE);
+    }
+
+    private boolean codeEquals(ICodeMessage codeMessage) {
         return StringUtils.equals(code, codeMessage.getCode());
     }
 

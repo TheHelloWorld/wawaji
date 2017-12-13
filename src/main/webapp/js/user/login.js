@@ -96,7 +96,7 @@ function login() {
         return;
     }
 
-    if(checkType = "checkCode") {
+    if(checkType == "checkCode") {
         validate();
     } else {
         loginOrRegister();
@@ -191,6 +191,9 @@ function checkMobileNo() {
 // 按钮倒计时
 function sendTextWaitTime(o) {
 
+    o.setAttribute("disabled", true);
+    o.innerText="重新发送(" + wait + ")";
+
     if (wait == 0) {
         o.removeAttribute("disabled");
         o.innerText="获取短信验证码";
@@ -209,6 +212,8 @@ function sendTextWaitTime(o) {
 
 // 登陆或注册
 function loginOrRegister() {
+
+    console.info(1111);
 
     $.ajax({
         url:"/toiletCat/user/registerOrLoginUser.action",

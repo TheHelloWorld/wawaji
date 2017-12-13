@@ -20,7 +20,12 @@ public class JSONUtil {
         if(result.success()) {
 
             return getSuccessReturnJSON(result.getValue());
+
+        } else if(result.otherMsg()) {
+
+            return getOtherMsgJson(result.getValue());
         }
+
         return getErrorJson();
     }
 
@@ -35,6 +40,10 @@ public class JSONUtil {
         if(result.success()) {
 
             return getSuccessReturnJSON(str);
+
+        } else if(result.otherMsg()) {
+
+            return getOtherMsgJson(result.getValue());
         }
 
         return getErrorJson();
@@ -75,6 +84,20 @@ public class JSONUtil {
         }
 
         return getErrorJson();
+    }
+
+    /**
+     * 其他消息json
+     * @param obj 执行结果
+     * @return
+     */
+    public static String getOtherMsgJson(Object obj) {
+        JSONObject json = new JSONObject();
+
+        json.put("is_success", BaseConstant.FAIL);
+        json.put("result", String.valueOf(obj));
+
+        return json.toJSONString();
     }
 
     /**

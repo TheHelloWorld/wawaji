@@ -139,13 +139,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             @Override
             public void exec() {
 
-                try (RedisUtil redisUtil = new RedisUtil("redis")) {
+                try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
-                    String verifyCode = redisUtil.get("sms-" + mobileNo);
+                    String verifyCode = redisUtil.get(BaseConstant.SMS_MOBILE_NO.replace("#{}", mobileNo));
 
                     // 若验证码不对
                     if (!ticket.equals(verifyCode)) {
-                        respondSysError();
+                        setOtherMsg();
                         got(BaseConstant.VCODE_ERR_MSG);
                         return;
                     }
@@ -155,6 +155,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 } catch (Exception e) {
                     logger.error("{} verifyCode redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+                    setOtherMsg();
                     got(BaseConstant.VCODE_ERR_MSG);
                     return;
                 }
@@ -193,7 +194,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     needCoin = needCoinResult.getValue();
                 } else {
                     logger.error("{} getCoinByMachineNo error:", BaseConstant.LOG_ERR_MSG);
-                    respondSysError();
+                    setOtherMsg();
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
                     return;
                 }
@@ -201,7 +202,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 判断用户游戏币是否足够
                 if (userCoin < needCoin) {
                     logger.info("{} 用户游戏币不足,用户游戏币数:{},所需游戏币数:{}", BaseConstant.LOG_MSG, userCoin, needCoin);
-                    respondSysError();
+                    setOtherMsg();
                     got(BaseConstant.NOT_ENOUGH_COIN);
                     return;
                 }
@@ -210,14 +211,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     String key = BaseConstant.MACHINE_IN_USE.replace("#{}", machineNo);
                     // 判断当前机器是否已有用户使用
                     if (redisUtil.setnx(key, userNo) == 0) {
-                        respondSysError();
+                        setOtherMsg();
                         // 若当前机器已被占用
                         got(BaseConstant.MACHINE_ALREADY_IN_UES);
                         return;
                     }
                 } catch (Exception e) {
                     logger.error("{} userPlayMachine redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
-                    respondSysError();
+                    setOtherMsg();
                     got(BaseConstant.MACHINE_ALREADY_IN_UES);
                     return;
                 }
@@ -227,7 +228,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                         machineService.getToyNoAndToyImgByMachineNo(machineNo);
 
                 if(!userMachineCommonResult.success()) {
-                    respondSysError();
+                    setOtherMsg();
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
                     return;
                 }
@@ -289,7 +290,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     logger.error("{} 扣除用户游戏币失败" + e, BaseConstant.LOG_ERR_MSG, e);
                     userSpendRecord.setTradeStatus(TradeStatus.FAIL.getStatus());
                     userSpendRecordService.addUserSpendRecord(userSpendRecord);
-                    respondSysError();
+                    setOtherMsg();
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
                     return;
                 }
@@ -327,7 +328,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     needCoin = needCoinResult.getValue();
                 } else {
                     logger.error("{} getCoinByGameRoomNo error:", BaseConstant.LOG_ERR_MSG);
-                    respondSysError();
+                    setOtherMsg();
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
                     return;
                 }
@@ -335,7 +336,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 判断用户游戏币是否足够
                 if (userCoin < needCoin) {
                     logger.info("{} 用户游戏币不足,用户游戏币数:{},所需游戏币数:{}", BaseConstant.LOG_MSG, userCoin, needCoin);
-                    respondSysError();
+                    setOtherMsg();
                     got(BaseConstant.NOT_ENOUGH_COIN);
                     return;
                 }
@@ -345,7 +346,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                         gameRoomService.getUserSeeGameRoomByGameRoomNo(gameRoomNo);
 
                 if(!userSeeGameRoomCommonResult.success()) {
-                    respondSysError();
+                    setOtherMsg();
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
                     return;
                 }
@@ -407,7 +408,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     logger.error("{} 扣除用户游戏币失败" + e, BaseConstant.LOG_ERR_MSG, e);
                     userSpendRecord.setTradeStatus(TradeStatus.FAIL.getStatus());
                     userSpendRecordService.addUserSpendRecord(userSpendRecord);
-                    respondSysError();
+                    setOtherMsg();
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
                     return;
                 }
@@ -444,7 +445,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     if (SDKTestSendTemplateSMS.sendMobileVerificationCode(mobileNo, random, timeout)) {
 
-                        redisUtil.set(Integer.valueOf(timeout), "sms-" + mobileNo, random);
+                        redisUtil.set(Integer.valueOf(timeout),
+                                BaseConstant.SMS_MOBILE_NO.replace("#{}", mobileNo), random);
 
                         got(BaseConstant.SUCCESS);
 
