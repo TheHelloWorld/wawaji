@@ -38,7 +38,7 @@
         values
             (
                 #{userNo, jdbcType=VARCHAR},
-                #{amount, jdbcType=DECIMAL},
+                #{coin, jdbcType=INTEGER},
                 #{tradeType, jdbcType=INTEGER},
                 #{tradeStatus, jdbcType=INTEGER},
                 #{tradeDate, jdbcType=INTEGER},
