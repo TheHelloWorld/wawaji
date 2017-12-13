@@ -220,7 +220,7 @@ function loginOrRegister() {
         type:"POST",
         async:false,
         data:{
-            mobileNo:$("#mobile").val(),
+            mobile:$("#mobile").val(),
             ticket:$("#textCode").val()
         },
         success:function(data){
