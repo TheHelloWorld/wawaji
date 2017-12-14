@@ -51,6 +51,10 @@ function returnMethod() {
     window.location.href="/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+userNo+"&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
 }
 
+function toUserToy() {
+    window.location.href="/toiletCat/userToy/userToy.html?type=gameRoom&userNo="+userNo+"&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
+}
+
 function toUserAddress() {
     window.location.href="/toiletCat/userAddress/userAddress.html?type=gameRoom&userNo="+userNo+"&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
 }

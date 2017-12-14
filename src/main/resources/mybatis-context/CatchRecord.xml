@@ -96,7 +96,7 @@
             c.catch_status,
             t.toy_img
         from catch_record c, toy t
-        where c.toy_no = t.toy_no and user_no = #{userNo} order by create_time desc
+        where c.toy_no = t.toy_no and c.user_no = #{userNo} order by c.create_time desc
         limit #{startPage}, #{pageSize}
     </select>
 
@@ -112,7 +112,7 @@
             c.catch_status,
             t.toy_img
         from catch_record c, toy t
-        where c.toy_no = t.toy_no and user_no = #{userNo} and id = #{id} order by create_time desc
+        where c.toy_no = t.toy_no and c.user_no = #{userNo} and c.id = #{id} order by c.create_time desc
         limit #{startPage}, #{pageSize}
     </select>
 
@@ -124,7 +124,7 @@
     </update>
 
     <!-- 根据抓取id修改抓取结果 -->
-    <update id="updateCatchStatusByIdAndUserNo" >
+    <update id="updateCatchResultByCatchId" >
         update catch_record set
             catch_result = #{catchResult, jdbcType=INTEGER}
         where catch_id = #{catchId, jdbcType=VARCHAR}

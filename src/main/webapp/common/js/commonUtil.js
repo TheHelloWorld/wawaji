@@ -730,3 +730,18 @@ Date.prototype.format = function(format) {
     }
     return format;
 };
+
+// 跳转到战利品页
+function toUserToy() {
+    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo + "&type=gameRoom";
+}
+
+// 跳转到充值页面
+function toRecharge() {
+    window.location.href="/toiletCat/user/recharge.html?userNo="+userNo + "&type=gameRoom";
+}
+
+// 跳转到用户主页
+function toUserIndex() {
+    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom&userNo="+userNo + "&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
+}

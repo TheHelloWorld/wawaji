@@ -1,5 +1,17 @@
-// 每页数据数
+// 用户编号
 var userNo = "";
+
+// 用户名
+var userName = "";
+
+// 用户游戏币数
+var userCoin = "";
+
+// 用户头像
+var userImg = "";
+
+// 用户邀请码
+var invitationCode = "";
 
 var nowPage = 1;
 
@@ -11,8 +23,16 @@ $(function() {
     // 获得类型
     type = getQueryString("type");
 
-    // 获得用户编号
+    // 用户编号
     userNo = getQueryString("userNo");
+    // 用户名
+    userName = getQueryString("userName");
+    // 用户游戏币数
+    userCoin = getQueryString("userCoin");
+    // 用户头像
+    userImg = getQueryString("userImg");
+    // 用户邀请码
+    invitationCode = getQueryString("invitationCode");
 
     // 获得总页数和总数量
     getTotalCountAndPageSizeByUserNo();

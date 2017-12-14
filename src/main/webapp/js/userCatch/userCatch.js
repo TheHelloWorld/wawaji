@@ -1,3 +1,8 @@
+// 每页数据数
+var pageSize = 0;
+
+var nowPage = 1;
+
 // 用户编号
 var userNo = "";
 
@@ -33,12 +38,15 @@ $(function() {
 // 分页获得当前用户所有抓取记录
 function getAllUserCatchRecordByUserNo(userNo) {
 
+    var startPage = (nowPage - 1) * pageSize;
+
     $.ajax({
         url:"/toiletCat/catchRecord/getCatchRecordListByUserNo.action",
         type:"POST",
         async:false,
         data:{
-            userNo:userNo
+            userNo:userNo,
+            startPage:startPage
         },
         success:function(data){
 
