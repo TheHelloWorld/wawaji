@@ -1,12 +1,33 @@
-// 每页数据数
+// 用户编号
 var userNo = "";
+
+// 用户名
+var userName = "";
+
+// 用户游戏币数
+var userCoin = "";
+
+// 用户头像
+var userImg = "";
+
+// 用户邀请码
+var invitationCode = "";
 
 // 是否可以添加标志位
 var canAdd = true;
 
 $(function() {
-    // 获得用户编号
+    // 用户编号
     userNo = getQueryString("userNo");
+    // 用户名
+    userName = getQueryString("userName");
+    // 用户游戏币数
+    userCoin = getQueryString("userCoin");
+    // 用户头像
+    userImg = getQueryString("userImg");
+    // 用户邀请码
+    invitationCode = getQueryString("invitationCode");
+
     // 判断当前用户是否看继续添加
     judeUserAddress(userNo);
 
@@ -154,5 +175,5 @@ function deleteUserAddress(id) {
 }
 
 function returnMethod() {
-    window.location.href="#";
+    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom&userNo="+userNo + "&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
 }

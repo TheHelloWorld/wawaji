@@ -1,13 +1,36 @@
-// 每页数据数
+// 用户编号
 var userNo = "";
-// 返回url
+
+// 用户名
+var userName = "";
+
+// 用户游戏币数
+var userCoin = "";
+
+// 用户头像
+var userImg = "";
+
+// 用户邀请码
+var invitationCode = "";
+
 var returnUrl = "";
 
 $(function() {
-    // 获得用户编号
+    // 用户编号
     userNo = getQueryString("userNo");
+    // 用户名
+    userName = getQueryString("userName");
+    // 用户游戏币数
+    userCoin = getQueryString("userCoin");
+    // 用户头像
+    userImg = getQueryString("userImg");
+    // 用户邀请码
+    invitationCode = getQueryString("invitationCode");
+
+    returnUrl = "/toiletCat/userAddress/userAddress.html?type=gameRoom&userNo="+userNo+"&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
+
     $("#userNo").val(userNo);
-    returnUrl = "/toiletCat/userAddress/userAddress.html?userNo="+userNo;
+
     if(getQueryString("type") == "update") {
         var id = getQueryString("id");
         getUserAddress(id, userNo);
@@ -72,6 +95,6 @@ function saveOrUpdate() {
 }
 
 function returnMethod() {
-    window.location.href="/toiletCat/userAddress/userAddress.html?userNo="+userNo;
+    window.location.href = returnUrl;
 }
 
