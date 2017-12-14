@@ -103,7 +103,7 @@ public class CatchRecordServiceImpl extends BaseServiceImpl implements CatchReco
 
     /**
      * 根据id,用户编号修改抓取记录状态
-     * @param catchStatus 抓去记录状态
+     * @param catchStatus 抓取记录状态
      * @param id id
      * @param userNo 用户编号
      */
@@ -120,6 +120,25 @@ public class CatchRecordServiceImpl extends BaseServiceImpl implements CatchReco
                 catchRecordDao.updateCatchStatusByIdAndUserNo(catchStatus, id, userNo);
             }
         },"updateCatchStatusByIdAndUserNo", json.toJSONString());
+    }
+
+    /**
+     * 根据抓取id修改抓取结果
+     * @param catchResult 抓取记录结果
+     * @param catchId 抓取id
+     */
+    @Override
+    public CommonResult updateCatchResultByCatchId(final Integer catchResult, final String catchId) {
+        JSONObject json = new JSONObject();
+        json.put("catchResult", catchResult);
+        json.put("catchId", catchId);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                catchRecordDao.updateCatchResultByCatchId(catchResult, catchId);
+            }
+        },"updateCatchResultByCatchId", json.toJSONString());
     }
 
     @Override

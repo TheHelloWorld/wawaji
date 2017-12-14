@@ -40,9 +40,16 @@ public interface CatchRecordService {
 
     /**
      * 根据id,用户编号修改抓取记录状态
-     * @param catchStatus 抓去记录状态
+     * @param catchStatus 抓取记录状态
      * @param id id
      * @param userNo 用户编号
      */
     CommonResult updateCatchStatusByIdAndUserNo(Integer catchStatus, Long id, String userNo);
+
+    /**
+     * 根据抓取id修改抓取结果
+     * @param catchResult 抓取记录结果
+     * @param catchId 抓取id
+     */
+    CommonResult updateCatchResultByCatchId(Integer catchResult, String catchId);
 }

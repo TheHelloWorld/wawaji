@@ -61,7 +61,8 @@ public interface UserService {
      * 根据用户编号和游戏房间号获得游戏抓取结果
      * @param userNo 用户编号
      * @param gameRoomNo 游戏房间号
+     * @param catchId 抓取id
      * @return
      */
-    CommonResult<String> getGameCatchResultByUserNoAndGameRoomNo(String userNo, String gameRoomNo);
+    CommonResult<String> getGameCatchResultByUserNoAndGameRoomNo(String userNo, String gameRoomNo, String catchId);
 }

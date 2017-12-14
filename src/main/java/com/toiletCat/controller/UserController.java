@@ -185,13 +185,14 @@ public class UserController {
      *
      * @param userNo    用户编号
      * @param gameRoomNo 游戏房间编号
+     * @param catchId 抓取id
      * @return
      */
     @RequestMapping(value = "/getGameCatchResultByUserNoAndGameRoomNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String getGameCatchResultByUserNoAndGameRoomNo(String userNo, String gameRoomNo) {
+    public String getGameCatchResultByUserNoAndGameRoomNo(String userNo, String gameRoomNo, String catchId) {
 
-        CommonResult<String> result = userService.getGameCatchResultByUserNoAndGameRoomNo(userNo, gameRoomNo);
+        CommonResult<String> result = userService.getGameCatchResultByUserNoAndGameRoomNo(userNo, gameRoomNo, catchId);
 
         return JSONUtil.getReturnBeanString(result);
     }

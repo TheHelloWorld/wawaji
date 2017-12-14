@@ -54,8 +54,13 @@ public interface CatchRecordDao {
      * @param id id
      * @param userNo 用户编号
      */
-    void updateCatchStatusByIdAndUserNo(@Param("catchStatus") Integer catchStatus,
-                                        @Param("id") Long id,
+    void updateCatchStatusByIdAndUserNo(@Param("catchStatus") Integer catchStatus, @Param("id") Long id,
                                         @Param("userNo") String userNo);
 
+    /**
+     * 根据抓取id修改抓取结果
+     * @param catchResult 抓取记录结果
+     * @param catchId 抓取id
+     */
+    void updateCatchResultByCatchId(@Param("catchResult") Integer catchResult, @Param("catchId") String catchId);
 }

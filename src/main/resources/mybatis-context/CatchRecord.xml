@@ -102,14 +102,14 @@
     <!-- 根据用户编号,id获得用户抓取记录 -->
     <select id="getCatchRecordByUserNo" resultMap="userCatchRecordMap">
         select
-        c.id,
-        c.user_no,
-        c.toy_no,
-        c.catch_id,
-        c.catch_result,
-        c.catch_time,
-        c.catch_status,
-        t.toy_img
+            c.id,
+            c.user_no,
+            c.toy_no,
+            c.catch_id,
+            c.catch_result,
+            c.catch_time,
+            c.catch_status,
+            t.toy_img
         from catch_record c, toy t
         where c.toy_no = t.toy_no and user_no = #{userNo} and id = #{id} order by create_time desc
         limit #{startPage}, #{pageSize}
@@ -120,6 +120,13 @@
         update catch_record set
             catch_status = #{catchStatus, jdbcType=INTEGER}
         where id = #{id} and user_no = #{userNo}
+    </update>
+
+    <!-- 根据抓取id修改抓取结果 -->
+    <update id="updateCatchStatusByIdAndUserNo" >
+        update catch_record set
+            catch_result = #{catchResult, jdbcType=INTEGER}
+        where catch_id = #{catchId, jdbcType=VARCHAR}
     </update>
 
 </mapper>

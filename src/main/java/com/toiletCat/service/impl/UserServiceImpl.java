@@ -9,6 +9,7 @@ import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.dao.CatchRecordDao;
 import com.toiletCat.dao.UserDao;
 import com.toiletCat.entity.*;
+import com.toiletCat.enums.CatchResult;
 import com.toiletCat.enums.CatchStatus;
 import com.toiletCat.enums.TradeStatus;
 import com.toiletCat.enums.TradeType;
@@ -271,7 +272,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     // 玩具图片
                     catchRecord.setToyImg(userMachine.getToyImg());
                     // 抓取状态 默认为等待
-                    catchRecord.setCatchStatus(CatchStatus.CATCH_WAIT.getStatus());
+                    catchRecord.setCatchResult(CatchResult.CATCH_WAIT.getStatus());
+                    // 抓取状态
+                    catchRecord.setCatchStatus(CatchStatus.NORMAL.getStatus());
 
                     catchRecordDao.addCatchRecord(catchRecord);
 
@@ -388,8 +391,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     catchRecord.setToyName(userSeeGameRoom.getToyName());
                     // 玩具图片
                     catchRecord.setToyImg(userSeeGameRoom.getToyImg());
-                    // 抓取状态 默认为等待
-                    catchRecord.setCatchStatus(CatchStatus.CATCH_WAIT.getStatus());
+                    // 抓取结果 默认为等待
+                    catchRecord.setCatchResult(CatchResult.CATCH_WAIT.getStatus());
+                    // 抓取状态
+                    catchRecord.setCatchStatus(CatchStatus.NORMAL.getStatus());
 
                     catchRecordDao.addCatchRecord(catchRecord);
 
@@ -511,10 +516,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      * 根据用户编号和游戏房间号获得游戏抓取结果
      * @param userNo 用户编号
      * @param gameRoomNo 游戏房间号
+     * @param catchId 抓取id
      * @return
      */
     @Override
-    public CommonResult<String> getGameCatchResultByUserNoAndGameRoomNo(final String userNo, final String gameRoomNo) {
+    public CommonResult<String> getGameCatchResultByUserNoAndGameRoomNo(final String userNo, final String gameRoomNo,
+                                                                        final String catchId) {
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
         json.put("gameRoomNo", gameRoomNo);
@@ -538,7 +545,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 Integer userNowLuckyNum = null;
 
                 if(!userGameRoomCount.success()) {
-                    got(getCatchFailReturn(roomAddLuckyNum));
+                    got(getCatchFailReturn(catchId, roomAddLuckyNum));
                     return;
                 }
 
@@ -569,7 +576,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     if(!userGameLucyNumResult.success()) {
 
-                        got(getCatchFailReturn(roomAddLuckyNum));
+                        got(getCatchFailReturn(catchId, roomAddLuckyNum));
                         return;
                     }
 
@@ -579,14 +586,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 用户房间幸运值大于等于最大用户房间幸运值
                 if(userLucKyNum + userNowLuckyNum >= BaseConstant.MAX_USER_ROOM_LUCKY_NUM) {
                     // 重置房间和用户房间幸运值
-                    got(resetLuckyNum(userNo, gameRoomNo, roomAddLuckyNum));
+                    got(resetLuckyNum(catchId, userNo, gameRoomNo, roomAddLuckyNum));
                     return;
                 }
 
                 // 若房间幸运值大于等于最大房间幸运值
                 if(gameRoom.getRoomNowLuckyNum() + roomAddLuckyNum >= gameRoom.getRoomLuckyNum()) {
                     // 重置房间和用户房间幸运值
-                    got(resetLuckyNum(userNo, gameRoomNo, roomAddLuckyNum));
+                    got(resetLuckyNum(catchId, userNo, gameRoomNo, roomAddLuckyNum));
                     return;
                 }
 
@@ -596,7 +603,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 累加游戏房间幸运值
                 gameRoomService.addRoomLuckyNumByGameRoomNo(gameRoomNo);
 
-                got(getCatchFailReturn(roomAddLuckyNum));
+                got(getCatchFailReturn(catchId, roomAddLuckyNum));
                 return;
 
             }
@@ -605,10 +612,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     /**
      * 获得抓取失败返回值
+     * @param catchId 抓取id
      * @param roomAddLuckyNum 房间累加幸运值
      * @return
      */
-    private String getCatchFailReturn(Integer roomAddLuckyNum) {
+    private String getCatchFailReturn(String catchId, Integer roomAddLuckyNum) {
+
+        catchRecordDao.updateCatchResultByCatchId(CatchResult.CATCH_FAIL.getStatus(), catchId);
 
         JSONObject json = new JSONObject();
         // 抓取失败
@@ -616,17 +626,20 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         //
         json.put("addNum", roomAddLuckyNum);
 
+
+
         return json.toJSONString();
     }
 
     /**
      * 重置用户及游戏房间幸运值
+     * @param catchId 抓取id
      * @param userNo 用户编号
      * @param gameRoomNo 游戏房间编号
      * @param roomAddLuckyNum 房间累加幸运值
      * @return
      */
-    private String resetLuckyNum(String userNo, String gameRoomNo, Integer roomAddLuckyNum) {
+    private String resetLuckyNum(String catchId, String userNo, String gameRoomNo, Integer roomAddLuckyNum) {
 
         // 重置用户房间幸运值
         CommonResult resetUserRoom = userGameRoomService.resetUserRoomLuckyNum(userNo, gameRoomNo);
@@ -634,6 +647,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         CommonResult resetGameRoom = gameRoomService.resetRoomLuckyNumByGameRoomNo(gameRoomNo);
 
         if(resetUserRoom.success() && resetGameRoom.success()) {
+
+            catchRecordDao.updateCatchResultByCatchId(CatchResult.CATCH_SUCCESS.getStatus(), catchId);
 
             JSONObject json = new JSONObject();
 
@@ -661,7 +676,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
         } else {
 
-            return getCatchFailReturn(roomAddLuckyNum);
+            return getCatchFailReturn(catchId, roomAddLuckyNum);
         }
     }
 
