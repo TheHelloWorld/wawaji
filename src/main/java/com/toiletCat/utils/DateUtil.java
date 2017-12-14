@@ -81,8 +81,6 @@ public class DateUtil {
             return null;
         }
 
-
-
         String dayTime = String.valueOf(day);
 
         try {
