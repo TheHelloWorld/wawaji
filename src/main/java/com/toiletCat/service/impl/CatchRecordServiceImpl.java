@@ -67,7 +67,7 @@ public class CatchRecordServiceImpl extends BaseServiceImpl implements CatchReco
      * @return
      */
     @Override
-    public CommonResult<List<CatchRecord>> getCatchRecordListByUserNo(final String userNo, final int startPage) {
+    public CommonResult<List<UserCatchRecord>> getCatchRecordListByUserNo(final String userNo, final int startPage) {
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
         json.put("startPage", startPage);

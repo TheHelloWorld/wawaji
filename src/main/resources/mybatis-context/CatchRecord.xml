@@ -28,6 +28,8 @@
 
     <!-- 抓取记录表 -->
     <resultMap type="com.toiletCat.bean.UserCatchRecord" id="userCatchRecordMap">
+        <!-- 主键id -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 用户编号 -->
         <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
         <!-- 用户头像 -->
@@ -38,6 +40,8 @@
         <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
         <!-- 玩具名称 -->
         <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
+        <!-- 玩具图片 -->
+        <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
         <!-- 抓取结果 -->
         <result property="catchResult" column="catch_result" jdbcType="INTEGER"/>
         <!-- 抓取时间 -->
@@ -87,9 +91,6 @@
     <select id="getCatchRecordListByUserNo" resultMap="userCatchRecordMap">
         select
             c.id,
-            c.user_no,
-            c.toy_no,
-            c.catch_id,
             c.catch_result,
             c.catch_time,
             c.catch_status,

@@ -5,6 +5,11 @@ import java.util.Date;
 public class UserCatchRecord {
 
     /**
+     * 主键id
+     */
+    private Long id;
+
+    /**
      * 用户编号
      */
     private String userNo;
@@ -30,6 +35,11 @@ public class UserCatchRecord {
     private String toyName;
 
     /**
+     * 玩具图片
+     */
+    private String toyImg;
+
+    /**
      * 抓取结果
      */
     private Integer catchResult;
@@ -43,6 +53,14 @@ public class UserCatchRecord {
      * 抓取时间
      */
     private Date catchTime;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUserNo() {
         return userNo;
@@ -82,6 +100,14 @@ public class UserCatchRecord {
 
     public void setToyName(String toyName) {
         this.toyName = toyName;
+    }
+
+    public String getToyImg() {
+        return toyImg;
+    }
+
+    public void setToyImg(String toyImg) {
+        this.toyImg = toyImg;
     }
 
     public Integer getCatchStatus() {

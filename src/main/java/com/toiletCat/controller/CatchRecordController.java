@@ -45,7 +45,7 @@ public class CatchRecordController {
     @ResponseBody
     public String getCatchRecordListByUserNo(String userNo, int startPage) {
 
-        CommonResult result = catchRecordService.getCatchRecordListByUserNo(userNo, startPage);
+        CommonResult<List<UserCatchRecord>> result = catchRecordService.getCatchRecordListByUserNo(userNo, startPage);
 
         return JSONUtil.getReturnBeanString(result);
     }

@@ -28,7 +28,7 @@ public interface CatchRecordService {
      * @param startPage 开始页
      * @return
      */
-    CommonResult<List<CatchRecord>> getCatchRecordListByUserNo(String userNo, int startPage);
+    CommonResult<List<UserCatchRecord>> getCatchRecordListByUserNo(String userNo, int startPage);
 
     /**
      * 根据用户编号,id获得用户抓取记录

@@ -37,7 +37,7 @@ public interface CatchRecordDao {
      * @param pageSize 每页数据数
      * @return
      */
-    List<CatchRecord> getCatchRecordListByUserNo(@Param("userNo") String userNo, @Param("startPage") int startPage,
+    List<UserCatchRecord> getCatchRecordListByUserNo(@Param("userNo") String userNo, @Param("startPage") int startPage,
                                      @Param("pageSize") int pageSize);
 
     /**

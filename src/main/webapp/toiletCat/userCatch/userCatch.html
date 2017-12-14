@@ -9,7 +9,7 @@
     <meta name="description" content="描述" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="format-detection" content="telephone=no" />
-    <title>我的抓取记录</title>
+    <title>我的地址</title>
 
     <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css" >
 
@@ -23,25 +23,36 @@
     <script type="text/javascript" src="/vendor/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/common/js/commonUtil.js"></script>
 
-    <script type="text/javascript" src="/js/userAddress/userAddress.js"></script>
+    <script type="text/javascript" src="/js/userCatch/userCatch.js"></script>
 </head>
-    <body>
-        <div class="index-body-div">
-            <nav class = "index-default-header default-height nav-center" >
-                <img class="return-button" id="returnButton" src="/image/background/returnButton.ico" onclick="returnMethod()" />
-                <span class="nav-text">我的地址</span>
-            </nav>
-            <div class="default-height">
-            </div>
-            <div id="userAddress">
-
-            </div>
-            <div class="default-height">
-            </div>
-            <nav class = "index-footer default-height nav-center" onclick="toAddUserAddressPage()" >
-                <img style="height: 100%" src="/image/background/add-address-button.ico" />
-                <span>添加新地址</span>
-            </nav>
+<body class="my-body">
+<div class="index-body-div">
+    <nav class = "index-default-header default-height nav-center" >
+        <div class="background-img">
+            <img class="return-button" id="returnButton" src="/image/background/returnButton.ico" onclick="returnMethod()" />
+            <span class="nav-text">我的抓取记录</span>
         </div>
-    </body>
+    </nav>
+    <div class="default-height">
+    </div>
+    <div id="catchRecord">
+
+    </div>
+    <div class="default-height">
+    </div>
+    <nav class = "index-footer default-height" >
+        <div class="background-img">
+            <div class="footer-button" >
+                <img class="footer-img" src="/image/button/cat_phone_48_text.png" onclick="toUserToy()" />
+            </div>
+            <div class="footer-button" >
+                <img class="footer-img" src="/image/button/cat_wizard_48_text.png" onclick="toRecharge()" />
+            </div>
+            <div class="footer-button" >
+                <img class="footer-img" src="/image/button/cat_laptop_48_text.png" onclick="toUserIndex()" />
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
 </html>
