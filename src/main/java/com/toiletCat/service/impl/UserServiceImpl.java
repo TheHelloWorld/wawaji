@@ -441,16 +441,19 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 PropertiesUtil systemProperties = new PropertiesUtil("system");
 
                 // 获取短信超时参数
-                String timeout = systemProperties.getProperty("sms_time_out");
+                String redisTimeout = systemProperties.getProperty("sms_redis_time_out");
+
+                // 获取短信超时参数
+                String textTimeout = systemProperties.getProperty("sms_text_time_out");
 
                 // 获取redis链接
                 try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
                     String random = RandomIntUtil.getRandom();
 
-                    if (SDKTestSendTemplateSMS.sendMobileVerificationCode(mobileNo, random, timeout)) {
+                    if (SDKTestSendTemplateSMS.sendMobileVerificationCode(mobileNo, random, textTimeout)) {
 
-                        redisUtil.set(Integer.valueOf(timeout),
+                        redisUtil.set(Integer.valueOf(redisTimeout),
                                 BaseConstant.SMS_MOBILE_NO.replace("#{}", mobileNo), random);
 
                         got(BaseConstant.SUCCESS);

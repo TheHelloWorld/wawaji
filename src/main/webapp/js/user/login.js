@@ -152,26 +152,7 @@ function sendTextCode(o) {
 
     sendTextWaitTime(o);
 
-    $.ajax({
-        url:"/toiletCat/user/sendMobileVerificationCode.action",
-        type:"POST",
-        async:false,
-        data:{
-            mobileNo:$("#mobile").val()
-        },
-        success:function(data){
-
-            // 转换数据
-            if(typeof(data) == "string") {
-                data = eval("("+data+")");
-            }
-
-            // 判断是否成功
-            if(data["is_success"] != "success") {
-                alert(data["result"]);
-            }
-        }
-    });
+    sendMobileText();
 }
 
 // 检查手机号
@@ -210,10 +191,32 @@ function sendTextWaitTime(o) {
     }
 }
 
+// 发送短信验证码
+function sendMobileText() {
+
+    $.ajax({
+        url:"/toiletCat/user/sendMobileVerificationCode.action",
+        type:"POST",
+        data:{
+            mobileNo:$("#mobile").val()
+        },
+        success:function(data){
+
+            // 转换数据
+            if(typeof(data) == "string") {
+                data = eval("("+data+")");
+            }
+
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+            }
+        }
+    });
+}
+
 // 登陆或注册
 function loginOrRegister() {
-
-    console.info(1111);
 
     $.ajax({
         url:"/toiletCat/user/registerOrLoginUser.action",
