@@ -745,3 +745,17 @@ function toRecharge() {
 function toUserIndex() {
     window.location.href="/toiletCat/user/userIndex.html?type=gameRoom&userNo="+userNo + "&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
 }
+
+// 检查手机号
+function checkMobileNo(id) {
+
+    var numbers = /^1\d{10}$/;
+    //获取输入手机号码
+    var val = $("#"+id).val().replace(/\s+/g,"");
+
+    if(!numbers.test(val) || val.length ==0) {
+        return false;
+    }
+
+    return true;
+}

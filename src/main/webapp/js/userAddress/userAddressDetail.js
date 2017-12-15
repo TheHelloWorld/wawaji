@@ -98,3 +98,13 @@ function returnMethod() {
     window.location.href = returnUrl;
 }
 
+// 检查参数
+function checkData() {
+   if(!isNotNull("userName")) {
+
+   } else if(!isNotNull("mobileNo")) {
+
+   }
+
+}
+

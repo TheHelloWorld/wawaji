@@ -155,20 +155,6 @@ function sendTextCode(o) {
     sendMobileText();
 }
 
-// 检查手机号
-function checkMobileNo() {
-
-    var numbers = /^1\d{10}$/;
-    //获取输入手机号码
-    var val = $('#mobile').val().replace(/\s+/g,"");
-
-    if(!numbers.test(val) || val.length ==0) {
-        return false;
-    }
-
-    return true;
-}
-
 // 按钮倒计时
 function sendTextWaitTime(o) {
 
