@@ -145,7 +145,7 @@ function sendTextCode(o) {
         return;
     }
 
-    if(!checkMobileNo()) {
+    if(!checkMobileNo("mobile")) {
         alert("请填入正确的手机号");
         return;
     }
