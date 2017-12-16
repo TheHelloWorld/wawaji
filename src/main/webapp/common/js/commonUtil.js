@@ -750,6 +750,7 @@ function toUserIndex() {
 function checkMobileNo(id) {
 
     var numbers = /^1\d{10}$/;
+    
     //获取输入手机号码
     var val = $("#"+id).val().replace(/\s+/g,"");
 

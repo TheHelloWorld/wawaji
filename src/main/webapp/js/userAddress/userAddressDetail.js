@@ -85,10 +85,10 @@ function getUserAddress(id, userNo) {
 // 储存或更新
 function saveOrUpdate() {
 
-    // 校验参数
-    if(!checkData()) {
-        return;
-    }
+    // // 校验参数
+    // if(!checkData()) {
+    //     return;
+    // }
 
     if(getQueryString("type") == "add") {
         var saveUrl = "/toiletCat/userAddress/addUserAddress.action";

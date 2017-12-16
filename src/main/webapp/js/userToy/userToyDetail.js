@@ -192,7 +192,13 @@ function getAllUserAddressByUserNo(userNo) {
                 str += "<label style='width: 100%;'>";
                 str += "<input type='radio' name='userAddress' onclick='clickAddress(this)' value='"+list[i]["id"]+"' />";
 
-                str += "<div id='userAddress"+list[i]["id"]+"' class='row'>";
+                var userAddressClass = "user-address-line-default";
+
+                if(i == 0) {
+                    userAddressClass = "user-address-line";
+                }
+
+                str += "<div class='" + userAddressClass + "' id='userAddress" + list[i]["id"] + "' onclick='clickAddress(" + list[i]["id"] + ")' class='row'>";
                 str += "    <div class='panel-body' >";
                 str += "        <div class='my-margin-bottom'>";
                 str += "            <input id = 'userName"+list[i]["id"]+"' type='hidden' value='" + list[i]["userName"] + "' >";
@@ -228,10 +234,12 @@ function getAllUserAddressByUserNo(userNo) {
 }
 
 // 点击地址
-function clickAddress(etc) {
+function clickAddress(id) {
+    $(".user-address-line").attr("'class", "user-address-line-default");
+    $("#userAddress"+id).attr("'class", "user-address-line");
     $("#zzc").hide();
     $("#choiceAddress").html("");
-    $("#choiceAddress").append($("#userAddress"+$(etc).val()).html());
+    $("#choiceAddress").append($("#userAddress"+id).html());
     $("#choiceAddress").append("<a href='javascript:void(0);' onclick='reChoiceAddress()'>重新选择>></a>");
 }
 

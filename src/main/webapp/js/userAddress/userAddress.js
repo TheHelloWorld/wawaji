@@ -94,7 +94,7 @@ function getAllUserAddressByUserNo(userNo) {
 
             for(var i = 0; i<list.length; i++) {
 
-                str += "<div id='userAddress"+list[i]["id"]+"' class='row'>";
+                str += "<div class='user-address-line' id='userAddress"+list[i]["id"]+"' class='row'>";
                 str += "    <div class='panel-body' >";
                 str += "        <div class='my-margin-bottom'>";
                 str += "            <span class='my-inline-right' >收货人:" + list[i]["userName"] + "</span>";
