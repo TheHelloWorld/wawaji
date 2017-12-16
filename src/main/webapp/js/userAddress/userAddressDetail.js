@@ -84,11 +84,11 @@ function getUserAddress(id, userNo) {
 
 // 储存或更新
 function saveOrUpdate() {
+    // 校验参数
+    if(!checkData()) {
+        return;
+    }
 
-    // // 校验参数
-    // if(!checkData()) {
-    //     return;
-    // }
 
     if(getQueryString("type") == "add") {
         var saveUrl = "/toiletCat/userAddress/addUserAddress.action";
@@ -108,28 +108,47 @@ function returnMethod() {
 function checkData() {
 
    if(!isNotNull("userName")) {
+       alert("请填写姓名");
+       return false;
 
    } else if(!checkMobileNo("mobileNo")) {
 
+       alert("请填写正确的手机号");
+       return false;
+
    } else if(!checkLocation()) {
 
-   } else {
+       return false;
+
+   } else if(!isNotNull("address")) {
+
+       alert("请填写详细地址");
+       return false;
 
    }
+
+   return true;
 
 }
 
 // 检查地址
 function checkLocation() {
-    if($("#province").val() == " -- ") {
 
-    } else if($("#city").val() == " -- ") {
+    if($("#province").val() == "") {
+        alert("请选择省份");
+        return false;
 
-    } else if($("#district").val() == " -- ") {
+    } else if($("#city").val() == "") {
+        alert("请选择城市");
+        return false;
+
+    } else if($("#district").val() == "") {
+        alert("请选择地区");
+        return false;
 
     }
 
-
+    return true;
 
 }
 
