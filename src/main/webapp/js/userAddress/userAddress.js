@@ -18,15 +18,7 @@ var canAdd = true;
 
 $(function() {
     // 用户编号
-    userNo = getQueryString("userNo");
-    // 用户名
-    userName = getQueryString("userName");
-    // 用户游戏币数
-    userCoin = getQueryString("userCoin");
-    // 用户头像
-    userImg = getQueryString("userImg");
-    // 用户邀请码
-    invitationCode = getQueryString("invitationCode");
+    userNo = sessionStorage["toiletCatUserNo"];
 
     // 判断当前用户是否看继续添加
     judeUserAddress(userNo);
@@ -128,7 +120,7 @@ function getAllUserAddressByUserNo(userNo) {
 // 添加元素
 function toAddUserAddressPage() {
     if(canAdd) {
-        window.location.href = "/toiletCat/userAddress/userAddressDetailPage.html?type=add&userNo="+userNo+"";
+        window.location.href = "/toiletCat/userAddress/userAddressDetailPage.html?type=add";
     } else {
         alert("最多只能有5个地址")
     }
@@ -137,7 +129,7 @@ function toAddUserAddressPage() {
 // 修改元素
 function toEditUserAddressPage(id) {
 
-    window.location.href = "/toiletCat/userAddress/userAddressDetailPage.html?type=update&userNo="+userNo+"&id="+id;
+    window.location.href = "/toiletCat/userAddress/userAddressDetailPage.html?type=update&id="+id;
 }
 
 // 修改元素
@@ -175,5 +167,5 @@ function deleteUserAddress(id) {
 }
 
 function returnMethod() {
-    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom&userNo="+userNo + "&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
+    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom";
 }

@@ -43,15 +43,15 @@ $(function() {
 
     if(nowType == "login") {
         // 用户编号
-        userNo = getQueryString("userNo");
+        userNo = sessionStorage["toiletCatUserNo"];
         // 用户名
-        userName = getQueryString("userName");
+        userName = sessionStorage["toiletCatUserName"];
         // 用户游戏币数
-        userCoin = getQueryString("userCoin");
+        userCoin = sessionStorage["toiletCatUserCoin"];
         // 用户头像
-        userImg = getQueryString("userImg");
+        userImg = sessionStorage["toiletCatUserImg"];
         // 用户邀请码
-        invitationCode = getQueryString("invitationCode");
+        invitationCode = sessionStorage["toiletCatInvitationCode"];
 
         setUserInfo();
 
@@ -92,6 +92,18 @@ function userAutoLogin() {
                 user = eval("("+user+")");
             }
 
+            // 赋值操作
+            // 用户编号
+            sessionStorage["toiletCatUserNo"] = user["userNo"];
+            // 用户名
+            sessionStorage["toiletCatUserName"] = user["userName"];
+            // 用户游戏币数
+            sessionStorage["toiletCatUserCoin"] = user["userCoin"];
+            // 用户头像
+            sessionStorage["toiletCatUserImg"] = user["userImg"];
+            // 用户邀请码
+            sessionStorage["toiletCatInvitationCode"] = user["invitationCode"];
+
             // 用户编号
             userNo = user["userNo"];
             // 用户名
@@ -100,7 +112,6 @@ function userAutoLogin() {
             userCoin = user["userCoin"];
             // 用户头像
             userImg = user["userImg"];
-
             // 用户邀请码
             invitationCode = user["invitationCode"];
 

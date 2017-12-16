@@ -1,18 +1,6 @@
 // 用户编号
 var userNo = "";
 
-// 用户名
-var userName = "";
-
-// 用户游戏币数
-var userCoin = "";
-
-// 用户头像
-var userImg = "";
-
-// 用户邀请码
-var invitationCode = "";
-
 var nowPage = 1;
 
 // 类型
@@ -20,19 +8,8 @@ var type= "";
 
 $(function() {
 
-    // 获得类型
-    type = getQueryString("type");
-
     // 用户编号
-    userNo = getQueryString("userNo");
-    // 用户名
-    userName = getQueryString("userName");
-    // 用户游戏币数
-    userCoin = getQueryString("userCoin");
-    // 用户头像
-    userImg = getQueryString("userImg");
-    // 用户邀请码
-    invitationCode = getQueryString("invitationCode");
+    userNo = sessionStorage["toiletCatUserNo"];
 
     // 获得总页数和总数量
     getTotalCountAndPageSizeByUserNo();
@@ -149,7 +126,7 @@ function getAllUserToyByUserNo() {
 // 修改元素
 function toUserToyDetail(id) {
 
-    window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
+    window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&id="+id;
 }
 
 function returnMethod() {

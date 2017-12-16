@@ -17,7 +17,7 @@ $(function() {
     $("#zzc").hide();
 
     // 获得用户编号
-    userNo = getQueryString("userNo");
+    userNo = sessionStorage["toiletCatUserNo"];
 
     id = getQueryString("id");
     
@@ -288,12 +288,12 @@ function updateChoiceType() {
                 return;
             }
 
-            window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
+            window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&id="+id;
         }
     });
 }
 
 // 返回用户战利品也
 function returnMethod() {
-    window.location.href = "/toiletCat/userToy/userToy.html?userNo="+userNo;
+    window.location.href = "/toiletCat/userToy/userToy.html";
 }

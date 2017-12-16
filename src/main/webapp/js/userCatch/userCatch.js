@@ -3,37 +3,59 @@ var pageSize = 0;
 
 var nowPage = 1;
 
-// 用户编号
 var userNo = "";
-
-// 用户名
-var userName = "";
-
-// 用户游戏币数
-var userCoin = "";
-
-// 用户头像
-var userImg = "";
-
-// 用户邀请码
-var invitationCode = "";
 
 $(function() {
     // 用户编号
-    userNo = getQueryString("userNo");
-    // 用户名
-    userName = getQueryString("userName");
-    // 用户游戏币数
-    userCoin = getQueryString("userCoin");
-    // 用户头像
-    userImg = getQueryString("userImg");
-    // 用户邀请码
-    invitationCode = getQueryString("invitationCode");
+    userNo = sessionStorage["toiletCatUserNo"];
+
+    // 获得所有用户可见游戏房间数量及分页
+    getTotalCountAndPageSizeByUserNo();
 
     // 分页获得当前用户所有抓取记录
     getAllUserCatchRecordByUserNo(userNo);
 
 });
+
+// 获得当前数据总数量和分页数据
+function getTotalCountAndPageSizeByUserNo() {
+    $.ajax({
+        url:"/toiletCat/catchRecord/countCatchRecordByUserNo.action",
+        type:"POST",
+        async:false,
+        data:{
+            userNo:userNo
+        },
+        success:function(data){
+
+            if(typeof(data) == "string"){
+                data = eval("("+data+")");
+            }
+
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+            totalCount = data["totalCount"];
+
+            pageSize = data["pageSize"];
+
+            if(totalCount <= pageSize) {
+
+                totalPage = 1;
+
+            } else if(totalCount % pageSize == 0) {
+
+                totalPage = totalCount / pageSize;
+
+            } else {
+
+                totalPage = parseInt(totalCount / pageSize);
+            }
+        }
+    });
+}
 
 // 分页获得当前用户所有抓取记录
 function getAllUserCatchRecordByUserNo(userNo) {
@@ -101,5 +123,5 @@ function getAllUserCatchRecordByUserNo(userNo) {
 }
 
 function returnMethod() {
-    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom&userNo="+userNo + "&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
+    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom";
 }

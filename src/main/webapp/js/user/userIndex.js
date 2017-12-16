@@ -16,15 +16,15 @@ var invitationCode = "";
 $(function(){
 
     // 用户编号
-    userNo = getQueryString("userNo");
+    userNo = sessionStorage["toiletCatUserNo"];
     // 用户名
-    userName = getQueryString("userName");
+    userName = sessionStorage["toiletCatUserName"];
     // 用户游戏币数
-    userCoin = getQueryString("userCoin");
+    userCoin = sessionStorage["toiletCatUserCoin"];
     // 用户头像
-    userImg = getQueryString("userImg");
+    userImg = sessionStorage["toiletCatUserImg"];
     // 用户邀请码
-    invitationCode = getQueryString("invitationCode");
+    invitationCode = sessionStorage["toiletCatInvitationCode"];
 
     setUserInfo();
 
@@ -48,19 +48,19 @@ $(function(){
 });
 
 function returnMethod() {
-    window.location.href="/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+userNo+"&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
+    window.location.href="/toiletCat/gameRoom/gameRoom.html?nowType=login";
 }
 
 function toUserToy() {
-    window.location.href="/toiletCat/userToy/userToy.html?type=gameRoom&userNo="+userNo+"&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
+    window.location.href="/toiletCat/userToy/userToy.html?type=gameRoom";
 }
 
 function toUserAddress() {
-    window.location.href="/toiletCat/userAddress/userAddress.html?type=gameRoom&userNo="+userNo+"&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
+    window.location.href="/toiletCat/userAddress/userAddress.html?type=gameRoom";
 }
 
 function toUserCatch() {
-    window.location.href="/toiletCat/userCatch/userCatch.html?type=gameRoom&userNo="+userNo+"&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
+    window.location.href="/toiletCat/userCatch/userCatch.html?type=gameRoom";
 }
 
 // 设置用户信息

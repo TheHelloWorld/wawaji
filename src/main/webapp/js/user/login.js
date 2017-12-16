@@ -234,26 +234,37 @@ function loginOrRegister() {
 
             var url = "";
 
+            // 用户编号
+            sessionStorage["toiletCatUserNo"] = user["userNo"];
+            // 用户名
+            sessionStorage["toiletCatUserName"] = user["userName"];
+            // 用户游戏币数
+            sessionStorage["toiletCatUserCoin"] = user["userCoin"];
+            // 用户头像
+            sessionStorage["toiletCatUserImg"] = user["userImg"];
+            // 用户邀请码
+            sessionStorage["toiletCatInvitationCode"] = user["invitationCode"];
+
             // 根据来源跳转不同页面
             // 游戏主页
             if(from == "gameIndex") {
 
-                url = "/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+user["userNo"]+"&userName="+user["userName"]+"&userImg="+user["userImg"]+"&userCoin="+user["userCoin"]+"&invitationCode="+user["invitationCode"];
+                url = "/toiletCat/gameRoom/gameRoom.html?nowType=login";
             // 用户主页
             } else if(from == "userIndex") {
 
-                url = "/toiletCat/user/userIndex.html?type="+type+"&userNo="+user["userNo"]+"&userName="+user["userName"]+"&userImg="+user["userImg"]+"&userCoin="+user["userCoin"]+"&invitationCode="+user["invitationCode"];
+                url = "/toiletCat/user/userIndex.html?type="+type;
             // 充值页面
             } else if(from == "recharge") {
-                url = "/toiletCat/gameRoom/gameRoom.html?type="+type+"&userNo="+user["userNo"];
+                url = "/toiletCat/gameRoom/gameRoom.html?type="+type;
             // 战利品页
             } else if(from == "userToy") {
 
-                url = "/toiletCat/userToy/userToy.html?type="+type+"&userNo="+user["userNo"];
+                url = "/toiletCat/userToy/userToy.html?type="+type;
             // 机器主页
             } else {
 
-                url = "/toiletCat/machineRoom/machineRoom.html?nowType=login&userNo="+user["userNo"]+"&userName="+user["userName"]+"&userImg="+user["userImg"]+"&userCoin="+user["userCoin"]+"&invitationCode="+user["invitationCode"];
+                url = "/toiletCat/machineRoom/machineRoom.html?nowType=login";
 
             }
 

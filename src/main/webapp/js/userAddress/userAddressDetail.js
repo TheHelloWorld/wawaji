@@ -16,18 +16,11 @@ var invitationCode = "";
 var returnUrl = "";
 
 $(function() {
-    // 用户编号
-    userNo = getQueryString("userNo");
-    // 用户名
-    userName = getQueryString("userName");
-    // 用户游戏币数
-    userCoin = getQueryString("userCoin");
-    // 用户头像
-    userImg = getQueryString("userImg");
-    // 用户邀请码
-    invitationCode = getQueryString("invitationCode");
 
-    returnUrl = "/toiletCat/userAddress/userAddress.html?type=gameRoom&userNo="+userNo+"&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
+    // 用户编号
+    userNo = sessionStorage["toiletCatUserNo"];
+
+    returnUrl = "/toiletCat/userAddress/userAddress.html";
 
     $("#userNo").val(userNo);
 
@@ -88,7 +81,6 @@ function saveOrUpdate() {
     if(!checkData()) {
         return;
     }
-
 
     if(getQueryString("type") == "add") {
         var saveUrl = "/toiletCat/userAddress/addUserAddress.action";
