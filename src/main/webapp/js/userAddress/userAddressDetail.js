@@ -145,9 +145,7 @@ function checkLocation() {
     } else if($("#district").val() == "") {
         alert("请选择地区");
         return false;
-
     }
-
     return true;
 
 }
