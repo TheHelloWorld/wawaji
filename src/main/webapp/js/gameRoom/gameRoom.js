@@ -20,18 +20,17 @@ $(function() {
     // 分页获得所有用户可见游戏房间并展示
     getUserSeeGameRoomListByPage(nowPage);
 
-    scrollBottomTest =function(){
-        $("#contain").scroll(function(){
-            var $this =$(this),
-                viewH =$(this).height(),//可见高度
-                contentH =$(this).get(0).scrollHeight,//内容高度
-                scrollTop =$(this).scrollTop();//滚动高度
-            //if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
-            if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
-               console.info("1123");
+    $(window).scroll(
+
+        function() {
+            var scrollTop = $(this).scrollTop();
+            var scrollHeight = $(document).height();
+            var windowHeight = $(this).height();
+            if (scrollTop + windowHeight == scrollHeight) {
+                // 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+                alert("弹弹弹");
             }
-        });
-    }
+    });
 
 });
 
