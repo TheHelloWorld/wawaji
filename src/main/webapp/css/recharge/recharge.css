@@ -1,0 +1,34 @@
+.recharge {
+    z-index: 99;
+    position: fixed;
+    background: #6DDBFD;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.recharge-coin {
+    float: left;
+    margin-top: 10%;
+    margin-left: 5%;
+}
+
+.recharge-block {
+    border-bottom: 0.1875rem solid #D7D7D7;
+    width: 90%;
+    margin-left: 5%;
+    color: white;
+}
+
+.recharge-money {
+    color: red;
+    float: right;
+    margin-top: 10%;
+    margin-right: 5%;
+    background: url(/image1/start.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    text-align: center;
+    width: 30%;
+}
