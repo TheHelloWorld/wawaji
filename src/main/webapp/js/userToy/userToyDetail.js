@@ -16,8 +16,8 @@ var userAddressJson = {};
 $(function() {
     $("#zzc").hide();
 
-    // 获得用户编号
-    userNo = sessionStorage["toiletCatUserNo"];
+    // 用户编号
+    checkSession();
 
     id = getQueryString("id");
     

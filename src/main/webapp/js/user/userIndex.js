@@ -15,8 +15,8 @@ var invitationCode = "";
 
 $(function(){
 
-    // 用户编号
-    userNo = sessionStorage["toiletCatUserNo"];
+    checkSession();
+
     // 用户名
     userName = sessionStorage["toiletCatUserName"];
     // 用户游戏币数
@@ -48,19 +48,19 @@ $(function(){
 });
 
 function returnMethod() {
-    window.location.href="/toiletCat/gameRoom/gameRoom.html?nowType=login";
+    window.location.href="/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+userNo;
 }
 
 function toUserToy() {
-    window.location.href="/toiletCat/userToy/userToy.html?type=gameRoom";
+    window.location.href="/toiletCat/userToy/userToy.html?type=gameRoom&userNo="+userNo;
 }
 
 function toUserAddress() {
-    window.location.href="/toiletCat/userAddress/userAddress.html?type=gameRoom";
+    window.location.href="/toiletCat/userAddress/userAddress.html?type=gameRoom&userNo="+userNo;
 }
 
 function toUserCatch() {
-    window.location.href="/toiletCat/userCatch/userCatch.html?type=gameRoom";
+    window.location.href="/toiletCat/userCatch/userCatch.html?type=gameRoom&userNo="+userNo;
 }
 
 // 设置用户信息

@@ -7,7 +7,7 @@ var userNo = "";
 
 $(function() {
     // 用户编号
-    userNo = sessionStorage["toiletCatUserNo"];
+    checkSession();
 
     // 获得所有用户可见游戏房间数量及分页
     getTotalCountAndPageSizeByUserNo();
@@ -123,5 +123,5 @@ function getAllUserCatchRecordByUserNo(userNo) {
 }
 
 function returnMethod() {
-    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom";
+    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom&userNo"+userNo;
 }

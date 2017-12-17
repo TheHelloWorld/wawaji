@@ -1,24 +1,17 @@
 // 用户编号
 var userNo = "";
 
-// 用户名
-var userName = "";
-
-// 用户游戏币数
-var userCoin = "";
-
-// 用户头像
-var userImg = "";
-
-// 用户邀请码
-var invitationCode = "";
-
 // 是否可以添加标志位
 var canAdd = true;
 
+var type = "";
+
 $(function() {
+
+    type = getQueryString("type");
+
     // 用户编号
-    userNo = sessionStorage["toiletCatUserNo"];
+    checkSession();
 
     // 判断当前用户是否看继续添加
     judeUserAddress(userNo);
@@ -120,7 +113,7 @@ function getAllUserAddressByUserNo(userNo) {
 // 添加元素
 function toAddUserAddressPage() {
     if(canAdd) {
-        window.location.href = "/toiletCat/userAddress/userAddressDetailPage.html?type=add";
+        window.location.href = "/toiletCat/userAddress/userAddressDetailPage.html?type=add&userNo="+userNo;
     } else {
         alert("最多只能有5个地址")
     }
@@ -129,7 +122,7 @@ function toAddUserAddressPage() {
 // 修改元素
 function toEditUserAddressPage(id) {
 
-    window.location.href = "/toiletCat/userAddress/userAddressDetailPage.html?type=update&id="+id;
+    window.location.href = "/toiletCat/userAddress/userAddressDetailPage.html?type=update&userNo="+userNo+"&id="+id;
 }
 
 // 修改元素
@@ -167,5 +160,5 @@ function deleteUserAddress(id) {
 }
 
 function returnMethod() {
-    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom";
+    window.location.href="/toiletCat/user/userIndex.html?type="+type+"&userNo"+userNo;
 }

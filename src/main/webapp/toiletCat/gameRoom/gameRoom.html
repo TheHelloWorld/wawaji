@@ -32,6 +32,35 @@
         <script type="text/javascript" src="/common/js/commonUtil.js"></script>
 
         <script type="text/javascript" src="/js/gameRoom/gameRoom.js"></script>
+
+        <script type="text/javascript">
+            var nowType = getQueryString("nowType");
+
+            if(nowType == "login") {
+                // 用户编号
+                userNo = sessionStorage["toiletCatUserNo"];
+
+                if(userNo == undefined) {
+                    userNo = getQueryString("userNo");
+                    getUserInfoByUserNo(userNo);
+                }
+
+                // 用户名
+                userName = sessionStorage["toiletCatUserName"];
+                // 用户游戏币数
+                userCoin = sessionStorage["toiletCatUserCoin"];
+                // 用户头像
+                userImg = sessionStorage["toiletCatUserImg"];
+                // 用户邀请码
+                invitationCode = sessionStorage["toiletCatInvitationCode"];
+
+                setUserInfo();
+
+            } else {
+                // 用户自动登陆
+                userAutoLogin();
+            }
+        </script>
     </head>
 
     <body class="my-body">

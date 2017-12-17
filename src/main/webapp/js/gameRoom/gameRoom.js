@@ -3,13 +3,9 @@ var pageSize = 0;
 
 var nowPage = 1;
 
-var showUrl = "/toiletCat/gameRoom/getAllGameRoomByPage.action";
-
 var width = $(window).width() / 2 - 20;
 
 var bannerType = 1;
-
-var nowType = "";
 
 // 用户编号
 var userNo = "";
@@ -28,8 +24,6 @@ var invitationCode = "";
 
 $(function() {
 
-    nowType = getQueryString("nowType");
-
     var url = "/toiletCat/gameRoom/getUserSeeGameRoomTotalCountAndPageSize.action";
 
     // 获取banner图
@@ -41,24 +35,6 @@ $(function() {
     // 分页获得所有用户可见游戏房间并展示
     getUserSeeGameRoomListByPage(nowPage);
 
-    if(nowType == "login") {
-        // 用户编号
-        userNo = sessionStorage["toiletCatUserNo"];
-        // 用户名
-        userName = sessionStorage["toiletCatUserName"];
-        // 用户游戏币数
-        userCoin = sessionStorage["toiletCatUserCoin"];
-        // 用户头像
-        userImg = sessionStorage["toiletCatUserImg"];
-        // 用户邀请码
-        invitationCode = sessionStorage["toiletCatInvitationCode"];
-
-        setUserInfo();
-
-    } else {
-        // 用户自动登陆
-        userAutoLogin();
-    }
 });
 
 // 用户自动登陆
@@ -183,8 +159,12 @@ function getUserSeeGameRoomListByPage(nowPage) {
 // 设置用户信息
 function setUserInfo() {
     $("#userInfo").html("");
-    var str = "<div class='user-info-div-img'><img src='"+userImg+"' class='user-img'></div>";
-    str += "<div class='user-info-div-user-coin'><img src='/image/background/coin.ico' />"+userCoin+"</div>";
+    var str = " <div class='user-info-div-img'></div>";
+    str += "        <img src='"+userImg+"' class='user-img'>";
+    str += "    </div>";
+    str += "    <div class='user-info-div-user-coin'>";
+    str += "        <img src='/image/background/coin.ico' />"+userCoin;
+    str += "    </div>";
 
     $("#userInfo").append(str);
 }
@@ -194,22 +174,7 @@ function toLoginPage() {
     window.location.href="/toiletCat/user/login.html?from=gameIndex&type=gameRoom&checkType=checkCode";
 }
 
-function toIndex() {
-    window.location.href="/toiletCat/gameRoom/gameRoom.html";
-}
-
-function getPage(page) {
-    nowPage = getPageByNum(nowPage, page, totalPage, step);
-    getAllByPage(showUrl, nowPage);
-}
-
 function nextPage() {
-    nowPage = nextPageNum(nowPage, totalPage, step);
-    getAllByPage(showUrl, nowPage);
-}
-
-//上一页
-function lastPage() {
-    nowPage = lastPageNum(nowPage, totalPage, step);
-    getAllByPage(showUrl, nowPage);
+    nowPage ++;
+    getUserSeeGameRoomListByPage(nowPage);
 }

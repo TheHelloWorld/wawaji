@@ -249,22 +249,22 @@ function loginOrRegister() {
             // 游戏主页
             if(from == "gameIndex") {
 
-                url = "/toiletCat/gameRoom/gameRoom.html?nowType=login";
+                url = "/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+user["userNo"];
             // 用户主页
             } else if(from == "userIndex") {
 
-                url = "/toiletCat/user/userIndex.html?type="+type;
+                url = "/toiletCat/user/userIndex.html?type="+type+"&userNo="+user["userNo"];
             // 充值页面
             } else if(from == "recharge") {
-                url = "/toiletCat/gameRoom/gameRoom.html?type="+type;
+                url = "/toiletCat/gameRoom/gameRoom.html?type="+type+"&userNo="+user["userNo"];
             // 战利品页
             } else if(from == "userToy") {
 
-                url = "/toiletCat/userToy/userToy.html?type="+type;
+                url = "/toiletCat/userToy/userToy.html?type="+type+"&userNo="+user["userNo"];
             // 机器主页
             } else {
 
-                url = "/toiletCat/machineRoom/machineRoom.html?nowType=login";
+                url = "/toiletCat/machineRoom/machineRoom.html?nowType=login&userNo="+user["userNo"];
 
             }
 

@@ -731,6 +731,16 @@ Date.prototype.format = function(format) {
     return format;
 };
 
+function checkSession() {
+    // 用户编号
+    userNo = sessionStorage["toiletCatUserNo"];
+
+    if(userNo == undefined) {
+        userNo = getQueryString("userNo");
+        getUserInfoByUserNo(userNo);
+    }
+}
+
 // 跳转到战利品页
 function toUserToy() {
     window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo + "&type=gameRoom";
@@ -743,7 +753,7 @@ function toRecharge() {
 
 // 跳转到用户主页
 function toUserIndex() {
-    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom&userNo="+userNo + "&userName="+userName+"&userImg="+userImg+"&userCoin="+userCoin+"&invitationCode="+invitationCode;
+    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom&userNo="+userNo;
 }
 
 // 检查手机号
@@ -759,4 +769,52 @@ function checkMobileNo(id) {
     }
 
     return true;
+}
+
+function getUserInfoByUserNo(userNo) {
+    $.ajax({
+        url:"/toiletCat/user/getUserByUserNo.action",
+        type:"POST",
+        async:false,
+		data:{
+        	userNo:userNo
+		},
+        success:function(data) {
+            // 转换数据
+            if(typeof(data) == "string") {
+                data = eval("("+data+")");
+            }
+
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+            var user = data["result"];
+
+            // 判断是否成功获取用户信息
+            if(user == "fail") {
+                console.info(user);
+                return;
+            }
+
+            if(typeof(user) == "string") {
+                user = eval("("+user+")");
+            }
+
+            // 赋值操作
+            // 用户编号
+            sessionStorage["toiletCatUserNo"] = user["userNo"];
+            // 用户名
+            sessionStorage["toiletCatUserName"] = user["userName"];
+            // 用户游戏币数
+            sessionStorage["toiletCatUserCoin"] = user["userCoin"];
+            // 用户头像
+            sessionStorage["toiletCatUserImg"] = user["userImg"];
+            // 用户邀请码
+            sessionStorage["toiletCatInvitationCode"] = user["invitationCode"];
+
+        }
+    });
 }

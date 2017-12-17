@@ -8,8 +8,10 @@ var type= "";
 
 $(function() {
 
+    type = getQueryString("type");
+
     // 用户编号
-    userNo = sessionStorage["toiletCatUserNo"];
+    checkSession();
 
     // 获得总页数和总数量
     getTotalCountAndPageSizeByUserNo();
@@ -126,18 +128,18 @@ function getAllUserToyByUserNo() {
 // 修改元素
 function toUserToyDetail(id) {
 
-    window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&id="+id;
+    window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
 }
 
 function returnMethod() {
     // 根据类型返回不同的首页
     if(type= "gameRoom") {
 
-        window.location.href = "/toiletCat/gameRoom/gameRoom.html";
+        window.location.href = "/toiletCat/gameRoom/gameRoom.html?type=gameRoom&userNo="+userNo;
 
     } else if(type= "machineRoom"){
 
-        window.location.href = "/toiletCat/machineRoom/machineRoom.html";
+        window.location.href = "/toiletCat/machineRoom/machineRoom.html?type=machineRoom&userNo="+userNo;
 
     }
 }
