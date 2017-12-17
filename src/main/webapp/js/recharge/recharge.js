@@ -1,6 +1,9 @@
+var recharge_scroll = $(window).scrollTop();
+
+var recharge_height = $(window).height();
+
 function recharge(){
-    var recharge_scroll = $(window).scrollTop();
-    var recharge_height = $(window).height();
+    $(".recharge").remove();
     var recharge_hc = recharge_height + recharge_scroll;
     var str = "	<div style='top:"+recharge_hc+"px;' class='recharge'>";
     str += "		<div class='recharge-first-line' >";
@@ -75,7 +78,10 @@ function recharge(){
     },500)
 }
 
-function closeRecharge(){
-    $(".recharge").remove()
+function closeRecharge() {
+    $(".recharge").animate({
+        top:recharge_height+"px"
+    },500);
+
 }
 
