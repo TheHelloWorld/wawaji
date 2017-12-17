@@ -158,8 +158,9 @@ function getUserSeeGameRoomListByPage(nowPage) {
 
 // 设置用户信息
 function setUserInfo() {
+
     $("#userInfo").html("");
-    var str = " <div class='user-info-div-img'></div>";
+    var str = " <div class='user-info-div-img'>";
     str += "        <img src='"+userImg+"' class='user-img'>";
     str += "    </div>";
     str += "    <div class='user-info-div-user-coin'>";

@@ -14,11 +14,14 @@
 
         <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css" >
 
-        <link rel="stylesheet" type="text/css" href="/css/common/toiletCatCommon.css" >
-
         <link rel="stylesheet" type="text/css" href="/css/common/banner.css" >
 
         <link rel="stylesheet" type="text/css" href="/dist/css/sb-admin-2.css" >
+
+        <link rel="stylesheet" type="text/css" href="/css/common/toiletCatCommon.css" >
+
+        <link rel="stylesheet" type="text/css" href="/css/recharge/recharge.css" >
+
         <!-- jQuery -->
         <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 
@@ -33,34 +36,8 @@
 
         <script type="text/javascript" src="/js/gameRoom/gameRoom.js"></script>
 
-        <script type="text/javascript">
-            var nowType = getQueryString("nowType");
+        <script type="text/javascript" src="/js/recharge/recharge.js"></script>
 
-            if(nowType == "login") {
-                // 用户编号
-                userNo = sessionStorage["toiletCatUserNo"];
-
-                if(userNo == undefined) {
-                    userNo = getQueryString("userNo");
-                    getUserInfoByUserNo(userNo);
-                }
-
-                // 用户名
-                userName = sessionStorage["toiletCatUserName"];
-                // 用户游戏币数
-                userCoin = sessionStorage["toiletCatUserCoin"];
-                // 用户头像
-                userImg = sessionStorage["toiletCatUserImg"];
-                // 用户邀请码
-                invitationCode = sessionStorage["toiletCatInvitationCode"];
-
-                setUserInfo();
-
-            } else {
-                // 用户自动登陆
-                userAutoLogin();
-            }
-        </script>
     </head>
 
     <body class="my-body">
@@ -73,8 +50,37 @@
                             <span style="float: left;padding-top: 1%; margin-left: 1%">登陆</span>
                         </div>
                     </div>
+
                 </div>
             </nav>
+            <script type="text/javascript">
+                var nowType = getQueryString("nowType");
+
+                if(nowType == "login") {
+                    // 用户编号
+                    userNo = sessionStorage["toiletCatUserNo"];
+
+                    if(userNo == undefined) {
+                        userNo = getQueryString("userNo");
+                        getUserInfoByUserNo(userNo);
+                    }
+
+                    // 用户名
+                    userName = sessionStorage["toiletCatUserName"];
+                    // 用户游戏币数
+                    userCoin = sessionStorage["toiletCatUserCoin"];
+                    // 用户头像
+                    userImg = sessionStorage["toiletCatUserImg"];
+                    // 用户邀请码
+                    invitationCode = sessionStorage["toiletCatInvitationCode"];
+
+                    setUserInfo();
+
+                } else {
+                    // 用户自动登陆
+                    userAutoLogin();
+                }
+            </script>
             <div class="default-height">
             </div>
             <div id="banner-box" class="banner-box">
@@ -91,7 +97,7 @@
                         <img class="footer-img" src="/image/button/cat_phone_48_text.png" onclick="toUserToy()" />
                     </div>
                     <div class="footer-button" >
-                        <img class="footer-img" src="/image/button/cat_wizard_48_text.png" onclick="toRecharge()" />
+                        <img class="footer-img" src="/image/button/cat_wizard_48_text.png" onclick="recharge()" />
                     </div>
                     <div class="footer-button" >
                         <img class="footer-img" src="/image/button/cat_laptop_48_text.png" onclick="toUserIndex()" />
