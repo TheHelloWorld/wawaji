@@ -1,6 +1,3 @@
-// 每页数据数
-var userNo = "";
-
 var id = 0;
 
 var toyForCoin = 0;

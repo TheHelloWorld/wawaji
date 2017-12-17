@@ -3,8 +3,6 @@ var pageSize = 0;
 
 var nowPage = 1;
 
-var userNo = "";
-
 $(function() {
     // 用户编号
     checkSession();

@@ -15,7 +15,7 @@ function recharge(){
     str += "				<img src='/image/background/coin.ico' width=100% height=100% />";
     str += "			</div>";
     str += "			<div class='recharge-coin' >";
-    str += "				"+userCoin;
+    str += "				"+sessionStorage["toiletCatUserCoin"];
     str += "			</div>";
     str += "		</div>";
     str += "		<div class='clear:both'>";

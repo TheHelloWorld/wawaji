@@ -1,5 +1,3 @@
-// 用户编号
-var userNo = "";
 
 var returnUrl = "";
 

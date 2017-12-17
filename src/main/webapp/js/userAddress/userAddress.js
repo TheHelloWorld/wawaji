@@ -1,6 +1,3 @@
-// 用户编号
-var userNo = "";
-
 // 是否可以添加标志位
 var canAdd = true;
 
