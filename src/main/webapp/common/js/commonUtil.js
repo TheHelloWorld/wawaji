@@ -602,7 +602,7 @@ function getTotalCountAndPageSize(url) {
 
             } else {
 
-                totalPage = parseInt(totalCount / pageSize);
+                totalPage = parseInt(totalCount / pageSize) + 1;
             }
         }
     });

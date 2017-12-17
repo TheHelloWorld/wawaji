@@ -1,5 +1,5 @@
 // 每页数据数
-var pageSize = 0;
+var pageSize = 10;
 
 var nowPage = 1;
 
@@ -20,16 +20,18 @@ $(function() {
     // 分页获得所有用户可见游戏房间并展示
     getUserSeeGameRoomListByPage(nowPage);
 
-    $(window).scroll(
+    $("#loading").hide();
 
-        function() {
-            var scrollTop = $(this).scrollTop();
-            var scrollHeight = $(document).height();
-            var windowHeight = $(this).height();
-            if (scrollTop + windowHeight == scrollHeight) {
-                // 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
-                alert("弹弹弹");
-            }
+    var indexBodyDivHeight = $(".index-body-div").height();
+
+    var addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+
+    $(".index-body-div").scroll(function(){
+
+        if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
+            nextPage();
+            console.info($("#main").height());
+        }
     });
 
 });
@@ -97,7 +99,10 @@ function userAutoLogin() {
 function getUserSeeGameRoomListByPage(nowPage) {
 
     var startPage = (nowPage - 1) * pageSize;
-
+    var loading = " <div id='loading-div' style='text-align: center;height: 10%'>";
+    loading += "        <img src='/image/loading.gif' height='100%'>";
+    loading += "    </div>";
+    $("#main").append(loading);
     $.ajax({
         url:"/toiletCat/gameRoom/getUserSeeGameRoomListByPage.action",
         type:"POST",
@@ -149,6 +154,7 @@ function getUserSeeGameRoomListByPage(nowPage) {
                 }
             }
             $("#main").append(str);
+            $("#loading-div").remove();
         }
     });
 }
@@ -174,5 +180,10 @@ function toLoginPage() {
 
 function nextPage() {
     nowPage ++;
-    getUserSeeGameRoomListByPage(nowPage);
+    if(nowPage <= totalPage) {
+        getUserSeeGameRoomListByPage(nowPage);
+    } else {
+        nowPage = totalPage;
+    }
+
 }
