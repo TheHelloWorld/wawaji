@@ -1,3 +1,18 @@
+.recharge-first-line {
+    float: left;
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 100%;
+}
+
+.recharge-user-coin {
+    float: left;
+    background: white;
+    width: 25%;
+    border-radius: 1.25rem;
+    margin-left: 25%;
+}
+
 .recharge {
     z-index: 99;
     position: fixed;
@@ -11,6 +26,7 @@
     float: left;
     margin-top: 10%;
     margin-left: 5%;
+    font-size: 1.5rem;
 }
 
 .recharge-block {
@@ -37,7 +53,8 @@
 
 .recharge-coin-text {
     float: left;
-    margin-left: 5%;
-    font-size: 0.9375rem;
+    margin-left: 25%;
+    font-size: 1.5rem;
     color: #ccc;
+    width: 100%;
 }
