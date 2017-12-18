@@ -20,7 +20,6 @@ $(function() {
     
     // 根据用户编号和id获得记录信息
     getUserToyByUserNoAndId();
-    console.info(123)
 
 });
 
