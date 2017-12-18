@@ -12,6 +12,8 @@
         <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
         <!-- 玩具名称 -->
         <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
+        <!-- 玩具图片 -->
+        <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
         <!-- 抓取Id -->
         <result property="catchId" column="catch_id" jdbcType="VARCHAR"/>
         <!-- 抓取结果 -->
@@ -56,6 +58,8 @@
             (
             user_no,
             toy_no,
+            toy_name,
+            toy_img,
             catch_id,
             catch_result,
             catch_time,
@@ -65,6 +69,8 @@
             (
             #{userNo, jdbcType=VARCHAR},
             #{toyNo, jdbcType=VARCHAR},
+            #{toyName, jdbcType=VARCHAR},
+            #{toyImg, jdbcType=VARCHAR},
             #{catchId, jdbcType=VARCHAR},
             #{catchResult, jdbcType=INTEGER},
             #{catchTime, jdbcType=DATE},
@@ -94,9 +100,9 @@
             c.catch_result,
             c.catch_time,
             c.catch_status,
-            t.toy_img
-        from catch_record c, toy t
-        where c.toy_no = t.toy_no and c.user_no = #{userNo} order by c.create_time desc
+            c.toy_img
+        from catch_record c
+        where c.user_no = #{userNo} order by c.create_time desc
         limit #{startPage}, #{pageSize}
     </select>
 
@@ -110,9 +116,9 @@
             c.catch_result,
             c.catch_time,
             c.catch_status,
-            t.toy_img
-        from catch_record c, toy t
-        where c.toy_no = t.toy_no and c.user_no = #{userNo} and c.id = #{id} order by c.create_time desc
+            c.toy_img
+        from catch_record c
+        where c.user_no = #{userNo} and c.id = #{id} order by c.create_time desc
         limit #{startPage}, #{pageSize}
     </select>
 

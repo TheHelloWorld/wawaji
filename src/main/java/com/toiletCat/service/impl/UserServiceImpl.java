@@ -275,6 +275,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     catchRecord.setCatchResult(CatchResult.CATCH_WAIT.getStatus());
                     // 抓取状态
                     catchRecord.setCatchStatus(CatchStatus.NORMAL.getStatus());
+                    // 抓取时间
+                    catchRecord.setCatchTime(new Date());
 
                     catchRecordDao.addCatchRecord(catchRecord);
 
@@ -393,6 +395,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     catchRecord.setToyImg(userSeeGameRoom.getToyImg());
                     // 抓取结果 默认为等待
                     catchRecord.setCatchResult(CatchResult.CATCH_WAIT.getStatus());
+                    // 抓取时间
+                    catchRecord.setCatchTime(new Date());
                     // 抓取状态
                     catchRecord.setCatchStatus(CatchStatus.NORMAL.getStatus());
 
@@ -528,6 +532,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
         json.put("gameRoomNo", gameRoomNo);
+        json.put("catchId", catchId);
 
         return exec(new Callback() {
             @Override
