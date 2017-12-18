@@ -35,7 +35,7 @@ function getTotalCountAndPageSizeByUserNo() {
             }
 
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"]);
                 return;
             }
 
@@ -81,7 +81,7 @@ function getAllUserToyByUserNo() {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"]);
                 return;
             }
 

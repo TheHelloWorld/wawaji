@@ -2,6 +2,50 @@
     background: #FEFE9E;
 }
 
+.toiletCat-msg {
+    text-align: center;
+    background: black;
+    z-index: 900;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    opacity: 0.7;
+}
+
+.toiletCat-msg-div {
+    position:fixed;
+    z-index: 905;
+    text-align: center;
+    top:25%;
+    margin-left: 20%;
+    width: 60%;
+    border-radius: 0.9375rem;
+    background: white;
+    opacity: 1;
+}
+
+.toiletCat-msg-alert {
+    font-size: 2.25rem;
+    border-bottom: 0.0625rem solid saddlebrown;
+}
+
+.toiletCat-msg-text {
+    margin-top: 10%;
+    font-size: 3.25rem;
+    opacity: 1;
+}
+
+.toiletCat-msg-button {
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 10%;
+    font-size: 3.25rem;
+    background: yellowgreen;
+    border-radius: 0.9375rem;
+    opacity: 1;
+}
+
 .index-body-div {
     background: url("/image/background/background-img.png");
     background-size: 35% 35%;

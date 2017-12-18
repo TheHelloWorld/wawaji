@@ -41,7 +41,7 @@ function userAutoLogin() {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"]);
                 return;
             }
 
@@ -82,14 +82,14 @@ function userLoginOrRegister() {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"]);
                 return;
             }
 
             var result = data["result"];
 
             if(result == "验证码错误,请重试") {
-                alert(result);
+                toiletCatMsg(result);
                 return;
             }
 
@@ -122,7 +122,7 @@ function getAllMachineByPage(nowPage) {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"]);
                 return;
             }
 

@@ -833,3 +833,29 @@ function getUserInfoByUserNo(userNo) {
         }
     });
 }
+
+// 弹出提示框
+function toiletCatMsg(msg) {
+	var str = "	<div class='toiletCat-msg' >";
+
+	str += "	</div>";
+    str += "		<div class='toiletCat-msg-div'>";
+    str += "			<div class='toiletCat-msg-alert'>";
+    str += "				提示";
+    str += "			</div>";
+    str += "			<div class='toiletCat-msg-text'>";
+    str += 					msg;
+    str += "			</div>";
+    str += "			<div class='toiletCat-msg-button' onclick='closeToiletCatMsg()'>";
+    str += "				确定";
+    str += "			</div>";
+    str += "		</div>";
+	$("body").append(str);
+	$(".toiletCat-msg").height($("body").height());
+}
+
+// 关闭提示框
+function closeToiletCatMsg() {
+    $(".toiletCat-msg").remove();
+    $(".toiletCat-msg-div").remove();
+}

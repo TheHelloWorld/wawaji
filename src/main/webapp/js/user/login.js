@@ -87,12 +87,12 @@ function createCode() {
 function login() {
 
     if(!isNotNull("mobile")) {
-        alert("手机号不能为空");
+        toiletCatMsg("手机号不能为空");
         return;
     }
 
     if(!checkMobileNo("mobile")) {
-        alert("请填入正确的手机号");
+        toiletCatMsg("请填入正确的手机号");
         return;
     }
 
@@ -110,14 +110,14 @@ function validate() {
 
     // 若输入的验证码为空
     if(!isNotNull("checkCodeText")) {
-        alert("请输入验证码！");
+        toiletCatMsg("请输入验证码！");
         return;
     }
 
     // 若输入的验证码与产生的验证码不一致时
     if(inputCode != code) {
         // 则弹出验证码输入错误
-        alert("验证码输入错误!");
+        toiletCatMsg("验证码输入错误!");
         // 刷新验证码
         createCode();
         // 清空文本框
@@ -141,12 +141,12 @@ function validate() {
 function sendTextCode(o) {
 
     if(!isNotNull("mobile")) {
-        alert("手机号不能为空");
+        toiletCatMsg("手机号不能为空");
         return;
     }
 
     if(!checkMobileNo("mobile")) {
-        alert("请填入正确的手机号");
+        toiletCatMsg("请填入正确的手机号");
         return;
     }
 
@@ -195,7 +195,7 @@ function sendMobileText() {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"]);
             }
         }
     });
@@ -221,7 +221,7 @@ function loginOrRegister() {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"]);
                 return;
             }
 

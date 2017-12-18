@@ -35,7 +35,7 @@ function getUserAddress(id, userNo) {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"]);
                 return;
             }
 
@@ -86,12 +86,12 @@ function returnMethod() {
 function checkData() {
 
    if(!isNotNull("userName")) {
-       alert("请填写姓名");
+       toiletCatMsg("请填写姓名");
        return false;
 
    } else if(!checkMobileNo("mobileNo")) {
 
-       alert("请填写正确的手机号");
+       toiletCatMsg("请填写正确的手机号");
        return false;
 
    } else if(!checkLocation()) {
@@ -100,7 +100,7 @@ function checkData() {
 
    } else if(!isNotNull("address")) {
 
-       alert("请填写详细地址");
+       toiletCatMsg("请填写详细地址");
        return false;
 
    }
@@ -113,15 +113,15 @@ function checkData() {
 function checkLocation() {
 
     if($("#province").val() == "") {
-        alert("请选择省份");
+        toiletCatMsg("请选择省份");
         return false;
 
     } else if($("#city").val() == "") {
-        alert("请选择城市");
+        toiletCatMsg("请选择城市");
         return false;
 
     } else if($("#district").val() == "") {
-        alert("请选择地区");
+        toiletCatMsg("请选择地区");
         return false;
     }
     return true;

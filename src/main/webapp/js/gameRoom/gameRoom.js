@@ -30,7 +30,7 @@ $(function() {
 
         if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
             nextPage();
-            console.info($("#main").height());
+            addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
         }
     });
 
@@ -51,7 +51,7 @@ function userAutoLogin() {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"]);
                 return;
             }
 
@@ -118,7 +118,7 @@ function getUserSeeGameRoomListByPage(nowPage) {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"]);
                 return;
             }
 
