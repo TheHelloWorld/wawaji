@@ -103,7 +103,7 @@
     </select>
 
     <!-- 根据游戏房间编号获得房间幸运值及当前幸运值 -->
-    <select id="getLuckyNumByGameRoomNo" parameterType="java.lang.String" resultMap="userSeeGameRoomMap">
+    <select id="getLuckyNumByGameRoomNo" parameterType="java.lang.String" resultMap="gameRoomMap">
         select
           room_lucky_num,
           room_now_lucky_num,
@@ -181,7 +181,7 @@
     <!-- 累加游戏房间幸运值 -->
     <update id="addRoomLuckyNumByGameRoomNo" parameterType="java.lang.String">
         update game_room set
-          room_lucky_num = room_lucky_num + add_lucky_num
+          room_now_lucky_num = room_now_lucky_num + add_lucky_num
         where game_room_no = #{gameRoomNo, jdbcType=VARCHAR}
     </update>
 
