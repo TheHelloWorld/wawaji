@@ -285,12 +285,12 @@ function updateChoiceType() {
                 return;
             }
 
-            window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&id="+id;
+            window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
         }
     });
 }
 
 // 返回用户战利品也
 function returnMethod() {
-    window.location.href = "/toiletCat/userToy/userToy.html";
+    window.location.href = "/toiletCat/userToy/userToy.html?userNo="+userNo;
 }
