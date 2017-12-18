@@ -30,7 +30,7 @@
 
     <script type="text/javascript" src="/js/userToy/userToyDetail.js"></script>
 </head>
-    <body >
+    <body class="my-body">
         <div class="index-body-div">
             <nav class = "index-header default-height nav-center" >
                 <img class="return-button" id="returnButton" src="/image/background/returnButton.ico" onclick="returnMethod()" />
@@ -39,14 +39,23 @@
             <div class="default-height">
             </div>
             <div id="userToy" >
+                <div id="userToyInfo">
+                </div>
                 <div class="zzc" id="zzc" >
-                    <div id="userAddress">
+                    <div style="padding-top: 5%" id="userAddress">
                     </div>
                 </div>
-                <div id="choiceAddress">
+                <div style="padding-top: 5%" id="choiceAddress">
+                </div>
+                <div style="padding-top: 5%" id="unHandleUserToy">
                 </div>
 
             </div>
+            <div class="default-height">
+            </div>
+            <nav class = "index-footer default-height" onclick="updateChoiceType()" style="text-align: center;font-size: 2.5rem" >
+                确定
+            </nav>
         </div>
     </body>
 </html>

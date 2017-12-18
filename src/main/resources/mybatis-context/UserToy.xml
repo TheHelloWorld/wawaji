@@ -88,6 +88,16 @@
         where u.toy_no = t.toy_no and u.user_no = #{userNo} and u.id = #{id}
     </select>
 
+    <!-- 根据用户编号获得用户所有未处理战利品 -->
+    <select id="getAllUnHandleUserToyByUserNo" parameterType="java.lang.String" resultMap="userToyMap">
+        select
+            u.toy_no,
+            t.toy_img,
+            t.toy_name
+        from user_toy u,toy t
+        where u.toy_no = t.toy_no and u.user_no = #{userNo} and choice_type = 0
+    </select>
+
     <!-- 根据id,用户编号修改选择方式 -->
     <update id="updateChoiceTypeByIdAndUserNo" parameterType="com.toiletCat.entity.UserToy">
         update user_toy set

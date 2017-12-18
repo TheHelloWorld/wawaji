@@ -80,6 +80,21 @@ public class UserToyController {
 
         return JSONUtil.getReturnStrString(result, String.valueOf(result.getValue()));
     }
+
+    /**
+     * 根据用户编号获得用户所有未处理战利品
+     * @param userNo 用户编号
+     * @return
+     */
+    @RequestMapping(value = "/getAllUnHandleUserToyByUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getAllUnHandleUserToyByUserNo(String userNo) {
+
+        CommonResult<List<UserToy>> result = userToyService.getAllUnHandleUserToyByUserNo(userNo);
+
+        return JSONUtil.getReturnBeanString(result);
+    }
+
     /**
      * 根据用户编号.id修改战利品选择类型
      * @param userToyStr 用户玩具str

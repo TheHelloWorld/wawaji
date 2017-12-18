@@ -15,7 +15,19 @@ $(function() {
     getTotalCountAndPageSizeByUserNo();
     
     // 获得当前用户所有战利品
-    getAllUserToyByUserNo();
+    getAllUserToyByUserNo(nowPage);
+
+    var indexBodyDivHeight = $(".index-body-div").height();
+
+    var addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+
+    $(".index-body-div").scroll(function(){
+
+        if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
+            nextPage();
+            addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+        }
+    });
 
 });
 
@@ -53,14 +65,14 @@ function getTotalCountAndPageSizeByUserNo() {
 
             } else {
 
-                totalPage = parseInt(totalCount / pageSize);
+                totalPage = parseInt(totalCount / pageSize) +1;
             }
         }
     });
 }
 
 // 获得当前用户所有战利品
-function getAllUserToyByUserNo() {
+function getAllUserToyByUserNo(nowPage) {
 
     var startPage = (nowPage -1 ) * pageSize;
 
@@ -139,5 +151,14 @@ function returnMethod() {
 
         window.location.href = "/toiletCat/machineRoom/machineRoom.html?type=machineRoom&userNo="+userNo;
 
+    }
+}
+
+function nextPage() {
+    nowPage ++;
+    if(nowPage <= totalPage) {
+        getAllUserToyByUserNo(nowPage);
+    } else {
+        nowPage = totalPage;
     }
 }

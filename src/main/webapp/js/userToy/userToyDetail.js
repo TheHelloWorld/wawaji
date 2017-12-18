@@ -10,6 +10,8 @@ var userToyJson = {};
 
 var userAddressJson = {};
 
+var flag = true;
+
 $(function() {
     $("#zzc").hide();
 
@@ -110,7 +112,7 @@ function getUserToyByUserNoAndId() {
                 str += "</nav>";
             }
 
-            $("#zzc").before(str);
+            $("#userToyInfo").append(str);
         }
     });
 }
@@ -185,8 +187,6 @@ function getAllUserAddressByUserNo(userNo) {
             var str = "";
 
             for(var i = 0; i<list.length; i++) {
-                str += "<label style='width: 100%;'>";
-                str += "<input type='radio' name='userAddress' onclick='clickAddress(this)' value='"+list[i]["id"]+"' />";
 
                 var userAddressClass = "user-address-line-default";
 
@@ -217,31 +217,71 @@ function getAllUserAddressByUserNo(userNo) {
                 }
 
                 str += "</div>";
-                str += "</label>";
-
             }
 
             $("#userAddress").append(str);
 
             $("#zzc").show();
         }
-
     });
 }
 
 // 点击地址
 function clickAddress(id) {
-    $(".user-address-line").attr("'class", "user-address-line-default");
-    $("#userAddress"+id).attr("'class", "user-address-line");
+    $("#userToyInfo").hide();
+    $(".user-address-line").attr("class", "user-address-line-default");
+    $("#userAddress"+id).attr("class", "user-address-line");
     $("#zzc").hide();
     $("#choiceAddress").html("");
-    $("#choiceAddress").append($("#userAddress"+id).html());
-    $("#choiceAddress").append("<a href='javascript:void(0);' onclick='reChoiceAddress()'>重新选择>></a>");
+    $("#choiceAddress").append($("#userAddress"+id).clone());
+    $("#choiceAddress").append("<a style='padding-top: 2%;padding-left: 2%' href='javascript:void(0);' onclick='reChoiceAddress()'>重新选择>></a>");
+
+    if(flag) {
+        getAllUnHandleUserToyByUserNo();
+    }
+
 }
 
 // 重新选择地址
 function reChoiceAddress() {
     $("#zzc").show();
+}
+
+// 获得用户所有未处理战利品
+function getAllUnHandleUserToyByUserNo() {
+
+    $.ajax({
+        url:"/toiletCat/userToy/getAllUnHandleUserToyByUserNo.action",
+        type:"POST",
+        async:false,
+        data:{
+            userNo:userNo
+        },
+        success:function(data){
+
+            // 转换数据
+            if(typeof(data) == "string") {
+                data = eval("("+data+")");
+            }
+
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+                toiletCatMsg(data["result"]);
+                return;
+            }
+
+            var list = data["result"];
+            var str = "";
+
+            console.info(list);
+            flag = false;
+            for(var i = 0; i<list.length; i++) {
+
+
+
+            }
+        }
+    });
 }
 
 // 修改选择方式

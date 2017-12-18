@@ -200,6 +200,24 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
     }
 
+    /**
+     * 根据用户编号获得用户所有未处理战利品
+     * @param userNo 用户编号
+     * @return
+     */
+    @Override
+    public CommonResult<List<UserToy>> getAllUnHandleUserToyByUserNo(final String userNo) {
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userToyDao.getAllUnHandleUserToyByUserNo(userNo));
+            }
+        }, "getAllUnHandleUserToyByUserNo", json.toJSONString());
+    }
+
     @Override
     protected Logger getLogger() {
         return logger;

@@ -185,5 +185,4 @@ function nextPage() {
     } else {
         nowPage = totalPage;
     }
-
 }
