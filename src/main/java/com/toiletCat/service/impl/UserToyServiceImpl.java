@@ -52,6 +52,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
         return exec(new Callback() {
             @Override
             public void exec() {
+                userToy.setDeliverId(0L);
                 userToyDao.addUserToy(userToy);
             }
         }, "addUserToy", JSON.toJSONString(userToy));
