@@ -91,6 +91,7 @@
     <!-- 根据用户编号获得用户所有未处理战利品 -->
     <select id="getAllUnHandleUserToyByUserNo" parameterType="java.lang.String" resultMap="userToyMap">
         select
+            u.id,
             u.toy_no,
             t.toy_img,
             t.toy_name

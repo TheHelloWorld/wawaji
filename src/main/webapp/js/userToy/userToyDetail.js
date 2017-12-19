@@ -10,6 +10,8 @@ var userToyJson = {};
 
 var userAddressJson = {};
 
+var userAddressId = 0;
+
 var flag = true;
 
 $(function() {
@@ -228,6 +230,9 @@ function getAllUserAddressByUserNo(userNo) {
 
 // 点击地址
 function clickAddress(id) {
+
+    userAddressId = id;
+
     $("#userToyInfo").hide();
     $(".user-address-line").attr("class", "user-address-line-default");
     $("#userAddress"+id).attr("class", "user-address-line");
@@ -281,13 +286,14 @@ function getAllUnHandleUserToyByUserNo() {
                 }
 
                 if(i % 2 == 0) {
-                    str += "<div class='machine-col-xs-6-left' onclick='toUserToyDetail("+list[i]["id"]+")' >";
+                    str += "<div class='machine-col-xs-6-left' >";
                 } else if(i % 2 != 0) {
-                    str += "<div class='machine-col-xs-6-right' onclick='toUserToyDetail("+list[i]["id"]+")' >";
+                    str += "<div class='machine-col-xs-6-right' >";
                 }
 
                 str += "<label>";
-                str += "    <input type='checkbox' name='unHandleToy' value='"+list[i]["toyName"]+"'>";
+                str += "    <input type='checkbox' name='unHandleToy' value='"+list[i]["id"]+"' >";
+                str += "    <input type='hidden' id='unHandleToy"+list[i]["id"]+"' value='"+list[i]["toyName"]+"' >";
                 str += "    <div class='machine-panel panel-info'>";
                 str += "        <div class='panel-body'>";
                 str += "            <div class='toy-img index-img'>"
@@ -322,37 +328,56 @@ function updateChoiceType() {
     var userToyStr = JSON.stringify(userToyJson);
 
     if($("#choiceType").val() == 2) {
-        var userAddressId = $('input:radio:checked').val();
+
+        var userToyIdJson = [];
+        var userToyNameJson = [];
+
         userAddressJson["userName"] = $("#userName"+userAddressId).val();
         userAddressJson["mobileNo"] = $("#mobileNo"+userAddressId).val();
         userAddressJson["address"] = $("#province"+userAddressId).val() + $("#address"+userAddressId).val();
+
+        var obj = document.getElementsByName('unHandleToy');
+        for(var i = 0;i<obj.length; i++) {
+            if(obj[i].checked) {
+
+                userToyIdJson.push(obj[i].value);
+
+                userToyNameJson.push($("#unHandleToy"+obj[i].value).val());
+
+            }
+
+        }
+
+        console.info("userToyIdJson" + userToyIdJson);
+        console.info("userToyNameJson" + userToyNameJson);
+
     }
 
     var userAddressStr = JSON.stringify(userAddressJson);
 
-    $.ajax({
-        url:"/toiletCat/userToy/updateChoiceTypeByIdAndUserNo.action",
-        type:"POST",
-        async:false,
-        data:{
-            userToyStr:userToyStr,
-            userAddressStr:userAddressStr
-        },
-        success:function (data) {
-            // 转换数据
-            if(typeof(data) == "string") {
-                data = eval("("+data+")");
-            }
-
-            // 判断是否成功
-            if(data["is_success"] != "success") {
-                toiletCatMsg(data["result"]);
-                return;
-            }
-
-            window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
-        }
-    });
+    // $.ajax({
+    //     url:"/toiletCat/userToy/updateChoiceTypeByIdAndUserNo.action",
+    //     type:"POST",
+    //     async:false,
+    //     data:{
+    //         userToyStr:userToyStr,
+    //         userAddressStr:userAddressStr
+    //     },
+    //     success:function (data) {
+    //         // 转换数据
+    //         if(typeof(data) == "string") {
+    //             data = eval("("+data+")");
+    //         }
+    //
+    //         // 判断是否成功
+    //         if(data["is_success"] != "success") {
+    //             toiletCatMsg(data["result"]);
+    //             return;
+    //         }
+    //
+    //         window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
+    //     }
+    // });
 }
 
 // 返回用户战利品也
