@@ -16,6 +16,7 @@ import com.toiletCat.entity.UserToy;
 import com.toiletCat.enums.*;
 import com.toiletCat.service.UserToyService;
 import com.toiletCat.utils.DateUtil;
+import com.toiletCat.utils.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +115,12 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
         return exec(new Callback() {
             @Override
             public void exec() {
-                got(userToyDao.getUserToyByUserNoAndId(userNo, id));
+                PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
+                Integer deliverCoin = Integer.valueOf(systemProperties.getProperty("user_deliver_coin"));
+                UserToy userToy = userToyDao.getUserToyByUserNoAndId(userNo, id);
+                // 设置邮寄所需游戏币数
+                userToy.setDeliverCoin(deliverCoin);
+                got(userToy);
             }
         },"getUserToyByUserNoAndId", json.toJSONString());
     }
@@ -158,6 +164,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                         nowUserToy.setDeliverId(deliver.getId());
                         nowUserToy.setId(id);
                         nowUserToy.setUserNo(userNo);
+                        nowUserToy.setChoiceType(choiceType);
                         userToyDao.updateChoiceTypeByIdAndUserNo(nowUserToy);
                     }
 
@@ -188,29 +195,6 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
             }
         }, "updateChoiceTypeByIdAndUserNo", JSON.toJSONString(userToy));
-    }
-
-    /**
-     * 根据用id,用户编号修改处理状态
-     * @param handleStatus 处理状态
-     * @param id id
-     * @param userNo 用户编号
-     */
-    @Override
-    public CommonResult updateHandleStatusByIdAndUserNo(final Integer handleStatus, final Long id, final String userNo) {
-
-        JSONObject json = new JSONObject();
-        json.put("handleStatus", HandleStatus.getValueMapByKey(handleStatus).name());
-        json.put("id", id);
-        json.put("userNo", userNo);
-
-        return exec(new Callback() {
-            @Override
-            public void exec() {
-                userToyDao.updateHandleStatusByIdAndUserNo(handleStatus, id, userNo);
-            }
-        }, "updateHandleStatusByIdAndUserNo", json.toJSONString());
-
     }
 
     /**

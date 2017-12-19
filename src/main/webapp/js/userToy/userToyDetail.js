@@ -12,6 +12,10 @@ var userAddressId = 0;
 
 var deliverId = 0;
 
+var deliverCoin = 0;
+
+var userCoin = 0;
+
 var flag = true;
 
 $(function() {
@@ -20,6 +24,9 @@ $(function() {
 
     // 用户编号
     checkSession();
+
+    // 用户游戏币数
+    userCoin = sessionStorage["toiletCatUserCoin"];
 
     id = getQueryString("id");
     
@@ -63,6 +70,8 @@ function getUserToyByUserNoAndId() {
             handleStatus = result["handleStatus"];
 
             deliverId = result["deliverId"];
+
+            deliverCoin = result["deliverCoin"];
 
             var str = " <div class='row'>";
             str += "        <div class='user-toy-div'>";
@@ -108,6 +117,8 @@ function getUserToyByUserNoAndId() {
 }
 
 function getDeliverByIdAndUserNo(str,id) {
+    console.info("deliverId:"+id);
+
     $.ajax({
         url:"/toiletCat/deliver/getDeliverByIdAndUserNo.action",
         type:"POST",
@@ -130,15 +141,16 @@ function getDeliverByIdAndUserNo(str,id) {
             }
 
             var result = data["result"];
+            console.info(result);
             if(result["deliverStatus"] == 0) {
                 str += "<span>待发货</span>";
             } else {
                 str += "<span>已发货</span>";
+                str += "<div>";
+                str += "    <div class='col-xs-5 user-toy-left user-toy-text-status'>发货单号:"+result["deliverNo"]+"</div>";
+                str += "    <div class='col-xs-5 user-toy-right user-toy-text-status'>快递公司:"+result["company"]+"</div>";
+                str += "</div>";
             }
-            str += "<div>";
-            str += "    <div class='col-xs-5 user-toy-left user-toy-text-status'>发货单号:"+result["deliverNo"]+"</div>";
-            str += "    <div class='col-xs-5 user-toy-right user-toy-text-status'>快递公司:"+result["company"]+"</div>";
-            str += "</div>";
 
             return str;
         }
@@ -293,7 +305,7 @@ function getAllUnHandleUserToyByUserNo() {
                 str += "    <input type='hidden' id='unHandleToy"+list[i]["id"]+"' value='"+list[i]["toyName"]+"' >";
                 str += "    <div class='machine-panel panel-info'>";
                 str += "        <div class='panel-body'>";
-                str += "            <div class='toy-img index-img'>"
+                str += "            <div class='toy-img index-img'>";
                 str += "                <img height='100px' width=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
                 str += "            </div>";
                 str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
@@ -359,6 +371,11 @@ function updateChoiceType() {
 
         if(count < 3) {
             toiletCatMsg("三个以上才包邮喵");
+
+            if(userCoin < deliverCoin) {
+                toiletCatMsg("游戏币不足QAQ 请充值喵");
+                recharge();
+            }
         }
 
         userToyJson["userToyIds"] = userToyIdJson;

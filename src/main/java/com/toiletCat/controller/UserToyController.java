@@ -136,7 +136,7 @@ public class UserToyController {
             }
 
             for(Object obj : userToyIdArray) {
-                userToyIdList.add(Long.valueOf(JSONObject.parseObject(String.valueOf(obj)).getString("toyName")));
+                userToyIdList.add(Long.valueOf(JSONObject.parseObject(String.valueOf(obj)).getString("userToyId")));
             }
 
             toyNameArray = toyNameArrayBuilder.toString().
@@ -154,22 +154,6 @@ public class UserToyController {
         UserToy userToy = JSON.parseObject(userToyStr, UserToy.class);
 
         CommonResult result =  userToyService.updateChoiceTypeByIdAndUserNo(userToy, userAddress, toyNameArray, userToyIdList);
-
-        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
-    }
-
-    /**
-     * 根据用户编号.id修改战利品处理状态
-     * @param handleStatus 处理状态
-     * @param id id
-     * @param userNo 用户编号
-     * @return
-     */
-    @RequestMapping(value = "/updateHandleStatusByIdAndUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    @ResponseBody
-    public String updateHandleStatusByIdAndUserNo(Integer handleStatus, Long id, String userNo) {
-
-        CommonResult result =  userToyService.updateHandleStatusByIdAndUserNo(handleStatus, id, userNo);
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }

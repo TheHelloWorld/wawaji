@@ -66,14 +66,14 @@ public class DeliverController {
     /**
      * 根据id和用户编号获得发货记录
      * @param id id
-     * @param dataNo 用户编号
+     * @param userNo 用户编号
      * @return
      */
     @RequestMapping(value = "/getDeliverByIdAndUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String getDeliverByIdAndUserNo(Long id, String dataNo) {
+    public String getDeliverByIdAndUserNo(Long id, String userNo) {
 
-        CommonResult<Deliver> result = deliverService.getDeliverByIdAndUserNo(id, dataNo);
+        CommonResult<Deliver> result = deliverService.getDeliverByIdAndUserNo(id, userNo);
 
         return JSONUtil.getReturnStrString(result, String.valueOf(result.getValue()));
     }

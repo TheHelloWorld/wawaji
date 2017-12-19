@@ -46,15 +46,7 @@ public interface UserToyService {
      */
     CommonResult updateChoiceTypeByIdAndUserNo(UserToy userToy, UserAddress userAddress, String toyNameArray,
                                                List<Long> userToyIdList);
-
-    /**
-     * 根据用id,用户编号修改处理状态
-     * @param handleStatus 处理状态
-     * @param id id
-     * @param userNo 用户编号
-     */
-    CommonResult updateHandleStatusByIdAndUserNo(Integer handleStatus, Long id, String userNo);
-
+    
     /**
      * 根据用户编号获得用户所有未处理战利品
      * @param userNo 用户编号

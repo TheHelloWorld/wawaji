@@ -46,6 +46,11 @@ public class UserToy extends BaseEntity implements Serializable {
      */
     private Integer toyForCoin;
 
+    /**
+     * 寄送娃娃所需游戏币数
+     */
+    private Integer deliverCoin;
+
     public String getUserNo() {
         return userNo;
     }
@@ -100,5 +105,13 @@ public class UserToy extends BaseEntity implements Serializable {
 
     public void setToyForCoin(Integer toyForCoin) {
         this.toyForCoin = toyForCoin;
+    }
+
+    public Integer getDeliverCoin() {
+        return deliverCoin;
+    }
+
+    public void setDeliverCoin(Integer deliverCoin) {
+        this.deliverCoin = deliverCoin;
     }
 }
