@@ -533,6 +533,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         json.put("userNo", userNo);
         json.put("gameRoomNo", gameRoomNo);
         json.put("catchId", catchId);
+        json.put("status", status);
 
         return exec(new Callback() {
             @Override
@@ -591,26 +592,44 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     userNowLuckyNum = userGameLucyNumResult.getValue();
                 }
 
+                logger.info("getGameCatchResultByUserNoAndGameRoomNo userLucKyNum:" + userLucKyNum +
+                        ",userNowLuckyNum:" + userNowLuckyNum + ",status:" + status);
+
                 // 用户房间幸运值大于等于最大用户房间幸运值
                 if(userLucKyNum + userNowLuckyNum >= BaseConstant.MAX_USER_ROOM_LUCKY_NUM && status > 0) {
+
+                    logger.info("getGameCatchResultByUserNoAndGameRoomNo 用户幸运值封顶");
+
                     // 重置房间和用户房间幸运值
                     got(resetLuckyNum(catchId, userNo, gameRoomNo, roomAddLuckyNum));
                     return;
                 }
 
+                logger.info("getGameCatchResultByUserNoAndGameRoomNo roomNowLuckyNum:" + gameRoom.getRoomNowLuckyNum() +
+                        ",roomAddLuckyNum:" + roomAddLuckyNum + ",status:" + status);
+
                 // 若房间幸运值大于等于最大房间幸运值
                 if(gameRoom.getRoomNowLuckyNum() + roomAddLuckyNum >= gameRoom.getRoomLuckyNum() && status > 0) {
+
+                    logger.info("getGameCatchResultByUserNoAndGameRoomNo 房间幸运值封顶");
+
                     // 重置房间和用户房间幸运值
                     got(resetLuckyNum(catchId, userNo, gameRoomNo, roomAddLuckyNum));
                     return;
                 }
 
                 if(userLucKyNum + userNowLuckyNum < BaseConstant.MAX_USER_ROOM_LUCKY_NUM) {
+
+                    logger.info("getGameCatchResultByUserNoAndGameRoomNo addUserRoomLuckyNumByUserNoAndGameRoomNo");
+
                     // 累加用户房间幸运值
                     userGameRoomService.addUserRoomLuckyNumByUserNoAndGameRoomNo(userNo, gameRoomNo, userLucKyNum);
                 }
 
                 if(gameRoom.getRoomNowLuckyNum() + roomAddLuckyNum < gameRoom.getRoomLuckyNum()) {
+
+                    logger.info("getGameCatchResultByUserNoAndGameRoomNo addRoomLuckyNumByGameRoomNo");
+
                     // 累加游戏房间幸运值
                     gameRoomService.addRoomLuckyNumByGameRoomNo(gameRoomNo);
                 }
