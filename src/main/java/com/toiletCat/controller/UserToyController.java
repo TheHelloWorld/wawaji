@@ -113,7 +113,8 @@ public class UserToyController {
         JSONObject userToyJSON = JSONObject.parseObject(userToyStr);
 
         // 玩具名集合
-        StringBuilder toyNameArrayBuilder = new StringBuilder("");
+        String toyNameArray = null;
+
 
         // 要更改的用户战利品id
         List<Long> userToyIdList = new ArrayList<>();
@@ -127,6 +128,8 @@ public class UserToyController {
 
             JSONArray userToyNameArray = JSONArray.parseArray(userToyJSON.getString("userToyNames"));
 
+            StringBuilder toyNameArrayBuilder = new StringBuilder("");
+
             for(Object obj : userToyNameArray) {
                 toyNameArrayBuilder.append(JSONObject.parseObject(String.valueOf(obj)).getString("toyName"));
                 toyNameArrayBuilder.append(",");
@@ -136,7 +139,7 @@ public class UserToyController {
                 userToyIdList.add(Long.valueOf(JSONObject.parseObject(String.valueOf(obj)).getString("toyName")));
             }
 
-            String toyNameArray = toyNameArrayBuilder.toString().
+            toyNameArray = toyNameArrayBuilder.toString().
                     substring(0, toyNameArrayBuilder.toString().length() - 1);
 
             // 去除多余key
@@ -150,7 +153,7 @@ public class UserToyController {
 
         UserToy userToy = JSON.parseObject(userToyStr, UserToy.class);
 
-        CommonResult result =  userToyService.updateChoiceTypeByIdAndUserNo(userToy, userAddress);
+        CommonResult result =  userToyService.updateChoiceTypeByIdAndUserNo(userToy, userAddress, toyNameArray, userToyIdList);
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
