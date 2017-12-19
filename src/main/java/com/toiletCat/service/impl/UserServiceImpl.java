@@ -605,8 +605,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     return;
                 }
 
-                // 累加用户房间幸运值
-                userGameRoomService.addUserRoomLuckyNumByUserNoAndGameRoomNo(userNo, gameRoomNo, userLucKyNum);
+                if(userLucKyNum + userNowLuckyNum < BaseConstant.MAX_USER_ROOM_LUCKY_NUM) {
+                    // 累加用户房间幸运值
+                    userGameRoomService.addUserRoomLuckyNumByUserNoAndGameRoomNo(userNo, gameRoomNo, userLucKyNum);
+                }
 
                 if(gameRoom.getRoomNowLuckyNum() + roomAddLuckyNum < gameRoom.getRoomLuckyNum()) {
                     // 累加游戏房间幸运值
