@@ -153,7 +153,7 @@ function getUserSeeGameRoomListByPage(nowPage) {
                 str += "    </div>";
                 str += "</div>";
 
-                if(i % 2 != 0) {
+                if(i % 2 != 0 || i == list.length - 1) {
                     str += "</div>";
                 }
             }

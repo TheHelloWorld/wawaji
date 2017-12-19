@@ -104,7 +104,6 @@ function getAllUserToyByUserNo(nowPage) {
 
                 if(i % 2 == 0) {
                     str += "<div class='row' style='margin-bottom: 5px'>";
-
                 }
 
                 if(i % 2 == 0) {
@@ -126,7 +125,7 @@ function getAllUserToyByUserNo(nowPage) {
                 str += "    </div>";
                 str += "</div>";
 
-                if(i % 2 != 0) {
+                if(i % 2 != 0 || i == list.length - 1) {
                     str += "</div>";
                 }
             }

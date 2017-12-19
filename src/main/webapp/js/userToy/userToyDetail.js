@@ -142,8 +142,8 @@ function getDeliverByIdAndUserNo(str,id) {
             var result = data["result"];
 
             str += "<div>";
-            str += "<div class='col-xs-5 user-toy-left user-toy-text-status'>发货单号:"+result["deliverNo"]+"</div>";
-            str += "<div class='col-xs-5 user-toy-right user-toy-text-status'>快递公司:"+result["company"]+"</div>";
+            str += "    <div class='col-xs-5 user-toy-left user-toy-text-status'>发货单号:"+result["deliverNo"]+"</div>";
+            str += "    <div class='col-xs-5 user-toy-right user-toy-text-status'>快递公司:"+result["company"]+"</div>";
             str += "</div>";
 
             return str;
@@ -273,13 +273,39 @@ function getAllUnHandleUserToyByUserNo() {
             var list = data["result"];
             var str = "";
 
-            console.info(list);
             flag = false;
             for(var i = 0; i<list.length; i++) {
 
+                if(i % 2 == 0) {
+                    str += "<div class='row' style='margin-bottom: 5px'>";
+                }
 
+                if(i % 2 == 0) {
+                    str += "<div class='machine-col-xs-6-left' onclick='toUserToyDetail("+list[i]["id"]+")' >";
+                } else if(i % 2 != 0) {
+                    str += "<div class='machine-col-xs-6-right' onclick='toUserToyDetail("+list[i]["id"]+")' >";
+                }
+
+                str += "<label>";
+                str += "    <input type='checkbox' name='unHandleToy' value='"+list[i]["toyName"]+"'>";
+                str += "    <div class='machine-panel panel-info'>";
+                str += "        <div class='panel-body'>";
+                str += "            <div class='toy-img index-img'>"
+                str += "                <img height='100px' width=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
+                str += "            </div>";
+                str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
+                str += "        </div>";
+                str += "    </div>";
+                str += "</label>";
+                str += "</div>";
+
+                if(i % 2 != 0 || i == list.length - 1) {
+                    str += "</div>";
+                }
 
             }
+
+            $("#unHandleUserToy").append(str);
         }
     });
 }
