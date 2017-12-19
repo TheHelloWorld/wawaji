@@ -14,6 +14,8 @@ import com.toiletCat.entity.UserAddress;
 import com.toiletCat.entity.UserSpendRecord;
 import com.toiletCat.entity.UserToy;
 import com.toiletCat.enums.*;
+import com.toiletCat.service.UserService;
+import com.toiletCat.service.UserSpendRecordService;
 import com.toiletCat.service.UserToyService;
 import com.toiletCat.utils.DateUtil;
 import com.toiletCat.utils.PropertiesUtil;
@@ -157,6 +159,28 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                     deliver.setDeliverStatus(DeliverStatus.INIT.getStatus());
 
                     deliverDao.addDeliver(deliver);
+
+                    // 若寄送娃娃少于3个则扣除相应游戏币作为邮寄费
+                    if(userToyIdList.size() < 3) {
+                        // 获取邮寄费
+                        PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
+                        Integer deliverCoin = Integer.valueOf(systemProperties.getProperty("user_deliver_coin"));
+                        userDao.updateUserCoinByUserNo(-deliverCoin, userNo);
+
+                        logger.info("updateChoiceTypeByIdAndUserNo 扣除用户邮寄费游戏币成功");
+                        UserSpendRecord userSpendRecord = new UserSpendRecord();
+
+                        userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
+                        userSpendRecord.setTradeType(TradeType.DELIVER_COIN.getType());
+                        userSpendRecord.setTradeTime(new Date());
+                        userSpendRecord.setTradeDate(DateUtil.getDate());
+                        userSpendRecord.setUserNo(userNo);
+                        userSpendRecord.setCoin(deliverCoin);
+
+                        userSpendRecordDao.addUserSpendRecord(userSpendRecord);
+
+                        logger.info("updateChoiceTypeByIdAndUserNo 添加用户消费记录成功");
+                    }
 
                     for(Long id : userToyIdList) {
 

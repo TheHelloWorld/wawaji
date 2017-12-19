@@ -12,7 +12,8 @@ public enum TradeType {
     RECHARGE(0, "充值"),
     REFUND(1, "退款"),
     TOY_FOR_COIN(2, "玩具兑换游戏币"),
-    SPEND(3, "消费");
+    SPEND(3, "消费"),
+    DELIVER_COIN(4, "邮寄费用");
 
     /**
      * 类型

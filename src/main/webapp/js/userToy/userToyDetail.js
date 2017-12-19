@@ -22,8 +22,12 @@ $(function() {
 
     $("#zzc").hide();
 
+    $("#submitButton").hide();
+
     // 用户编号
     checkSession();
+
+
 
     // 用户游戏币数
     userCoin = sessionStorage["toiletCatUserCoin"];
@@ -92,7 +96,7 @@ function getUserToyByUserNoAndId() {
             str += "        <div class='col-xs-5 user-toy-left user-toy-text-status'>";
             str += "            <span>状态:</span>";
             str += "        </div>";
-            str += "        <div class='col-xs-5 user-toy-right user-toy-text-left'>";
+            str += "        <div class='col-xs-5 user-toy-right user-toy-text-left' style='font-size: 1.5rem;color: #666615;'>";
 
             if (result["choiceType"] == 0) {
                 str += "<select id='choiceType' class='user-toy-select' onchange='choiceDeliver()'>";
@@ -100,15 +104,15 @@ function getUserToyByUserNoAndId() {
                 str += "    <option value='1'>兑换成"+result["toyForCoin"]+"个游戏币</option>";
                 str += "    <option value='2'>寄送</option>";
                 str += "</select>";
+
             } else if (result["choiceType"] == 1) {
 
                 str += "<span>已兑换"+result["toyForCoin"]+"个游戏币</span>";
 
             } else if (result["choiceType"] == 2) {
-
-                str += getDeliverByIdAndUserNo(str, result["deliverId"]);
+                str += getDeliverByIdAndUserNo(result["deliverId"]);
             }
-            str += "        </div>";
+
             str += "    </div>";
 
             $("#userToyInfo").append(str);
@@ -116,8 +120,9 @@ function getUserToyByUserNoAndId() {
     });
 }
 
-function getDeliverByIdAndUserNo(str,id) {
-    console.info("deliverId:"+id);
+function getDeliverByIdAndUserNo(id) {
+
+    var deliverStr = "";
 
     $.ajax({
         url:"/toiletCat/deliver/getDeliverByIdAndUserNo.action",
@@ -141,26 +146,39 @@ function getDeliverByIdAndUserNo(str,id) {
             }
 
             var result = data["result"];
-            console.info(result);
-            if(result["deliverStatus"] == 0) {
-                str += "<span>待发货</span>";
-            } else {
-                str += "<span>已发货</span>";
-                str += "<div>";
-                str += "    <div class='col-xs-5 user-toy-left user-toy-text-status'>发货单号:"+result["deliverNo"]+"</div>";
-                str += "    <div class='col-xs-5 user-toy-right user-toy-text-status'>快递公司:"+result["company"]+"</div>";
-                str += "</div>";
+
+            if(typeof(result) == "string") {
+                result = eval("("+result+")");
             }
 
-            return str;
+            if(result["deliverStatus"] == 0) {
+                deliverStr += "<span>待发货</span>";
+                deliverStr += "</div>";
+            } else {
+                deliverStr += "<span>已发货</span>";
+                deliverStr += "</div>";
+                deliverStr += "<div style='margin-top: 10%;font-size: 1.5rem;color: #666615;'>";
+                deliverStr += "    <div class='col-xs-5 user-toy-left user-toy-text-status'>发货单号:</div>";
+                deliverStr += "    <div class='col-xs-5 user-toy-right user-toy-text-status'>快递公司:</div>";
+                deliverStr += "    <div class='col-xs-5 user-toy-left user-toy-text-status'>"+result["deliverNo"]+"</div>";
+
+                deliverStr += "    <div class='col-xs-5 user-toy-right user-toy-text-status'>"+result["company"]+"</div>";
+                deliverStr += "</div>";
+            }
+
         }
     });
+    return deliverStr;
 }
 
 function choiceDeliver() {
     // 如果是寄送
     if($("#choiceType").val() == "2") {
         getAllUserAddressByUserNo(userNo);
+        $("#submitButton").show();
+    } else if($("#choiceType").val() == "1"){
+        $("#userAddress").html("");
+        $("#submitButton").show();
     } else {
         $("#userAddress").html("");
     }
