@@ -30,6 +30,16 @@ public class Deliver extends BaseEntity implements Serializable {
     private String address;
 
     /**
+     * 娃娃信息
+     */
+    private String toyNameArray;
+
+    /**
+     * 用户战利品id集合
+     */
+    private String userToyIdArray;
+
+    /**
      * 发货单号
      */
     private String deliverNo;
@@ -79,6 +89,22 @@ public class Deliver extends BaseEntity implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getToyNameArray() {
+        return toyNameArray;
+    }
+
+    public void setToyNameArray(String toyNameArray) {
+        this.toyNameArray = toyNameArray;
+    }
+
+    public String getUserToyIdArray() {
+        return userToyIdArray;
+    }
+
+    public void setUserToyIdArray(String userToyIdArray) {
+        this.userToyIdArray = userToyIdArray;
     }
 
     public String getDeliverNo() {

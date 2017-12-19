@@ -122,9 +122,12 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
      * 根据id,用户编号修改选择方式
      * @param userToy 用户玩具
      * @param userAddress 用户地址
+     * @param toyNameArray 玩具名集合
+     * @param userToyIdList 用户战利品id集合
      */
     @Override
-    public CommonResult updateChoiceTypeByIdAndUserNo(final UserToy userToy, final UserAddress userAddress) {
+    public CommonResult updateChoiceTypeByIdAndUserNo(final UserToy userToy, final UserAddress userAddress,
+                                                      final String toyNameArray, final List<Long> userToyIdList) {
 
         return exec(new Callback() {
             @Override
@@ -139,6 +142,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                 if(ChoiceType.FOR_DELIVER.getStatus() == choiceType) {
 
                     Deliver deliver = new Deliver();
+                    deliver.setToyNameArray(toyNameArray);
                     deliver.setUserNo(userNo);
                     deliver.setAddress(userAddress.getAddress());
                     deliver.setMobileNo(userAddress.getMobileNo());
@@ -147,8 +151,15 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                     deliverDao.addDeliver(deliver);
 
-                    userToy.setDeliverId(deliver.getId());
-                    userToy.setHandleStatus(HandleStatus.WAIT_DELIVER.getStatus());
+                    for(Long id : userToyIdList) {
+
+                        UserToy nowUserToy = new UserToy();
+                        nowUserToy.setDeliverId(deliver.getId());
+                        nowUserToy.setHandleStatus(HandleStatus.WAIT_DELIVER.getStatus());
+                        nowUserToy.setId(id);
+                        nowUserToy.setUserNo(userNo);
+                        userToyDao.updateChoiceTypeByIdAndUserNo(userToy);
+                    }
 
                 } else if(ChoiceType.FOR_COIN.getStatus() == choiceType) {
                     // 添加相应的游戏币给用户
@@ -169,9 +180,11 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                     userSpendRecord.setTradeType(TradeType.TOY_FOR_COIN.getType());
 
                     userSpendRecordDao.addUserSpendRecord(userSpendRecord);
+
+                    userToyDao.updateChoiceTypeByIdAndUserNo(userToy);
                 }
 
-                userToyDao.updateChoiceTypeByIdAndUserNo(userToy);
+
 
             }
         }, "updateChoiceTypeByIdAndUserNo", JSON.toJSONString(userToy));

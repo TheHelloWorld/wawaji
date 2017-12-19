@@ -41,8 +41,11 @@ public interface UserToyService {
      * 根据id,用户编号修改选择方式
      * @param userToy 用户玩具
      * @param userAddress 用户地址
+     * @param toyNameArray 玩具名集合
+     * @param userToyIdList 用户战利品id集合
      */
-    CommonResult updateChoiceTypeByIdAndUserNo(UserToy userToy, UserAddress userAddress);
+    CommonResult updateChoiceTypeByIdAndUserNo(UserToy userToy, UserAddress userAddress, String toyNameArray,
+                                               List<Long> userToyIdList);
 
     /**
      * 根据用id,用户编号修改处理状态

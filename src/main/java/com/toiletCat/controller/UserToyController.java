@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/toiletCat/userToy")
@@ -109,29 +110,45 @@ public class UserToyController {
 
         UserAddress userAddress = null;
 
-        UserToy userToy = null;
-
         JSONObject userToyJSON = JSONObject.parseObject(userToyStr);
+
+        // 玩具名集合
+        StringBuilder toyNameArrayBuilder = new StringBuilder("");
+
+        // 要更改的用户战利品id
+        List<Long> userToyIdList = new ArrayList<>();
 
         // 若为选择寄送类型
         if(ChoiceType.FOR_DELIVER.getStatus() == Integer.valueOf(userToyJSON.getString("choiceType"))) {
 
-
             userAddress = JSON.parseObject(userAddressStr, UserAddress.class);
 
-            JSONArray userToyArray = JSONArray.parseArray(userToyJSON.getString("userToyIds"));
+            JSONArray userToyIdArray = JSONArray.parseArray(userToyJSON.getString("userToyIds"));
 
             JSONArray userToyNameArray = JSONArray.parseArray(userToyJSON.getString("userToyNames"));
 
+            for(Object obj : userToyNameArray) {
+                toyNameArrayBuilder.append(JSONObject.parseObject(String.valueOf(obj)).getString("toyName"));
+                toyNameArrayBuilder.append(",");
+            }
+
+            for(Object obj : userToyIdArray) {
+                userToyIdList.add(Long.valueOf(JSONObject.parseObject(String.valueOf(obj)).getString("toyName")));
+            }
+
+            String toyNameArray = toyNameArrayBuilder.toString().
+                    substring(0, toyNameArrayBuilder.toString().length() - 1);
+
+            // 去除多余key
             userToyJSON.remove("userToyIds");
 
             userToyJSON.remove("userToyNames");
 
+            userToyStr = userToyJSON.toJSONString();
 
-
-        } else {
-            userToy = JSON.parseObject(userToyStr, UserToy.class);
         }
+
+        UserToy userToy = JSON.parseObject(userToyStr, UserToy.class);
 
         CommonResult result =  userToyService.updateChoiceTypeByIdAndUserNo(userToy, userAddress);
 
@@ -152,6 +169,14 @@ public class UserToyController {
         CommonResult result =  userToyService.updateHandleStatusByIdAndUserNo(handleStatus, id, userNo);
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
+    }
+
+    public static void main(String[] args) {
+
+        String ss = "1,2,3,4,5,";
+        ss = ss.substring(0,ss.length() - 1);
+
+        System.out.println(ss);
     }
 
 }

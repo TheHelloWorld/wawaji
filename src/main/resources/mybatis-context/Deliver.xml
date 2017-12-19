@@ -14,6 +14,10 @@
         <result property="mobileNo" column="mobile_no" jdbcType="VARCHAR"/>
         <!-- 地址 -->
         <result property="address" column="address" jdbcType="VARCHAR"/>
+        <!-- 娃娃信息 -->
+        <result property="toyNameArray" column="toy_name_array" jdbcType="VARCHAR"/>
+        <!-- 用户战利品id集合 -->
+        <result property="userToyIdArray" column="user_toy_id_array" jdbcType="VARCHAR"/>
         <!-- 快递单号 -->
         <result property="deliverNo" column="deliver_no" jdbcType="VARCHAR"/>
         <!-- 快递公司 -->
@@ -72,6 +76,8 @@
             user_name,
             mobile_no,
             address,
+            toy_name_array,
+            user_toy_id_array,
             deliver_no,
             company,
             deliver_msg,
@@ -88,6 +94,8 @@
             user_no,
             user_name,
             mobile_no,
+            toy_name_array,
+            user_toy_id_array,
             address,
             deliver_no,
             company,
