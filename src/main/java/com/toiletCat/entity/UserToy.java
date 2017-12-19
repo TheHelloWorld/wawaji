@@ -29,11 +29,6 @@ public class UserToy extends BaseEntity implements Serializable {
      */
     private Long deliverId;
 
-    /**
-     * 处理状态
-     */
-    private Integer handleStatus;
-
     /************************* 链表查询用 toy *******************************/
 
     /**
@@ -89,14 +84,6 @@ public class UserToy extends BaseEntity implements Serializable {
 
     public void setDeliverId(Long deliverId) {
         this.deliverId = deliverId;
-    }
-
-    public Integer getHandleStatus() {
-        return handleStatus;
-    }
-
-    public void setHandleStatus(Integer handleStatus) {
-        this.handleStatus = handleStatus;
     }
 
     public String getToyName() {

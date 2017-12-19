@@ -4,17 +4,18 @@ var toyForCoin = 0;
 
 var handleStatus = 0;
 
-var choiceTypeFlag = false;
-
 var userToyJson = {};
 
 var userAddressJson = {};
 
 var userAddressId = 0;
 
+var deliverId = 0;
+
 var flag = true;
 
 $(function() {
+
     $("#zzc").hide();
 
     // 用户编号
@@ -61,6 +62,8 @@ function getUserToyByUserNoAndId() {
 
             handleStatus = result["handleStatus"];
 
+            deliverId = result["deliverId"];
+
             var str = " <div class='row'>";
             str += "        <div class='user-toy-div'>";
             str += "            <img class='user-toy-img toy-img index-img' src='" + result["toyImg"] + "'>";
@@ -81,8 +84,8 @@ function getUserToyByUserNoAndId() {
             str += "            <span>状态:</span>";
             str += "        </div>";
             str += "        <div class='col-xs-5 user-toy-right user-toy-text-left'>";
+
             if (result["choiceType"] == 0) {
-                choiceTypeFlag = true;
                 str += "<select id='choiceType' class='user-toy-select' onchange='choiceDeliver()'>";
                 str += "    <option value='0'>未选择</option>";
                 str += "    <option value='1'>兑换成"+result["toyForCoin"]+"个游戏币</option>";
@@ -94,25 +97,10 @@ function getUserToyByUserNoAndId() {
 
             } else if (result["choiceType"] == 2) {
 
-                if (result["handleStatus"] == 20) {
-
-                    str += "<span>待发货</span>";
-                } else if (result["handleStatus"] == 30) {
-
-                    str += "<span>已发货</span>";
-                    str += getDeliverByIdAndUserNo(str, result["deliverId"]);
-
-                }
+                str += getDeliverByIdAndUserNo(str, result["deliverId"]);
             }
             str += "        </div>";
             str += "    </div>";
-
-            if(choiceTypeFlag) {
-                str += "<div class='default-height'></div>";
-                str += "<nav class ='index-footer default-height' >";
-                str += "<button onclick='updateChoiceType("+result["id"]+")' class='btn btn-outline btn-primary btn-lg btn-block'>确认</button>";
-                str += "</nav>";
-            }
 
             $("#userToyInfo").append(str);
         }
@@ -121,7 +109,7 @@ function getUserToyByUserNoAndId() {
 
 function getDeliverByIdAndUserNo(str,id) {
     $.ajax({
-        url:"/toiletCat/deliver/getUserToyByUserNoAndId.action",
+        url:"/toiletCat/deliver/getDeliverByIdAndUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -142,7 +130,11 @@ function getDeliverByIdAndUserNo(str,id) {
             }
 
             var result = data["result"];
-
+            if(result["deliverStatus"] == 0) {
+                str += "<span>待发货</span>";
+            } else {
+                str += "<span>已发货</span>";
+            }
             str += "<div>";
             str += "    <div class='col-xs-5 user-toy-left user-toy-text-status'>发货单号:"+result["deliverNo"]+"</div>";
             str += "    <div class='col-xs-5 user-toy-right user-toy-text-status'>快递公司:"+result["company"]+"</div>";
@@ -329,7 +321,7 @@ function updateChoiceType() {
     userToyJson["choiceType"] = $("#choiceType").val();
     userToyJson["toyForCoin"] = toyForCoin;
     userToyJson["handleStatus"] = handleStatus;
-
+    userToyJson["deliverId"] = deliverId;
 
 
     if($("#choiceType").val() == 2) {

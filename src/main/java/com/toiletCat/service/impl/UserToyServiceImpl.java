@@ -156,7 +156,6 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                         UserToy nowUserToy = new UserToy();
                         nowUserToy.setDeliverId(deliver.getId());
-                        nowUserToy.setHandleStatus(HandleStatus.WAIT_DELIVER.getStatus());
                         nowUserToy.setId(id);
                         nowUserToy.setUserNo(userNo);
                         userToyDao.updateChoiceTypeByIdAndUserNo(nowUserToy);

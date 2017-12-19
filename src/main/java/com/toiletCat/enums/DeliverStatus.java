@@ -9,7 +9,7 @@ import java.util.Map;
 public enum DeliverStatus {
 
 
-    INIT(0, "代发货"),
+    INIT(0, "待发货"),
     DELIVERED(1, "已发货"),
     SIGN(2,"已签收");
 

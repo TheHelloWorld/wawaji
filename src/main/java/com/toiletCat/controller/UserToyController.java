@@ -174,12 +174,4 @@ public class UserToyController {
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 
-    public static void main(String[] args) {
-
-        String ss = "1,2,3,4,5,";
-        ss = ss.substring(0,ss.length() - 1);
-
-        System.out.println(ss);
-    }
-
 }
