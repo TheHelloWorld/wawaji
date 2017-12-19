@@ -62,7 +62,9 @@ public interface UserService {
      * @param userNo 用户编号
      * @param gameRoomNo 游戏房间号
      * @param catchId 抓取id
+     * @param status 状态
      * @return
      */
-    CommonResult<String> getGameCatchResultByUserNoAndGameRoomNo(String userNo, String gameRoomNo, String catchId);
+    CommonResult<String> getGameCatchResultByUserNoAndGameRoomNo(String userNo, String gameRoomNo, String catchId,
+                                                                 Integer status);
 }

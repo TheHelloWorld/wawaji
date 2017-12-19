@@ -49,6 +49,14 @@ public interface GameRoomService {
     CommonResult<UserSeeGameRoom> getUserSeeGameRoomByGameRoomNo(String gameRoomNo);
 
     /**
+     * 根据游戏房间号码获得用户可见游戏房间
+     * @param userNo 用户编号
+     * @param gameRoomNo 游戏房间号码
+     * @return
+     */
+    CommonResult<String> getUserGameRoomInfoByGameRoomNo(String userNo, String gameRoomNo);
+
+    /**
      * 根据游戏房间编号获得所需游戏币数
      * @param gameRoomNo 游戏房间编号
      * @return

@@ -133,4 +133,19 @@ public class GameRoomController {
 
         return JSONUtil.getReturnBeanString(result);
     }
+
+    /**
+     * 根据游戏房间号码用户号码获得房间信息
+     * @param userNo 用户编号
+     * @param gameRoomNo 游戏房间号码
+     * @return
+     */
+    @RequestMapping(value = "/getUserGameRoomInfoByGameRoomNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getUserGameRoomInfoByGameRoomNo(String userNo, String gameRoomNo) {
+
+        CommonResult<String> result =  gameRoomService.getUserGameRoomInfoByGameRoomNo(userNo, gameRoomNo);
+
+        return JSONUtil.getReturnBeanString(result);
+    }
 }

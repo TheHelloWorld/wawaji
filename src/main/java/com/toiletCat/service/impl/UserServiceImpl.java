@@ -528,7 +528,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      */
     @Override
     public CommonResult<String> getGameCatchResultByUserNoAndGameRoomNo(final String userNo, final String gameRoomNo,
-                                                                        final String catchId) {
+                                                                        final String catchId, final Integer status) {
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
         json.put("gameRoomNo", gameRoomNo);
@@ -592,14 +592,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 }
 
                 // 用户房间幸运值大于等于最大用户房间幸运值
-                if(userLucKyNum + userNowLuckyNum >= BaseConstant.MAX_USER_ROOM_LUCKY_NUM) {
+                if(userLucKyNum + userNowLuckyNum >= BaseConstant.MAX_USER_ROOM_LUCKY_NUM && status > 0) {
                     // 重置房间和用户房间幸运值
                     got(resetLuckyNum(catchId, userNo, gameRoomNo, roomAddLuckyNum));
                     return;
                 }
 
                 // 若房间幸运值大于等于最大房间幸运值
-                if(gameRoom.getRoomNowLuckyNum() + roomAddLuckyNum >= gameRoom.getRoomLuckyNum()) {
+                if(gameRoom.getRoomNowLuckyNum() + roomAddLuckyNum >= gameRoom.getRoomLuckyNum() && status > 0) {
                     // 重置房间和用户房间幸运值
                     got(resetLuckyNum(catchId, userNo, gameRoomNo, roomAddLuckyNum));
                     return;
@@ -608,8 +608,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 累加用户房间幸运值
                 userGameRoomService.addUserRoomLuckyNumByUserNoAndGameRoomNo(userNo, gameRoomNo, userLucKyNum);
 
-                // 累加游戏房间幸运值
-                gameRoomService.addRoomLuckyNumByGameRoomNo(gameRoomNo);
+                if(gameRoom.getRoomNowLuckyNum() + roomAddLuckyNum < gameRoom.getRoomLuckyNum()) {
+                    // 累加游戏房间幸运值
+                    gameRoomService.addRoomLuckyNumByGameRoomNo(gameRoomNo);
+                }
 
                 got(getCatchFailReturn(catchId, roomAddLuckyNum));
                 return;

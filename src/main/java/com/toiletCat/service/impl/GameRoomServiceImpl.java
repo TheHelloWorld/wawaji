@@ -7,6 +7,7 @@ import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.UserSeeGameRoom;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.dao.GameRoomDao;
+import com.toiletCat.dao.UserGameRoomDao;
 import com.toiletCat.entity.GameRoom;
 import com.toiletCat.enums.HandleType;
 import com.toiletCat.service.GameRoomService;
@@ -28,6 +29,9 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
     @Autowired
     private GameRoomDao gameRoomDao;
+
+    @Autowired
+    private UserGameRoomDao userGameRoomDao;
 
     /**
      * 添加游戏房间
@@ -141,6 +145,8 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
         }, "getUserSeeGameRoomListByPage", json.toJSONString());
     }
 
+
+
     /**
      * 根据游戏房间号码获得用户可见游戏房间
      * @param gameRoomNo 游戏房间号码
@@ -154,7 +160,40 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
         return exec(new Callback() {
             @Override
             public void exec() {
+
                 got(gameRoomDao.getUserSeeGameRoomByGameRoomNo(gameRoomNo));
+            }
+        }, "getUserSeeGameRoomByGameRoomNo", json.toJSONString());
+    }
+
+    /**
+     * 根据游戏房间号码用户号码获得房间信息
+     * @param userNo 用户编号
+     * @param gameRoomNo 游戏房间号码
+     * @return
+     */
+    @Override
+    public CommonResult<String> getUserGameRoomInfoByGameRoomNo(final String userNo, final String gameRoomNo) {
+        JSONObject json = new JSONObject();
+        json.put("userNo",userNo);
+        json.put("gameRoomNo",gameRoomNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                String str = JSON.toJSONString(gameRoomDao.getUserSeeGameRoomByGameRoomNo(gameRoomNo));
+
+                JSONObject returnJSON = JSONObject.parseObject(str);
+
+                if(userGameRoomDao.countUserGameRoomByUserNo(userNo, gameRoomNo) == 0) {
+                    returnJSON.put("userGameRoomLuckyNumB", "0");
+                } else {
+                    returnJSON.put("userGameRoomLuckyNumB", userGameRoomDao.getUserGameRoomLuckyNumByUserNo(
+                            userNo, gameRoomNo));
+                }
+
+                got(returnJSON.toJSONString());
             }
         }, "getUserSeeGameRoomByGameRoomNo", json.toJSONString());
     }
