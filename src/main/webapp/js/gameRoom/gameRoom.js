@@ -7,6 +7,10 @@ var width = $(window).width() / 2 - 20;
 
 var bannerType = 1;
 
+var loginFlag = "";
+
+var loginUrl = "/toiletCat/user/login.html?from=gameIndex&type=gameRoom&checkType=checkCode";
+
 $(function() {
 
     var url = "/toiletCat/gameRoom/getUserSeeGameRoomTotalCountAndPageSize.action";
@@ -59,7 +63,7 @@ function userAutoLogin() {
 
             // 判断是否成功获取用户信息
             if(user == "fail") {
-                console.info(user);
+                loginFlag = user;
                 return;
             }
 
@@ -175,7 +179,7 @@ function setUserInfo() {
 
 // 跳转到登录页
 function toLoginPage() {
-    window.location.href="/toiletCat/user/login.html?from=gameIndex&type=gameRoom&checkType=checkCode";
+    window.location.href = loginUrl;
 }
 
 function nextPage() {
@@ -185,4 +189,37 @@ function nextPage() {
     } else {
         nowPage = totalPage;
     }
+}
+
+// 跳转到战利品页
+function toUserToy() {
+
+    var userToyUrl = "/toiletCat/userToy/userToy.html?userNo="+userNo + "&type=gameRoom";
+
+    if(loginFlag == "fail") {
+        userToyUrl = loginUrl;
+    }
+    window.location.href = userToyUrl;
+}
+
+// 跳转到充值页面
+function toRecharge() {
+
+    if(loginFlag == "fail") {
+        window.location.href = loginUrl;
+    }
+
+    recharge();
+}
+
+// 跳转到用户主页
+function toUserIndex() {
+
+    var userIndexUrl = "/toiletCat/user/userIndex.html?type=gameRoom&userNo=" + userNo;
+
+    if(loginFlag == "fail") {
+        userIndexUrl = loginUrl;
+    }
+
+    window.location.href = userIndexUrl;
 }
