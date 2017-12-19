@@ -159,7 +159,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                         nowUserToy.setHandleStatus(HandleStatus.WAIT_DELIVER.getStatus());
                         nowUserToy.setId(id);
                         nowUserToy.setUserNo(userNo);
-                        userToyDao.updateChoiceTypeByIdAndUserNo(userToy);
+                        userToyDao.updateChoiceTypeByIdAndUserNo(nowUserToy);
                     }
 
                 } else if(ChoiceType.FOR_COIN.getStatus() == choiceType) {
