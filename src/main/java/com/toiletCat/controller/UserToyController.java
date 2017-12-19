@@ -1,6 +1,8 @@
 package com.toiletCat.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.entity.UserAddress;
@@ -105,13 +107,30 @@ public class UserToyController {
     @ResponseBody
     public String updateChoiceTypeByIdAndUserNo(String userToyStr, String userAddressStr) {
 
-        UserToy userToy = JSON.parseObject(userToyStr, UserToy.class);
-
         UserAddress userAddress = null;
 
+        UserToy userToy = null;
+
+        JSONObject userToyJSON = JSONObject.parseObject(userToyStr);
+
         // 若为选择寄送类型
-        if(ChoiceType.FOR_DELIVER.getStatus() == userToy.getChoiceType()) {
+        if(ChoiceType.FOR_DELIVER.getStatus() == Integer.valueOf(userToyJSON.getString("choiceType"))) {
+
+
             userAddress = JSON.parseObject(userAddressStr, UserAddress.class);
+
+            JSONArray userToyArray = JSONArray.parseArray(userToyJSON.getString("userToyIds"));
+
+            JSONArray userToyNameArray = JSONArray.parseArray(userToyJSON.getString("userToyNames"));
+
+            userToyJSON.remove("userToyIds");
+
+            userToyJSON.remove("userToyNames");
+
+
+
+        } else {
+            userToy = JSON.parseObject(userToyStr, UserToy.class);
         }
 
         CommonResult result =  userToyService.updateChoiceTypeByIdAndUserNo(userToy, userAddress);

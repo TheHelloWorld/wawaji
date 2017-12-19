@@ -292,7 +292,12 @@ function getAllUnHandleUserToyByUserNo() {
                 }
 
                 str += "<label>";
-                str += "    <input type='checkbox' name='unHandleToy' value='"+list[i]["id"]+"' >";
+                if(list[i]["id"] == id) {
+                    str += "    <input type='checkbox' name='unHandleToy' value='"+list[i]["id"]+"' checked>";
+                } else {
+                    str += "    <input type='checkbox' name='unHandleToy' value='"+list[i]["id"]+"' >";
+                }
+
                 str += "    <input type='hidden' id='unHandleToy"+list[i]["id"]+"' value='"+list[i]["toyName"]+"' >";
                 str += "    <div class='machine-panel panel-info'>";
                 str += "        <div class='panel-body'>";
@@ -325,7 +330,7 @@ function updateChoiceType() {
     userToyJson["toyForCoin"] = toyForCoin;
     userToyJson["handleStatus"] = handleStatus;
 
-    var userToyStr = JSON.stringify(userToyJson);
+
 
     if($("#choiceType").val() == 2) {
 
@@ -336,48 +341,70 @@ function updateChoiceType() {
         userAddressJson["mobileNo"] = $("#mobileNo"+userAddressId).val();
         userAddressJson["address"] = $("#province"+userAddressId).val() + $("#address"+userAddressId).val();
 
+        var count = 0;
+
         var obj = document.getElementsByName('unHandleToy');
         for(var i = 0;i<obj.length; i++) {
             if(obj[i].checked) {
 
-                userToyIdJson.push(obj[i].value);
+                count ++;
 
-                userToyNameJson.push($("#unHandleToy"+obj[i].value).val());
+                var userToyIdSingle = {};
+
+                userToyIdSingle["userToyId"] = obj[i].value;
+
+                userToyIdJson.push(userToyIdSingle);
+
+                var userToyNameSingle = {};
+
+                userToyNameSingle["toyName"] = $("#unHandleToy"+obj[i].value).val();
+
+                userToyNameJson.push(userToyNameSingle);
 
             }
 
         }
 
-        console.info("userToyIdJson" + userToyIdJson);
-        console.info("userToyNameJson" + userToyNameJson);
+        if(count < 3) {
+            toiletCatMsg("三个以上才包邮喵");
+        }
+
+        userToyJson["userToyIds"] = userToyIdJson;
+
+        userToyJson["userToyNames"] = userToyNameJson;
 
     }
 
+    var userToyStr = JSON.stringify(userToyJson);
+
     var userAddressStr = JSON.stringify(userAddressJson);
 
-    // $.ajax({
-    //     url:"/toiletCat/userToy/updateChoiceTypeByIdAndUserNo.action",
-    //     type:"POST",
-    //     async:false,
-    //     data:{
-    //         userToyStr:userToyStr,
-    //         userAddressStr:userAddressStr
-    //     },
-    //     success:function (data) {
-    //         // 转换数据
-    //         if(typeof(data) == "string") {
-    //             data = eval("("+data+")");
-    //         }
-    //
-    //         // 判断是否成功
-    //         if(data["is_success"] != "success") {
-    //             toiletCatMsg(data["result"]);
-    //             return;
-    //         }
-    //
-    //         window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
-    //     }
-    // });
+    console.info("userToyStr:" + userToyStr);
+    console.info("userAddressStr:" + userAddressStr);
+
+    $.ajax({
+        url:"/toiletCat/userToy/updateChoiceTypeByIdAndUserNo.action",
+        type:"POST",
+        async:false,
+        data:{
+            userToyStr:userToyStr,
+            userAddressStr:userAddressStr
+        },
+        success:function (data) {
+            // 转换数据
+            if(typeof(data) == "string") {
+                data = eval("("+data+")");
+            }
+
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+                toiletCatMsg(data["result"]);
+                return;
+            }
+
+            window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
+        }
+    });
 }
 
 // 返回用户战利品也
