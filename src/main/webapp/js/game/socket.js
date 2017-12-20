@@ -14,7 +14,8 @@ var catchId;
 
 var webSocket;
 
-function startWebSocket() { 
+function startWebSocket() {
+	console.info("sfasfsaf");
     webSocket = new WebSocket(wsUri);
     webSocket.onopen = function(evt) {
         onOpen(evt)
