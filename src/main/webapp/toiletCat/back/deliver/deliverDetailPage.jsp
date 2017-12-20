@@ -54,7 +54,16 @@
                 <div class="col-xs-5">
                     地址:
                     <span name = "address">
-                        <input class="form-control" id = "address">
+                        <input class="form-control" id = "address" disabled />
+                    </span>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-xs-5">
+                    娃娃信息:
+                    <span name = "toyNameArray">
+                        <input class="form-control" id = "toyNameArray" disabled />
                     </span>
                 </div>
             </div>
