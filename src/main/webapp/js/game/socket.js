@@ -135,15 +135,29 @@ function catchToy(){
 	}
 	var sign = "catch&"+uId+"&"+rId;
 	sign = hex_md5(sign);
-	var json = '{"type":"catch","uId":'+uId+',"rId":"'+rId+'","sign":"'+sign+'","status":"'+status+'","uName":"'+userName+'","tName":"'+toyName+'","userImg":"'+userImg+'"}';
-	doSend(json);
+	var json = {};
+    json["type"] = "catch";
+    json["uId"] = uId;
+    json["rId"] = rId;
+    json["sign"] = sign;
+    json["status"] = status;
+    json["userName"] = userName;
+    json["tName"] = toyName;
+    json["userImg"] = userImg;
+
+	doSend(JSON.stringify(json));
 }
 
 function getInfo(){
 	uId = getQueryString('userNo');
 	rId = getQueryString('gameRoomNo');
-	var json = '{"type":"init","uId":'+uId+',"rId":"'+rId+'"}';
-	doSend(json);
+
+    var json = {};
+    json["type"] = "init";
+    json["uId"] = uId;
+    json["rId"] = rId;
+
+    doSend(JSON.stringify(json));
 }
 
 function catchStatus(data){
@@ -159,8 +173,14 @@ function catchStatus(data){
 function startGame(){
 	var sign = 'start&'+uId+"&"+toyNowCoin+"&"+rId;
 	sign = hex_md5(sign);
-	var json = '{"type":"start","uId":'+uId+',"rId":"'+rId+'","coin":"'+toyNowCoin+'","sign":"'+sign+'"}';
-	doSend(json);
+    var json = {};
+    json["type"] = "start";
+    json["uId"] = uId;
+    json["rId"] = rId;
+    json["coin"] = toyNowCoin;
+    json["sign"] = sign;
+
+    doSend(JSON.stringify(json));
 }
 
 function successList(data){
