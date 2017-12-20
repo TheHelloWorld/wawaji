@@ -11,7 +11,7 @@ var current_size = {"up":[], "left":[], "right":[], "di":[] };
 var flag_status = {"move":true,"get":true};
 var wawa_num = 5;
 
-function load(){
+function load() {
 	hc = $(window).height();
 	wc = $(window).width();
 	//初始化屏幕大小
