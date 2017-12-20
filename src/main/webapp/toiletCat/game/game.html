@@ -3,53 +3,67 @@
 <head user-scalable=no>
     <meta charset="UTF-8">
     <meta content="user-scalable=0" name="viewport" />
-    <link href="./css/base.css" rel="stylesheet" type="text/css">
+    <link href="/css/game/base.css" rel="stylesheet" type="text/css">
     <link href="/css/game/gameRecharge.css" rel="stylesheet" type="text/css">
     <title>马桶猫抓娃娃</title>
 </head>
-<body style="background:#6DDBF6;">
+<body>
 <div class="game-start">
-    <div class="game-middle" style="background:url('image1/background1.png');background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;">
+    <div class="game-middle" >
         <div class="showCoinMsg" style="background:white;opacity:0.5;"></div>
         <div class="showCoinMsg">
             <div class="showOnceCoin">
-                <div style="text-align:right;"><img src="/image1/coint.ico" width=40%/></div>
-                <div class="showOnceCoinCur" style="text-align:left;font-weight:bold;">19/局</div>
+                <div style="text-align:right;">
+                    <img src=/image/background/coin.ico" width=40%/>
+                </div>
+                <div class="showOnceCoinCur" style="text-align:left;font-weight:bold;">
+                    19/局
+                </div>
             </div>
             <div class="showPlayCoin">
-                <div style="text-align:right;"><img src="/image1/coint.ico"  width=40%/></div>
-                <div class="showCurCoin" style="text-align:left;font-weight:bold;">200</div>
+                <div style="text-align:right;">
+                    <img src="/image/background/coin.ico" width=40%/>
+                </div>
+                <div class="showCurCoin" style="text-align:left;font-weight:bold;">
+                    200
+                </div>
             </div>
             <div class="showCurPlayNum">
-                <div class="curPlayer" style="text-align:left;font-weight:bold;">在线人数：2000</div>
+                <div class="curPlayer" style="text-align:left;font-weight:bold;">
+                    在线人数：2000
+                </div>
             </div>
             <div style="clear:both"></div>
         </div>
-        <div class="zhuazi">
-            <img src="image1/ufo-cat.png" class="zhuaziup" />
-            <img src="image1/arm3.png" class="zhuazileft" />
-            <img src="image1/arm4.png" class="zhuaziright" />
+        <div class="grasp">
+            <img src="/image/game/ufo-cat.png" class="grasp-up" />
+            <img src="/image/game/arm3.png" class="grasp-left" />
+            <img src="/image/game/arm4.png" class="grasp-right" />
         </div>
-        <div style="z-index:90"><img src="image1/di.png" class="zhuazidi" /></div>
+        <div style="z-index:90">
+            <img src="/image/game/di.png" class="grasp-down" />
+        </div>
         <div class="loadgift">
 
         </div>
-        <div class="game-bottom" id="startButton" ><img src="image1/startnew.png" style="width:60%;margin-top:8%" ontouchstart="startGame()"></div>
+        <div class="game-bottom" id="startButton" >
+            <img src="/image/game/startnew.png" style="width:60%;margin-top:8%" ontouchstart="startGame()">
+        </div>
         <div class="game-bottom"  style="display:none;" id="moveButton" >
-            <div class="botton-background" style="transform:rotateX(45deg);background:url('image1/anniu.png');height:310px;width:310px;background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"></div>
-            <div class="botton-top" ontouchstart="movesmall()" ontouchend="stopmove()" style="opacity:0;background:url('image1/cat_track.net.ico');height:85px;width:85px;background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"></div>
-            <div class="botton-left"  ontouchstart="moveleft()" ontouchend="stopmove()" style="opacity:0;-webkit-transform:rotate(-90deg);background:url('image1/cat_track.net.ico');height:85px;width:85px;background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"></div>
-            <div class="botton-right" ontouchstart="moveright()" ontouchend="stopmove()" style="opacity:0;-webkit-transform:rotate(90deg);background:url('image1/cat_track.net.ico');height:85px;width:85px;background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"></div>
-            <div class="botton-bottom" ontouchstart="movebig()"  ontouchend="stopmove()" style="opacity:0;-webkit-transform:rotate(-180deg);background:url('image1/cat_track.net.ico');height:85px;width:85px;background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"></div>
-            <div class="botton-get" style="background:url('image/game/anniu_catch.png');height:150px;width:150px;background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"></div>
-            <div class="botton-get" id="startdjs" ontouchstart="catchToy()" style="height:150px;width:150px;background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;color:white;font-size:60px;line-height:150px;">30</div>
+            <div class="button-background" ></div>
+            <div class="button-top" ontouchstart="moveSmall()" ontouchend="stopMove()" ></div>
+            <div class="button-left"  ontouchstart="moveLeft()" ontouchend="stopMove()" ></div>
+            <div class="button-right" ontouchstart="moveRight()" ontouchend="stopMove()" ></div>
+            <div class="button-bottom" ontouchstart="moveBig()"  ontouchend="stopMove()" ></div>
+            <div class="button-get" style="background:url('/image/game/anniu_catch.png');height:150px;width:150px;background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"></div>
+            <div class="button-get" id="startdjs" ontouchstart="catchToy()" style="height:150px;width:150px;background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;color:white;font-size:60px;line-height:150px;">30</div>
         </div>
         <div class="luckyNum">
         </div>
-        <div class="buttomButton">
-            <div><img src="/image/button/cat_phone_48_text.png" width=100% onclick="javascript:location.href='/toiletCat/userToy/userToy.html?userNo=b1ee3039d8da4549965609f3eae24d90&type=gameRoom'"/></div>
+        <div class="bottom-button">
+            <div><img src="/image/button/cat_phone_48_text.png" width=100% onclick="toUserToy()"/></div>
             <div><img src="/image/button/cat_wizard_48_text.png"  width=100% onclick="recharge()"/></div>
-            <div><img src="/image/button/cat_laptop_48_text.png"  width=100% onclick="javascript:location.href='/toiletCat/user/userIndex.html?type=gameRoom&userNo=b1ee3039d8da4549965609f3eae24d90'" /></div>
+            <div><img src="/image/button/cat_laptop_48_text.png"  width=100% onclick="toUserIndex()" /></div>
             <div style="clear:both"></div>
         </div>
         <div class="broadcastFail" >
@@ -58,27 +72,27 @@
     </div>
 </div>
 <div class="successPerson">
-    <div class="successPersontitle successPersontitleleft" onclick="showDiv('list')">Ta们最近成功了</div>
-    <div class="successPersontitle successPersontitleright" onclick="showDiv('detail')">娃娃详情</div>
+    <div class="successPersonTitle successPersonTitle-left" onclick="showDiv('list')">Ta们最近成功了</div>
+    <div class="successPersonTitle successPersonTitle-right" onclick="showDiv('detail')">娃娃详情</div>
     <div style="clear:both"></div>
-    <div class="successList">
-        <div class="successListdiv">
-            <div class="successListimg">
-                <img src="images/yjfk.jpg" />
+    <div class="success-list">
+        <div class="success-list-div">
+            <div class="success-list-img">
+                <img src="/image/game/yjfk.jpg" />
             </div>
-            <div class="successListname">
+            <div class="success-list-name">
                 <div>哈哈哈</div>
                 <div>52分钟前</div>
             </div>
-            <div class="successListread" style="background-image:url('./images/botton.jpg')">
+            <div class="success-list-read" style="background-image:url('/image/game/botton.jpg')">
                 Ta的战利品
             </div>
             <div style="clear:both"></div>
         </div>
     </div>
 
-    <div class="successdetail" style="display:none">
-        <div class="successdetaildiv">
+    <div class="success-detail" style="display:none">
+        <div class="success-detail-div">
 
         </div>
     </div>
@@ -86,28 +100,42 @@
 
 <div style="background:black;display:none;z-index:98" class="resultMsg" >
 </div>
-<div style="width:100%;position:fixed;left:0px;top:25%;z-index:99;display:none" id="faildiv">
-    <div class="resultMsgimg"><img src="images/ku.png"></div>
-    <div class="resultMsgimg">蓝瘦，香菇！~~</div>
-    <div class="resultMsgButton"><button type="button" onclick="closeLastDiv('again')">再来一次(<span id="djs">10</span>)</button></div>
-    <div class="resultMsgButton"><button type="button" onclick="closeLastDiv('failClose')">算了....</button></div>
+<div style="width:100%;position:fixed;left:0;top:25%;z-index:99;display:none" id="faildiv">
+    <div class="result-msg-img">
+        <img src="/image/game/ku.png">
+    </div>
+    <div class="result-msg-img">
+        蓝瘦，香菇！~~
+    </div>
+    <div class="result-msg-button">
+        <button type="button" onclick="closeLastDiv('again')">再来一次(<span id="djs">10</span>)</button>
+    </div>
+    <div class="result-msg-button">
+        <button type="button" onclick="closeLastDiv('failClose')">算了....</button>
+    </div>
 </div>
 
 <div class="zzc" id="successdiv" style="display:none">
-    <div class="resultMsgimg" id="successImg"><img src="images/ku.png"></div>
-    <div class="resultMsgimg" id="successName">恭喜您获得</div>
-    <div class="resultMsgButton"><button>查看战利品</button></div>
-    <div class="resultMsgButton"><button type="button" onclick="closeLastDiv('successClose')">留在这里</button></div>
+    <div class="result-msg-img" id="successImg">
+        <img src="/image/game/ku.png">
+    </div>
+    <div class="result-msg-img" id="successName">恭喜您获得</div>
+    <div class="result-msg-button">
+        <button>查看战利品</button>
+    </div>
+    <div class="result-msg-button">
+        <button type="button" onclick="closeLastDiv('successClose')">留在这里</button>
+    </div>
 </div>
 <div class="broadcastSuccess"  style="display:none">
     <div class="broadcastSuccessBack"></div>
-    <div class="broadcastSuccesswords"></div>
+    <div class="broadcastSuccessWords"></div>
 </div>
 
-<div style="background:black;z-index:998;position:fixed;left:0px;top:0px;width:100%;" class="loading" >
+<div style="background:black;z-index:998;position:fixed;left:0;top:0;width:100%;" class="loading" >
 </div>
 <div style="position:fixed;top:35%;left:30%;z-index:999" class="loadinggif">
-    <img src="/image1/loading.gif" />
+    <img src="/image/game/loading.gif" />
 </div>
 
 </body>
@@ -117,6 +145,7 @@
 <script type="text/javascript" src="/js/game/load.js"></script>
 <script type="text/javascript" src="/js/game/move.js"></script>
 <script type="text/javascript" src="/js/game/get.js"></script>
+<script type="text/javascript" src="/common/commonUtil.js"></script>
 <script type="text/javascript" src="/js/recharge/recharge.js"></script>
 
 <script>

@@ -102,7 +102,7 @@ function setInit(data){
 	for(var key in data.result.toyDesc){
 		str +='<div style="text-align:center;margin-top:5%;"><img src="'+data.result.toyDesc[key]+'" /></div>';
 	}
-	$(".successdetaildiv").html(str);
+	$(".success-detail-div").html(str);
 	$(".showOnceCoinCur").html(toyNowCoin+"/局");
 	var weight = (luckyNum/100 *34);
 	$(".luckyNum").css('width',weight+'%');
@@ -157,34 +157,31 @@ function startGame(){
 function successList(data){
 	var str = "";
 	for(var key in data.result){
-		str +='<div class="successListdiv">';
-		str +='  <div class="successListimg">';
+		str +='<div class="success-list-div">';
+		str +='  <div class="success-list-img">';
 		str +='    <img src="'+data.result[key].userImg+'" />';
 		str +='  </div>';
-		str +='  <div class="successListname">';
+		str +='  <div class="success-list-name">';
 		str +='  <div>'+data.result[key].userName+'</div>';
 		str +='  <div>'+data.result[key].catchTime+'</div>';
 		str +='  </div>';
-		//str +='  <div class="successListread" style="background-image:url(/images/botton.jpg)">';
-		//str +='  Ta的战利品';
-		//str +='  </div>';
 		str +='  <div style="clear:both"></div>';
 		str +='  </div>';
 	}
-	$(".successList").html(str);
+	$(".success-list").html(str);
 }
 
 function showDiv(type){
 	if(type == 'list'){
-		$(".successPersontitleleft").css('border-bottom','3px solid rgb(109, 219, 246)');
-		$(".successPersontitleright").css('border-bottom','0px solid rgb(109, 219, 246)');
-		$(".successList").show();
-		$(".successdetail").hide();
+		$(".successPersonTitle-left").css('border-bottom','3px solid rgb(109, 219, 246)');
+		$(".successPersonTitle-right").css('border-bottom','0px solid rgb(109, 219, 246)');
+		$(".success-list").show();
+		$(".success-detail").hide();
 	}else{
-		$(".successPersontitleleft").css('border-bottom','0px solid rgb(109, 219, 246)');
-		$(".successPersontitleright").css('border-bottom','3px solid rgb(109, 219, 246)');
-		$(".successList").hide();
-		$(".successdetail").show();
+		$(".successPersonTitle-left").css('border-bottom','0px solid rgb(109, 219, 246)');
+		$(".successPersonTitle-right").css('border-bottom','3px solid rgb(109, 219, 246)');
+		$(".success-list").hide();
+		$(".success-detail").show();
 	}
 }
 var myStr; 
@@ -203,25 +200,25 @@ function broadcast(data){
 		}
 	}else{
 		if(data.isMe != 1){
-			$(".broadcastSuccesswords").html(data.str);
+			$(".broadcastSuccessWords").html(data.str);
 			$(".broadcastSuccess").show();
 			setTimeout(hidebroadcast,2000);
 		}else{
-			$(".broadcastSuccesswords").html(data.str);
+			$(".broadcastSuccessWords").html(data.str);
 		}
 		var str = "";
-		str +='<div class="successListdiv">';
-		str +='  <div class="successListimg">';
+		str +='<div class="success-list-div">';
+		str +='  <div class="success-list-img">';
 		str +='    <img src="'+data.userImg+'" />';
 		str +='  </div>';
-		str +='  <div class="successListname">';
+		str +='  <div class="success-list-name">';
 		str +='  <div>'+data.userName+'</div>';
 		str +='  <div>'+data.catchTime+'</div>';
 		str +='  </div>';
 		str +='  <div style="clear:both"></div>';
 		str +='  </div>';
-		str +=$(".successList").html();
-		$(".successList").html(str);
+		str +=$(".success-list").html();
+		$(".success-list").html(str);
 	}
 	
 }

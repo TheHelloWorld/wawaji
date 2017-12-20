@@ -2,7 +2,7 @@ var auto, i=0, current_id = -1, can_big=false, can_small = true, current_status=
 var change_width=0,change_height=0;
 var finish_arr = [];
 //停止移动操作
-function stopmove(){
+function stopMove(){
 	clearInterval(auto);
 }
 //改变娃娃底部颜色 并记录当前娃娃选择娃娃id
@@ -31,7 +31,7 @@ function changeColor(){
 	if(current_status == wawa_num){current_id = -1;}
 }
 
-function moveright(){
+function moveRight(){
 	if(flag_status['move'] == true){
 		stopmove();
 		if(current_size['up']['left']+0.5 < max['up']['left']){
@@ -57,7 +57,7 @@ function moveright(){
 	}
 }
 
-function moveleft(){
+function moveLeft(){
 	if(flag_status['move'] == true){
 		stopmove();
 		if(current_size['up']['left']+0.5 >zhuazi_size['up']['left']){
@@ -82,7 +82,7 @@ function moveleft(){
 		}
 	}
 }
-function movebig(){
+function moveBig(){
 	if(flag_status['move'] == true){
 		stopmove();
 		var j = 0;
@@ -149,7 +149,7 @@ function movebig(){
 	}
 }
 
-function movesmall(){
+function moveSmall(){
 	if(flag_status['move'] == true){
 		stopmove();
 		can_big = true;

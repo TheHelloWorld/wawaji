@@ -9,6 +9,7 @@ body {
     -moz-user-select:none;
     -ms-user-select:none;
     user-select:none;
+    background:#6DDBF6;
 }
 
 .game-start {
@@ -27,6 +28,13 @@ body {
     -moz-opacity:1;
     opacity:1;
     width:100%;
+}
+
+.game-middle {
+    background: url('/image/game/background1.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
 }
 
 .game-top div {
@@ -57,32 +65,32 @@ body {
     font-size:35px;
 }
 
-.zhuazi {
+.grasp {
     position:absolute;
     left:0;
     top:0;
     z-index:90;
 }
 
-.zhuaziup {
+.grasp-up {
     position:absolute;
     top:103px;
 }
 
-.zhuazileft {
+.grasp-left {
     position:absolute;
     top:265px;
     -webkit-transform-origin:100% 0;
 }
 
-.zhuazidi {
+.grasp-down {
     position:absolute;
     -webkit-transform-origin:100% 0;
     top:1050px;
     z-index:50;
 }
 
-.zhuaziright {
+.grasp-right {
     position:absolute;
     top:265px;
     -webkit-transform-origin:0 0;
@@ -109,46 +117,80 @@ body {
     color:white
 }
 
-.botton-background {
+.button-background {
     z-index:99;
     position: absolute;
     left:18%;
     top:4%;
+    transform:rotateX(45deg);
+    background:url('/image/game/anniu.png');
+    height:310px;
+    width:310px;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
 }
 
-.botton-top {
+.button-top {
     z-index:99;
     position: absolute;
     left:30%;
     top:9%;
+    opacity:0;
+    height:85px;
+    width:85px;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
 }
 
-.botton-left {
+.button-left {
     z-index:99;
     position: absolute;
     left:20%;
     top:26%;
+    opacity:0;
+    -webkit-transform:rotate(-90deg);
+    height:85px;
+    width:85px;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
 }
 
-.botton-right {
+.button-right {
     z-index:99;
     position: absolute;
     left:40%;
     top:26%;
+    opacity:0;
+    -webkit-transform:rotate(90deg);
+    height:85px;
+    width:85px;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
 }
 
-.botton-bottom {
+.button-bottom {
     z-index:99;
     position: absolute;
     left:30%;
     top:45%;
+    opacity:0;
+    -webkit-transform:rotate(-180deg);
+    height:85px;
+    width:85px;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
 }
 
 .game-bottom img {
     width:150%;
 }
 
-.botton-get {
+.button-get {
     position: absolute;
     left:65%;
     top:17%;
@@ -187,13 +229,6 @@ body {
     margin-top:4%
 }
 
-.unstart-price {
-    margin-top:20px;
-    font-size:31px;
-    width:100%;
-    text-align:center
-}
-
 .resultMsg {
     width:100%;
     position:fixed;
@@ -203,14 +238,14 @@ body {
     z-index:91
 }
 
-.resultMsgimg {
+.result-msg-img {
     text-align:center;
     margin-top:10%;
     font-size:52px;
     color:white
 }
 
-.resultMsgButton {
+.result-msg-button {
     text-align:center;
 }
 
@@ -241,30 +276,29 @@ body {
     padding-top:5%;
 }
 
-.successPersontitle {
+.successPersonTitle {
     width:45%;
-    text-align:left;
     font-size:50px;
     float:left;
     text-align:center;
     color:#818181
 }
 
-.successPersontitleleft {
+.successPersonTitle-left {
     border-bottom:3px solid rgb(109, 219, 246);
     margin-left:3%;
 }
 
-.successPersontitleright {
+.successPersonTitle-right {
     margin-right:2%;
 }
 
-.successList .successList {
+.success-list {
     width:100%;
     margin-top:5%;
 }
 
-.successListdiv {
+.success-list-div {
     color:#818181;
     font-size:30px;
     border-bottom:3px solid rgb(109, 219, 246);
@@ -273,24 +307,24 @@ body {
     margin-top:5%;
 }
 
-.successListimg {
+.success-list-img {
     width:20%;
     padding-left:5%;
     float:left;
 }
 
-.successListimg img {
+.success-list-img img {
     width:100px;
     height:100px;
     border-radius:50px;
 }
 
-.successListname {
+.success-list-name {
     width:30%;
     float:left;
 }
 
-.successListread {
+.success-list-read {
     width:30%;
     float:right;
     height:50px;
@@ -303,14 +337,14 @@ body {
     line-height:80px;
 }
 
-.buttomButton {
+.bottom-button {
     position:absolute;
     bottom:0;
     right:0;
     width:60%;
 }
 
-.buttomButton div {
+.bottom-button div {
     float:left;
     width:20%;
     margin-left:10%;
@@ -393,7 +427,7 @@ body {
     z-index:98
 }
 
-.broadcastSuccesswords{
+.broadcastSuccessWords{
     font-size:56px;
     z-index:99;
     position:absolute;
