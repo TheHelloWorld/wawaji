@@ -10,6 +10,7 @@ var current_size = {"up":[], "left":[], "right":[], "di":[] };
 
 var flag_status = {"move":true,"get":true};
 var wawa_num = 5;
+
 function load(){
 	hc = $(window).height();
 	wc = $(window).width();
@@ -24,29 +25,29 @@ function load(){
 	$(".broadcastSuccessBack").css('height',hc*0.1);
 	
 	//初始化要用到的爪子对象
-	obj['up'] = $(".zhuaziup");
-	obj['left'] = $(".zhuazileft");
-	obj['right'] = $(".zhuaziright");
-	obj['di'] = $(".zhuazidi");
+	obj['up'] = $(".grasp-up");
+	obj['left'] = $(".grasp-left");
+	obj['right'] = $(".grasp-right");
+	obj['di'] = $(".grasp-down");
 	
 	//获取爪子 3个部件的宽高
-	zhuazi_size['up']['width'] = $(".zhuaziup").css('width');
-	zhuazi_size['up']['height'] = $(".zhuaziup").css('height');
+	zhuazi_size['up']['width'] = $(".grasp-up").css('width');
+	zhuazi_size['up']['height'] = $(".grasp-up").css('height');
 	
-	zhuazi_size['left']['width'] = $(".zhuazileft").css('width');
-	zhuazi_size['left']['height'] = $(".zhuazileft").css('height');
+	zhuazi_size['left']['width'] = $(".grasp-left").css('width');
+	zhuazi_size['left']['height'] = $(".grasp-left").css('height');
 	
-	zhuazi_size['right']['width'] = $(".zhuaziright").css('width');
-	zhuazi_size['right']['height'] = $(".zhuaziright").css('height');
+	zhuazi_size['right']['width'] = $(".grasp-right").css('width');
+	zhuazi_size['right']['height'] = $(".grasp-right").css('height');
 	
-	current_size['up']['width'] = $(".zhuaziup").css('width');
-	current_size['up']['height'] = $(".zhuaziup").css('height');
+	current_size['up']['width'] = $(".grasp-up").css('width');
+	current_size['up']['height'] = $(".grasp-up").css('height');
 	
-	current_size['left']['width'] = $(".zhuazileft").css('width');
-	current_size['left']['height'] = $(".zhuazileft").css('height');
+	current_size['left']['width'] = $(".grasp-left").css('width');
+	current_size['left']['height'] = $(".grasp-left").css('height');
 	
-	current_size['right']['width'] = $(".zhuaziright").css('width');
-	current_size['right']['height'] = $(".zhuaziright").css('height');
+	current_size['right']['width'] = $(".grasp-right").css('width');
+	current_size['right']['height'] = $(".grasp-right").css('height');
 	
 	//获取爪子影子的宽高和初始位置
 	zhuazi_size['di']['top'] = hc*0.61;//605
@@ -88,7 +89,7 @@ function load(){
 	max['up']['left'] = wc*0.765;
 	max['left']['left'] = wc*0.71;
 	max['right']['left'] = wc*0.82;
-	max['right']['di'] = wc*0.685
+	max['right']['di'] = wc*0.685;
 
 	var wawa_width = wawa_init_size[wawa_num][0];
 	var wawa_height = wawa_init_size[wawa_num][1];
@@ -126,22 +127,22 @@ window.ontouchstart = function(e) { e.preventDefault(); };
 
 function showDiv(type){
 	if(type == 'list'){
-		$(".successPersontitleleft").css('border-bottom','3px solid rgb(109, 219, 246)');
-		$(".successPersontitleright").css('border-bottom','0px solid rgb(109, 219, 246)');
-		$(".successList").show();
-		$(".successdetail").hide();
+		$(".successPersonTitle-left").css('border-bottom','3px solid rgb(109, 219, 246)');
+		$(".successPersonTitle-right").css('border-bottom','0px solid rgb(109, 219, 246)');
+		$(".success-list").show();
+		$(".success-detail").hide();
 	}else{
-		$(".successPersontitleleft").css('border-bottom','0px solid rgb(109, 219, 246)');
-		$(".successPersontitleright").css('border-bottom','3px solid rgb(109, 219, 246)');
-		$(".successList").hide();
-		$(".successdetail").show();
+		$(".successPersonTitle-left").css('border-bottom','0px solid rgb(109, 219, 246)');
+		$(".successPersonTitle-right").css('border-bottom','3px solid rgb(109, 219, 246)');
+		$(".success-list").hide();
+		$(".success-detail").show();
 	}
 }
 
-function setBotton(){
-	$(".botton-top").attr({"ontouchstart":"movesmall()", "ontouchend":"stopmove()"});
-	$(".botton-left").attr({"ontouchstart":"moveleft()", "ontouchend":"stopmove()"});
-	$(".botton-bottom").attr({"ontouchstart":"movebig()", "ontouchend":"stopmove()"});
-	$(".botton-right").attr({"ontouchstart":"moveright()", "ontouchend":"stopmove()"});
-	$(".botton-get").attr({"ontouchstart":"catchToy()"});
+function setButton(){
+	$(".button-top").attr({"ontouchstart":"moveSmall()", "ontouchend":"stopMove()"});
+	$(".button-left").attr({"ontouchstart":"moveLeft()", "ontouchend":"stopMove()"});
+	$(".button-bottom").attr({"ontouchstart":"moveBig()", "ontouchend":"stopMove()"});
+	$(".button-right").attr({"ontouchstart":"moveRight()", "ontouchend":"stopMove()"});
+	$(".button-get").attr({"ontouchstart":"catchToy()"});
 }

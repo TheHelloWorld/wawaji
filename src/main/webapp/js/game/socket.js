@@ -12,22 +12,24 @@ var toyRoomImg;
 var luckyNum;
 var catchId;
 
+var webSocket;
+
 function startWebSocket() { 
-    websocket = new WebSocket(wsUri); 
-    websocket.onopen = function(evt) { 
+    webSocket = new WebSocket(wsUri);
+    webSocket.onopen = function(evt) {
         onOpen(evt)
-    }; 
-    websocket.onclose = function(evt) { 
+    };
+    webSocket.onclose = function(evt) {
         onClose(evt) 
-    }; 
-    websocket.onmessage = function(evt) { 
+    };
+    webSocket.onmessage = function(evt) {
         onMessage(evt) 
-    }; 
-    websocket.onerror = function(evt) { 
+    };
+    webSocket.onerror = function(evt) {
         onError(evt) 
     };
 }  
-startWebSocket()
+startWebSocket();
 function onOpen(evt) {
 	getInfo();
 }  
@@ -82,16 +84,16 @@ function onError(evt) {
 }
 
 function closeSocket() {
-    websocket.close();
+    webSocket.close();
 }
 
 function doSend(message) {
-    websocket.send(message); 
+    webSocket.send(message);
 }
 
 function setInit(data){
 	current_id = -1;
-	setBotton();
+	setButton();
 	toyImg = data.result.toyRoomImg;
 	toyNo = data.result.toyNo;
 	toyNowCoin = data.result.toyNowCoin;
@@ -240,7 +242,7 @@ var startDjsTimer;
 function startGameStatus(data){
 	if(data.result.result == "success"){
 		var startdjs = 30;
-		setBotton();
+        setButton();
 		$("#startButton").hide();
 		$("#moveButton").show();
 		var coin = parseInt($(".showCurCoin").html());
