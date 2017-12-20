@@ -82,6 +82,7 @@
     <select id="getLatelyCatchSuccessRecordByToyNo" parameterType="java.lang.String" resultMap="userCatchRecordMap">
         select
             u.user_img,
+            u.user_name,
             c.toy_name,
             c.catch_time
         from catch_record c, `user` u

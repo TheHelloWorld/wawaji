@@ -9,10 +9,7 @@ import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.dao.CatchRecordDao;
 import com.toiletCat.dao.UserDao;
 import com.toiletCat.entity.*;
-import com.toiletCat.enums.CatchResult;
-import com.toiletCat.enums.CatchStatus;
-import com.toiletCat.enums.TradeStatus;
-import com.toiletCat.enums.TradeType;
+import com.toiletCat.enums.*;
 import com.toiletCat.service.*;
 import com.toiletCat.utils.*;
 import org.slf4j.Logger;
@@ -46,6 +43,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     @Autowired
     private UserGameRoomService userGameRoomService;
+
+    @Autowired
+    private UserToyService userToyService;
 
     /**
      * 用户注册或登录
@@ -680,6 +680,21 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         if(resetUserRoom.success() && resetGameRoom.success()) {
 
             catchRecordDao.updateCatchResultByCatchId(CatchResult.CATCH_SUCCESS.getStatus(), catchId);
+
+            // 添加用户战利品记录
+            UserToy userToy = new UserToy();
+
+            userToy.setUserNo(userNo);
+
+            String toyNo = gameRoomService.getUserSeeGameRoomByGameRoomNo(gameRoomNo).getValue().getToyNo();
+
+            userToy.setToyNo(toyNo);
+
+            userToy.setDeliverId(0L);
+
+            userToy.setChoiceType(ChoiceType.INIT.getStatus());
+
+            userToyService.addUserToy(userToy);
 
             JSONObject json = new JSONObject();
 

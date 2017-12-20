@@ -26,6 +26,7 @@
                                     <th><lable name="userName">用户姓名</lable></th>
                                     <th><lable name="mobileNo">手机号</lable></th>
                                     <th><lable name="address">地址</lable></th>
+                                    <th><lable name="toyNameArray">娃娃信息</lable></th>
                                     <th><lable name="deliverNo">发货单号</lable></th>
                                     <th><lable name="company">快递公司</lable></th>
                                     <th><lable name="deliverMsg">货物信息</lable></th>
