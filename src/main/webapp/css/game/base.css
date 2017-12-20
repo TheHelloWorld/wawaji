@@ -223,131 +223,130 @@ body {
 }
 
 .unstart-play {
-    width:31%;
-    height:50%;
-    margin-left:35%;
-    margin-top:4%
+    width: 31%;
+    height: 50%;
+    margin-left: 35%;
+    margin-top: 4%
 }
 
 .resultMsg {
-    width:100%;
-    position:fixed;
-    left:0;
-    top:0;
-    opacity:0.7;
-    z-index:91
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    opacity: 0.7;
+    z-index: 91
 }
 
 .result-msg-img {
-    text-align:center;
-    margin-top:10%;
-    font-size:52px;
-    color:white
+    text-align: center;
+    margin-top: 10%;
+    font-size: 52px;
+    color: white
 }
 
 .result-msg-button {
-    text-align:center;
+    text-align: center;
 }
 
 .resultMsgButton button {
-    width:35%;
-    height:75px;
-    font-size:52px;
-    margin-top:3%;
-    background:#FEFE9E;
-    border:0;
-    border-radius:20px;
+    width: 35%;
+    height: 75px;
+    font-size: 52px;
+    margin-top: 3%;
+    background: #FEFE9E;
+    border: 0;
+    border-radius: 20px;
 }
 
 .zzc {
-    width:100%;
-    position:fixed;
-    left:0;
-    top:25%;
-    z-index:99;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 25%;
+    z-index:  99;
 }
 
 .successPerson {
-    width:90%;
-    overflow:auto;
-    margin-left:5%;
-    background:white;
-    border-radius:20px;
-    padding-top:5%;
+    width: 90%;
+    overflow: auto;
+    margin-left: 5%;
+    background: white;
+    border-radius: 20px;
+    padding-top: 5%;
 }
 
 .successPersonTitle {
-    width:45%;
-    font-size:50px;
-    float:left;
-    text-align:center;
-    color:#818181
+    width: 45%;
+    font-size: 50px;
+    float: left;
+    text-align: center;
+    color: #818181
 }
 
 .successPersonTitle-left {
-    border-bottom:3px solid rgb(109, 219, 246);
-    margin-left:3%;
+    border-bottom: 3px solid rgb(109, 219, 246);
+    margin-left: 3%;
 }
 
 .successPersonTitle-right {
-    margin-right:2%;
+    margin-right: 2%;
 }
 
 .success-list {
-    width:100%;
-    margin-top:5%;
+    width: 100%;
+    margin-top: 5%;
 }
 
 .success-list-div {
-    color:#818181;
-    font-size:30px;
-    border-bottom:3px solid rgb(109, 219, 246);
-    width:90%;
-    margin-left:3%;
-    margin-top:5%;
+    color: #818181;
+    font-size: 30px;
+    border-bottom: 3px solid rgb(109, 219, 246);
+    width: 90%;
+    margin-left: 3%;
+    margin-top: 5%;
 }
 
 .success-list-img {
-    width:20%;
-    padding-left:5%;
-    float:left;
+    width: 20%;
+    padding-left: 5%;
+    float: left;
 }
 
 .success-list-img img {
-    width:100px;
-    height:100px;
-    border-radius:50px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
 }
 
 .success-list-name {
-    width:30%;
-    float:left;
+    width: 30%;
+    float: left;
 }
 
 .success-list-read {
-    width:30%;
-    float:right;
-    height:50px;
-    color:#333843;
-    padding-left:5%;
-    background-size:100% 100%;
-    margin-right:5%;
-    font-size:40px;
-    height:80px;
-    line-height:80px;
+    width: 30%;
+    float: right;
+    color: #333843;
+    padding-left: 5%;
+    background-size: 100% 100%;
+    margin-right: 5%;
+    font-size: 40px;
+    height: 80px;
+    line-height: 80px;
 }
 
 .bottom-button {
-    position:absolute;
-    bottom:0;
-    right:0;
-    width:60%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60%;
 }
 
 .bottom-button div {
-    float:left;
-    width:20%;
-    margin-left:10%;
+    float: left;
+    width: 20%;
+    margin-left: 10%;
 }
 
 .luckyNum {
@@ -359,21 +358,21 @@ body {
     height: 6.2%;
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    -moz-background-size:100% 100%;
+    -moz-background-size: 100% 100%;
     opacity: 0.5;
 }
 
 .showCoinMsg {
-    width:100%;
-    position:absolute;
-    top:0;
-    height:5%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    height: 5%;
 }
 
 .showOnceCoin {
-    float:left;
-    width:25%;
-    margin-left:10%;
+    float: left;
+    width: 25%;
+    margin-left:  10%;
 }
 
 .showOnceCoin div {
@@ -383,65 +382,79 @@ body {
 }
 
 .showPlayCoin {
-    float:left;
-    width:25%;
-    margin-left:2%;
+    float: left;
+    width: 25%;
+    margin-left: 2%;
 }
 
 .showPlayCoin div {
-    width:50%;
-    font-size:40px;
-    float:left;
+    width: 50%;
+    font-size: 40px;
+    float: left;
 }
 
 .showCurPlayNum {
-    float:right;
-    width:33%;
-    font-size:40px;
+    float: right;
+    width: 33%;
+    font-size: 40px;
 }
 
 .broadcastFail {
-    overflow:hidden;
-    position:absolute;
-    top:20%;
-    left:0;
-    height:10%;
-    width:100%;
+    overflow: hidden;
+    position: absolute;
+    top: 20%;
+    left: 0;
+    height: 10%;
+    width: 100%;
 }
 
-.broadcastSuccess{
-    position:fixed;
-    top:5%;
-    left:0;
-    width:100%;
-    z-index:95
+.broadcastSuccess {
+    position: fixed;
+    top: 5%;
+    left: 0;
+    width: 100%;
+    z-index: 95
 }
 
-.broadcastSuccessBack{
-    background:white;
-    opacity:0.5;
-    position:absolute;
-    left:0;
-    top:0;
-    width:100%;
-    z-index:98
+.broadcastSuccessBack {
+    background: white;
+    opacity: 0.5;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 98
 }
 
-.broadcastSuccessWords{
-    font-size:56px;
-    z-index:99;
-    position:absolute;
-    left:0;
-    top:0;
+.broadcastSuccessWords {
+    font-size: 56px;
+    z-index: 99;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
-.toyInfo{
-    position:absolute;
-    left:25%;
-    top:15%;
-    z-index:50;
-    background:red;
-    opacity:0.5;
-    width:50%;
-    height:20%;
+.toyInfo {
+    position: absolute;
+    left: 25%;
+    top: 15%;
+    z-index: 50;
+    background: red;
+    opacity: 0.5;
+    width: 50%;
+    height: 20%;
+}
+
+.hole {
+    background: url('/image/game/hole.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    position: absolute;
+    left: 15%;
+    top: 52%;
+    z-index: 99;
+    width: 25%;
+    height: 15%;
+    opacity: 0.7;
 }

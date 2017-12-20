@@ -110,6 +110,12 @@ function setInit(data){
 	var userCoin = sessionStorage["toiletCatUserCoin"];
 	$(".showCurCoin").html(userCoin);
 	load();
+    $(".toyInfo").css({
+        'background':'url('+toyImg+')',
+        'background-repeat':'no-repeat',
+        'background-size':'100% 100%',
+        '-moz-background-size':'100% 100%'
+    });
 }
 
 function catchToy(){

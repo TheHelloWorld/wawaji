@@ -136,9 +136,9 @@ function getUserSeeGameRoomListByPage(nowPage) {
                 }
 
                 if(i % 2 == 0) {
-                    str += "<div class='machine-col-xs-6-left' >";
+                    str += "<div class='machine-col-xs-6-left' onclick='toGamePage("+list[i]["gameRoomNo"]+")'>";
                 } else if(i % 2 != 0) {
-                    str += "<div class='machine-col-xs-6-right' >";
+                    str += "<div class='machine-col-xs-6-right' onclick='toGamePage("+list[i]["gameRoomNo"]+")'>";
                 }
 
                 str += "    <div class='machine-panel panel-info'>";
@@ -148,7 +148,7 @@ function getUserSeeGameRoomListByPage(nowPage) {
                 str += "            </div>";
                 str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
                 str += "            <div><span class='my-inline-right' ><img src='/image/background/coin.ico' />:" + list[i]["toyNowCoin"] + "</span></div>";
-                str += "            <div><span>在线人数:" + list[i]["viewer"] + "</span></div>";
+                str += "            <div><span>在线人数:<span id='viewer"+list[i]["gameRoomNo"]+"'>" + list[i]["viewer"] + "</span></span></div>";
                 str += "        </div>";
                 str += "    </div>";
                 str += "</div>";
@@ -161,6 +161,10 @@ function getUserSeeGameRoomListByPage(nowPage) {
             $("#loading-div").remove();
         }
     });
+}
+
+function toGamePage(gameRoomNo) {
+    window.location.href = "/toiletCat/game/game.html?userNo="+userNo + "&gameRoomNo="+gameRoomNo;
 }
 
 // 设置用户信息
