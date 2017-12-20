@@ -11,14 +11,14 @@ var can_up = {'left':false};
 var angle
 function getprize(){
 	if(flag_status['get'] == true){
-		$(".botton-top").attr({"ontouchstart":"", "ontouchend":""});
-		$(".botton-left").attr({"ontouchstart":"", "ontouchend":""});
-		$(".botton-bottom").attr({"ontouchstart":"", "ontouchend":""});
-		$(".botton-right").attr({"ontouchstart":"", "ontouchend":""});
-		$(".botton-get").attr({"ontouchstart":""});
+		$(".button-top").attr({"ontouchstart":"", "ontouchend":""});
+		$(".button-left").attr({"ontouchstart":"", "ontouchend":""});
+		$(".button-bottom").attr({"ontouchstart":"", "ontouchend":""});
+		$(".button-right").attr({"ontouchstart":"", "ontouchend":""});
+		$(".button-get").attr({"ontouchstart":""});
 		flag_status['move'] = false;
 		flag_status['get'] = false;
-		if(current_id > -1){$(".zhuazi").css("z-index",wawa_init_position[wawa_num][2][current_id]);
+		if(current_id > -1){$(".grasp").css("z-index",wawa_init_position[wawa_num][2][current_id]);
 			var top = parseFloat($("#liwu"+current_id).css('top'));
 			var zhua_up = current_size['up']['top'];
 			var zhua_left = current_size['left']['top'];
@@ -47,7 +47,7 @@ function getprize(){
 				}
 			},1);
 		}else{
-			$(".zhuazi").css("z-index",91);
+			$(".grasp").css("z-index",91);
 			var down_height = current_size['di']['top']-parseFloat(current_size['left']['height'])/2;
 			var y = 0;
 			var zhua_up = current_size['up']['top'];
@@ -235,20 +235,20 @@ function zhuazi_get_up(){
 					"left":zhuazi_size['left']['left']+"px",
 					"top":zhuazi_size['left']['top']+"px",
 					"width":zhuazi_size['left']['width'],
-					"height":zhuazi_size['left']['height'],
+					"height":zhuazi_size['left']['height']
 				},1000);
 				obj['right'].animate({
 					"left":zhuazi_size['right']['left']+"px",
 					"top":zhuazi_size['right']['top']+"px",
 					"width":zhuazi_size['right']['width'],
-					"height":zhuazi_size['right']['height'],
+					"height":zhuazi_size['right']['height']
 				},1000);
 				
 				obj['di'].animate({
 					"left":zhuazi_size['di']['left']+"px",
 					"top":zhuazi_size['di']['top']+"px",
 					"width":zhuazi_size['di']['width'],
-					"height":zhuazi_size['di']['height'],
+					"height":zhuazi_size['di']['height']
 				},1000);
 				
 				if(status == 1 && current_id > -1){
@@ -256,7 +256,7 @@ function zhuazi_get_up(){
 					var top = parseFloat($('#liwu'+current_id).css('top'))+change_height;
 					$('#liwu'+current_id).animate({
 						"left":(change_width+zhuazi_size['left']['left'])+"px",
-						"top":top+"px",
+						"top":top+"px"
 					},1000);
 				}
 				setTimeout(put_down_angle,1400);
@@ -291,13 +291,13 @@ function zhuazi_get_up_angle(){
 					if(can_up['left_angle'] > can_up['right_angle']){
 						turn_left = can_up['left_angle']-x;
 						turn_right = can_up['right_angle']+x;
-						$('.zhuazileft').css("-webkit-transform",'rotate(-'+turn_left+'deg)');
-						$('.zhuaziright').css("-webkit-transform",'rotate('+turn_right+'deg)');
+						$('.grasp-left').css("-webkit-transform",'rotate(-'+turn_left+'deg)');
+						$('.grasp-right').css("-webkit-transform",'rotate('+turn_right+'deg)');
 					}else{
 						turn_left = can_up['left_angle']+x;
 						turn_right = can_up['right_angle']-x;
-						$('.zhuazileft').css("-webkit-transform",'rotate(-'+turn_left+'deg)');
-						$('.zhuaziright').css("-webkit-transform",'rotate('+turn_right+'deg)');
+						$('.grasp-left').css("-webkit-transform",'rotate(-'+turn_left+'deg)');
+						$('.grasp-right').css("-webkit-transform",'rotate('+turn_right+'deg)');
 					}
 				}
 			},1)
@@ -327,8 +327,8 @@ function over_angle(){
 			x++;
 			turn_left = can_up['left_angle']+x;
 			turn_right = can_up['right_angle']+x;
-			$('.zhuazileft').css("-webkit-transform",'rotate(-'+turn_left+'deg)');
-			$('.zhuaziright').css("-webkit-transform",'rotate('+turn_right+'deg)');
+			$('.grasp-left').css("-webkit-transform",'rotate(-'+turn_left+'deg)');
+			$('.grasp-right').css("-webkit-transform",'rotate('+turn_right+'deg)');
 		}
 	},1)
 }
@@ -354,14 +354,14 @@ function put_down_angle(){
 	current_size['di']['top'] = hc*0.61;//605
 	current_size['di']['left'] = wc*0.17;//125
 	
-	current_size['up']['width'] = $(".zhuaziup").css('width');
-	current_size['up']['height'] = $(".zhuaziup").css('height');
+	current_size['up']['width'] = $(".grasp-up").css('width');
+	current_size['up']['height'] = $(".grasp-up").css('height');
 	
-	current_size['left']['width'] = $(".zhuazileft").css('width');
-	current_size['left']['height'] = $(".zhuazileft").css('height');
+	current_size['left']['width'] = $(".grasp-left").css('width');
+	current_size['left']['height'] = $(".grasp-left").css('height');
 	
-	current_size['right']['width'] = $(".zhuaziright").css('width');
-	current_size['right']['height'] = $(".zhuaziright").css('height');
+	current_size['right']['width'] = $(".grasp-right").css('width');
+	current_size['right']['height'] = $(".grasp-right").css('height');
 	current_size['di']['width'] = (wc * 0.2)+"px";
 	current_size['di']['height'] = obj['di'].css('height');
 	

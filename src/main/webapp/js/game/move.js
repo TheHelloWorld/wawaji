@@ -33,11 +33,11 @@ function changeColor(){
 
 function moveRight(){
 	if(flag_status['move'] == true){
-		stopmove();
+        stopMove();
 		if(current_size['up']['left']+0.5 < max['up']['left']){
 			auto = window.setInterval(function(){
 				if(current_size['up']['left']>=max['up']['left']){
-					stopmove();
+                    stopMove();
 				}else{
 					for(var p = 0;p<2;p++){
 						changeColor();
@@ -59,11 +59,11 @@ function moveRight(){
 
 function moveLeft(){
 	if(flag_status['move'] == true){
-		stopmove();
+		stopMove();
 		if(current_size['up']['left']+0.5 >zhuazi_size['up']['left']){
 			auto = window.setInterval(function(){
 				if(current_size['up']['left']<=zhuazi_size['up']['left']){
-					stopmove();
+                    stopMove();
 				}else{
 					for(var p = 0;p<2;p++){
 						changeColor();
@@ -84,7 +84,7 @@ function moveLeft(){
 }
 function moveBig(){
 	if(flag_status['move'] == true){
-		stopmove();
+        stopMove();
 		var j = 0;
 		can_small = true;
 		if(can_big){
@@ -92,7 +92,7 @@ function moveBig(){
 				changeColor();
 				if(i == 0){
 					can_big = false;
-					stopmove();
+                    stopMove();
 				}else{
 					i--;
 					j++
@@ -151,7 +151,7 @@ function moveBig(){
 
 function moveSmall(){
 	if(flag_status['move'] == true){
-		stopmove();
+        stopMove();
 		can_big = true;
 		var j=0;
 		if(can_small){
@@ -162,7 +162,7 @@ function moveSmall(){
 					clearInterval(auto);
 				}else{
 					i++;
-					j++
+					j++;
 					change_width = parseFloat(zhuazi_size['up']['width']) * 0.002;
 					change_height = parseFloat(zhuazi_size['up']['height']) * 0.002;
 					
