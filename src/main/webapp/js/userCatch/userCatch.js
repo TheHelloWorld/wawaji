@@ -13,6 +13,18 @@ $(function() {
     // 分页获得当前用户所有抓取记录
     getAllUserCatchRecordByUserNo(userNo);
 
+    var indexBodyDivHeight = $(".index-body-div").height();
+
+    var addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+
+    $(".index-body-div").scroll(function(){
+
+        if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
+            nextPage();
+            addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+        }
+    });
+
 });
 
 // 获得当前数据总数量和分页数据
@@ -49,10 +61,19 @@ function getTotalCountAndPageSizeByUserNo() {
 
             } else {
 
-                totalPage = parseInt(totalCount / pageSize);
+                totalPage = parseInt(totalCount / pageSize) + 1;
             }
         }
     });
+}
+
+function nextPage(userNo) {
+    nowPage ++;
+    if(nowPage <= totalPage) {
+        getAllUserCatchRecordByUserNo(userNo);
+    } else {
+        nowPage = totalPage;
+    }
 }
 
 // 分页获得当前用户所有抓取记录
