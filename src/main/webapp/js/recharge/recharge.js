@@ -169,10 +169,15 @@ function rechargeThis(amount, coin) {
     });
 }
 
+// 变更充值后金额
 function updateUserCoin(nowCoin) {
-
+    // 游戏房间主页
     $("#gameRoomIndexUserCoin").html(nowCoin);
+    // 用户充值页
     $("#user-recharge-coin").html(nowCoin);
+    // 用户主页
     $("#userIndexUserCoin").html(nowCoin);
+    // 游戏页
+    $(".showCurCoin").html(nowCoin);
 }
 
