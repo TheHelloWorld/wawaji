@@ -37,6 +37,13 @@ public interface UserDao {
     User getUserByUserNo(String userNo);
 
     /**
+     * 根据用户编号获得用户数量
+     * @param userNo 用户编号
+     * @return
+     */
+    Integer countUserByUserNo(String userNo);
+
+    /**
      * 根据用户编号获得用户名称
      * @param userNo 用户编号
      * @return

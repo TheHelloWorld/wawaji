@@ -56,6 +56,11 @@
       select count(*) from `user` where mobile_no = #{mobileNo, jdbcType=VARCHAR}
     </select>
 
+    <!-- 根据用户编号获得用户数量 -->
+    <select id="countUserByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from `user` where user_no = #{userNo, jdbcType=VARCHAR}
+    </select>
+
     <!-- 分页获得所有用户记录 -->
     <select id="getAllUserByPage" resultMap="userMap">
         select

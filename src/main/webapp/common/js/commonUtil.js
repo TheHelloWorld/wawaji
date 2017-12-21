@@ -584,7 +584,7 @@ function getTotalCountAndPageSize(url) {
             }
 
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -634,7 +634,7 @@ function saveThis(saveUrl, returnUrl) {
             }
 
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -669,7 +669,7 @@ function updateThis(updateUrl, returnUrl) {
             }
 
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -797,7 +797,8 @@ function getUserInfoByUserNo(userNo) {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+
+                toiletCatMsg(data["result"],"toLoginPage()");
                 return;
             }
 
@@ -829,8 +830,13 @@ function getUserInfoByUserNo(userNo) {
     });
 }
 
+function toLoginPage() {
+	window.location.href = "/toiletCat/user/login.html?from=gameIndex&type=gameRoom&checkType=checkCode";
+}
+
+
 // 弹出提示框
-function toiletCatMsg(msg) {
+function toiletCatMsg(msg, method) {
 	var str = "	<div class='toiletCat-msg' >";
 
 	str += "	</div>";
@@ -841,7 +847,7 @@ function toiletCatMsg(msg) {
     str += "			<div class='toiletCat-msg-text'>";
     str += 					msg;
     str += "			</div>";
-    str += "			<div class='toiletCat-msg-button' onclick='closeToiletCatMsg()'>";
+    str += "			<div class='toiletCat-msg-button' onclick='closeToiletCatMsg("+method+")'>";
     str += "				确定";
     str += "			</div>";
     str += "		</div>";
@@ -850,7 +856,11 @@ function toiletCatMsg(msg) {
 }
 
 // 关闭提示框
-function closeToiletCatMsg() {
+function closeToiletCatMsg(method) {
     $(".toiletCat-msg").remove();
     $(".toiletCat-msg-div").remove();
+
+    if(method != null) {
+    	eval(method);
+	}
 }

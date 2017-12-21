@@ -36,7 +36,7 @@ function judeUserAddress(userNo) {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                toiletCatMsg(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -67,7 +67,7 @@ function getAllUserAddressByUserNo(userNo) {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                toiletCatMsg(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -112,7 +112,7 @@ function toAddUserAddressPage() {
     if(canAdd) {
         window.location.href = "/toiletCat/userAddress/userAddressDetailPage.html?type=add&userNo="+userNo;
     } else {
-        toiletCatMsg("最多只能有5个地址")
+        toiletCatMsg("最多只能有5个地址", null);
     }
 }
 
@@ -146,7 +146,7 @@ function deleteUserAddress(id) {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                toiletCatMsg(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 

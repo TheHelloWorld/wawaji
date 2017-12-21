@@ -490,6 +490,15 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         return exec(new Callback() {
             @Override
             public void exec() {
+
+                // 判断当前用户编号是否正确
+                if(userDao.countUserByUserNo(userNo) == 0) {
+                    logger.warn("getUserByUserNo user not exists userNo:" + userNo);
+                    got("用户不存在");
+                    setOtherMsg();
+                    return;
+                }
+
                 got(userDao.getUserByUserNo(userNo));
 
             }

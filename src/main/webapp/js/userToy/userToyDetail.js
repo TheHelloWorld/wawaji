@@ -59,7 +59,7 @@ function getUserToyByUserNoAndId() {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                toiletCatMsg(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -141,7 +141,7 @@ function getDeliverByIdAndUserNo(id) {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                toiletCatMsg(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -203,7 +203,7 @@ function getAllUserAddressByUserNo(userNo) {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                toiletCatMsg(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -293,7 +293,7 @@ function getAllUnHandleUserToyByUserNo() {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                toiletCatMsg(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -388,11 +388,9 @@ function updateChoiceType() {
         }
 
         if(count < 3) {
-            toiletCatMsg("三个以上才包邮喵");
 
             if(userCoin < deliverCoin) {
-                toiletCatMsg("游戏币不足QAQ 请充值喵");
-                recharge();
+                toiletCatMsg("游戏币不足QAQ 请充值喵", "recharge()");
             }
         }
 
@@ -425,7 +423,7 @@ function updateChoiceType() {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                toiletCatMsg(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
