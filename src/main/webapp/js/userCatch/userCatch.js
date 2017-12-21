@@ -107,23 +107,25 @@ function getAllUserCatchRecordByUserNo(userNo) {
 
             for(var i = 0; i<list.length; i++) {
 
-                str += "<div id='userCatchRecord"+list[i]["id"]+"' class='row'>";
-                str += "    <div class='panel-body' >";
+                str += "<div id='userCatchRecord"+list[i]["id"]+"' class='catch-toy-row' >";
+                str += "</div>";
+                str += "    <div class='catch-toy-div' >";
                 str += "        <div class='catch-toy-img'>";
                 str += "            <img src='" + list[i]["toyImg"] + "' />";
                 str += "        </div>";
                 var newDate = new Date();
                 newDate.setTime(list[i]["catchTime"]);
-                str += "        <div class='catch-toy-time' ><span>" +newDate.format('yyyy-MM-dd h:m:s') + "</span></div>";
-                str += "        <div class='catch-toy-result' >"
+                str += "        <div class='catch-toy-time' ><span>" +newDate.format('yyyy-MM-dd hh:mm:ss') + "</span>";
+                str += "            <div class='catch-toy-result' >";
                 if(list[i]["catchResult"] == "1") {
-                    str += "        <span>抓取成功</span>";
+                    str += "            <span>抓取成功</span>";
                 } else {
-                    str += "        <span>抓取失败</span>";
+                    str += "            <span>抓取失败</span>";
                 }
+                str += "            </div>";
                 str += "        </div>";
                 str += "    </div>";
-                str += "</div>"
+
                 str += "<div style='text-align: center'>";
 
                 if(i%2 == 0) {
@@ -136,6 +138,8 @@ function getAllUserCatchRecordByUserNo(userNo) {
             }
 
             $("#catchRecord").append(str);
+
+            $(".catch-toy-row").height($(".catch-toy-div").height());
         }
 
     });
