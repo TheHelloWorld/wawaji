@@ -164,7 +164,14 @@ function getUserSeeGameRoomListByPage(nowPage) {
 }
 
 function toGamePage(gameRoomNo) {
-    window.location.href = "/toiletCat/game/game.html?userNo="+userNo + "&gameRoomNo="+gameRoomNo;
+
+    var gameRoomUrl = "/toiletCat/game/game.html?userNo=" + userNo + "&gameRoomNo=" + gameRoomNo;
+
+    if(loginFlag == "fail") {
+        gameRoomUrl = loginUrl;
+    }
+    window.location.href = gameRoomUrl;
+
 }
 
 // 设置用户信息
