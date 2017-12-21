@@ -182,7 +182,7 @@ function setUserInfo() {
     str += "        <img src='"+userImg+"' class='user-img'>";
     str += "    </div>";
     str += "    <div class='user-info-div-user-coin'>";
-    str += "        <img src='/image/background/coin.ico' />"+userCoin;
+    str += "        <img src='/image/background/coin.ico' /><span id='gameRoomIndexUserCoin' >" + userCoin + "</span>";
     str += "    </div>";
 
     $("#userInfo").append(str);

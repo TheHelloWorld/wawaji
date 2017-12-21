@@ -51,7 +51,7 @@ function toUserCatch() {
 
 // 设置用户信息
 function setUserInfo() {
-    $("#userCoin").html(userCoin);
+    $("#userIndexUserCoin").html(userCoin);
     $("#userImg").append("<img src='"+userImg+"' />");
     $("#userName").html(userName);
     $("#invitationCode").html(invitationCode);

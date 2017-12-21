@@ -160,13 +160,19 @@ function rechargeThis(amount, coin) {
 
             var nowCoin = parseInt(sessionStorage["toiletCatUserCoin"]) + coin;
 
-            $("#user-recharge-coin").html(nowCoin);
+            updateUserCoin(nowCoin);
 
             sessionStorage["toiletCatUserCoin"] = nowCoin;
 
-            toiletCatMsg(data["result"], "closeRecharge()");
-
+            toiletCatMsg("充值成功", "closeRecharge()");
         }
     });
+}
+
+function updateUserCoin(nowCoin) {
+
+    $("#gameRoomIndexUserCoin").html(nowCoin);
+    $("#user-recharge-coin").html(nowCoin);
+    $("#userIndexUserCoin").html(nowCoin);
 }
 
