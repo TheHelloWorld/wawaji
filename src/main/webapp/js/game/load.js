@@ -146,3 +146,7 @@ function setButton(){
 	$(".button-right").attr({"ontouchstart":"moveRight()", "ontouchend":"stopMove()"});
 	$(".button-get").attr({"ontouchstart":"catchToy()"});
 }
+
+function returnMethod() {
+    window.location.href = "/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+uId;
+}

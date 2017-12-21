@@ -144,11 +144,11 @@ function returnMethod() {
     // 根据类型返回不同的首页
     if(type= "gameRoom") {
 
-        window.location.href = "/toiletCat/gameRoom/gameRoom.html?type=gameRoom&userNo="+userNo;
+        window.location.href = "/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+userNo;
 
     } else if(type= "machineRoom"){
 
-        window.location.href = "/toiletCat/machineRoom/machineRoom.html?type=machineRoom&userNo="+userNo;
+        window.location.href = "/toiletCat/machineRoom/machineRoom.html?nowType=login&&userNo="+userNo;
 
     }
 }
