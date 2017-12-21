@@ -84,8 +84,11 @@
             <div class="default-height">
             </div>
             <div id="loading" style="padding-top: 2%;text-align: center;" >
-                <img src="/image/game/loading.gif">
+                <img height=100% width=100% src="/image/game/loading.gif">
             </div>
+            <script>
+                $("#loading").css('height',$(window).height());
+            </script>
             <div id="banner-box" class="banner-box">
 
             </div>
@@ -109,4 +112,5 @@
             </nav>
         </div>
     </body>
+
 </html>
