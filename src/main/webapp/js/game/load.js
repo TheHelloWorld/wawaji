@@ -107,7 +107,7 @@ function load() {
 			index = wawa_init_position[wawa_num][1][1]
 		}
 		left = wc * wawa_init_position[wawa_num][0][key]+"px";
-		str += '<div id="liwu'+key+'" style="position:absolute;z-index:'+index+';top:'+top+';left:'+left+'"><img src="'+toyRoomImg+'" class="wawa" style="z-index:'+index+'"/></div><div id="wawaback'+key+'" style="top:'+top2+';left:'+left+';width:185px;height:20px;background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;position:absolute;z-index:'+index+';text-align:center" class="wawaback"><img src="image1/wawadi.png" class="wawaback" style="width:90%;height:30px;z-index:'+index+'"/></div>';
+		str += '<div id="liwu'+key+'" style="position:absolute;z-index:'+index+';top:'+top+';left:'+left+'"><img src="'+toyRoomImg+'" class="wawa" style="z-index:'+index+'"/></div><div id="wawaback'+key+'" style="top:'+top2+';left:'+left+';width:185px;height:20px;background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;position:absolute;z-index:'+index+';text-align:center" class="wawaback"><img src="/image/game/wawadi.png" class="wawaback" style="width:90%;height:30px;z-index:'+index+'"/></div>';
 	}
 	$(".loadgift").append(str);
 	//获取每个娃娃的上下左右四个位置

@@ -22,10 +22,10 @@ function changeColor(){
 			$.inArray(key,finish_arr) == -1
 		){
 			current_id = key;
-			$("#wawaback"+key+" img").attr('src',"image1/di-ready.png");
+			$("#wawaback"+key+" img").attr('src',"/image/game/di-ready.png");
 		}else{
 			current_status++;
-			$("#wawaback"+key+" img").attr('src',"image1/wawadi.png");
+			$("#wawaback"+key+" img").attr('src',"/image/game/wawadi.png");
 		}
 	}
 	if(current_status == wawa_num){current_id = -1;}
