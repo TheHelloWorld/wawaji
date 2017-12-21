@@ -67,4 +67,13 @@ public interface UserService {
      */
     CommonResult<String> getGameCatchResultByUserNoAndGameRoomNo(String userNo, String gameRoomNo, String catchId,
                                                                  Integer status);
+
+    /**
+     * 用户充值
+     * @param userNo 用户编号
+     * @param amount 金额
+     * @param coin 游戏币数
+     * @return
+     */
+    CommonResult<String> userRecharge(String userNo, Long amount, Integer coin);
 }

@@ -213,5 +213,20 @@ public class UserController {
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 
+    /**
+     * 用户充值
+     * @param userNo 用户编号
+     * @param amount 金额
+     * @param coin 游戏币数
+     * @return
+     */
+    @RequestMapping(value = "/userRecharge", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String userRecharge(String userNo, Long amount, Integer coin) {
+
+        CommonResult result = userService.userRecharge(userNo, amount, coin);
+
+        return JSONUtil.getReturnBeanString(result);
+    }
 
 }

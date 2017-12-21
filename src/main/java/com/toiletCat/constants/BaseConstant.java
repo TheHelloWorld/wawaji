@@ -79,6 +79,11 @@ public class BaseConstant {
 	public static final String SYSTEM_ERROR = "系统升级维护中,请稍候";
 
 	/**
+	 * 马桶猫
+	 */
+	public static final String TOILER_CAT = "ToiletCat";
+
+	/**
 	 * 普通log
 	 **/
 	public static final String LOG_MSG = "toiletCat msg:";

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @SuppressWarnings("all")
@@ -40,6 +41,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     @Autowired
     private UserSpendRecordService userSpendRecordService;
+
+    @Autowired
+    private UserRechargeRecordService userRechargeRecordService;
 
     @Autowired
     private UserGameRoomService userGameRoomService;
@@ -651,6 +655,75 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     }
 
     /**
+     * 用户充值
+     * @param userNo 用户编号
+     * @param amount 金额
+     * @param coin 游戏币数
+     * @return
+     */
+    @Override
+    public CommonResult<String> userRecharge(final String userNo, final Long amount, final Integer coin) {
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+        json.put("amount", amount);
+        json.put("coin", coin);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                Integer tradeDate = DateUtil.getDate();
+
+                Date tradeTime = new Date();
+
+                // 添加用户充值记录
+                // 用户充值记录
+                UserRechargeRecord userRechargeRecord = new UserRechargeRecord();
+                // 金额
+                userRechargeRecord.setAmount(BigDecimal.valueOf(amount));
+                // 用户编号
+                userRechargeRecord.setUserNo(userNo);
+                // 交易日期
+                userRechargeRecord.setTradeDate(tradeDate);
+                // 交易时间
+                userRechargeRecord.setTradeTime(tradeTime);
+                // 交易状态
+                userRechargeRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
+                // 订单号
+                userRechargeRecord.setOrderNo(BaseConstant.TOILER_CAT + tradeTime.getTime());
+
+                userRechargeRecordService.addUserRechargeRecord(userRechargeRecord);
+
+                //todo: 添加调用第三方支付
+
+                // 添加用户游戏币
+                userDao.updateUserCoinByUserNo(coin, userNo);
+
+                // 添加用户消费记录
+                // 用户消费记录
+                UserSpendRecord userSpendRecord = new UserSpendRecord();
+                //  消费日期
+                userSpendRecord.setTradeDate(tradeDate);
+                // 消费时间
+                userSpendRecord.setTradeTime(tradeTime);
+                // 消费类型(充值)
+                userSpendRecord.setTradeType(TradeType.RECHARGE.getType());
+                // 消费游戏币
+                userSpendRecord.setCoin(coin);
+                // 用户编号
+                userSpendRecord.setUserNo(userNo);
+                // 消费状态
+                userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
+
+                userSpendRecordService.addUserSpendRecord(userSpendRecord);
+
+                got(BaseConstant.SUCCESS);
+
+            }
+        }, "userRecharge", json.toJSONString());
+    }
+
+    /**
      * 获得抓取失败返回值
      * @param catchId 抓取id
      * @param roomAddLuckyNum 房间累加幸运值
@@ -665,8 +738,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         json.put("catch_result", BaseConstant.CATCH_FAIL);
         //
         json.put("addNum", roomAddLuckyNum);
-
-
 
         return json.toJSONString();
     }
@@ -739,4 +810,5 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     protected Logger getLogger() {
         return logger;
     }
+
 }
