@@ -307,7 +307,7 @@ function zhuazi_get_up_angle(){
 
 function down(){
 	var cur = parseFloat($("#liwu"+current_id).css('top'));
-	$("#wawaback"+current_id+" img").attr('src',"image1/di.png");
+	$("#wawaback"+current_id+" img").attr('src',"/image/game/di.png");
 	var gift_down_left = parseFloat($("#liwu"+current_id).css('left'));
 	$("#liwu"+current_id).animate({
 		'top':liwu_move['position']['top'],
