@@ -33,8 +33,20 @@ public class RandomIntUtil {
     public static Integer getRandomNum(int bound) {
         Random random = new Random();
 
-        return random.nextInt(9) + 1 + bound;
+        return random.nextInt(10) + 1 + bound;
     }
+
+    /**
+     * 获得上边界到最大值之间的随机数
+     * @param highBound 上边界
+     * @return
+     */
+    public static Integer getRandomNumByHighBound(int highBound) {
+        Random random = new Random();
+
+        return random.nextInt(highBound) + 1;
+    }
+
 
     /**
      * 获得随机名称

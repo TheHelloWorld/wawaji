@@ -498,7 +498,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 判断当前用户编号是否正确
                 if(userDao.countUserByUserNo(userNo) == 0) {
                     logger.warn("getUserByUserNo user not exists userNo:" + userNo);
-                    got("用户不存在");
+                    got("登录超时,请重新登录");
                     setOtherMsg();
                     return;
                 }
@@ -558,6 +558,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 Integer roomAddLuckyNum = gameRoom.getAddLuckyNum();
 
+                Integer userLucKyNum = RandomIntUtil.getRandomNum(5);
+
                 // 判断当前用户是否在此房间有幸运值
                 CommonResult<Integer> userGameRoomCount = userGameRoomService
                         .countUserGameRoomByUserNo(userNo, gameRoomNo);
@@ -567,11 +569,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 Integer userNowLuckyNum = null;
 
                 if(!userGameRoomCount.success()) {
-                    got(getCatchFailReturn(catchId, roomAddLuckyNum));
+
+                    got(getCatchFailReturn(catchId, userLucKyNum));
+
+                    // 累加幸运值
+                    addLuckyNum(userLucKyNum, userNowLuckyNum, userNo, gameRoomNo, roomAddLuckyNum, gameRoom);
                     return;
                 }
-
-                Integer userLucKyNum = RandomIntUtil.getRandomNum(0);
 
                 // 若用户第一次来此房间
                 if(userGameRoomCount.getValue() == 0) {
@@ -598,11 +602,19 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     if(!userGameLucyNumResult.success()) {
 
-                        got(getCatchFailReturn(catchId, roomAddLuckyNum));
+                        got(getCatchFailReturn(catchId, userLucKyNum));
+
+                        // 累加幸运值
+                        addLuckyNum(userLucKyNum, userNowLuckyNum, userNo, gameRoomNo, roomAddLuckyNum, gameRoom);
                         return;
                     }
 
                     userNowLuckyNum = userGameLucyNumResult.getValue();
+                }
+
+                if(userNowLuckyNum >= BaseConstant.USER_ROOM_LUCKY_BORDER) {
+                    userLucKyNum = RandomIntUtil.getRandomNumByHighBound(5);
+
                 }
 
                 logger.info("getGameCatchResultByUserNoAndGameRoomNo userLucKyNum:" + userLucKyNum +
@@ -614,7 +626,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     logger.info("getGameCatchResultByUserNoAndGameRoomNo 用户幸运值封顶");
 
                     // 重置房间和用户房间幸运值
-                    got(resetLuckyNum(catchId, userNo, gameRoomNo, roomAddLuckyNum));
+                    got(resetLuckyNum(catchId, userNo, gameRoomNo, userLucKyNum));
                     return;
                 }
 
@@ -627,31 +639,48 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     logger.info("getGameCatchResultByUserNoAndGameRoomNo 房间幸运值封顶");
 
                     // 重置房间和用户房间幸运值
-                    got(resetLuckyNum(catchId, userNo, gameRoomNo, roomAddLuckyNum));
+                    got(resetLuckyNum(catchId, userNo, gameRoomNo, userLucKyNum));
                     return;
                 }
 
-                if(userLucKyNum + userNowLuckyNum < BaseConstant.MAX_USER_ROOM_LUCKY_NUM) {
+                // 累加幸运值
+                addLuckyNum(userLucKyNum, userNowLuckyNum, userNo, gameRoomNo, roomAddLuckyNum, gameRoom);
 
-                    logger.info("getGameCatchResultByUserNoAndGameRoomNo addUserRoomLuckyNumByUserNoAndGameRoomNo");
-
-                    // 累加用户房间幸运值
-                    userGameRoomService.addUserRoomLuckyNumByUserNoAndGameRoomNo(userNo, gameRoomNo, userLucKyNum);
-                }
-
-                if(gameRoom.getRoomNowLuckyNum() + roomAddLuckyNum < gameRoom.getRoomLuckyNum()) {
-
-                    logger.info("getGameCatchResultByUserNoAndGameRoomNo addRoomLuckyNumByGameRoomNo");
-
-                    // 累加游戏房间幸运值
-                    gameRoomService.addRoomLuckyNumByGameRoomNo(gameRoomNo);
-                }
-
-                got(getCatchFailReturn(catchId, roomAddLuckyNum));
+                got(getCatchFailReturn(catchId, userLucKyNum));
                 return;
 
             }
         }, "getGameCatchResultByUserNoAndGameRoomNo", json.toJSONString());
+    }
+
+    /**
+     * 累加幸运值
+     * @param userLucKyNum 添加用户房间幸运值
+     * @param userNowLuckyNum 当前用户房间幸运值
+     * @param userNo 用户编号
+     * @param gameRoomNo 游戏房间编号
+     * @param roomAddLuckyNum 房间每次累加幸运值
+     * @param gameRoom 游戏房间
+     */
+    private void addLuckyNum(Integer userLucKyNum, Integer userNowLuckyNum, String userNo, String gameRoomNo,
+                             Integer roomAddLuckyNum, GameRoom gameRoom) {
+
+
+        if(userLucKyNum + userNowLuckyNum < BaseConstant.MAX_USER_ROOM_LUCKY_NUM && userNowLuckyNum != null) {
+
+            logger.info("getGameCatchResultByUserNoAndGameRoomNo addLuckyNum addUserRoomLuckyNumByUserNoAndGameRoomNo");
+
+            // 累加用户房间幸运值
+            userGameRoomService.addUserRoomLuckyNumByUserNoAndGameRoomNo(userNo, gameRoomNo, userLucKyNum);
+        }
+
+        if(gameRoom.getRoomNowLuckyNum() + roomAddLuckyNum < gameRoom.getRoomLuckyNum()) {
+
+            logger.info("getGameCatchResultByUserNoAndGameRoomNo addLuckyNum addRoomLuckyNumByGameRoomNo");
+
+            // 累加游戏房间幸运值
+            gameRoomService.addRoomLuckyNumByGameRoomNo(gameRoomNo);
+        }
     }
 
     /**
@@ -676,6 +705,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 Date tradeTime = new Date();
 
+                //todo: 添加调用第三方支付
+
                 // 添加用户充值记录
                 // 用户充值记录
                 UserRechargeRecord userRechargeRecord = new UserRechargeRecord();
@@ -693,8 +724,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 userRechargeRecord.setOrderNo(BaseConstant.TOILER_CAT + tradeTime.getTime());
 
                 userRechargeRecordService.addUserRechargeRecord(userRechargeRecord);
-
-                //todo: 添加调用第三方支付
 
                 // 添加用户游戏币
                 userDao.updateUserCoinByUserNo(coin, userNo);
@@ -726,10 +755,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     /**
      * 获得抓取失败返回值
      * @param catchId 抓取id
-     * @param roomAddLuckyNum 房间累加幸运值
+     * @param userLucKyNum 用户房间累加幸运值
      * @return
      */
-    private String getCatchFailReturn(String catchId, Integer roomAddLuckyNum) {
+    private String getCatchFailReturn(String catchId, Integer userLucKyNum) {
 
         catchRecordDao.updateCatchResultByCatchId(CatchResult.CATCH_FAIL.getStatus(), catchId);
 
@@ -737,7 +766,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         // 抓取失败
         json.put("catch_result", BaseConstant.CATCH_FAIL);
         //
-        json.put("addNum", roomAddLuckyNum);
+        json.put("addNum", userLucKyNum);
 
         return json.toJSONString();
     }
@@ -747,10 +776,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      * @param catchId 抓取id
      * @param userNo 用户编号
      * @param gameRoomNo 游戏房间编号
-     * @param roomAddLuckyNum 房间累加幸运值
+     * @param userLucKyNum 用户房间累加幸运值
      * @return
      */
-    private String resetLuckyNum(String catchId, String userNo, String gameRoomNo, Integer roomAddLuckyNum) {
+    private String resetLuckyNum(String catchId, String userNo, String gameRoomNo, Integer userLucKyNum) {
 
         // 重置用户房间幸运值
         CommonResult resetUserRoom = userGameRoomService.resetUserRoomLuckyNum(userNo, gameRoomNo);
@@ -800,10 +829,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             SocketUtil.sendMsg(msg.toJSONString());
             return json.toJSONString();
 
-        } else {
-
-            return getCatchFailReturn(catchId, roomAddLuckyNum);
         }
+
+        return getCatchFailReturn(catchId, userLucKyNum);
+
     }
 
     @Override

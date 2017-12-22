@@ -138,7 +138,12 @@ public class BaseConstant {
 	/**
 	 * 用户游戏房间最大幸运值
 	 */
-	public static final Integer MAX_USER_ROOM_LUCKY_NUM = 50;
+	public static final Integer MAX_USER_ROOM_LUCKY_NUM = 100;
+
+	/**
+	 * 用户幸运值边界
+	 */
+	public static final Integer USER_ROOM_LUCKY_BORDER = 80;
 
 	/**
 	 * 游戏房间幸运累加值
