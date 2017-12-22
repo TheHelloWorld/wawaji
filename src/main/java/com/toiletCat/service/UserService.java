@@ -72,8 +72,7 @@ public interface UserService {
      * 用户充值
      * @param userNo 用户编号
      * @param amount 金额
-     * @param coin 游戏币数
      * @return
      */
-    CommonResult<String> userRecharge(String userNo, Long amount, Integer coin);
+    CommonResult<String> userRecharge(String userNo, Long amount);
 }

@@ -32,7 +32,8 @@
                 amount,
                 trade_status,
                 trade_date,
-                trade_time
+                trade_time,
+                order_no
             )
         values
             (
@@ -40,7 +41,8 @@
                 #{amount, jdbcType=DECIMAL},
                 #{tradeStatus, jdbcType=INTEGER},
                 #{tradeDate, jdbcType=INTEGER},
-                #{tradeTime, jdbcType=DATE}
+                #{tradeTime, jdbcType=DATE},
+                #{orderNo, jdbcType=VARCHAR}
             )
     </insert>
 

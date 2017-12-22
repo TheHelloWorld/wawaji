@@ -22,7 +22,7 @@ function recharge() {
     str += "		</div>";
     str += "	</div>";
     str += "	<div style='float: left;' >";
-    str += "	<div class='recharge-block' onclick='rechargeThis(10,100)' >";
+    str += "	<div class='recharge-block' onclick='rechargeThis(10)' >";
     str += "		<div class='recharge-coin' >";
     str += "			<img src='/image/background/coin.ico' width=100% height=100% />";
     str += "		</div>";
@@ -38,7 +38,7 @@ function recharge() {
     str += "		<div class='clear:both'>";
     str += "		</div>";
     str += "	</div>";
-    str += "	<div class='recharge-block' onclick='rechargeThis(20,210)' >";
+    str += "	<div class='recharge-block' onclick='rechargeThis(20)' >";
     str += "		<div class='recharge-coin' >";
     str += "			<img src='/image/background/coin.ico' width=100% height=100% />";
     str += "		</div>";
@@ -54,7 +54,7 @@ function recharge() {
     str += "		<div class='clear:both'>";
     str += "		</div>";
     str += "	</div>";
-    str += "	<div class='recharge-block' onclick='rechargeThis(30,330)' >";
+    str += "	<div class='recharge-block' onclick='rechargeThis(30)' >";
     str += "		<div class='recharge-coin' >";
     str += "			<img src='/image/background/coin.ico' width=100% height=100% />";
     str += "		</div>";
@@ -70,7 +70,7 @@ function recharge() {
     str += "		<div class='clear:both'>";
     str += "		</div>";
     str += "	</div>";
-    str += "	<div class='recharge-block' onclick='rechargeThis(30,330)' >";
+    str += "	<div class='recharge-block' onclick='rechargeThis(50)' >";
     str += "		<div class='recharge-coin' >";
     str += "			<img src='/image/background/coin.ico' width=100% height=100% />";
     str += "		</div>";
@@ -86,7 +86,7 @@ function recharge() {
     str += "		<div class='clear:both'>";
     str += "		</div>";
     str += "	</div>";
-    str += "	<div class='recharge-block' onclick='rechargeThis(100,1180)' >";
+    str += "	<div class='recharge-block' onclick='rechargeThis(100)' >";
     str += "		<div class='recharge-coin' >";
     str += "			<img src='/image/background/coin.ico' width=100% height=100% />";
     str += "		</div>";
@@ -102,7 +102,7 @@ function recharge() {
     str += "		<div class='clear:both'>";
     str += "		</div>";
     str += "	</div>";
-    str += "	<div class='recharge-block' onclick='rechargeThis(200,2400)' >";
+    str += "	<div class='recharge-block' onclick='rechargeThis(200)' >";
     str += "		<div class='recharge-coin' >";
     str += "			<img src='/image/background/coin.ico' width=100% height=100% />";
     str += "		</div>";
@@ -136,14 +136,13 @@ function closeRecharge() {
 }
 
 // 充值操作
-function rechargeThis(amount, coin) {
+function rechargeThis(amount) {
     $.ajax({
         url:"/toiletCat/user/userRecharge.action",
         type:"POST",
         async:false,
         data:{
             amount:amount,
-            coin:coin,
             userNo:userNo
         },
         success:function(data) {
@@ -158,7 +157,13 @@ function rechargeThis(amount, coin) {
                 return;
             }
 
-            var nowCoin = parseInt(sessionStorage["toiletCatUserCoin"]) + coin;
+            var result = data["result"];
+
+            if(typeof(result) == "string") {
+                result = eval("("+result+")");
+            }
+
+            var nowCoin = parseInt(sessionStorage["toiletCatUserCoin"]) + parseInt(result["recharge_coin"]);
 
             updateUserCoin(nowCoin);
 

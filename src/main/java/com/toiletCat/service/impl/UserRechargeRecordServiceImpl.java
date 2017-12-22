@@ -46,18 +46,6 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
             public void exec() {
                 userRechargeRecordDao.addUserRechargeRecord(userRechargeRecord);
 
-                // TODO:待充值功能之后完善
-                Date date = new Date();
-
-                UserSpendRecord userSpendRecord = new UserSpendRecord();
-                userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
-                userSpendRecord.setTradeTime(date);
-                userSpendRecord.setTradeDate(DateUtil.getDateByTime(date));
-                userSpendRecord.setTradeType(TradeType.RECHARGE.getType());
-                userSpendRecord.setUserNo(userRechargeRecord.getUserNo());
-
-                userSpendRecordService.addUserSpendRecord(userSpendRecord);
-
             }
         }, "addUserRechargeRecord", JSON.toJSONString(userRechargeRecord));
     }

@@ -9,38 +9,43 @@ import java.util.Map;
 public enum MoneyForCoin {
 
 
-    EXCHANGE(1, 1);
+    EXCHANGE_10(10L, 100),
+    EXCHANGE_20(20L, 210),
+    EXCHANGE_30(30L, 330),
+    EXCHANGE_50(50L, 550),
+    EXCHANGE_100(100L, 1180),
+    EXCHANGE_200(200L, 2400);
 
     /**
      * 状态
      **/
-    private int money;
+    private Long money;
 
     /**
      * 描述
      **/
-    private int coin;
+    private Integer coin;
 
-    private static Map<Integer,Integer> valueMap = new HashMap<>();
+    private static Map<Long,Integer> valueMap = new HashMap<>();
 
-    MoneyForCoin(int money, int coin) {
+    MoneyForCoin(Long money, int coin) {
         this.money = money;
         this.coin = coin;
     }
 
-    public int getMoney() {
+    public Long getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(Long money) {
         this.money = money;
     }
 
-    public int getCoin() {
+    public Integer getCoin() {
         return coin;
     }
 
-    public void setCoin(int coin) {
+    public void setCoin(Integer coin) {
         this.coin = coin;
     }
 
@@ -48,17 +53,17 @@ public enum MoneyForCoin {
         if(valueMap.isEmpty()) {
             MoneyForCoin[] array = MoneyForCoin.values();
             for(MoneyForCoin MoneyForCoin : array) {
-                valueMap.put(MoneyForCoin.getMoney(), MoneyForCoin.getMoney());
+                valueMap.put(MoneyForCoin.getMoney(), MoneyForCoin.getCoin());
             }
         }
     }
 
-    public static Map<Integer,Integer> getValueMap() {
+    public static Map<Long,Integer> getValueMap() {
         initValueMap();
         return valueMap;
     }
 
-    public static Integer getValueMapByKey(Integer key) {
+    public static Integer getValueMapByKey(Long key) {
         initValueMap();
         return valueMap.get(key);
     }

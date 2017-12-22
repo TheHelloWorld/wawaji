@@ -687,15 +687,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      * 用户充值
      * @param userNo 用户编号
      * @param amount 金额
-     * @param coin 游戏币数
      * @return
      */
     @Override
-    public CommonResult<String> userRecharge(final String userNo, final Long amount, final Integer coin) {
+    public CommonResult<String> userRecharge(final String userNo, final Long amount) {
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
         json.put("amount", amount);
-        json.put("coin", coin);
 
         return exec(new Callback() {
             @Override
@@ -725,6 +723,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 userRechargeRecordService.addUserRechargeRecord(userRechargeRecord);
 
+                Integer coin = MoneyForCoin.getValueMapByKey(amount);
+
+                logger.info("userRecharge amount:" + amount + ", coin:" + coin);
+
                 // 添加用户游戏币
                 userDao.updateUserCoinByUserNo(coin, userNo);
 
@@ -746,7 +748,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 userSpendRecordService.addUserSpendRecord(userSpendRecord);
 
-                got(BaseConstant.SUCCESS);
+                JSONObject returnJSON = new JSONObject();
+
+                returnJSON.put("recharge_result", BaseConstant.SUCCESS);
+
+                returnJSON.put("recharge_coin", coin);
+
+                got(returnJSON.toJSONString());
 
             }
         }, "userRecharge", json.toJSONString());
