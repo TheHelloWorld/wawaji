@@ -558,7 +558,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 Integer roomAddLuckyNum = gameRoom.getAddLuckyNum();
 
-                Integer userLucKyNum = RandomIntUtil.getRandomNum(5);
+                Integer userLucKyNum = RandomIntUtil.getRandomNumByHighBound(15);
 
                 // 判断当前用户是否在此房间有幸运值
                 CommonResult<Integer> userGameRoomCount = userGameRoomService
