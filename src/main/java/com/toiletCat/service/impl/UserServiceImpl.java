@@ -725,6 +725,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 Integer coin = MoneyForCoin.getValueMapByKey(amount);
 
+                if(coin == null) {
+                    setOtherMsg();
+                    got("请重新选择金额");
+                    return;
+                }
+
                 logger.info("userRecharge amount:" + amount + ", coin:" + coin);
 
                 // 添加用户游戏币
