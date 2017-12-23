@@ -19,7 +19,7 @@
         <!-- 抓取结果 -->
         <result property="catchResult" column="catch_result" jdbcType="INTEGER"/>
         <!-- 抓取时间 -->
-        <result property="catchTime" column="catch_time" jdbcType="DATE"/>
+        <result property="catchTime" column="catch_time" />
         <!-- 抓取状态 -->
         <result property="catchStatus" column="catch_status" jdbcType="INTEGER"/>
         <!-- 创建时间 -->
@@ -47,7 +47,7 @@
         <!-- 抓取结果 -->
         <result property="catchResult" column="catch_result" jdbcType="INTEGER"/>
         <!-- 抓取时间 -->
-        <result property="catchTime" column="catch_time" jdbcType="DATE"/>
+        <result property="catchTime" column="catch_time" />
         <!-- 抓取状态 -->
         <result property="catchStatus" column="catch_status" jdbcType="INTEGER"/>
     </resultMap>
@@ -73,7 +73,7 @@
             #{toyImg, jdbcType=VARCHAR},
             #{catchId, jdbcType=VARCHAR},
             #{catchResult, jdbcType=INTEGER},
-            #{catchTime, jdbcType=DATE},
+            #{catchTime},
             #{catchStatus, jdbcType=INTEGER}
             )
     </insert>
