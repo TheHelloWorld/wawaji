@@ -1,12 +1,16 @@
 
 var nowPage = 1;
 
-// 类型
-var type= "";
+var otherUserNo = "";
+
+var gameRoomNo = "";
 
 $(function() {
 
-    type = getQueryString("type");
+    // 其他用户编号
+    otherUserNo = getQueryString("otherUserNo");
+    // 游戏房间编号
+    gameRoomNo = getQueryString("gameRoomNo");
 
     // 用户编号
     checkSession();
@@ -38,7 +42,7 @@ function getTotalCountAndPageSizeByUserNo() {
         type:"POST",
         async:false,
         data:{
-            userNo:userNo
+            userNo:otherUserNo
         },
         success:function(data){
 
@@ -82,7 +86,7 @@ function getAllUserToyByUserNo(nowPage) {
         async:false,
         data:{
             startPage:startPage,
-            userNo:userNo
+            userNo:otherUserNo
         },
         success:function(data){
 
@@ -107,9 +111,9 @@ function getAllUserToyByUserNo(nowPage) {
                 }
 
                 if(i % 2 == 0) {
-                    str += "<div class='machine-col-xs-6-left' onclick='toUserToyDetail("+list[i]["id"]+")' >";
+                    str += "<div class='machine-col-xs-6-left' >";
                 } else if(i % 2 != 0) {
-                    str += "<div class='machine-col-xs-6-right' onclick='toUserToyDetail("+list[i]["id"]+")' >";
+                    str += "<div class='machine-col-xs-6-right' >";
                 }
 
                 str += "    <div class='machine-panel panel-info'>";
@@ -134,23 +138,10 @@ function getAllUserToyByUserNo(nowPage) {
     });
 }
 
-// 修改元素
-function toUserToyDetail(id) {
-
-    window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
-}
-
 function returnMethod() {
-    // 根据类型返回不同的首页
-    if(type= "gameRoom") {
 
-        window.location.href = "/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+userNo;
+    window.location.href = "/toiletCat/game/game.html?userNo=" + userNo + "&gameRoomNo=" + gameRoomNo;
 
-    } else if(type= "machineRoom"){
-
-        window.location.href = "/toiletCat/machineRoom/machineRoom.html?nowType=login&&userNo="+userNo;
-
-    }
 }
 
 function nextPage() {
