@@ -9,6 +9,7 @@
 }
 
 .catch-toy-div {
+    width: 100%;
     position:absolute;
     float: left;
     height: 20%;
