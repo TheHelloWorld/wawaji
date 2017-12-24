@@ -211,7 +211,7 @@ function getAllUserAddressByUserNo(userNo) {
             var str = "";
 
             if(list.length == 0) {
-                toiletCatMsg("请添加寄送地址喵", toUserAddress())
+                toiletCatMsg("请添加寄送地址喵", "toUserAddress()");
             }
 
             for(var i = 0; i<list.length; i++) {
