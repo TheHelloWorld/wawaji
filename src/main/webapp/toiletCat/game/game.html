@@ -13,7 +13,7 @@
         <div class="showCoinMsg" style="background:white;opacity:0.5;"></div>
         <div class="showCoinMsg">
             <div style="float:left;" >
-                <div><img style="-webkit-transform:rotate(-90deg);" src="/image/game/returnButton.ico" ontouchstart="returnMethod()" /></div>
+                <div><img style="-webkit-transform:rotate(-90deg);" src="/image/game/returnButton.ico" ontouchstart="gameReturnMethod()" /></div>
             </div>
             <div class="showOnceCoin">
                 <div style="text-align:right;">
@@ -64,9 +64,9 @@
         <div class="luckyNum">
         </div>
         <div class="bottom-button">
-            <div><img src="/image/button/cat_phone_48_text.png" width=100% ontouchstart="toUserToy()" /></div>
-            <div><img src="/image/button/cat_wizard_48_text.png"  width=100% ontouchstart="recharge()" /></div>
-            <div><img src="/image/button/cat_laptop_48_text.png"  width=100% ontouchstart="toUserIndex()" /></div>
+            <div ><img src="/image/button/cat_phone_48_text.png" class="game-user-toy" ontouchstart="gameToUserToy()" /></div>
+            <div class="game-recharge"><img src="/image/button/cat_wizard_48_text.png"  width=100% ontouchstart="recharge()" /></div>
+            <div><img src="/image/button/cat_laptop_48_text.png"  width=100% ontouchstart="gameToUserIndex()" /></div>
             <div class="clear" ></div>
         </div>
         <div class="broadcastFail" >

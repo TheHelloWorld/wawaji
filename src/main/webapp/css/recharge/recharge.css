@@ -3,6 +3,12 @@
     margin-top: 5%;
     margin-left: 5%;
     width: 100%;
+    height: 10%;
+}
+
+.rechargeReturn {
+    height: 60%;
+    width: 60%;
 }
 
 .recharge-user-coin {
@@ -10,7 +16,7 @@
     background: white;
     width: 25%;
     border-radius: 1.25rem;
-    margin-left: 25%;
+    margin-left: 18%;
 }
 
 .recharge {

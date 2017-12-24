@@ -147,6 +147,14 @@ function setButton(){
 	$(".button-get").attr({"ontouchstart":"catchToy()"});
 }
 
-function returnMethod() {
+function gameReturnMethod() {
     window.location.href = "/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+uId;
+}
+
+function gameToUserToy() {
+    window.location.href = "/toiletCat/userToy/userToy.html?userNo="+uId + "&type=gameRoom";
+}
+
+function gameToUserIndex() {
+    window.location.href = "/toiletCat/user/userIndex.html?type=gameRoom&userNo="+uId;
 }

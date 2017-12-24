@@ -5,6 +5,11 @@
     width: 100%;
 }
 
+.rechargeReturn {
+    height: 100%;
+    width: 100%;
+}
+
 .recharge-user-coin {
     float: left;
     background: white;

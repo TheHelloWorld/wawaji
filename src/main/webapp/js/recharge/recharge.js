@@ -7,8 +7,8 @@ function recharge() {
     var recharge_hc = recharge_height + recharge_scroll;
     var str = "	<div style='top:"+recharge_hc+"px;' class='recharge'>";
     str += "		<div class='recharge-first-line' >";
-    str += "			<div style='float:left;'>";
-    str += "				<img style='-webkit-transform:rotate(-90deg);' src='/image/background/returnButton.ico' width=100% onclick='closeRecharge()'/>";
+    str += "			<div style='float:left;height: 100%'>";
+    str += "				<img style='-webkit-transform:rotate(-90deg);' src='/image/game/returnButton.ico' class='rechargeReturn' onclick='closeRecharge()'/>";
     str += "			</div>";
     str += "		<div class='recharge-user-coin' >";
     str += "			<div class='recharge-coin' >";

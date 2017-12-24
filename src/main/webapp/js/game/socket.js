@@ -113,6 +113,9 @@ function setInit(data){
 	var userCoin = sessionStorage["toiletCatUserCoin"];
 	$(".showCurCoin").html(userCoin);
 	load();
+
+	$(".game-user-toy").height($(".game-recharge").height());
+
     $(".toyInfo").css({
         'background':'url('+toyImg+')',
         'background-repeat':'no-repeat',

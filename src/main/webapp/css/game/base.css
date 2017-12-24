@@ -347,6 +347,7 @@ position:fixed;top:0px;left:0px;z-index:500;
     float: left;
     width: 20%;
     margin-left: 10%;
+    height: 100%;
 }
 
 .luckyNum {

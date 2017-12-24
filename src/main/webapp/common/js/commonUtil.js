@@ -758,12 +758,12 @@ function checkSession() {
 
 // 跳转到战利品页
 function toUserToy() {
-    window.location.href="/toiletCat/userToy/userToy.html?userNo="+userNo + "&type=gameRoom";
+    window.location.href = "/toiletCat/userToy/userToy.html?userNo=" + userNo + "&type=gameRoom";
 }
 
 // 跳转到用户主页
 function toUserIndex() {
-    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom&userNo="+userNo;
+    window.location.href = "/toiletCat/user/userIndex.html?type=gameRoom&userNo=" + userNo;
 }
 
 // 检查手机号
