@@ -210,6 +210,10 @@ function getAllUserAddressByUserNo(userNo) {
             var list = data["result"];
             var str = "";
 
+            if(list.length == 0) {
+                toiletCatMsg("请添加寄送地址喵", toUserAddress())
+            }
+
             for(var i = 0; i<list.length; i++) {
 
                 var userAddressClass = "user-address-line-default";
@@ -248,6 +252,10 @@ function getAllUserAddressByUserNo(userNo) {
             $("#zzc").show();
         }
     });
+}
+
+function toUserAddress() {
+    window.location.href="/toiletCat/userAddress/userAddress.html?type=gameRoom&userNo="+userNo;
 }
 
 // 点击地址
@@ -403,9 +411,6 @@ function updateChoiceType() {
     var userToyStr = JSON.stringify(userToyJson);
 
     var userAddressStr = JSON.stringify(userAddressJson);
-
-    console.info("userToyStr:" + userToyStr);
-    console.info("userAddressStr:" + userAddressStr);
 
     $.ajax({
         url:"/toiletCat/userToy/updateChoiceTypeByIdAndUserNo.action",
