@@ -114,7 +114,7 @@ function setInit(data){
 	$(".showCurCoin").html(userCoin);
 	load();
 
-	$(".game-user-toy").height($(".game-recharge").height());
+    $(".game-user-toy").height($(".game-recharge").height());
 
     $(".toyInfo").css({
         'background':'url('+toyImg+')',
@@ -264,27 +264,31 @@ function hidebroadcast(){
 }
 var startDjsTimer;
 function startGameStatus(data){
-	if(data.result.result == "success"){
-		var startdjs = 30;
-        setButton();
-		$("#startButton").hide();
-		$("#moveButton").show();
-		var coin = parseInt($(".showCurCoin").html());
-		$(".showCurCoin").html(coin-toyNowCoin);
-		sessionStorage["toiletCatUserCoin"] = coin-toyNowCoin;
-		$("#djs").html(10);
-		current_id=-1;	
-		startDjsTimer = window.setInterval(function(){
-			if(startdjs == 0){
-				clearInterval(startDjsTimer);
-				catchToy();
-			}else{
-				startdjs--;
-				$("#startdjs").html(startdjs);
-			}
-		},1000)
+	if(data.is_success == 'fail'){
+		recharge();
 	}else{
-		chongzhi();
+		if(data.result.result == "success"){
+			var startdjs = 30;
+			setButton();
+			$("#startButton").hide();
+			$("#moveButton").show();
+			var coin = parseInt($(".showCurCoin").html());
+			$(".showCurCoin").html(coin-toyNowCoin);
+			sessionStorage["toiletCatUserCoin"] = coin-toyNowCoin;
+			$("#djs").html(10);
+			current_id=-1;	
+			startDjsTimer = window.setInterval(function(){
+				if(startdjs == 0){
+					clearInterval(startDjsTimer);
+					catchToy();
+				}else{
+					startdjs--;
+					$("#startdjs").html(startdjs);
+				}
+			},1000)
+		}else{
+			recharge();
+		}
 	}
 }
 
