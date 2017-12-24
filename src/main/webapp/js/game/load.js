@@ -20,9 +20,8 @@ function load() {
 	$(".game-bottom").css({'height': hc*0.3});
 	$(".zzc").css({'height': hc*0.5});
 	$(".resultMsg").css('height',hc);
-	$(".successPerson").css({'height': hc*0.9,'margin-top':hc*0.1});
-	$(".broadcastSuccess").css('height',hc*0.1);
-	$(".broadcastSuccessBack").css('height',hc*0.1);
+	$(".successPerson").css({'height': hc*0.9,'margin-top':hc*0.05});
+	$(".showDetailDivButton").css('height',hc*0.2);	
 	
 	//初始化要用到的爪子对象
 	obj['up'] = $(".grasp-up");
@@ -126,6 +125,7 @@ function load() {
 window.ontouchstart = function(e) { e.preventDefault(); };
 
 function showDiv(type){
+	$(".successPerson").show();
 	if(type == 'list'){
 		$(".successPersonTitle-left").css('border-bottom','3px solid rgb(109, 219, 246)');
 		$(".successPersonTitle-right").css('border-bottom','0px solid rgb(109, 219, 246)');

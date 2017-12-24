@@ -268,8 +268,9 @@ function startGameStatus(data){
 		$("#moveButton").show();
 		var coin = parseInt($(".showCurCoin").html());
 		$(".showCurCoin").html(coin-toyNowCoin);
-		$(".successPerson").hide();
-		
+		sessionStorage["toiletCatUserCoin"] = coin-toyNowCoin;
+		$("#djs").html(10);
+		current_id=-1;	
 		startDjsTimer = window.setInterval(function(){
 			if(startdjs == 0){
 				clearInterval(startDjsTimer);

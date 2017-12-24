@@ -13,7 +13,7 @@
         <div class="showCoinMsg" style="background:white;opacity:0.5;"></div>
         <div class="showCoinMsg">
             <div style="float:left;" >
-                <div><img style="-webkit-transform:rotate(-90deg);" src="/image/game/returnButton.ico" onclick="returnMethod()" /></div>
+                <div><img style="-webkit-transform:rotate(-90deg);" src="/image/game/returnButton.ico" ontouchstart="returnMethod()" /></div>
             </div>
             <div class="showOnceCoin">
                 <div style="text-align:right;">
@@ -64,24 +64,26 @@
         <div class="luckyNum">
         </div>
         <div class="bottom-button">
-            <div><img src="/image/button/cat_phone_48_text.png" width=100% onclick="toUserToy()" /></div>
-            <div><img src="/image/button/cat_wizard_48_text.png"  width=100% onclick="recharge()" /></div>
-            <div><img src="/image/button/cat_laptop_48_text.png"  width=100% onclick="toUserIndex()" /></div>
+            <div><img src="/image/button/cat_phone_48_text.png" width=100% ontouchstart="toUserToy()" /></div>
+            <div><img src="/image/button/cat_wizard_48_text.png"  width=100% ontouchstart="recharge()" /></div>
+            <div><img src="/image/button/cat_laptop_48_text.png"  width=100% ontouchstart="toUserIndex()" /></div>
             <div class="clear" ></div>
         </div>
         <div class="broadcastFail" >
+        </div>
+	<div class="toyInfo" style="background:url('/image/button/cat_laptop_48_text.png');">
+        </div>
+	<div class="hole">
+        </div>
 
-        </div>
-        <div class="toyInfo" style="background:url('/image/button/cat_laptop_48_text.png');">
-
-        </div>
-        <div class="hole">
-        </div>
     </div>
 </div>
-<div class="successPerson">
-    <div class="successPersonTitle successPersonTitle-left" onclick="showDiv('list')" >Ta们最近成功了</div>
-    <div class="successPersonTitle successPersonTitle-right" onclick="showDiv('detail')" >娃娃详情</div>
+<div class="successPerson" style="display:none">
+    <div class="successPersonTitle successPersonTitle-left" ontouchstart="showDiv('list')" >Ta们最近成功了</div>
+    <div class="successPersonTitle successPersonTitle-right" ontouchstart="showDiv('detail')" >娃娃详情</div>
+	<div class="closesuccessPerson" ontouchstart="javascript:$('.successPerson').hide()">
+			<img src="/image/game/returnButton.ico">
+		</div>
     <div class="clear" ></div>
     <div class="success-list" >
         <div class="success-list-div" >
@@ -106,6 +108,12 @@
     </div>
 </div>
 
+<div class="showDetailDivButton">
+		<div style="position:absolute;background:white;height:100%;width:100%;border-radius:20px;opacity:0.6;"></div>
+		<div style="position:absolute;top:20%;left:20%;border-radius:50%;border:1px solid #1B1698;width:60%;" ontouchstart="showDiv('list')" >成</div>
+		<div style="position:absolute;top:60%;left:20%;border-radius:50%;border:1px solid #1B1698;width:60%;" ontouchstart="showDiv('detail')">详</div>
+	</div>
+
 <div style="background:black;display:none;z-index:98" class="resultMsg" >
 </div>
 <div style="width:100%;position:fixed;left:0;top:25%;z-index:99;display:none" id="faildiv">
@@ -116,10 +124,10 @@
         蓝瘦，香菇！~~
     </div>
     <div class="result-msg-button">
-        <button type="button" onclick="closeLastDiv('again')">再来一次(<span id="djs">10</span>)</button>
+        <button type="button" ontouchstart="closeLastDiv('again')">再来一次(<span id="djs">10</span>)</button>
     </div>
     <div class="result-msg-button">
-        <button type="button" onclick="closeLastDiv('failClose')">算了....</button>
+        <button type="button" ontouchstart="closeLastDiv('failClose')">算了....</button>
     </div>
 </div>
 
@@ -132,7 +140,7 @@
         <button>查看战利品</button>
     </div>
     <div class="result-msg-button">
-        <button type="button" onclick="closeLastDiv('successClose')">留在这里</button>
+        <button type="button" ontouchstart="closeLastDiv('successClose')">留在这里</button>
     </div>
 </div>
 <div class="broadcastSuccess"  style="display:none">
