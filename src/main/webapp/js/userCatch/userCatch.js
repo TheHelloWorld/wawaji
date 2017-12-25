@@ -108,7 +108,7 @@ function getAllUserCatchRecordByUserNo(userNo) {
             for(var i = 0; i<list.length; i++) {
 
                 str += "<div id='userCatchRecord"+list[i]["id"]+"' class='catch-toy-row' >";
-                str += "</div>";
+
                 str += "    <div class='catch-toy-div' >";
                 str += "        <div class='catch-toy-img'>";
                 str += "            <img src='" + list[i]["toyImg"] + "' />";
@@ -125,7 +125,7 @@ function getAllUserCatchRecordByUserNo(userNo) {
                 str += "            </div>";
                 str += "        </div>";
                 str += "    </div>";
-
+                str += "</div>";
                 str += "<div style='text-align: center'>";
 
                 if(i%2 == 0) {

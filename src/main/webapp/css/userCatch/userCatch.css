@@ -3,21 +3,18 @@
     float: left;
     width: 100%;
     background: gainsboro;
-    opacity: 0.8;
     margin-top: 2%;
     border-radius: 1.875rem;
 }
 
 .catch-toy-div {
     width: 100%;
-    position:absolute;
     float: left;
-    height: 20%;
+    height: 100%;
     margin-left: 5%;
 }
 
 .catch-toy-img {
-    margin-top: 2%;
     float: left;
     width: 30%;
     height: 100%;
@@ -35,10 +32,10 @@
 .catch-toy-time {
     float: left;
     margin-left: 25%;
-    margin-top: 10%;
+    margin-top: 8%;
 }
 
 .catch-toy-result {
-    margin-top: 15%;
+    margin-top: 13%;
 
 }
