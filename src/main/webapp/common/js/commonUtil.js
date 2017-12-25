@@ -847,7 +847,7 @@ function toiletCatMsg(msg, method) {
     str += "			<div class='toiletCat-msg-text'>";
     str += 					msg;
     str += "			</div>";
-    str += "			<div class='toiletCat-msg-button' onclick='closeToiletCatMsg("+method+")'>";
+    str += "			<div class='toiletCat-msg-button' ontouchend='closeToiletCatMsg("+method+")'>";
     str += "				确定";
     str += "			</div>";
     str += "		</div>";

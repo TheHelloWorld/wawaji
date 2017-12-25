@@ -70,6 +70,12 @@ function saveOrUpdate() {
 
     if(getQueryString("type") == "add") {
         var saveUrl = "/toiletCat/userAddress/addUserAddress.action";
+
+        if(sessionStorage["toiletCatUserToyAddUserAddress"] == "1") {
+            sessionStorage["toiletCatUserToyAddUserAddress"] = "0";
+            returnUrl = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+sessionStorage["toiletCatUserToyId"];
+        }
+
         saveThis(saveUrl, returnUrl);
     } else {
         var updateUrl = "/toiletCat/userAddress/updateUserAddressByIdAndUserNo.action";

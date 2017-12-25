@@ -27,8 +27,6 @@ $(function() {
     // 用户编号
     checkSession();
 
-
-
     // 用户游戏币数
     userCoin = sessionStorage["toiletCatUserCoin"];
 
@@ -255,7 +253,9 @@ function getAllUserAddressByUserNo(userNo) {
 }
 
 function toUserAddress() {
-    window.location.href="/toiletCat/userAddress/userAddress.html?type=gameRoom&userNo="+userNo;
+    sessionStorage["toiletCatUserToyAddUserAddress"] = "1";
+    sessionStorage["toiletCatUserToyId"] = id;
+    window.location.href="/toiletCat/userAddress/userAddressDetailPage.html?type=add&userNo="+userNo;
 }
 
 // 点击地址
