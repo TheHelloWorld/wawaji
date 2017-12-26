@@ -122,7 +122,7 @@ function toEditUserAddressPage(id) {
     window.location.href = "/toiletCat/userAddress/userAddressDetailPage.html?type=update&userNo="+userNo+"&id="+id;
 }
 
-// 修改元素
+// 删除元素
 function deleteUserAddress(id) {
 
     if(!confirm("确定要删除吗?")) {

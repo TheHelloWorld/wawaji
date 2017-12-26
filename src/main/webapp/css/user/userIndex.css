@@ -14,7 +14,7 @@ body {
 }
 
 .background-div {
-    background: url("/image/background/background-img.png");
+    background: url("/image/background/background-big.png");
     background-size: 35% 35%;
     -moz-background-size: 30% 30%;
     padding-top: 2%;

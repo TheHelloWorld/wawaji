@@ -766,6 +766,10 @@ function toUserIndex() {
     window.location.href = "/toiletCat/user/userIndex.html?type=gameRoom&userNo=" + userNo;
 }
 
+function toIndex() {
+    window.location.href="/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+userNo;
+}
+
 // 检查手机号
 function checkMobileNo(id) {
 

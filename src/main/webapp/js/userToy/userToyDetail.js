@@ -18,6 +18,8 @@ var userCoin = 0;
 
 var flag = true;
 
+var onlyOneUserAddressId = 0;
+
 $(function() {
 
     $("#zzc").hide();
@@ -31,7 +33,15 @@ $(function() {
     userCoin = sessionStorage["toiletCatUserCoin"];
 
     id = getQueryString("id");
-    
+
+    if(sessionStorage["toiletCatUserToyAddUserAddress"] == "2") {
+
+        sessionStorage["toiletCatUserToyAddUserAddress"] = "null";
+        getAllUserAddressByUserNo(userNo);
+        clickAddress(onlyOneUserAddressId);
+        $("#submitButton").show();
+    }
+
     // 根据用户编号和id获得记录信息
     getUserToyByUserNoAndId();
 
@@ -220,6 +230,8 @@ function getAllUserAddressByUserNo(userNo) {
                     userAddressClass = "user-address-line";
                 }
 
+                onlyOneUserAddressId = list[i]["id"];
+
                 str += "<div class='" + userAddressClass + "' id='userAddress" + list[i]["id"] + "' onclick='clickAddress(" + list[i]["id"] + ")' class='row'>";
                 str += "    <div class='panel-body' >";
                 str += "        <div class='my-margin-bottom'>";
@@ -247,7 +259,10 @@ function getAllUserAddressByUserNo(userNo) {
 
             $("#userAddress").append(str);
 
-            $("#zzc").show();
+            if(sessionStorage["toiletCatUserToyAddUserAddress"] != "2") {
+                $("#zzc").show();
+            }
+
         }
     });
 }
@@ -306,7 +321,7 @@ function getAllUnHandleUserToyByUserNo() {
             }
 
             var list = data["result"];
-            var str = "";
+            var str = "<div style='text-align: center;color: #666615;font-size: 2.25rem;'>三个以上才包邮哦(邮费<img src='/image/background/coin.ico'>"+deliverCoin+")</div>";
 
             flag = false;
             for(var i = 0; i<list.length; i++) {

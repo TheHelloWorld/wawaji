@@ -47,7 +47,7 @@
 }
 
 .index-body-div {
-    background: url("/image/background/background-img.png");
+    background: url("/image/background/background-big.png");
     background-size: 35% 35%;
     -moz-background-size: 30% 30%;
     overflow:scroll;
@@ -151,15 +151,25 @@
     float: left;
     text-align: center;
     margin-left: 8%;
-    margin-right: 25%;
+    margin-right: 15%;
     height: 3.75rem;
     margin-inside: 5%;
+}
+
+.footer-button-diff {
+    margin-left: 6%;
+    margin-right: 17%;
 }
 
 .footer-img {
     z-index: 999;
     position: fixed;
     bottom: 1%;
+    width: 12%;
+}
+
+.footer-diff {
+    width: 15%;
 }
 
 .footer-text {

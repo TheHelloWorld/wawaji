@@ -72,7 +72,7 @@ function saveOrUpdate() {
         var saveUrl = "/toiletCat/userAddress/addUserAddress.action";
 
         if(sessionStorage["toiletCatUserToyAddUserAddress"] == "1") {
-            sessionStorage["toiletCatUserToyAddUserAddress"] = "0";
+            sessionStorage["toiletCatUserToyAddUserAddress"] = "2";
             returnUrl = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+sessionStorage["toiletCatUserToyId"];
         }
 
