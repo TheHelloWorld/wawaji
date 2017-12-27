@@ -96,6 +96,7 @@ body {
 }
 
 .game-bottom {
+    z-index:211;
     border: 0 solid yellow;
     text-align: center;
     position: absolute;
@@ -112,12 +113,12 @@ body {
     top: 47%;
     border: 0 solid black;
     font-size: 50px;
-    z-index: 99;
+    z-index: 210;
     color: white
 }
 
 .button-background {
-    z-index: 99;
+    z-index: 210;
     position: absolute;
     left: 18%;
     top: 4%;
@@ -131,7 +132,7 @@ body {
 }
 
 .button-top {
-    z-index: 99;
+    z-index: 210;
     position: absolute;
     left: 30%;
     top: 9%;
@@ -144,7 +145,7 @@ body {
 }
 
 .button-left {
-    z-index: 99;
+    z-index: 210;
     position: absolute;
     left: 20%;
     top: 26%;
@@ -158,7 +159,7 @@ body {
 }
 
 .button-right {
-    z-index: 99;
+    z-index: 210;
     position: absolute;
     left: 40%;
     top: 26%;
@@ -172,7 +173,7 @@ body {
 }
 
 .button-bottom {
-    z-index: 99;
+    z-index: 210;
     position: absolute;
     left: 30%;
     top: 45%;
@@ -273,7 +274,7 @@ body {
     background: white;
     border-radius: 20px;
     padding-top: 5%;
-position:fixed;top:0px;left:0px;z-index:500;
+    position:fixed;top:0px;left:0px;z-index:500;
 }
 
 .successPersonTitle {
@@ -364,6 +365,7 @@ position:fixed;top:0px;left:0px;z-index:500;
 }
 
 .showCoinMsg {
+    z-index:210;
     width: 100%;
     position: absolute;
     top: 0;
@@ -463,5 +465,6 @@ position:fixed;top:0px;left:0px;z-index:500;
     text-align: left;
     font-weight: bold;
 }
-.showDetailDivButton{position:fixed;right:0px;top:40%;width:10%;font-size:46px;border-radius:20px;text-align:center;}
+.showDetailDivButton{z-index:210;position:fixed;right:0px;top:40%;width:10%;font-size:46px;border-radius:20px;text-align:center;}
 .closesuccessPerson{position:absolute;top:0px;right:0px;width:10%;height:10%;}
+.game-back{background:url(/image/game/game-back.png);background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;z-index:200;position:fixed;top:0px;left:0px;}
