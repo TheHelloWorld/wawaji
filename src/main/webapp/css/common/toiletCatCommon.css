@@ -1,5 +1,5 @@
 .my-body {
-    background: #FEFE9E;
+    background: #595163;
 }
 
 .toiletCat-msg {
@@ -58,7 +58,7 @@
     left:0;
     top:0;
     z-index:99;
-    background:#6DDBF6;
+    background:#fe8820;
     border-radius: 0.9375rem;
     border: 0.0625rem solid saddlebrown;
 }
@@ -68,7 +68,7 @@
     left:0;
     top:0;
     z-index:99;
-    background:#6DDBF6;
+    background:#fe8820;
 }
 
 .index-footer {
@@ -76,7 +76,7 @@
     left:0;
     bottom:0;
     z-index:99;
-    background:#6DDBF6;
+    background:#fe8820;
     border-radius: 0.9375rem;
     border: 0.0625rem solid saddlebrown;
 }
