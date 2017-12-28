@@ -1,6 +1,7 @@
 var auto, i=0, current_id = -1, can_big=false, can_small = true, current_status=0;
 var change_width=0,change_height=0;
 var finish_arr = [];
+
 //停止移动操作
 function stopMove(){
     clearInterval(auto);

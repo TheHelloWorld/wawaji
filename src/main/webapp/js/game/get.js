@@ -430,6 +430,7 @@ function afterSuccess(){
     current_id = -1;
 }
 
+
 function closeLastDiv(type){
     clearInterval(djsTimer);
     if(type == 'failClose'){

@@ -105,13 +105,21 @@ function setInit(data){
     for(var key in data.result.toyDesc){
         str +='<div style="text-align:center;margin-top:5%;"><img src="'+data.result.toyDesc[key]+'" /></div>';
     }
+
     $(".success-detail-div").html(str);
+
     $(".showOnceCoinCur").html(toyNowCoin+"/局");
+
     var weight = (luckyNum/100 *34);
+
     $(".luckyNum").css('width',weight+'%');
+
     $(".curPlayer").html("在线人数："+data.result.curPlayer);
+
     var userCoin = sessionStorage["toiletCatUserCoin"];
+
     $(".showCurCoin").html(userCoin);
+
     load();
 
     $(".game-user-toy").height($(".game-recharge").height());

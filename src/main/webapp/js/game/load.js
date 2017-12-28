@@ -86,7 +86,7 @@ function load() {
     obj['left'].css({'left': zhuazi_size['left']['left']+"px"});
     obj['right'].css({'left': zhuazi_size['right']['left']+"px"});
 
-    max['up']['left'] = wc*0.765;
+    max['up']['left'] = wc*0.62;
     max['left']['left'] = wc*0.71;
     max['right']['left'] = wc*0.82;
     max['right']['di'] = wc*0.685;
@@ -147,6 +147,7 @@ function setButton(){
     $(".button-right").attr({"ontouchstart":"moveRight()", "ontouchend":"stopMove()"});
     $(".button-get").attr({"ontouchstart":"catchToy()"});
 }
+
 
 function gameReturnMethod() {
     if(gameStatus == 1){

@@ -5,7 +5,6 @@
  *
  */
 
-
 (function(global,doc,factoryFn){
     //初始化toucher主方法
     var factory = factoryFn(global,doc);

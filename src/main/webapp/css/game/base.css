@@ -264,7 +264,7 @@ body {
     position: fixed;
     left: 0;
     top: 25%;
-    z-index: 99;
+    z-index: 220;
 }
 
 .successPerson {
@@ -338,11 +338,13 @@ body {
 }
 
 .bottom-button {
+    z-index:220;
     position: absolute;
     bottom: 0;
     right: 0;
     width: 60%;
 }
+
 
 .bottom-button div {
     float: left;
@@ -352,6 +354,7 @@ body {
 }
 
 .luckyNum {
+    z-index:220;
     position: absolute;
     bottom: 1.8%;
     left: 5%;

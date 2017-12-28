@@ -4,8 +4,7 @@
 <%@page import="com.toiletCat.utils.FontHandle"%>
 <%!
 // 生成随机颜色方法定义 
-Color getRandColor(Random random,int fc,int bc) 
-
+Color getRandColor(Random random,int fc,int bc)
 { 
     if(fc>255) fc=255; 
     if(bc>255) bc=255; 

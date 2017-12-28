@@ -89,7 +89,7 @@ function getUserToyByUserNoAndId() {
             str += "        <div class='user-toy-div'>";
             str += "            <img class='user-toy-img toy-img index-img' src='" + result["toyImg"] + "'>";
             str += "        </div>";
-            str += "        <div class='user-toy-div'>";
+            str += "        <div class='user-toy-div' style='color:white;font-size:1.5rem;margin-left:0%;'>";
             str += "            <div>" + result["toyName"] + "</div>";
             str += "<br/>";
             var newDate = new Date();
@@ -101,10 +101,10 @@ function getUserToyByUserNoAndId() {
             str += "        </div>";
             str += "    </div>";
             str += "    <div  class='row'>";
-            str += "        <div class='col-xs-5 user-toy-left user-toy-text-status'>";
-            str += "            <span>状态:</span>";
+            str += "        <div class='col-xs-5 user-toy-left user-toy-text-status' style='width:30%'>";
+            str += "            <span style='color:white'>状态:</span>";
             str += "        </div>";
-            str += "        <div class='col-xs-5 user-toy-right user-toy-text-left' style='font-size: 1.5rem;color: #666615;'>";
+            str += "        <div class='col-xs-5 user-toy-right user-toy-text-left' style='font-size: 1.5rem;color: #666615;width:50%;color:white;font-size:bold;'>";
 
             if (result["choiceType"] == 0) {
                 str += "<select id='choiceType' class='user-toy-select' onchange='choiceDeliver()'>";
@@ -365,6 +365,7 @@ function getAllUnHandleUserToyByUserNo() {
         }
     });
 }
+
 
 // 修改选择方式
 function updateChoiceType() {
