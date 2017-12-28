@@ -10,7 +10,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
+import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.config.RequestConfig;
@@ -387,7 +389,50 @@ public class HttpClientUtil {
 
     public static void main(String[] args) throws Exception {
 
-        System.out.println(sendHttpGet("http://www.baidu.com"));
+        TreeMap<String, String> treeMap = new TreeMap<>();
+
+        JSONObject json = new JSONObject();
+
+        json.put("pid","13018");
+        json.put("type","wxpay");
+        json.put("out_trade_no","toiletCat_test001");
+        json.put("notify_url","www.toiletCat.com/test.html");
+        json.put("return_url","www.toiletCat.com/test.html");
+        json.put("name","toiletCat");
+        json.put("money","1.00");
+        json.put("sitename","toiletCatCom");
+
+
+
+        treeMap.put("pid","");
+        treeMap.put("type","");
+        treeMap.put("out_trade_no","");
+        treeMap.put("notify_url","");
+        treeMap.put("return_url","");
+        treeMap.put("name","");
+        treeMap.put("money","");
+        treeMap.put("sitename","");
+
+        for(String key : treeMap.keySet()) {
+            treeMap.put(key, json.getString(key));
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for(String key : treeMap.keySet()) {
+            stringBuilder.append(key);
+            stringBuilder.append("=");
+            stringBuilder.append(treeMap.get(key));
+            stringBuilder.append("&");
+        }
+
+        String str = stringBuilder.toString();
+
+        str = str.substring(0, str.length()-1);
+
+        System.out.println(str);
+
+//        System.out.println(sendHttpGet("http://www.baidu.com"));
 
     }
 }
