@@ -372,67 +372,39 @@ public class HttpClientUtil {
         return parameterBuffer.toString();
     }
 
-    /**利用MD5进行加密
-     * @param str  待加密的字符串
-     * @return  加密后的字符串
-     * @throws NoSuchAlgorithmException  没有这种产生消息摘要的算法
-     * @throws UnsupportedEncodingException
-     */
-    public String EncoderByMd5(String str) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        //确定计算方法
-        MessageDigest md5 = MessageDigest.getInstance("MD5");
-        BASE64Encoder base64en = new BASE64Encoder();
+    private static String GetMd5(String s)
+    {
+        char hexDigits[] = {
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'a', 'b', 'c', 'd', 'e', 'f'
+        };
+        char str[];
+        byte strTemp[] = s.getBytes();
+        try {
+            MessageDigest mdTemp = MessageDigest.getInstance("MD5");
+            mdTemp.update(strTemp);
+            byte md[] = mdTemp.digest();
+            int j = md.length;
+            str = new char[j * 2];
+            int k = 0;
+            for (int i = 0; i < j; i++)
+            {
+                byte byte0 = md[i];
+                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
+                str[k++] = hexDigits[byte0 & 0xf];
+            }
 
-        //加密后的字符串
-        return base64en.encode(md5.digest(str.getBytes("utf-8")));
+            return new String(str);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static void main(String[] args) throws Exception {
 
-        TreeMap<String, String> treeMap = new TreeMap<>();
 
-        JSONObject json = new JSONObject();
-
-        json.put("pid","13018");
-        json.put("type","wxpay");
-        json.put("out_trade_no","toiletCat_test001");
-        json.put("notify_url","www.toiletCat.com/test.html");
-        json.put("return_url","www.toiletCat.com/test.html");
-        json.put("name","toiletCat");
-        json.put("money","1.00");
-        json.put("sitename","toiletCatCom");
-
-
-
-        treeMap.put("pid","");
-        treeMap.put("type","");
-        treeMap.put("out_trade_no","");
-        treeMap.put("notify_url","");
-        treeMap.put("return_url","");
-        treeMap.put("name","");
-        treeMap.put("money","");
-        treeMap.put("sitename","");
-
-        for(String key : treeMap.keySet()) {
-            treeMap.put(key, json.getString(key));
-        }
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for(String key : treeMap.keySet()) {
-            stringBuilder.append(key);
-            stringBuilder.append("=");
-            stringBuilder.append(treeMap.get(key));
-            stringBuilder.append("&");
-        }
-
-        String str = stringBuilder.toString();
-
-        str = str.substring(0, str.length()-1);
-
-        System.out.println(str);
-
-//        System.out.println(sendHttpGet("http://www.baidu.com"));
 
     }
 }
