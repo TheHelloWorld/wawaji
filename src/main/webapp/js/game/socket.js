@@ -13,6 +13,7 @@ var luckyNum;
 var catchId;
 var gameStatus=0;
 var webSocket;
+var userNo;
 
 function startWebSocket() {
 
@@ -94,6 +95,7 @@ function doSend(message) {
 
 function setInit(data){
     current_id = -1;
+    userNo = getQueryString("userNo");
     setButton();
     toyImg = data.result.toyRoomImg;
     toyNo = data.result.toyNo;
@@ -135,6 +137,7 @@ function setInit(data){
 function catchToy(){
     clearInterval(startDjsTimer);
     uId = getQueryString('userNo');
+    userNo = getQueryString('userNo');
     rId = getQueryString('gameRoomNo');
     userName = sessionStorage["toiletCatUserName"];
     userImg = sessionStorage["toiletCatUserImg"];

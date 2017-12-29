@@ -736,6 +736,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 添加用户游戏币
                 userDao.updateUserCoinByUserNo(coin, userNo);
 
+                // 获得用户当前游戏币
+                Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+
                 // 添加用户消费记录
                 // 用户消费记录
                 UserSpendRecord userSpendRecord = new UserSpendRecord();
@@ -758,7 +761,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 returnJSON.put("recharge_result", BaseConstant.SUCCESS);
 
-                returnJSON.put("recharge_coin", coin);
+                returnJSON.put("recharge_coin", userCoin);
 
                 got(returnJSON.toJSONString());
 

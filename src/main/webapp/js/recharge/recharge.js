@@ -163,7 +163,7 @@ function rechargeThis(amount) {
                 result = eval("("+result+")");
             }
 
-            var nowCoin = parseInt(sessionStorage["toiletCatUserCoin"]) + parseInt(result["recharge_coin"]);
+            var nowCoin = parseInt(result["recharge_coin"]);
 
             updateUserCoin(nowCoin);
 
