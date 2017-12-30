@@ -699,11 +699,21 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             @Override
             public void exec() {
 
+                logger.info("userRecharge userNo:" + userNo + ", amount:" + amount);
+
+                Integer coin = MoneyForCoin.getValueMapByKey(amount);
+
+                if(coin == null) {
+                    setOtherMsg();
+                    got("请重新选择金额");
+                    return;
+                }
+
+                logger.info("userRecharge userNo:" + userNo + ", amount:" + amount + ", coin:" + coin);
+
                 Integer tradeDate = DateUtil.getDate();
 
                 Date tradeTime = new Date();
-
-                //todo: 添加调用第三方支付
 
                 // 添加用户充值记录
                 // 用户充值记录
@@ -717,53 +727,17 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 交易时间
                 userRechargeRecord.setTradeTime(tradeTime);
                 // 交易状态
-                userRechargeRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
+                userRechargeRecord.setTradeStatus(TradeStatus.INIT.getStatus());
+
+                String orderNo = BaseConstant.TOILER_CAT + tradeTime.getTime() + userNo;
+
                 // 订单号
-                userRechargeRecord.setOrderNo(BaseConstant.TOILER_CAT + tradeTime.getTime());
+                userRechargeRecord.setOrderNo(orderNo);
 
                 userRechargeRecordService.addUserRechargeRecord(userRechargeRecord);
 
-                Integer coin = MoneyForCoin.getValueMapByKey(amount);
-
-                if(coin == null) {
-                    setOtherMsg();
-                    got("请重新选择金额");
-                    return;
-                }
-
-                logger.info("userRecharge amount:" + amount + ", coin:" + coin);
-
-                // 添加用户游戏币
-                userDao.updateUserCoinByUserNo(coin, userNo);
-
-                // 获得用户当前游戏币
-                Integer userCoin = userDao.getUserCoinByUserNo(userNo);
-
-                // 添加用户消费记录
-                // 用户消费记录
-                UserSpendRecord userSpendRecord = new UserSpendRecord();
-                //  消费日期
-                userSpendRecord.setTradeDate(tradeDate);
-                // 消费时间
-                userSpendRecord.setTradeTime(tradeTime);
-                // 消费类型(充值)
-                userSpendRecord.setTradeType(TradeType.RECHARGE.getType());
-                // 消费游戏币
-                userSpendRecord.setCoin(coin);
-                // 用户编号
-                userSpendRecord.setUserNo(userNo);
-                // 消费状态
-                userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
-
-                userSpendRecordService.addUserSpendRecord(userSpendRecord);
-
-                JSONObject returnJSON = new JSONObject();
-
-                returnJSON.put("recharge_result", BaseConstant.SUCCESS);
-
-                returnJSON.put("recharge_coin", userCoin);
-
-                got(returnJSON.toJSONString());
+                // 获得请求url并返回
+                got(RechargeUtil.getRequestUrl(orderNo, String.valueOf(amount), ""));
 
             }
         }, "userRecharge", json.toJSONString());

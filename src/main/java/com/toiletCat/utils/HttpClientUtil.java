@@ -1,18 +1,14 @@
 package com.toiletCat.utils;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
-import com.alibaba.fastjson.JSONObject;
+import com.toiletCat.constants.BaseConstant;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.config.RequestConfig;
@@ -26,35 +22,32 @@ import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
-import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
-import sun.misc.BASE64Encoder;
 
 /**
  *
- * @author H__D
- * @date 2016年10月19日 上午11:27:25
+ * @author liuzikun
+ * @date 2017年12月30日 上午11:27:25
  *
  */
 public class HttpClientUtil {
 
     // utf-8字符编码
-    public static final String CHARSET_UTF_8 = "utf-8";
+    private static final String CHARSET_UTF_8 = "utf-8";
 
     // HTTP内容类型。
-    public static final String CONTENT_TYPE_TEXT_HTML = "text/xml";
+    private static final String CONTENT_TYPE_TEXT_HTML = "text/xml";
 
     // HTTP内容类型。相当于form表单的形式，提交数据
     public static final String CONTENT_TYPE_FORM_URL = "application/x-www-form-urlencoded";
 
     // HTTP内容类型。相当于form表单的形式，提交数据
     public static final String CONTENT_TYPE_JSON_URL = "application/json;charset=utf-8";
-
 
     // 连接管理器
     private static PoolingHttpClientConnectionManager pool;
@@ -97,16 +90,14 @@ public class HttpClientUtil {
         } catch (KeyManagementException e) {
             e.printStackTrace();
         }
-
-
         // 设置请求超时时间
         requestConfig = RequestConfig.custom().setSocketTimeout(50000).setConnectTimeout(50000)
                 .setConnectionRequestTimeout(50000).build();
     }
 
-    public static CloseableHttpClient getHttpClient() {
+    private static CloseableHttpClient getHttpClient() {
 
-        CloseableHttpClient httpClient = HttpClients.custom()
+        return HttpClients.custom()
                 // 设置连接池管理
                 .setConnectionManager(pool)
                 // 设置请求配置
@@ -114,100 +105,68 @@ public class HttpClientUtil {
                 // 设置重试次数
                 .setRetryHandler(new DefaultHttpRequestRetryHandler(0, false))
                 .build();
-
-        return httpClient;
     }
 
     /**
      * 发送Post请求
      *
-     * @param httpPost
+     * @param httpPost http post 请求
      * @return
      */
     private static String sendHttpPost(HttpPost httpPost) {
 
-        CloseableHttpClient httpClient = null;
-        CloseableHttpResponse response = null;
-        // 响应内容
-        String responseContent = null;
-        try {
-            // 创建默认的httpClient实例.
-            httpClient = getHttpClient();
-            // 配置请求信息
-            httpPost.setConfig(requestConfig);
-            // 执行请求
-            response = httpClient.execute(httpPost);
-            // 得到响应实例
-            HttpEntity entity = response.getEntity();
-
-            // 可以获得响应头
-            // Header[] headers = response.getHeaders(HttpHeaders.CONTENT_TYPE);
-            // for (Header header : headers) {
-            // System.out.println(header.getName());
-            // }
-
-            // 得到响应类型
-            // System.out.println(ContentType.getOrDefault(response.getEntity()).getMimeType());
-
-            // 判断响应状态
-            if (response.getStatusLine().getStatusCode() >= 300) {
-                throw new Exception(
-                        "HTTP Request is not success, Response code is " + response.getStatusLine().getStatusCode());
-            }
-
-            if (HttpStatus.SC_OK == response.getStatusLine().getStatusCode()) {
-                responseContent = EntityUtils.toString(entity, CHARSET_UTF_8);
-                EntityUtils.consume(entity);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // 释放资源
-                if (response != null) {
-                    response.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return responseContent;
+        return sendHttpRequest(httpPost, null);
     }
 
     /**
      * 发送Get请求
      *
-     * @param httpGet
+     * @param httpGet http get 请求
      * @return
      */
     private static String sendHttpGet(HttpGet httpGet) {
 
-        CloseableHttpClient httpClient = null;
+        return sendHttpRequest(null, httpGet);
+
+    }
+
+    /**
+     * 发送http请求
+     * @param httpPost http post 请求
+     * @param httpGet http get 请求
+     * @return
+     */
+    private static String sendHttpRequest(HttpPost httpPost, HttpGet httpGet) {
+        CloseableHttpClient httpClient;
         CloseableHttpResponse response = null;
         // 响应内容
         String responseContent = null;
         try {
             // 创建默认的httpClient实例.
             httpClient = getHttpClient();
-            // 配置请求信息
-            httpGet.setConfig(requestConfig);
-            // 执行请求
-            response = httpClient.execute(httpGet);
+
+            if(httpPost == null) {
+
+                // 配置请求信息
+                httpGet.setConfig(requestConfig);
+                // 执行请求
+                response = httpClient.execute(httpGet);
+
+            } else {
+
+                // 配置请求信息
+                httpPost.setConfig(requestConfig);
+                // 执行请求
+                response = httpClient.execute(httpPost);
+
+            }
+
+
             // 得到响应实例
             HttpEntity entity = response.getEntity();
 
-            // 可以获得响应头
-            // Header[] headers = response.getHeaders(HttpHeaders.CONTENT_TYPE);
-            // for (Header header : headers) {
-            // System.out.println(header.getName());
-            // }
-
-            // 得到响应类型
-            // System.out.println(ContentType.getOrDefault(response.getEntity()).getMimeType());
-
             // 判断响应状态
-            if (response.getStatusLine().getStatusCode() >= 300) {
+            if (response.getStatusLine().getStatusCode() != 200) {
                 throw new Exception(
                         "HTTP Request is not success, Response code is " + response.getStatusLine().getStatusCode());
             }
@@ -232,13 +191,10 @@ public class HttpClientUtil {
         return responseContent;
     }
 
-
-
     /**
      * 发送 post请求
      *
-     * @param httpUrl
-     *            地址
+     * @param httpUrl 地址
      */
     public static String sendHttpPost(String httpUrl) {
         // 创建httpPost
@@ -249,7 +205,7 @@ public class HttpClientUtil {
     /**
      * 发送 get请求
      *
-     * @param httpUrl
+     * @param httpUrl 请求url
      */
     public static String sendHttpGet(String httpUrl) {
         // 创建get请求
@@ -261,40 +217,30 @@ public class HttpClientUtil {
     /**
      * 发送 post请求
      *
-     * @param httpUrl
-     *            地址
-     * @param params
-     *            参数(格式:key1=value1&key2=value2)
+     * @param httpUrl 地址
+     * @param params  参数(格式:key1=value1&key2=value2)
      *
      */
-    public static String sendHttpPost(String httpUrl, String params) {
-        HttpPost httpPost = new HttpPost(httpUrl);// 创建httpPost
-        try {
-            // 设置参数
-            if (params != null && params.trim().length() > 0) {
-                StringEntity stringEntity = new StringEntity(params, "UTF-8");
-                stringEntity.setContentType(CONTENT_TYPE_FORM_URL);
-                httpPost.setEntity(stringEntity);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private static String sendHttpPost(String httpUrl, String params) {
+        // 创建httpPost
+        HttpPost httpPost = new HttpPost(httpUrl);
+
+        setHttpPostParam(httpPost, params);
+
         return sendHttpPost(httpPost);
     }
 
     /**
      * 发送 post请求
      *
-     * @param maps
-     *            参数
+     * @param maps  参数
      */
     public static String sendHttpPost(String httpUrl, Map<String, String> maps) {
-        String parem = convertStringParamter(maps);
-        return sendHttpPost(httpUrl, parem);
+
+        String param = convertStringParamter(maps);
+
+        return sendHttpPost(httpUrl, param);
     }
-
-
-
 
     /**
      * 发送 post请求 发送json数据
@@ -306,17 +252,11 @@ public class HttpClientUtil {
      *
      */
     public static String sendHttpPostJson(String httpUrl, String paramsJson) {
-        HttpPost httpPost = new HttpPost(httpUrl);// 创建httpPost
-        try {
-            // 设置参数
-            if (paramsJson != null && paramsJson.trim().length() > 0) {
-                StringEntity stringEntity = new StringEntity(paramsJson, "UTF-8");
-                stringEntity.setContentType(CONTENT_TYPE_JSON_URL);
-                httpPost.setEntity(stringEntity);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // 创建httpPost
+        HttpPost httpPost = new HttpPost(httpUrl);
+
+        setHttpPostParam(httpPost, paramsJson);
+
         return sendHttpPost(httpPost);
     }
 
@@ -328,18 +268,25 @@ public class HttpClientUtil {
      *
      */
     public static String sendHttpPostXml(String httpUrl, String paramsXml) {
-        HttpPost httpPost = new HttpPost(httpUrl);// 创建httpPost
+        // 创建httpPost
+        HttpPost httpPost = new HttpPost(httpUrl);
+
+        setHttpPostParam(httpPost, paramsXml);
+
+        return sendHttpPost(httpPost);
+    }
+
+    private static void setHttpPostParam(HttpPost httpPost, String param) {
         try {
             // 设置参数
-            if (paramsXml != null && paramsXml.trim().length() > 0) {
-                StringEntity stringEntity = new StringEntity(paramsXml, "UTF-8");
+            if (param != null && param.trim().length() > 0) {
+                StringEntity stringEntity = new StringEntity(param, "UTF-8");
                 stringEntity.setContentType(CONTENT_TYPE_TEXT_HTML);
                 httpPost.setEntity(stringEntity);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return sendHttpPost(httpPost);
     }
 
 
@@ -350,7 +297,7 @@ public class HttpClientUtil {
      *            需要转化的键值对集合
      * @return 字符串
      */
-    public static String convertStringParamter(Map parameterMap) {
+    private static String convertStringParamter(Map parameterMap) {
         StringBuffer parameterBuffer = new StringBuffer();
         if (parameterMap != null) {
             Iterator iterator = parameterMap.keySet().iterator();
@@ -372,39 +319,4 @@ public class HttpClientUtil {
         return parameterBuffer.toString();
     }
 
-    private static String GetMd5(String s)
-    {
-        char hexDigits[] = {
-                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                'a', 'b', 'c', 'd', 'e', 'f'
-        };
-        char str[];
-        byte strTemp[] = s.getBytes();
-        try {
-            MessageDigest mdTemp = MessageDigest.getInstance("MD5");
-            mdTemp.update(strTemp);
-            byte md[] = mdTemp.digest();
-            int j = md.length;
-            str = new char[j * 2];
-            int k = 0;
-            for (int i = 0; i < j; i++)
-            {
-                byte byte0 = md[i];
-                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
-                str[k++] = hexDigits[byte0 & 0xf];
-            }
-
-            return new String(str);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static void main(String[] args) throws Exception {
-
-
-
-    }
 }

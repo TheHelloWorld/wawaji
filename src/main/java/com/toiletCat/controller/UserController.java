@@ -65,8 +65,8 @@ public class UserController {
     /**
      * 用户登录(若用户不存在则添加)
      *
-     * @param ticket    手机验证码
-     * @param mobile    手机号
+     * @param ticket 手机验证码
+     * @param mobile 手机号
      * @return
      */
     @RequestMapping(value = "/registerOrLoginUser", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")

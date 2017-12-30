@@ -8,10 +8,10 @@ import java.util.Map;
  */
 public enum TradeStatus {
 
-
-    SUCCESS(0, "成功"),
-    FAIL(1, "失败"),
-    PROCESSING(2,"处理中");
+    INIT(0, "初始化"),
+    SUCCESS(10, "成功"),
+    FAIL(20, "失败"),
+    PROCESSING(30,"处理中");
 
     /**
      * 状态
