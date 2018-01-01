@@ -4,6 +4,7 @@ import com.toiletCat.entity.UserRechargeRecord;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -65,4 +66,18 @@ public interface UserRechargeRecordDao {
     Map<String, Object> getSumRechargeAmountAndCountByTradeDateAndTradeStatus(@Param("tradeDate") Integer tradeDate,
                                                                                @Param("tradeStatus") Integer tradeStatus);
 
+    /**
+     * 根据用户编号和订单号获得金额
+     * @param userNo 用户编号
+     * @param orderNo 订单编号
+     * @return
+     */
+    BigDecimal getAmountByUserNoAndOrderNo(@Param("userNo") String userNo, @Param("orderNo") String orderNo);
+
+    /**
+     * 根据订单编号修改交易状态
+     * @param orderNo 订单编号
+     * @param tradeStatus 交易状态
+     */
+    void updateTradeStatusByOrderNo(@Param("orderNo") String orderNo, @Param("tradeStatus") Integer tradeStatus);
 }

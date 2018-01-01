@@ -1,8 +1,12 @@
 package com.toiletCat.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.toiletCat.bean.RechargeResult;
 import com.toiletCat.constants.BaseConstant;
+import com.toiletCat.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,11 +18,9 @@ public class RechargeController {
 
     private static final Logger logger = LoggerFactory.getLogger(RechargeController.class);
 
-    /**
-     * 用户自动登陆
-     *
-     * @return
-     */
+    @Autowired
+    private UserService userService;
+
     /**
      * 充值回调接口
      * @param money 商品金额
@@ -33,44 +35,50 @@ public class RechargeController {
      * @return
      */
     @RequestMapping(value = "/rechargeResult", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String rechargeResult(String money, String name, String out_trade_no, String pid, String trade_no,
+    public void rechargeResult(String money, String name, String out_trade_no, String pid, String trade_no,
                                  String trade_status, String type, String sign, String sign_type) {
+
+        // 充值结果bean
+        RechargeResult rechargeResult = new RechargeResult();
+
+        // 交易金额
+        rechargeResult.setMoney(money);
+
+        // 交易商品名称
+        rechargeResult.setName(name);
+
+        // 我方订单号
+        rechargeResult.setOrderNo(out_trade_no);
+
+        // 我方在支付机构id
+        rechargeResult.setpId(pid);
+
+        // 签名
+        rechargeResult.setSign(sign);
+
+        // 支付类型(微信/支付宝)
+        rechargeResult.setType(type);
+
+        // 签名类型
+        rechargeResult.setSignType(sign_type);
+
+        // 交易状态
+        rechargeResult.setTradeStatus(trade_status);
+
+        // 支付机构订单号
+        rechargeResult.setTradeNo(trade_no);
+
+        // 判断支付机构返回我方订单号是否正确
+        if(out_trade_no.length() != 54) {
+            logger.warn("rechargeResult return result orderNo error rechargeResult:" + rechargeResult);
+            return;
+        }
 
         String userNo = out_trade_no.substring(22);
 
-        logger.info(BaseConstant.LOG_MSG + " rechargeResult userNo:" + userNo + ", orderNo:" + out_trade_no);
+        logger.info(BaseConstant.LOG_MSG + " rechargeResult userNo:" + userNo + ", rechargeResult:" + rechargeResult);
 
-        return null;
-//        // 添加用户游戏币
-//        userDao.updateUserCoinByUserNo(coin, userNo);
-//
-//        // 获得用户当前游戏币
-//        Integer userCoin = userDao.getUserCoinByUserNo(userNo);
-//
-//        // 添加用户消费记录
-//        // 用户消费记录
-//        UserSpendRecord userSpendRecord = new UserSpendRecord();
-//        //  消费日期
-//        userSpendRecord.setTradeDate(tradeDate);
-//        // 消费时间
-//        userSpendRecord.setTradeTime(tradeTime);
-//        // 消费类型(充值)
-//        userSpendRecord.setTradeType(TradeType.RECHARGE.getType());
-//        // 消费游戏币
-//        userSpendRecord.setCoin(coin);
-//        // 用户编号
-//        userSpendRecord.setUserNo(userNo);
-//        // 消费状态
-//        userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
-//
-//        userSpendRecordService.addUserSpendRecord(userSpendRecord);
-//
-//        JSONObject returnJSON = new JSONObject();
-//
-//        returnJSON.put("recharge_result", BaseConstant.SUCCESS);
-//
-//        returnJSON.put("recharge_coin", userCoin);
-//
-//        got(returnJSON.toJSONString());
     }
+
+
 }

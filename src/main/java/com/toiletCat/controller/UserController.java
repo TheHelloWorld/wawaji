@@ -217,13 +217,14 @@ public class UserController {
      * 用户充值
      * @param userNo 用户编号
      * @param amount 金额
+     * @param rechargeType 充值类型
      * @return
      */
     @RequestMapping(value = "/userRecharge", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String userRecharge(String userNo, Long amount) {
+    public String userRecharge(String userNo, Long amount, String rechargeType) {
 
-        CommonResult<String> result = userService.userRecharge(userNo, amount);
+        CommonResult<String> result = userService.userRecharge(userNo, amount, rechargeType);
 
         return JSONUtil.getReturnBeanString(result);
     }

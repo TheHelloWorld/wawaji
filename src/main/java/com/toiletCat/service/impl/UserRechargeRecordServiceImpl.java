@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -151,8 +152,8 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
                                                                                      final Integer tradeStatus) {
 
         JSONObject json = new JSONObject();
-        json.put("tradeDate",tradeDate);
-        json.put("tradeStatus",tradeStatus);
+        json.put("tradeDate", tradeDate);
+        json.put("tradeStatus", tradeStatus);
 
         return exec(new Callback() {
             @Override
@@ -161,6 +162,46 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
             }
         }, "getSumRechargeAmountAndCountByTradeDateAndTradeStatus", json.toJSONString());
 
+    }
+
+    /**
+     * 根据用户编号和订单号获得金额
+     * @param userNo 用户编号
+     * @param orderNo 订单编号
+     * @return
+     */
+    @Override
+    public CommonResult<BigDecimal> getAmountByUserNoAndOrderNo(final String userNo, final String orderNo) {
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+        json.put("orderNo", orderNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userRechargeRecordDao.getAmountByUserNoAndOrderNo(userNo, orderNo));
+            }
+        }, "countNumByUserNoAndOrderNo", json.toJSONString());
+
+    }
+
+    /**
+     * 根据订单编号修改交易状态
+     * @param orderNo 订单编号
+     * @param tradeStatus 交易状态
+     */
+    @Override
+    public CommonResult updateTradeStatusByOrderNo(final String orderNo, final Integer tradeStatus) {
+        JSONObject json = new JSONObject();
+        json.put("orderNo", orderNo);
+        json.put("tradeStatus", tradeStatus);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                userRechargeRecordDao.updateTradeStatusByOrderNo(orderNo, tradeStatus);
+            }
+        }, "updateTradeStatusByOrderNo", json.toJSONString());
     }
 
     @Override

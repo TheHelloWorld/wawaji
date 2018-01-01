@@ -22,6 +22,11 @@ public class UserRechargeRecord extends BaseEntity implements Serializable {
     private String orderNo;
 
     /**
+     * 充值类型(支付宝/微信)
+     */
+    private String rechargeType;
+
+    /**
      * 充值金额
      */
     private BigDecimal amount;
@@ -55,6 +60,14 @@ public class UserRechargeRecord extends BaseEntity implements Serializable {
 
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
+    }
+
+    public String getRechargeType() {
+        return rechargeType;
+    }
+
+    public void setRechargeType(String rechargeType) {
+        this.rechargeType = rechargeType;
     }
 
     public BigDecimal getAmount() {

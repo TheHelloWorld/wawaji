@@ -48,7 +48,7 @@ public class UserSpendRecordServiceImpl extends BaseServiceImpl implements UserS
     public CommonResult<Integer> countUserSpendRecordByUserNo(final String userNo) {
 
         JSONObject json = new JSONObject();
-        json.put("userNo",userNo);
+        json.put("userNo", userNo);
 
         return exec(new Callback() {
             @Override
@@ -69,8 +69,8 @@ public class UserSpendRecordServiceImpl extends BaseServiceImpl implements UserS
     public CommonResult<List<UserSpendRecord>> getUserSpendRecordByUserNo(final String userNo, final int startPage) {
 
         JSONObject json = new JSONObject();
-        json.put("userNo",userNo);
-        json.put("startPage",startPage);
+        json.put("userNo", userNo);
+        json.put("startPage", startPage);
 
         return exec(new Callback() {
             @Override
@@ -78,6 +78,25 @@ public class UserSpendRecordServiceImpl extends BaseServiceImpl implements UserS
                 got(userSpendRecordDao.getUserSpendRecordByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
         }, "getUserSpendRecordByUserNo", json.toJSONString());
+    }
+
+    /**
+     * 根据订单编号修改交易状态
+     * @param orderNo 订单编号
+     * @param tradeStatus 交易状态
+     */
+    @Override
+    public CommonResult updateTradeStatusByOrderNo(final String orderNo, final Integer tradeStatus) {
+        JSONObject json = new JSONObject();
+        json.put("orderNo", orderNo);
+        json.put("tradeStatus", tradeStatus);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                userSpendRecordDao.updateTradeStatusByOrderNo(orderNo, tradeStatus);
+            }
+        }, "updateTradeStatusByOrderNo", json.toJSONString());
     }
 
     @Override

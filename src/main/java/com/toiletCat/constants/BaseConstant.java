@@ -181,4 +181,9 @@ public class BaseConstant {
 	 * 短信验证相关
 	 */
 	public static final String SMS_MOBILE_NO = "sms_#{}";
+
+	/**
+	 * 充值返回结果(成功)
+	 */
+	public static final String RECHARGE_RESULT_TRADE_STATUS = "TRADE_SUCCESS";
 }

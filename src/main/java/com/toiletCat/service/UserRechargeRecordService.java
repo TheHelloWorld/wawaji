@@ -3,6 +3,7 @@ package com.toiletCat.service;
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.entity.UserRechargeRecord;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -55,4 +56,18 @@ public interface UserRechargeRecordService {
      */
     CommonResult<Map<String, Object>> getSumRechargeAmountAndCountByTradeDateAndTradeStatus(Integer tradeDate, Integer tradeStatus);
 
+    /**
+     * 根据用户编号和订单号获得金额
+     * @param userNo 用户编号
+     * @param orderNo 订单编号
+     * @return
+     */
+    CommonResult<BigDecimal> getAmountByUserNoAndOrderNo(String userNo, String orderNo);
+
+    /**
+     * 根据订单编号修改交易状态
+     * @param orderNo 订单编号
+     * @param tradeStatus 交易状态
+     */
+    CommonResult updateTradeStatusByOrderNo(String orderNo, Integer tradeStatus);
 }

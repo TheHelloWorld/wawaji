@@ -72,7 +72,8 @@ public interface UserService {
      * 用户充值
      * @param userNo 用户编号
      * @param amount 金额
+     * @param rechargeType 充值类型
      * @return
      */
-    CommonResult<String> userRecharge(String userNo, Long amount);
+    CommonResult<String> userRecharge(String userNo, Long amount, String rechargeType);
 }

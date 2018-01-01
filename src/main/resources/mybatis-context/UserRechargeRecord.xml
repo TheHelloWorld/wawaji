@@ -10,6 +10,8 @@
         <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
         <!-- 用户编号 -->
         <result property="orderNo" column="order_no" jdbcType="VARCHAR"/>
+        <!-- 充值类型 -->
+        <result property="rechargeType" column="recharge_type" jdbcType="VARCHAR"/>
         <!-- 充值金额 -->
         <result property="amount" column="amount" jdbcType="DECIMAL"/>
         <!-- 交易状态 -->
@@ -33,7 +35,8 @@
                 trade_status,
                 trade_date,
                 trade_time,
-                order_no
+                order_no,
+                recharge_type
             )
         values
             (
@@ -42,7 +45,8 @@
                 #{tradeStatus, jdbcType=INTEGER},
                 #{tradeDate, jdbcType=INTEGER},
                 #{tradeTime},
-                #{orderNo, jdbcType=VARCHAR}
+                #{orderNo, jdbcType=VARCHAR},
+                #{rechargeType, jdbcType=VARCHAR}
             )
     </insert>
 
@@ -51,12 +55,19 @@
         select count(*) from user_recharge_record where user_no = #{userNo}
     </select>
 
+    <!-- 根据用户编号和订单号获得金额 -->
+    <select id="getAmountByUserNoAndOrderNo" resultType="java.math.BigDecimal">
+        select amount from user_recharge_record where order_no = #{orderNo} and user_no = #{userNo}
+    </select>
+
     <!-- 根据用户编号分页获得用户充值记录 -->
     <select id="getUserRechargeRecordByUserNo" resultMap="userRechargeRecordMap">
         select
             id,
             user_no,
             amount,
+            recharge_type,
+            order_no,
             trade_status,
             trade_date,
             trade_time
@@ -64,7 +75,6 @@
         where user_no = #{userNo}
         limit #{startPage}, #{pageSize}
     </select>
-
 
     <!-- 根据交易日期和交易状态分页获得所有充值记录 -->
     <select id="countUserRechargeRecordByTradeDateAndTradeStatus" resultType="java.lang.Integer">
@@ -76,6 +86,8 @@
         select
             id,
             user_no,
+            recharge_type,
+            order_no,
             amount,
             trade_status,
             trade_date,
@@ -88,11 +100,18 @@
     <!-- 根据交易日期和交易状态获得汇总信息 -->
     <select id="getSumRechargeAmountAndCountByTradeDateAndTradeStatus" resultType="java.util.Map">
         select
-        sum(amount) as totalAmount,
-        count(*) as totalCount
+          sum(amount) as totalAmount,
+          count(*) as totalCount
         from user_recharge_record
         where trade_date = #{tradeDate} and trade_status = #{tradeStatus}
         limit #{startPage}, #{pageSize}
     </select>
+
+    <!-- 根据订单编号修改交易状态 -->
+    <update id="updateTradeStatusByOrderNo">
+        update user_recharge_record set
+          trade_status = #{tradeStatus, jdbcType=INTEGER}
+        where order_no = #{orderNo, jdbcType=VARCHAR}
+    </update>
 
 </mapper>

@@ -8,6 +8,8 @@
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 用户编号 -->
         <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
+        <!-- 用户编号 -->
+        <result property="orderNo" column="order_no" jdbcType="VARCHAR"/>
         <!-- 消费游戏币数 -->
         <result property="coin" column="coin" jdbcType="INTEGER"/>
         <!-- 交易类型 -->
@@ -30,6 +32,7 @@
             (
                 user_no,
                 coin,
+                order_no,
                 trade_type,
                 trade_status,
                 trade_date,
@@ -39,6 +42,7 @@
             (
                 #{userNo, jdbcType=VARCHAR},
                 #{coin, jdbcType=INTEGER},
+                #{orderNo, jdbcType=VARCHAR},
                 #{tradeType, jdbcType=INTEGER},
                 #{tradeStatus, jdbcType=INTEGER},
                 #{tradeDate, jdbcType=INTEGER},
@@ -51,6 +55,7 @@
         select
             id,
             user_no,
+            order_no,
             coin,
             trade_type,
             trade_status,
@@ -60,5 +65,12 @@
         where user_no = #{userNo}
         limit #{startPage}, #{pageSize}
     </select>
+
+    <!-- 根据订单编号修改交易状态 -->
+    <update id="updateTradeStatusByOrderNo">
+        update user_spend_record set
+          trade_status = #{tradeStatus, jdbcType=INTEGER}
+        where order_no = #{orderNo, jdbcType=VARCHAR}
+    </update>
 
 </mapper>

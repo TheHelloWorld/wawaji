@@ -32,4 +32,11 @@ public interface UserSpendRecordDao {
     List<UserSpendRecord> getUserSpendRecordByUserNo(@Param("userNo") String userNo,
                                                            @Param("startPage") int startPage,
                                                            @Param("pageSize") int pageSize);
+
+    /**
+     * 根据订单编号修改交易状态
+     * @param orderNo 订单编号
+     * @param tradeStatus 交易状态
+     */
+    void updateTradeStatusByOrderNo(@Param("orderNo") String orderNo, @Param("tradeStatus") Integer tradeStatus);
 }

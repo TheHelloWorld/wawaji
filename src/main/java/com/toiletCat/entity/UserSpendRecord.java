@@ -16,6 +16,11 @@ public class UserSpendRecord extends BaseEntity implements Serializable {
     private String userNo;
 
     /**
+     * 订单编号
+     */
+    private String orderNo;
+
+    /**
      * 消费游戏币数
      */
     private Integer coin;
@@ -46,6 +51,14 @@ public class UserSpendRecord extends BaseEntity implements Serializable {
 
     public void setUserNo(String userNo) {
         this.userNo = userNo;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
     public Integer getCoin() {

@@ -687,10 +687,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      * 用户充值
      * @param userNo 用户编号
      * @param amount 金额
+     * @param rechargeType 充值类型
      * @return
      */
     @Override
-    public CommonResult<String> userRecharge(final String userNo, final Long amount) {
+    public CommonResult<String> userRecharge(final String userNo, final Long amount, final String rechargeType) {
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
         json.put("amount", amount);
@@ -718,14 +719,22 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 添加用户充值记录
                 // 用户充值记录
                 UserRechargeRecord userRechargeRecord = new UserRechargeRecord();
+
                 // 金额
                 userRechargeRecord.setAmount(BigDecimal.valueOf(amount));
+
+                // 充值类型(支付宝/微信)
+                userRechargeRecord.setRechargeType(rechargeType);
+
                 // 用户编号
                 userRechargeRecord.setUserNo(userNo);
+
                 // 交易日期
                 userRechargeRecord.setTradeDate(tradeDate);
+
                 // 交易时间
                 userRechargeRecord.setTradeTime(tradeTime);
+
                 // 交易状态
                 userRechargeRecord.setTradeStatus(TradeStatus.INIT.getStatus());
 
@@ -734,7 +743,44 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 订单号
                 userRechargeRecord.setOrderNo(orderNo);
 
-                userRechargeRecordService.addUserRechargeRecord(userRechargeRecord);
+                CommonResult addRechargeResult = userRechargeRecordService.addUserRechargeRecord(userRechargeRecord);
+
+                if(!addRechargeResult.success()) {
+                    respondSysError();
+                    return;
+                }
+
+                // 添加用户消费记录
+                // 用户消费记录
+                UserSpendRecord userSpendRecord = new UserSpendRecord();
+
+                //  消费日期
+                userSpendRecord.setTradeDate(tradeDate);
+
+                // 订单号
+                userSpendRecord.setOrderNo(orderNo);
+
+                // 消费时间
+                userSpendRecord.setTradeTime(tradeTime);
+
+                // 消费类型(充值)
+                userSpendRecord.setTradeType(TradeType.RECHARGE.getType());
+
+                // 消费游戏币
+                userSpendRecord.setCoin(coin);
+
+                // 用户编号
+                userSpendRecord.setUserNo(userNo);
+
+                // 消费状态
+                userSpendRecord.setTradeStatus(TradeStatus.INIT.getStatus());
+
+                CommonResult addSpendResult = userSpendRecordService.addUserSpendRecord(userSpendRecord);
+
+                if(!addSpendResult.success()) {
+                    respondSysError();
+                    return;
+                }
 
                 // 获得请求url并返回
                 got(RechargeUtil.getRequestUrl(orderNo, String.valueOf(amount), ""));

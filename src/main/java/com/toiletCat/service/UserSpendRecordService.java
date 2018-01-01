@@ -27,4 +27,12 @@ public interface UserSpendRecordService {
      * @return
      */
     CommonResult<List<UserSpendRecord>> getUserSpendRecordByUserNo(String userNo, int startPage);
+
+    /**
+     * 根据订单编号修改交易状态
+     * @param orderNo 订单编号
+     * @param tradeStatus 交易状态
+     */
+    CommonResult updateTradeStatusByOrderNo(String orderNo, Integer tradeStatus);
+
 }
