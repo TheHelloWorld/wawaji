@@ -46,25 +46,20 @@ function getRechargeResult() {
                 result = eval("("+result+")");
             }
 
-            var str = "";
+            $("#recharge-result").html("");
 
             if(result["result"] == "fail") {
                 flag = false;
-                str += "<img src='/image/background/recharge_fail.ico' />";
-                str += "<span>充值失败 QAQ</span>";
+                toiletCatMsg("充值失败 QAQ", "returnLastPage()");
 
 
             } else {
                 flag = false;
-                str += "<img src='/image/background/recharge_success.ico' />";
-                str += "<span>充值成功</span>";
+
                 // 用户游戏币数
                 sessionStorage["toiletCatUserCoin"] = result["userCoin"];
+                toiletCatMsg("充值成功", "returnLastPage()");
             }
-
-            $("#recharge-result").html("");
-
-            $("#recharge-result").append(str);
 
         }
     });
