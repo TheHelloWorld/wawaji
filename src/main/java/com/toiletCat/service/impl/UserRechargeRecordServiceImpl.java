@@ -204,6 +204,26 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
         }, "updateTradeStatusByOrderNo", json.toJSONString());
     }
 
+    /**
+     * 根据用户编号和订单号获得交易结果
+     * @param userNo 用户编号
+     * @param orderNo 订单编号
+     * @return
+     */
+    @Override
+    public CommonResult<Integer> getTradeStatusByOrderNo(final String userNo, final String orderNo) {
+        JSONObject json = new JSONObject();
+        json.put("orderNo", orderNo);
+        json.put("userNo", userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userRechargeRecordDao.getTradeStatusByOrderNo(userNo, orderNo));
+            }
+        }, "getTradeStatusByOrderNo", json.toJSONString());
+    }
+
     @Override
     protected Logger getLogger() {
         return logger;

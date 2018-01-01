@@ -70,4 +70,12 @@ public interface UserRechargeRecordService {
      * @param tradeStatus 交易状态
      */
     CommonResult updateTradeStatusByOrderNo(String orderNo, Integer tradeStatus);
+
+    /**
+     * 根据用户编号和订单号获得交易结果
+     * @param userNo 用户编号
+     * @param orderNo 订单编号
+     * @return
+     */
+    CommonResult<Integer> getTradeStatusByOrderNo(String userNo, String orderNo);
 }

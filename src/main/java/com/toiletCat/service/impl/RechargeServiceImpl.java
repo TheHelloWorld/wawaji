@@ -64,7 +64,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 Long money;
                 // 转换钱
                 try {
-                    money = Long.valueOf(rechargeResult.getMoney());
+                    money = BigDecimal.valueOf(Double.valueOf(rechargeResult.getMoney())).longValue();
                 } catch (Exception e) {
                     logger.error("getRechargeResultByParam transMoney err param:" + rechargeResult, e);
                     return;
@@ -80,7 +80,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 // 我方订单号
                 String orderNo = rechargeResult.getOrderNo();
 
-                CommonResult<BigDecimal> orderAmount = userRechargeRecordService.getAmountByUserNoAndOrderNo(userNo, orderNo);
+                // 根据用户编号和订单号获得我方记录交易金额
+                CommonResult<BigDecimal> orderAmount = userRechargeRecordService.getAmountByUserNoAndOrderNo(userNo,
+                        orderNo);
 
                 if(!orderAmount.success()) {
                     logger.error("getRechargeResultByParam countNumByUserNoAndOrderNo error param:"+ rechargeResult);
@@ -109,6 +111,11 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     tradeStatus = TradeStatus.FAIL;
                 }
 
+                if(tradeStatus == TradeStatus.SUCCESS) {
+                    // 添加用户游戏币
+                    userDao.updateUserCoinByUserNo(coin, userNo);
+                }
+
                 // 修改充值记录交易状态
                 CommonResult updateRechargeResult = userRechargeRecordService.
                         updateTradeStatusByOrderNo(orderNo, tradeStatus.getStatus());
@@ -125,14 +132,83 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     logger.warn("getRechargeResultByParam spend updateTradeStatusByOrderNo error:" + rechargeResult);
                 }
 
-                if(tradeStatus == TradeStatus.SUCCESS) {
-                    // 添加用户游戏币
-                    userDao.updateUserCoinByUserNo(coin, userNo);
-                }
-
             }
         }, "getRechargeResultByParam", json.toJSONString());
 
+    }
+
+    /**
+     * 根据订单号获得充值结果
+     * @param orderNo 订单号
+     * @return
+     */
+    @Override
+    public CommonResult<String> getRechargeResultByOrderNo(final String orderNo) {
+        JSONObject json = new JSONObject();
+        json.put("orderNo", orderNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                JSONObject returnJSON = new JSONObject();
+
+                // 判断支付机构返回我方订单号是否正确
+                if(orderNo.length() != 54) {
+                    logger.warn("getRechargeResultByOrderNo orderNo is wrong orderNo:" + orderNo);
+                    returnJSON.put("result", "fail");
+                    got(returnJSON.toJSONString());
+                    return;
+                }
+
+                String userNo = orderNo.substring(22);
+
+                // 判断用户编号是否存在
+                if(userDao.countUserByUserNo(userNo) == 0) {
+                    logger.warn("getRechargeResultByOrderNo userNo not exists userNo:"+ userNo);
+                    returnJSON.put("result", "fail");
+                    got(returnJSON.toJSONString());
+                    return;
+                }
+
+                // 根据用户编号和订单号获得我方记录交易金额
+                CommonResult<BigDecimal> orderAmount = userRechargeRecordService.getAmountByUserNoAndOrderNo(userNo,
+                        orderNo);
+
+
+                if(orderAmount.getValue() == null) {
+                    logger.warn("getRechargeResultByOrderNo order not exists userNo:"+ userNo + ",  orderNo:"
+                            + orderNo);
+                    returnJSON.put("result", "fail");
+                    got(returnJSON.toJSONString());
+                    return;
+                }
+
+                // 获得充值结果
+                CommonResult<Integer> rechargeResult = userRechargeRecordService.
+                        getTradeStatusByOrderNo(userNo, orderNo);
+
+                // 若还为初始化状态表示还为收到结果
+                if(rechargeResult.getValue() == TradeStatus.INIT.getStatus()) {
+                    returnJSON.put("result", "wait");
+                    got(returnJSON.toJSONString());
+                    return;
+                }
+
+                if(rechargeResult.getValue() == TradeStatus.FAIL.getStatus()) {
+                    returnJSON.put("result", "fail");
+                    got(returnJSON.toJSONString());
+                    return;
+                }
+
+                Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+
+                returnJSON.put("result", "success");
+                returnJSON.put("userCoin", userCoin);
+                got(returnJSON.toJSONString());
+
+            }
+        }, "getRechargeResultByOrderNo", json.toJSONString());
     }
 
     /**

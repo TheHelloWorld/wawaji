@@ -1,14 +1,17 @@
 package com.toiletCat.controller;
 
+import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.RechargeResult;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.service.RechargeService;
+import com.toiletCat.utils.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("/toiletCat/recharge")
 @Controller
@@ -79,5 +82,18 @@ public class RechargeController {
         rechargeService.getRechargeResultByParam(userNo, rechargeResult);
     }
 
+    /**
+     * 根据订单号获得充值结果
+     * @param orderNo 订单号
+     * @return
+     */
+    @RequestMapping(value = "/getRechargeResultByOrderNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getRechargeResultByOrderNo(String orderNo) {
+
+        CommonResult<String> result = rechargeService.getRechargeResultByOrderNo(orderNo);
+
+        return JSONUtil.getReturnBeanString(result);
+    }
 
 }

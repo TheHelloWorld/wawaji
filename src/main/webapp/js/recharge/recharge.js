@@ -143,6 +143,7 @@ function rechargeThis(amount) {
         async:false,
         data:{
             amount:amount,
+            rechargeType:"alipay",
             userNo:userNo
         },
         success:function(data) {
@@ -157,19 +158,9 @@ function rechargeThis(amount) {
                 return;
             }
 
-            var result = data["result"];
+            // 跳转到充值页面
+            window.location.href = data["result"];
 
-            if(typeof(result) == "string") {
-                result = eval("("+result+")");
-            }
-
-            var nowCoin = parseInt(result["recharge_coin"]);
-
-            updateUserCoin(nowCoin);
-
-            sessionStorage["toiletCatUserCoin"] = nowCoin;
-
-            toiletCatMsg("充值成功", "closeRecharge()");
         }
     });
 }
