@@ -10,7 +10,7 @@
 
     <title>用户发货页</title>
 
-    <%@ include file="../../../include/header.jsp"%>
+    <%@ include file="/include/header.jsp"%>
 
     <script type="text/javascript" src="/js/back/deliver/deliverDetailPage.js"></script>
 </head>

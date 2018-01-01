@@ -11,7 +11,7 @@
 
     <title>玩具页</title>
 
-    <%@ include file="../../../include/header.jsp"%>
+    <%@ include file="/include/header.jsp"%>
 
     <link href="/dist/css/fileInput/fileinput.css" media="all"rel="stylesheet" type="text/css" />
 
@@ -75,7 +75,7 @@
                         <script type="text/javascript">
 
                                 // 上传图片处理controller
-                                var url = "/toiletCat/fileUpload/bannerImgUpload.action";
+                                var url = "/toiletCat/api/fileUpload/bannerImgUpload.action";
 
                                 // input file id
                                 var inputId = "uploadBannerImg";

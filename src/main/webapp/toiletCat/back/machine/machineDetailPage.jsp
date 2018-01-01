@@ -10,7 +10,7 @@
 
     <title>机器页</title>
 
-    <%@ include file="../../../include/header.jsp"%>
+    <%@ include file="/include/header.jsp"%>
 
     <script type="text/javascript" src="/js/back/machine/machineDetailPage.js"></script>
 </head>
