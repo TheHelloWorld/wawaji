@@ -1,16 +1,14 @@
 package com.toiletCat.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.bean.RechargeResult;
 import com.toiletCat.constants.BaseConstant;
-import com.toiletCat.service.UserService;
+import com.toiletCat.service.RechargeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("/toiletCat/recharge")
 @Controller
@@ -19,7 +17,7 @@ public class RechargeController {
     private static final Logger logger = LoggerFactory.getLogger(RechargeController.class);
 
     @Autowired
-    private UserService userService;
+    private RechargeService rechargeService;
 
     /**
      * 充值回调接口
@@ -78,6 +76,7 @@ public class RechargeController {
 
         logger.info(BaseConstant.LOG_MSG + " rechargeResult userNo:" + userNo + ", rechargeResult:" + rechargeResult);
 
+        rechargeService.getRechargeResultByParam(userNo, rechargeResult);
     }
 
 

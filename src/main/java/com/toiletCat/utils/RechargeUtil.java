@@ -2,6 +2,7 @@ package com.toiletCat.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.constants.BaseConstant;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,12 +76,18 @@ public class RechargeUtil {
         treeMap.put("sitename","");
 
         for(String key : treeMap.keySet()) {
+            if(StringUtils.isBlank(json.getString(key))) {
+                continue;
+            }
             treeMap.put(key, json.getString(key));
         }
 
         StringBuilder stringBuilder = new StringBuilder();
 
         for(String key : treeMap.keySet()) {
+            if(StringUtils.isBlank(treeMap.get(key))) {
+                continue;
+            }
             stringBuilder.append(key);
             stringBuilder.append("=");
             stringBuilder.append(treeMap.get(key));
@@ -151,5 +158,15 @@ public class RechargeUtil {
 
         return request.toString();
 
+    }
+
+    /**
+     * 验签
+     * @param resultSign 返回签名
+     * @param json 参数
+     * @return
+     */
+    public static Boolean checkSign(String resultSign, JSONObject json) {
+        return resultSign.equals(getSign(json));
     }
 }

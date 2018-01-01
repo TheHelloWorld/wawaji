@@ -11,6 +11,7 @@ import com.toiletCat.enums.TradeStatus;
 import com.toiletCat.service.RechargeService;
 import com.toiletCat.service.UserRechargeRecordService;
 import com.toiletCat.service.UserSpendRecordService;
+import com.toiletCat.utils.RechargeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,12 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
         return exec(new Callback() {
             @Override
             public void exec() {
+
+                // 验签
+                if(!checkSign(rechargeResult)) {
+                    logger.warn("getRechargeResultByParam sign is wrong param:"+ rechargeResult);
+                    return;
+                }
 
                 // 判断用户编号是否存在
                 if(userDao.countUserByUserNo(userNo) == 0) {
@@ -125,6 +132,26 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
             }
         }, "getRechargeResultByParam", json.toJSONString());
+
+    }
+
+    /**
+     * 验签
+     * @param rechargeResult 充值返回结果
+     * @return
+     */
+    private Boolean checkSign(RechargeResult rechargeResult) {
+        JSONObject json = new JSONObject();
+
+        json.put("pid", rechargeResult.getpId());
+        json.put("money", rechargeResult.getMoney());
+        json.put("out_trade_no", rechargeResult.getOrderNo());
+        json.put("name", rechargeResult.getName());
+        json.put("trade_no", rechargeResult.getTradeNo());
+        json.put("trade_status", rechargeResult.getTradeStatus());
+        json.put("type", rechargeResult.getType());
+
+        return RechargeUtil.checkSign(rechargeResult.getSign(), json);
 
     }
 
