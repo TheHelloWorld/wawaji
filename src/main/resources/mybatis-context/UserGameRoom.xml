@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lzg.wawaji.dao.UserGameRoomDao">
+<mapper namespace="com.toiletCat.dao.UserGameRoomDao">
 
     <!-- 用户游戏房间表 -->
-    <resultMap type="com.lzg.wawaji.entity.UserGameRoom" id="userGameRoomMap">
+    <resultMap type="com.toiletCat.entity.UserGameRoom" id="userGameRoomMap">
         <!-- 主键id -->
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 用户编号 -->
@@ -19,7 +19,7 @@
     </resultMap>
 
     <!-- 添加用户游戏房间记录 -->
-    <insert id="addUserGameRoom" useGeneratedKeys="true" keyProperty="id" parameterType="com.lzg.wawaji.entity.UserGameRoom">
+    <insert id="addUserGameRoom" useGeneratedKeys="true" keyProperty="id" parameterType="com.toiletCat.entity.UserGameRoom">
         insert into user_game_room
             (
             user_no,
@@ -40,7 +40,7 @@
     </select>
 
     <!-- 根据用户编号和房间编号获得用户游戏房间 -->
-    <select id="getUserGameRoomByUserNoAndGameRoomNo" resultMap="deliverMap">
+    <select id="getUserGameRoomByUserNoAndGameRoomNo" resultMap="userGameRoomMap">
         select
             id,
             user_no,

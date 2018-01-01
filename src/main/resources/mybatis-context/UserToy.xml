@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lzg.wawaji.dao.UserToyDao">
+<mapper namespace="com.toiletCat.dao.UserToyDao">
 
     <!-- 用户消费记录表 -->
-    <resultMap type="com.lzg.wawaji.entity.UserToy" id="userToyMap">
+    <resultMap type="com.toiletCat.entity.UserToy" id="userToyMap">
         <!-- 主键id -->
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 用户编号 -->
@@ -14,8 +14,6 @@
         <result property="choiceType" column="choice_type" jdbcType="INTEGER"/>
         <!-- 发货记录id -->
         <result property="deliverId" column="deliver_id" jdbcType="BIGINT"/>
-        <!-- 处理状态 -->
-        <result property="handleStatus" column="handle_status" jdbcType="INTEGER"/>
         <!-- 创建时间 -->
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <!-- 最后修改时间 -->
@@ -31,22 +29,20 @@
     </resultMap>
 
     <!-- 添加用户娃娃记录 -->
-    <insert id="addUserToy" parameterType="com.lzg.wawaji.entity.UserToy">
+    <insert id="addUserToy" parameterType="com.toiletCat.entity.UserToy">
         insert into user_toy
             (
                 user_no,
                 toy_no,
                 choice_type,
-                deliver_id,
-                handle_status
+                deliver_id
             )
         values
             (
                 #{userNo, jdbcType=VARCHAR},
                 #{toyNo, jdbcType=VARCHAR},
                 #{choiceType, jdbcType=INTEGER},
-                #{deliverId, jdbcType=BIGINT},
-                #{handle_status, jdbcType=INTEGER}
+                #{deliverId, jdbcType=BIGINT}
             )
     </insert>
 
@@ -62,7 +58,6 @@
             u.user_no,
             u.toy_no,
             u.choice_type,
-            u.handle_status,
             t.toy_img,
             t.toy_name,
             u.create_time
@@ -79,7 +74,6 @@
             u.toy_no,
             u.choice_type,
             u.deliver_id,
-            u.handle_status,
             t.toy_img,
             t.toy_name,
             t.toy_for_coin,
@@ -88,19 +82,22 @@
         where u.toy_no = t.toy_no and u.user_no = #{userNo} and u.id = #{id}
     </select>
 
+    <!-- 根据用户编号获得用户所有未处理战利品 -->
+    <select id="getAllUnHandleUserToyByUserNo" parameterType="java.lang.String" resultMap="userToyMap">
+        select
+            u.id,
+            u.toy_no,
+            t.toy_img,
+            t.toy_name
+        from user_toy u,toy t
+        where u.toy_no = t.toy_no and u.user_no = #{userNo} and choice_type = 0
+    </select>
+
     <!-- 根据id,用户编号修改选择方式 -->
-    <update id="updateChoiceTypeByIdAndUserNo" parameterType="com.lzg.wawaji.entity.UserToy">
+    <update id="updateChoiceTypeByIdAndUserNo" parameterType="com.toiletCat.entity.UserToy">
         update user_toy set
           choice_type = #{choiceType, jdbcType=INTEGER},
-          deliver_id = #{deliverId, jdbcType=BIGINT},
-          handle_status = #{handleStatus, jdbcType=INTEGER}
-        where id = #{id} and user_no = #{userNo}
-    </update>
-
-    <!-- 根据用id,用户编号修改处理状态 -->
-    <update id="updateHandleStatusByIdAndUserNo">
-        update user_toy set
-        handle_status = #{handleStatus, jdbcType=INTEGER}
+          deliver_id = #{deliverId, jdbcType=BIGINT}
         where id = #{id} and user_no = #{userNo}
     </update>
 

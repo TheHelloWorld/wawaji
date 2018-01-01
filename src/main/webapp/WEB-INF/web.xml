@@ -74,7 +74,7 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>/wawaji/index/index.html</welcome-file>
+        <welcome-file>/toiletCat/gameRoom/gameRoom.html</welcome-file>
     </welcome-file-list>
 
 </web-app>

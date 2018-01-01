@@ -1,15 +1,9 @@
-.locktable{
+.lock-table{
 	float: left;
 }
 
-.lockdiv{
-	/* 隐去多余的边框*/
-	margin-left:-1px;
-	margin-right:-1px;
-	overflow-x: scroll;
-}
 
-.lockdiv{
+.lock-div{
 	/* 隐去多余的边框*/
 	margin-left:-1px;
 	margin-right:-1px;

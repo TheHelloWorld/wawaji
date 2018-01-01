@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lzg.wawaji.dao.ToyDao">
+<mapper namespace="com.toiletCat.dao.ToyDao">
 
 
     <!-- 娃娃表 -->
-    <resultMap type="com.lzg.wawaji.entity.Toy" id="toyMap">
+    <resultMap type="com.toiletCat.entity.Toy" id="toyMap">
         <!-- 主键Id -->
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 娃娃编号 -->
@@ -15,6 +15,8 @@
         <result property="toyForCoin" column="toy_for_coin" jdbcType="INTEGER"/>
         <!-- 娃娃图片地址 -->
         <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
+        <!-- 娃娃房间中图片 -->
+        <result property="toyRoomImg" column="toy_room_img" jdbcType="VARCHAR"/>
         <!-- 娃娃描述 -->
         <result property="toyDesc" column="toy_desc" jdbcType="VARCHAR"/>
         <!-- 娃娃当前游戏币 -->
@@ -32,13 +34,14 @@
     </resultMap>
 
     <!-- 添加娃娃记录 -->
-    <insert id="addToy" parameterType="com.lzg.wawaji.entity.Toy">
+    <insert id="addToy" parameterType="com.toiletCat.entity.Toy">
         insert into toy
             (
                 toy_no,
                 toy_name,
                 toy_for_coin,
                 toy_img,
+                toy_room_img,
                 toy_desc,
                 toy_now_coin,
                 toy_origin_coin,
@@ -51,6 +54,7 @@
                 #{toyName, jdbcType=VARCHAR},
                 #{toyForCoin, jdbcType=INTEGER},
                 #{toyImg, jdbcType=VARCHAR},
+                #{toyRoomImg, jdbcType=VARCHAR},
                 #{toyDesc, jdbcType=VARCHAR},
                 #{toyNowCoin, jdbcType=INTEGER},
                 #{toyOriginCoin, jdbcType=INTEGER},
@@ -72,6 +76,7 @@
             toy_name,
             toy_for_coin,
             toy_img,
+            toy_room_img,
             toy_desc,
             toy_now_coin,
             toy_origin_coin,
@@ -89,6 +94,7 @@
           toy_name,
           toy_for_coin,
           toy_img,
+          toy_room_img,
           toy_desc,
           toy_now_coin,
           toy_origin_coin,
@@ -98,11 +104,12 @@
     </select>
 
     <!-- 根据id,娃娃机编号修改娃娃机记录 -->
-    <update id="updateToyByIdAndToyNo" parameterType="com.lzg.wawaji.entity.Toy">
+    <update id="updateToyByIdAndToyNo" parameterType="com.toiletCat.entity.Toy">
         update toy set
             toy_name = #{toyName, jdbcType=VARCHAR},
             toy_for_coin = #{toyForCoin, jdbcType=INTEGER},
             toy_img = #{toyImg, jdbcType=VARCHAR},
+            toy_room_img = #{toyRoomImg, jdbcType=VARCHAR},
             toy_desc = #{toyDesc, jdbcType=VARCHAR},
             toy_now_coin = #{toyNowCoin, jdbcType=INTEGER},
             toy_origin_coin = #{toyOriginCoin, jdbcType=INTEGER},

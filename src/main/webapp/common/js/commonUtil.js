@@ -19,13 +19,17 @@ var nowMonth = now.getMonth();
 
 //当前年
 var nowYear = now.getYear();
+
 nowYear += (nowYear < 2000) ? 1900 : 0;
 
 //上月日期
 var lastMonthDate = new Date();
+
 lastMonthDate.setDate(1);
 lastMonthDate.setMonth(lastMonthDate.getMonth()-1);
+
 var lastYear = lastMonthDate.getYear();
+
 var lastMonth = lastMonthDate.getMonth();
 
 //显示图表或表格的标志位
@@ -34,8 +38,28 @@ var tableOrPicture = false;
 // 储存或修改用json
 var json = {};
 
+// 用户编号
+var userNo = "";
+
+// 用户名
+var userName = "";
+
+// 用户游戏币数
+var userCoin = "";
+
+// 用户头像
+var userImg = "";
+
+// 用户邀请码
+var invitationCode = "";
+
 $(function(){
+
+	// 设置div为屏幕高度
     $(".index-body-div").height($(window).height());
+
+    // 设置div为屏幕宽度
+    $(".index-body-div").width($(window).width());
 });
 
 //初始化页码
@@ -443,7 +467,6 @@ function sleep(numberMillis) {
 	}
 }
 
-
 // 获取URL参数
 function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -561,7 +584,7 @@ function getTotalCountAndPageSize(url) {
             }
 
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -579,7 +602,7 @@ function getTotalCountAndPageSize(url) {
 
             } else {
 
-                totalPage = parseInt(totalCount / pageSize);
+                totalPage = parseInt(totalCount / pageSize) + 1;
             }
         }
     });
@@ -611,7 +634,7 @@ function saveThis(saveUrl, returnUrl) {
             }
 
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -628,6 +651,8 @@ function updateThis(updateUrl, returnUrl) {
         var col = $(this).attr("name");
         json[col] = $("#"+col).val();
     });
+
+    // 将json转换为字符串
     var paramStr = JSON.stringify(json);
 
     $.ajax({
@@ -644,7 +669,7 @@ function updateThis(updateUrl, returnUrl) {
             }
 
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -720,3 +745,126 @@ Date.prototype.format = function(format) {
     }
     return format;
 };
+
+function checkSession() {
+    // 用户编号
+    userNo = sessionStorage["toiletCatUserNo"];
+
+    if(userNo == undefined) {
+        userNo = getQueryString("userNo");
+        getUserInfoByUserNo(userNo);
+    }
+}
+
+// 跳转到战利品页
+function toUserToy() {
+    window.location.href = "/toiletCat/userToy/userToy.html?userNo=" + userNo + "&type=gameRoom";
+}
+
+// 跳转到用户主页
+function toUserIndex() {
+    window.location.href = "/toiletCat/user/userIndex.html?type=gameRoom&userNo=" + userNo;
+}
+
+function toIndex() {
+    window.location.href="/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+userNo;
+}
+
+// 检查手机号
+function checkMobileNo(id) {
+
+    var numbers = /^1\d{10}$/;
+    
+    //获取输入手机号码
+    var val = $("#"+id).val().replace(/\s+/g,"");
+
+    if(!numbers.test(val) || val.length ==0) {
+        return false;
+    }
+
+    return true;
+}
+
+function getUserInfoByUserNo(userNo) {
+    $.ajax({
+        url:"/toiletCat/user/getUserByUserNo.action",
+        type:"POST",
+        async:false,
+		data:{
+        	userNo:userNo
+		},
+        success:function(data) {
+            // 转换数据
+            if(typeof(data) == "string") {
+                data = eval("("+data+")");
+            }
+
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+
+                toiletCatMsg(data["result"],"toLoginPage()");
+                return;
+            }
+
+            var user = data["result"];
+
+            // 判断是否成功获取用户信息
+            if(user == "fail") {
+                console.info(user);
+                return;
+            }
+
+            if(typeof(user) == "string") {
+                user = eval("("+user+")");
+            }
+
+            // 赋值操作
+            // 用户编号
+            sessionStorage["toiletCatUserNo"] = user["userNo"];
+            // 用户名
+            sessionStorage["toiletCatUserName"] = user["userName"];
+            // 用户游戏币数
+            sessionStorage["toiletCatUserCoin"] = user["userCoin"];
+            // 用户头像
+            sessionStorage["toiletCatUserImg"] = user["userImg"];
+            // 用户邀请码
+            sessionStorage["toiletCatInvitationCode"] = user["invitationCode"];
+
+        }
+    });
+}
+
+function toLoginPage() {
+	window.location.href = "/toiletCat/user/login.html?from=gameIndex&type=gameRoom&checkType=checkCode";
+}
+
+
+// 弹出提示框
+function toiletCatMsg(msg, method) {
+	var str = "	<div class='toiletCat-msg' >";
+
+	str += "	</div>";
+    str += "		<div class='toiletCat-msg-div'>";
+    str += "			<div class='toiletCat-msg-alert'>";
+    str += "				提示";
+    str += "			</div>";
+    str += "			<div class='toiletCat-msg-text'>";
+    str += 					msg;
+    str += "			</div>";
+    str += "			<div class='toiletCat-msg-button' ontouchend='closeToiletCatMsg("+method+")'>";
+    str += "				确定";
+    str += "			</div>";
+    str += "		</div>";
+	$("body").append(str);
+	$(".toiletCat-msg").height($("body").height());
+}
+
+// 关闭提示框
+function closeToiletCatMsg(method) {
+    $(".toiletCat-msg").remove();
+    $(".toiletCat-msg-div").remove();
+
+    if(method != null) {
+    	eval(method);
+	}
+}

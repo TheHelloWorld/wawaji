@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+        <meta http-equiv="expires" content="0">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+        <meta name="keywords" content="关键词" />
+        <meta name="description" content="描述" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="format-detection" content="telephone=no" />
+
+        <title>娃娃机主页</title>
+
+        <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css" >
+
+        <link rel="stylesheet" type="text/css" href="/css/common/toiletCatCommon.css" >
+
+        <link rel="stylesheet" type="text/css" href="/css/common/banner.css" >
+
+        <link rel="stylesheet" type="text/css" href="/dist/css/sb-admin-2.css" >
+        <!-- jQuery -->
+        <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+
+        <script type="text/javascript" src="/common/js/wySilder.min.js"></script>
+
+        <script type="text/javascript" src="/common/js/banner.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/common/js/commonUtil.js"></script>
+
+        <script type="text/javascript" src="/js/machineRoom/machineRoom.js"></script>
+    </head>
+
+    <body style="width: 100%">
+        <div class="index-body-div">
+            <nav class = "index-header default-height" >
+                <div class="background-img">
+                    <div class="user-info" id="userInfo">
+                        <div  onclick="toLoginPage()">
+                            <img class="login-button" id="returnButton" src="/image/background/login.ico" onclick="returnMethod()" />
+                            <span style="float: left;padding-top: 1%; margin-left: 1%">登陆</span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="default-height">
+            </div>
+            <div class="banner-box">
+
+            </div>
+            <div id = "main" >
+
+            </div>
+            <div class="default-height">
+            </div>
+            <nav class = "index-footer default-height" >
+                <div class="background-img">
+                    <div class="footer-button" >
+                        <img class="footer-img" src="/image/button/cat_phone_48_text.png" onclick="toUserToy()" />
+                    </div>
+                    <div class="footer-button" >
+                        <img class="footer-img" src="/image/button/cat_wizard_48_text.png" onclick="toUserToy()" />
+                    </div>
+                    <div class="footer-button" >
+                        <img class="footer-img" src="/image/button/cat_laptop_48_text.png" onclick="toUserIndex()" />
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </body>
+</html>

@@ -1,10 +1,11 @@
 .ac_results {
-        padding: 0px;
-        border: 1px solid WindowFrame;
+        padding: 0;
+        border: 0.0625rem solid WindowFrame;
         background-color: Window;
         overflow: hidden;
         z-index: 99999;
 }
+
 /* www.bvbsoft.com  */
 .ac_results ul {
         width: 100%;
@@ -23,33 +24,36 @@
         left:0;
         z-index:-1;
         filter:mask();
-        width:3000px;
-        height:3000px;
+        width: 187.5rem;
+        height: 187.5rem;
 }
  
 .ac_results li {
     clear:both;
-        margin: 0px;
-        padding: 2px 5px;
-        cursor: default;
-        display: block;
-        font-size: 12px;
-        line-height: 16px;
-        overflow: hidden;
+    margin: 0;
+    padding: 0.125rem 0.3125rem;
+    cursor: default;
+    display: block;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    overflow: hidden;
 }
+
 .ac_results li p{
    float:left;
    margin:0;
    padding:0;
 }
+
 .ac_results li span{
    margin:0;
    padding:0;
    float:right;
-   font-size: 12px;
+   font-size: 0.75rem;
 }
+
 .ac_loading {
-        background : Window url('../images/indicator.gif') right center no-repeat;
+
 }
  
 .ac_over {

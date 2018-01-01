@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+        <meta http-equiv="expires" content="0">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+        <meta name="keywords" content="关键词" />
+        <meta name="description" content="描述" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="format-detection" content="telephone=no" />
+
+        <title>地址详情</title>
+
+        <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css" >
+
+        <link rel="stylesheet" type="text/css" href="/css/common/toiletCatCommon.css" >
+
+        <link rel="stylesheet" type="text/css" href="/dist/css/sb-admin-2.css" >
+        <!-- jQuery -->
+        <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <script type="text/javascript" src="/common/js/commonUtil.js"></script>
+
+        <script src="/dist/js/distpicker/distpicker.min.js"></script>
+
+        <script src="/dist/js/distpicker/distpicker.data.min.js"></script>
+
+        <script src="/js/userAddress/userAddressDetail.js"></script>
+    </head>
+    <body class="my-body">
+        <div class="index-body-div">
+            <nav class = "index-default-header default-height nav-center" >
+                <div class="background-img">
+                    <img class="return-button" id="returnButton" src="/image/background/returnButton.ico" onclick="returnMethod()" />
+                    <span class="nav-text" style="font-size: 1.5rem;font-weight: bold;margin-top: 2%;">地址详情</span>
+                </div>
+            </nav>
+            <div class="default-height">
+            </div>
+            <br/>
+            <div id="dataInfo" class="form-group" style="padding-left:5%;">
+                <span name = "id">
+                    <input type="hidden" id = "id">
+                </span>
+                <span name = "userNo">
+                    <input type="hidden" id = "userNo">
+                </span>
+                <div class='my-bottom-line address-margin-bottom'>
+                    <div class="address-margin-bottom">
+                        <span style="color:white;font-size:1.5rem">收货人:</span>
+                        <span name = "userName" style="margin-bottom: 5px">
+                            <input class="my-form-control" id = "userName">
+                        </span>
+                    </div>
+                </div>
+                <br/>
+                <div class='my-bottom-line address-margin-bottom'>
+                    <div class="address-margin-bottom">
+                        <span  style="color:white;font-size:1.5rem">手机号:</span>
+                        <span name = "mobileNo">
+                            <input class="my-form-control" id = "mobileNo">
+                        </span>
+                    </div>
+                </div>
+                <br/>
+                <div class='my-bottom-line address-margin-bottom'>
+                    <div class="address-margin-bottom">
+                        <div  data-toggle="distpicker" class="form-group">
+                            <span name = "province">
+                                <select class="my-select-form-control" id="province"></select>
+                            </span>
+                            <span name = "city">
+                                <select class="my-select-form-control" id="city"></select>
+                            </span>
+                            <span name = "district">
+                                <select class="my-select-form-control" id="district"></select>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class='my-bottom-line address-margin-bottom'>
+                    <div class="address-margin-bottom">
+                        <span  style="color:white;font-size:1.5rem">详细住址:</span>
+                        <span name = "address">
+                            <input class="my-form-control" id = "address" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="default-height">
+            </div>
+            <nav class = "index-footer default-height" >
+                <button onclick="saveOrUpdate()" class="btn btn-outline btn-primary btn-lg btn-block">提交</button>
+            </nav>
+        </div>
+    </body>
+</html>

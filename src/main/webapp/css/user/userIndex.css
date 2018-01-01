@@ -1,0 +1,69 @@
+body {
+    background: #595163;
+    width: 100%;
+    font-size: 2rem;
+    margin-top: 0;
+    margin-left: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow: hidden;
+}
+
+
+.background-div {
+    background: url("/image/background/background-big.png");
+    background-size: 35% 35%;
+    -moz-background-size: 30% 30%;
+    padding-top: 2%;
+}
+
+.center-content {
+    width: 90%;
+    font-size: 2.25rem;
+    font-weight: bold;
+    margin-top: 10%;
+    margin-left: 5%;
+    background: #B1ED0A;
+    border-radius: 1.875rem;
+}
+
+.center-img {
+    height: 100%;
+}
+
+.center-img img {
+    border-radius: 50%;
+    margin-top: 5%;
+    border: 0.625rem solid white;
+}
+
+.center-title {
+    height: 100%;
+}
+
+.center-name {
+    margin-top: 1%;
+    color: #666615;
+}
+
+.center-other {
+    width: 90%;
+    font-size: 1.25rem;
+    margin-top: 0.625rem;
+    margin-left: 5%;
+    background: #B1ED0A;
+    border-radius: 1.875rem;
+}
+
+.text {
+    color: #666615;
+    margin-top: 1%;
+    font-size: 2.25rem;
+    font-weight: bold;
+    float: left;
+    margin-left: 25%;
+}

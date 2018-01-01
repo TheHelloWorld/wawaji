@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lzg.wawaji.dao.GameRoomDao">
+<mapper namespace="com.toiletCat.dao.GameRoomDao">
 
     <!-- 游戏房间表 -->
-    <resultMap type="com.lzg.wawaji.entity.GameRoom" id="gameRoomMap">
+    <resultMap type="com.toiletCat.entity.GameRoom" id="gameRoomMap">
         <!-- 主键id -->
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 游戏房间编号 -->
-        <result property="gameRomeNo" column="game_rome_no" jdbcType="VARCHAR"/>
+        <result property="gameRoomNo" column="game_room_no" jdbcType="VARCHAR"/>
         <!-- 玩具编号 -->
         <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
         <!-- 房间幸运值 -->
         <result property="roomLuckyNum" column="room_lucky_num" jdbcType="INTEGER"/>
         <!-- 房间当前幸运值 -->
         <result property="roomNowLuckyNum" column="room_now_lucky_num" jdbcType="INTEGER"/>
+        <!-- 每次累加幸运值 -->
+        <result property="addLuckyNum" column="add_lucky_num" jdbcType="INTEGER"/>
         <!-- 当前状态 -->
         <result property="currentState" column="current_state" jdbcType="INTEGER"/>
         <!-- 创建时间 -->
@@ -23,15 +25,21 @@
     </resultMap>
 
     <!-- 用户可见游戏房间表 -->
-    <resultMap type="com.lzg.wawaji.bean.UserSeeGameRoom" id="userSeeGameRoomMap">
+    <resultMap type="com.toiletCat.bean.UserSeeGameRoom" id="userSeeGameRoomMap">
         <!-- 主键id -->
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 游戏房间编号 -->
         <result property="gameRoomNo" column="game_room_no" jdbcType="VARCHAR"/>
         <!-- 玩具编号 -->
         <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
+        <!-- 玩具编号 -->
+        <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
         <!-- 娃娃图片地址 -->
         <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
+        <!-- 娃娃房间中图片 -->
+        <result property="toyRoomImg" column="toy_room_img" jdbcType="VARCHAR"/>
+        <!-- 娃娃描述 -->
+        <result property="toyDesc" column="toy_desc" jdbcType="VARCHAR"/>
         <!-- 娃娃当前游戏币数 -->
         <result property="toyNowCoin" column="toy_now_coin" jdbcType="INTEGER"/>
         <!-- 娃娃原本游戏币数 -->
@@ -49,13 +57,14 @@
     </resultMap>
 
     <!-- 添加游戏房间 -->
-    <insert id="addGameRoom" useGeneratedKeys="true" keyProperty="id" parameterType="com.lzg.wawaji.entity.GameRoom">
+    <insert id="addGameRoom" useGeneratedKeys="true" keyProperty="id" parameterType="com.toiletCat.entity.GameRoom">
         insert into game_room
             (
             game_room_no,
             toy_no,
             room_lucky_num,
             room_now_lucky_num,
+            add_lucky_num,
             current_state
             )
         values
@@ -64,6 +73,7 @@
             #{toyNo, jdbcType=VARCHAR},
             #{roomLuckyNum, jdbcType=INTEGER},
             #{roomNowLuckyNum, jdbcType=INTEGER},
+            #{addLuckyNum, jdbcType=INTEGER},
             #{currentState, jdbcType=INTEGER}
             )
     </insert>
@@ -81,6 +91,7 @@
             toy_no,
             room_lucky_num,
             room_now_lucky_num,
+            add_lucky_num,
             current_state
         from game_room
         limit #{startPage}, #{pageSize}
@@ -92,41 +103,39 @@
     </select>
 
     <!-- 根据游戏房间编号获得房间幸运值及当前幸运值 -->
-    <select id="getLuckyNumByGameRoomNo" parameterType="java.lang.String" resultMap="userSeeGameRoomMap">
+    <select id="getLuckyNumByGameRoomNo" parameterType="java.lang.String" resultMap="gameRoomMap">
         select
           room_lucky_num,
-          room_now_lucky_num
+          room_now_lucky_num,
+          add_lucky_num
         from game_room where game_room_no = #{gameRoomNo, jdbcType=VARCHAR}
     </select>
 
     <!-- 分页获得所有用户可见的游戏房间 -->
     <select id="getUserSeeGameRoomListByPage" resultMap="userSeeGameRoomMap">
         select
-            g.id,
             g.game_room_no,
             g.toy_no,
             t.toy_img,
+            t.toy_name,
             t.toy_now_coin,
-            t.toy_origin_coin,
-            g.room_lucky_num,
-            g.room_now_lucky_num,
-            g.current_state
+            t.toy_origin_coin
         from game_room g, toy t where g.toy_no = t.toy_no and g.current_state = 1
         limit #{startPage}, #{pageSize}
     </select>
 
     <!-- 根据游戏房间号码获得用户可见游戏房间 -->
-    <select id="getUserSeeGameRoomListByPage" parameterType="java.lang.String" resultMap="userSeeGameRoomMap">
+    <select id="getUserSeeGameRoomByGameRoomNo" parameterType="java.lang.String" resultMap="userSeeGameRoomMap">
         select
-            g.id,
             g.game_room_no,
-            g.toy_no,
+            t.toy_no,
             t.toy_img,
+            t.toy_room_img,
+            t.toy_name,
+            t.toy_desc,
             t.toy_now_coin,
-            t.toy_origin_coin,
             g.room_lucky_num,
-            g.room_now_lucky_num,
-            g.current_state
+            g.room_now_lucky_num
         from game_room g, toy t where g.toy_no = t.toy_no and g.game_room_no = #{gameRoomNo, jdbcType=VARCHAR}
     </select>
 
@@ -134,6 +143,13 @@
     <select id="getCoinByGameRoomNo" parameterType="java.lang.String" resultType="java.lang.Integer">
         select
           t.toy_now_coin
+        from game_room g, toy t where g.toy_no = t.toy_no and g.game_room_no = #{gameRoomNo, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据游戏房间编号获得玩具名称 -->
+    <select id="getToyNameByGameRoomNo" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+          t.toy_name
         from game_room g, toy t where g.toy_no = t.toy_no and g.game_room_no = #{gameRoomNo, jdbcType=VARCHAR}
     </select>
 
@@ -145,25 +161,27 @@
             toy_no,
             room_lucky_num,
             room_now_lucky_num,
+            add_lucky_num,
             current_state
         from game_room
         where game_room_no = #{gameRoomNo, jdbcType=VARCHAR} and id = #{id}
     </select>
 
     <!-- 根据游戏房间编号和id修改游戏房间 -->
-    <update id="updateGameRoomByGameRoomNoAndId" parameterType="com.lzg.wawaji.entity.GameRoom">
+    <update id="updateGameRoomByGameRoomNoAndId" parameterType="com.toiletCat.entity.GameRoom">
         update game_room set
             toy_no = #{toyNo, jdbcType=VARCHAR},
             room_lucky_num = #{roomLuckyNum, jdbcType=INTEGER},
             room_now_lucky_num = #{roomNowLuckyNum, jdbcType=INTEGER},
+            add_lucky_num = #{addLuckyNum, jdbcType=INTEGER},
             current_state = #{currentState, jdbcType=INTEGER}
         where id = #{id} and game_room_no = #{gameRoomNo}
     </update>
 
     <!-- 累加游戏房间幸运值 -->
-    <update id="addRoomLuckyNumByGameRoomNo">
+    <update id="addRoomLuckyNumByGameRoomNo" parameterType="java.lang.String">
         update game_room set
-        room_lucky_num = room_lucky_num + #{addNum, jdbcType=INTEGER}
+          room_now_lucky_num = room_now_lucky_num + add_lucky_num
         where game_room_no = #{gameRoomNo, jdbcType=VARCHAR}
     </update>
 

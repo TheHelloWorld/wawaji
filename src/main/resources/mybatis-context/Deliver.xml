@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lzg.wawaji.dao.DeliverDao">
+<mapper namespace="com.toiletCat.dao.DeliverDao">
 
     <!-- 用户地址表 -->
-    <resultMap type="com.lzg.wawaji.entity.Deliver" id="deliverMap">
+    <resultMap type="com.toiletCat.entity.Deliver" id="deliverMap">
         <!-- 主键id -->
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 用户编号 -->
@@ -14,6 +14,8 @@
         <result property="mobileNo" column="mobile_no" jdbcType="VARCHAR"/>
         <!-- 地址 -->
         <result property="address" column="address" jdbcType="VARCHAR"/>
+        <!-- 娃娃信息 -->
+        <result property="toyNameArray" column="toy_name_array" jdbcType="VARCHAR"/>
         <!-- 快递单号 -->
         <result property="deliverNo" column="deliver_no" jdbcType="VARCHAR"/>
         <!-- 快递公司 -->
@@ -29,13 +31,14 @@
     </resultMap>
 
     <!-- 添加发货记录 -->
-    <insert id="addDeliver" useGeneratedKeys="true" keyProperty="id" parameterType="com.lzg.wawaji.entity.Deliver">
+    <insert id="addDeliver" useGeneratedKeys="true" keyProperty="id" parameterType="com.toiletCat.entity.Deliver">
         insert into deliver
             (
             user_no,
             user_name,
             mobile_no,
             address,
+            toy_name_array,
             deliver_no,
             company,
             deliver_msg,
@@ -47,6 +50,7 @@
             #{userName, jdbcType=VARCHAR},
             #{mobileNo, jdbcType=VARCHAR},
             #{address, jdbcType=VARCHAR},
+            #{toyNameArray, jdbcType=VARCHAR},
             #{deliverNo, jdbcType=VARCHAR},
             #{company, jdbcType=VARCHAR},
             #{deliverMsg, jdbcType=VARCHAR},
@@ -72,6 +76,7 @@
             user_name,
             mobile_no,
             address,
+            toy_name_array,
             deliver_no,
             company,
             deliver_msg,
@@ -88,6 +93,7 @@
             user_no,
             user_name,
             mobile_no,
+            toy_name_array,
             address,
             deliver_no,
             company,
@@ -114,7 +120,7 @@
     </select>
 
     <!-- 根据id,用户编号修改用户地址及状态 -->
-    <update id="updateDeliverMsgByIdAndUserNo" parameterType="com.lzg.wawaji.entity.Deliver">
+    <update id="updateDeliverMsgByIdAndUserNo" parameterType="com.toiletCat.entity.Deliver">
         update deliver set
             deliver_no = #{deliverNo, jdbcType=VARCHAR},
             company = #{company, jdbcType=VARCHAR},

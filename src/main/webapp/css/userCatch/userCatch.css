@@ -1,0 +1,40 @@
+.catch-toy-row {
+    float: left;
+    width: 100%;
+    background: gainsboro;
+    margin-top: 2%;
+    border-radius: 1.875rem;
+}
+
+.catch-toy-div {
+    width: 100%;
+    float: left;
+    height: 100%;
+    margin-left: 5%;
+}
+
+.catch-toy-img {
+    float: left;
+    width: 30%;
+    height: 100%;
+    border-radius: 1.875rem;
+    border: 0.3125rem solid #666615;
+}
+
+.catch-toy-img img {
+    border-radius: 1.875rem;
+    float: left;
+    width: 100%;
+    height: 100%;
+}
+
+.catch-toy-time {
+    float: left;
+    margin-left: 25%;
+    margin-top: 8%;
+}
+
+.catch-toy-result {
+    margin-top: 13%;
+
+}

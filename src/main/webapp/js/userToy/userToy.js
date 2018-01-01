@@ -1,24 +1,40 @@
-// 每页数据数
-var userNo = "";
 
 var nowPage = 1;
 
+// 类型
+var type= "";
+
 $(function() {
-    // 获得用户编号
-    userNo = getQueryString("userNo");
+
+    type = getQueryString("type");
+
+    // 用户编号
+    checkSession();
 
     // 获得总页数和总数量
     getTotalCountAndPageSizeByUserNo();
     
     // 获得当前用户所有战利品
-    getAllUserToyByUserNo();
+    getAllUserToyByUserNo(nowPage);
+
+    var indexBodyDivHeight = $(".index-body-div").height();
+
+    var addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+
+    $(".index-body-div").scroll(function(){
+
+        if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
+            nextPage();
+            addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+        }
+    });
 
 });
 
 // 获得总页数和总数量
 function getTotalCountAndPageSizeByUserNo() {
     $.ajax({
-        url:"/wawaji/userToy/countUserToyByUserNo.action",
+        url:"/toiletCat/userToy/countUserToyByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -31,7 +47,7 @@ function getTotalCountAndPageSizeByUserNo() {
             }
 
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -49,19 +65,19 @@ function getTotalCountAndPageSizeByUserNo() {
 
             } else {
 
-                totalPage = parseInt(totalCount / pageSize);
+                totalPage = parseInt(totalCount / pageSize) +1;
             }
         }
     });
 }
 
 // 获得当前用户所有战利品
-function getAllUserToyByUserNo() {
+function getAllUserToyByUserNo(nowPage) {
 
     var startPage = (nowPage -1 ) * pageSize;
 
     $.ajax({
-        url:"/wawaji/userToy/getUserToyListByUserNo.action",
+        url:"/toiletCat/userToy/getUserToyListByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -77,7 +93,7 @@ function getAllUserToyByUserNo() {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -87,8 +103,7 @@ function getAllUserToyByUserNo() {
             for(var i = 0; i<list.length; i++) {
 
                 if(i % 2 == 0) {
-                    str += "<div class='row' style='margin-bottom: 5px'>";
-
+                    str += "<div class='row' style='margin-bottom: 2%'>";
                 }
 
                 if(i % 2 == 0) {
@@ -102,15 +117,15 @@ function getAllUserToyByUserNo() {
                 str += "            <div class='toy-img index-img'>"
                 str += "                <img height='100px' width=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
                 str += "            </div>";
-                str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
+                str += "            <div style='margin-bottom: 1%'><span>" + list[i]["toyName"] + "</span></div>";
                 var newDate = new Date();
                 newDate.setTime(list[i]["createTime"]);
-                str += "            <div style='margin-bottom: 2px'><span>" +newDate.format('yyyy-MM-dd h:m') + "</span></div>";
+                str += "            <div style='margin-bottom: 1%'><span>" +newDate.format('yyyy-MM-dd h:m') + "</span></div>";
                 str += "        </div>";
                 str += "    </div>";
                 str += "</div>";
 
-                if(i % 2 != 0) {
+                if(i % 2 != 0 || i == list.length - 1) {
                     str += "</div>";
                 }
             }
@@ -122,5 +137,27 @@ function getAllUserToyByUserNo() {
 // 修改元素
 function toUserToyDetail(id) {
 
-    window.location.href = "/wawaji/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
+    window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
+}
+
+function returnMethod() {
+    // 根据类型返回不同的首页
+    if(type= "gameRoom") {
+
+        window.location.href = "/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+userNo;
+
+    } else if(type= "machineRoom"){
+
+        window.location.href = "/toiletCat/machineRoom/machineRoom.html?nowType=login&&userNo="+userNo;
+
+    }
+}
+
+function nextPage() {
+    nowPage ++;
+    if(nowPage <= totalPage) {
+        getAllUserToyByUserNo(nowPage);
+    } else {
+        nowPage = totalPage;
+    }
 }
