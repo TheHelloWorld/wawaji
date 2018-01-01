@@ -21,7 +21,7 @@ $(function() {
 // 判断当前是否可以继续添加地址
 function judeUserAddress(userNo) {
     $.ajax({
-        url:"/toiletCat/userAddress/judgeUserAddressIsMaxNum.action",
+        url:"/toiletCat/api/userAddress/judgeUserAddressIsMaxNum.action",
         type:"POST",
         async:false,
         data:{
@@ -52,7 +52,7 @@ function judeUserAddress(userNo) {
 function getAllUserAddressByUserNo(userNo) {
 
     $.ajax({
-        url:"/toiletCat/userAddress/getUserAddressListByUserNo.action",
+        url:"/toiletCat/api/userAddress/getUserAddressListByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -130,7 +130,7 @@ function deleteUserAddress(id) {
     }
 
     $.ajax({
-        url:"/toiletCat/userAddress/deleteUserAddressByIdAndUserNo.action",
+        url:"/toiletCat/api/userAddress/deleteUserAddressByIdAndUserNo.action",
         type:"POST",
         async:false,
         data:{

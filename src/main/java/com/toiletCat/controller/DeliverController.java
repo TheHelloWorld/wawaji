@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@RequestMapping("/toiletCat/deliver")
+@RequestMapping("/toiletCat/api/deliver")
 @Controller
 public class DeliverController {
 

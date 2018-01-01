@@ -13,7 +13,7 @@ var loginUrl = "/toiletCat/user/login.html?from=gameIndex&type=gameRoom&checkTyp
 
 $(function() {
 
-    var url = "/toiletCat/gameRoom/getUserSeeGameRoomTotalCountAndPageSize.action";
+    var url = "/toiletCat/api/gameRoom/getUserSeeGameRoomTotalCountAndPageSize.action";
 
     // 获取banner图
     getBannerByType(bannerType);
@@ -44,7 +44,7 @@ $(function() {
 function userAutoLogin() {
 
     $.ajax({
-        url:"/toiletCat/user/autoLogin.action",
+        url:"/toiletCat/api/user/autoLogin.action",
         type:"POST",
         async:false,
         success:function(data) {
@@ -108,7 +108,7 @@ function getUserSeeGameRoomListByPage(nowPage) {
     loading += "    </div>";
     $("#main").append(loading);
     $.ajax({
-        url:"/toiletCat/gameRoom/getUserSeeGameRoomListByPage.action",
+        url:"/toiletCat/api/gameRoom/getUserSeeGameRoomListByPage.action",
         type:"POST",
         async:false,
         data:{

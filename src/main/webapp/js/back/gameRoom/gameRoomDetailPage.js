@@ -13,7 +13,7 @@ $(function(){
 
         var gameRoomNo = getQueryString("gameRoomNo");
 
-        var getUrl = "/toiletCat/gameRoom/getGameRoomByGameRoomNoAndId.action";
+        var getUrl = "/toiletCat/api/gameRoom/getGameRoomByGameRoomNoAndId.action";
         getDataByInfo(getUrl, id, gameRoomNo);
     }
 });
@@ -22,10 +22,10 @@ $(function(){
 function updateOrSaveGameRoom() {
 
     if(getQueryString("type") == "add") {
-        var saveUrl = "/toiletCat/gameRoom/addGameRoom.action";
+        var saveUrl = "/toiletCat/api/gameRoom/addGameRoom.action";
         saveThis(saveUrl, returnUrl);
     } else {
-        var updateUrl = "/toiletCat/gameRoom/updateGameRoomByGameRoomNoAndId.action";
+        var updateUrl = "/toiletCat/api/gameRoom/updateGameRoomByGameRoomNoAndId.action";
         updateThis(updateUrl, returnUrl);
     }
 

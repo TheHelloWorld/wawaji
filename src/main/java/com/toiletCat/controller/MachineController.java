@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@RequestMapping("/toiletCat/machine")
+@RequestMapping("/toiletCat/api/machine")
 @Controller
 public class MachineController {
 

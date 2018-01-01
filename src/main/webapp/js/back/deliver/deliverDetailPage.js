@@ -5,13 +5,13 @@ $(function(){
     // 判断当前类型为修改
     var id = getQueryString("id");
     var userNo = getQueryString("userNo");
-    var getUrl = "/toiletCat/deliver/getDeliverByIdAndUserNo.action";
+    var getUrl = "/toiletCat/api/deliver/getDeliverByIdAndUserNo.action";
     getDataByInfo(getUrl, id, userNo);
 });
 
 // 修改
 function updateDeliver() {
-    var updateUrl = "/toiletCat/deliver/updateDeliverMsgByIdAndUserNo.action";
+    var updateUrl = "/toiletCat/api/deliver/updateDeliverMsgByIdAndUserNo.action";
     updateThis(updateUrl, returnUtl);
 }
 

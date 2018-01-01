@@ -3,7 +3,7 @@ var pageSize = 0;
 
 var nowPage = 1;
 
-var showUrl = "/toiletCat/machine/getAllMachineByPage.action";
+var showUrl = "/toiletCat/api/machine/getAllMachineByPage.action";
 
 var width = $(window).width() / 2 - 20;
 
@@ -12,7 +12,7 @@ var userNo = "";
 var bannerType = 0;
 
 $(function() {
-    var url = "/toiletCat/machine/getMachineTotalCountAndPageSize.action";
+    var url = "/toiletCat/api/machine/getMachineTotalCountAndPageSize.action";
 
     // 获取banner图
     getBannerByType(bannerType);
@@ -30,7 +30,7 @@ $(function() {
 // 用户自动登陆
 function userAutoLogin() {
     $.ajax({
-        url:"/toiletCat/user/autoLogin.action",
+        url:"/toiletCat/api/user/autoLogin.action",
         type:"POST",
         async:false,
         success:function(data) {
@@ -67,7 +67,7 @@ function userAutoLogin() {
 // 用户登陆或注册
 function userLoginOrRegister() {
     $.ajax({
-        url:"/toiletCat/user/registerOrLoginUser.action",
+        url:"/toiletCat/api/user/registerOrLoginUser.action",
         type:"POST",
         async:false,
         data:{
@@ -108,7 +108,7 @@ function getAllMachineByPage(nowPage) {
     var startPage = (nowPage - 1) * pageSize;
 
     $.ajax({
-        url:"/toiletCat/machine/getUserAllMachineByPage.action",
+        url:"/toiletCat/api/machine/getUserAllMachineByPage.action",
         type:"POST",
         async:false,
         data:{

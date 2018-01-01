@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequestMapping("/toiletCat/userToy")
+@RequestMapping("/toiletCat/api/userToy")
 @Controller
 public class UserToyController {
 

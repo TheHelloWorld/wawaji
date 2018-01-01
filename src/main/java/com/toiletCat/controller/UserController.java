@@ -19,7 +19,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@RequestMapping("/toiletCat/user")
+@RequestMapping("/toiletCat/api/user")
 @Controller
 public class UserController {
 

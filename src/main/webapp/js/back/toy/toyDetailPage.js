@@ -6,7 +6,7 @@ $(function(){
 
         var id = getQueryString("id");
         var toyNo = getQueryString("toyNo");
-        var getUrl = "/toiletCat/toy/getToyByIdAndToyNo.action";
+        var getUrl = "/toiletCat/api/toy/getToyByIdAndToyNo.action";
         getDataByInfo(getUrl, id, toyNo);
     }
 });
@@ -15,10 +15,10 @@ $(function(){
 function updateOrSaveToy() {
 
     if(getQueryString("type") == "add") {
-        var saveUrl = "/toiletCat/toy/addToy.action";
+        var saveUrl = "/toiletCat/api/toy/addToy.action";
         saveThis(saveUrl, returnUrl);
     } else {
-        var updateUrl = "/toiletCat/toy/updateToyByIdAndToyNo.action";
+        var updateUrl = "/toiletCat/api/toy/updateToyByIdAndToyNo.action";
         updateThis(updateUrl, returnUrl);
     }
 }

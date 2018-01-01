@@ -787,7 +787,7 @@ function checkMobileNo(id) {
 
 function getUserInfoByUserNo(userNo) {
     $.ajax({
-        url:"/toiletCat/user/getUserByUserNo.action",
+        url:"/toiletCat/api/user/getUserByUserNo.action",
         type:"POST",
         async:false,
 		data:{

@@ -109,10 +109,9 @@ public class RechargeUtil {
      * 获得支付请求url
      * @param orderNo 我方订单号
      * @param money 支付金额
-     * @param returnUrl 返回url
      * @return
      */
-    public static String getRequestUrl(String orderNo, String money, String returnUrl) {
+    public static String getRequestUrl(String orderNo, String money) {
 
         PropertiesUtil propertiesUtil = new PropertiesUtil("system");
 
@@ -121,8 +120,8 @@ public class RechargeUtil {
         json.put("pid", propertiesUtil.getProperty("recharge_pid"));
         json.put("type", propertiesUtil.getProperty("recharge_type"));
         json.put("out_trade_no", orderNo);
-        json.put("notify_url", propertiesUtil.getProperty("notify_url"));
-        json.put("return_url", returnUrl);
+        json.put("notify_url", propertiesUtil.getProperty("recharge_notify_url"));
+        json.put("return_url", propertiesUtil.getProperty("recharge_return_url"));
         json.put("name", propertiesUtil.getProperty("recharge_name"));
         json.put("money", money);
         json.put("sitename", propertiesUtil.getProperty("recharge_sitename"));

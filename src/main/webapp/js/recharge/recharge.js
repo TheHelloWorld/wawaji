@@ -138,7 +138,7 @@ function closeRecharge() {
 // 充值操作
 function rechargeThis(amount) {
     $.ajax({
-        url:"/toiletCat/user/userRecharge.action",
+        url:"/toiletCat/api/recharge/userRecharge.action",
         type:"POST",
         async:false,
         data:{

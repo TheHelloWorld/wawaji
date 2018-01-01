@@ -783,7 +783,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 }
 
                 // 获得请求url并返回
-                got(RechargeUtil.getRequestUrl(orderNo, String.valueOf(amount), ""));
+                got(RechargeUtil.getRequestUrl(orderNo, String.valueOf(amount)));
 
             }
         }, "userRecharge", json.toJSONString());

@@ -6,11 +6,11 @@ var step = 5;
 var nowPage = 1;
 
 // 展示url
-var showUrl = "/toiletCat/machine/getAllMachineByPage.action";
+var showUrl = "/toiletCat/api/machine/getAllMachineByPage.action";
 
 $(function(){
     // 获得总页数和总数量
-    var countAndPageSizeUrl = "/toiletCat/machine/getMachineTotalCountAndPageSize.action";
+    var countAndPageSizeUrl = "/toiletCat/api/machine/getMachineTotalCountAndPageSize.action";
     getTotalCountAndPageSize(countAndPageSizeUrl);
 
     // 分页获得所有记录
@@ -53,7 +53,7 @@ function deleteThis(dataParam) {
     var machineNo = dataParam["machineNo"];
 
     $.ajax({
-        url:"/toiletCat/machine/deleteMachineByIdAndToyNo.action",
+        url:"/toiletCat/api/machine/deleteMachineByIdAndToyNo.action",
         type:"POST",
         async:false,
         data:{

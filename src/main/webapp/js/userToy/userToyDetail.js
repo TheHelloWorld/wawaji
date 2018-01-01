@@ -51,7 +51,7 @@ $(function() {
 function getUserToyByUserNoAndId() {
 
     $.ajax({
-        url:"/toiletCat/userToy/getUserToyByUserNoAndId.action",
+        url:"/toiletCat/api/userToy/getUserToyByUserNoAndId.action",
         type:"POST",
         async:false,
         data:{
@@ -133,7 +133,7 @@ function getDeliverByIdAndUserNo(id) {
     var deliverStr = "";
 
     $.ajax({
-        url:"/toiletCat/deliver/getDeliverByIdAndUserNo.action",
+        url:"/toiletCat/api/deliver/getDeliverByIdAndUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -196,7 +196,7 @@ function choiceDeliver() {
 function getAllUserAddressByUserNo(userNo) {
 
     $.ajax({
-        url:"/toiletCat/userAddress/getUserAddressListByUserNo.action",
+        url:"/toiletCat/api/userAddress/getUserAddressListByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -301,7 +301,7 @@ function reChoiceAddress() {
 function getAllUnHandleUserToyByUserNo() {
 
     $.ajax({
-        url:"/toiletCat/userToy/getAllUnHandleUserToyByUserNo.action",
+        url:"/toiletCat/api/userToy/getAllUnHandleUserToyByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -429,7 +429,7 @@ function updateChoiceType() {
     var userAddressStr = JSON.stringify(userAddressJson);
 
     $.ajax({
-        url:"/toiletCat/userToy/updateChoiceTypeByIdAndUserNo.action",
+        url:"/toiletCat/api/userToy/updateChoiceTypeByIdAndUserNo.action",
         type:"POST",
         async:false,
         data:{

@@ -18,7 +18,7 @@ $(function() {
 // 获得总页数和总数量
 function getTotalCountAndPageSizeByUserNo() {
     $.ajax({
-        url:"/toiletCat/userSpendRecord/countUserSpendRecordByUserNo.action",
+        url:"/toiletCat/api/userSpendRecord/countUserSpendRecordByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -61,7 +61,7 @@ function getAllUserSpendRecordByUserNo() {
     var startPage = (nowPage -1 ) * pageSize;
 
     $.ajax({
-        url:"/toiletCat/userSpendRecord/getUserSpendRecordByUserNo.action",
+        url:"/toiletCat/api/userSpendRecord/getUserSpendRecordByUserNo.action",
         type:"POST",
         async:false,
         data:{

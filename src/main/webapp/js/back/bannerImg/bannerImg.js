@@ -6,11 +6,11 @@ var step = 5;
 var nowPage = 1;
 
 // 展示url
-var showUrl = "/toiletCat/bannerImg/getBannerImgByPage.action";
+var showUrl = "/toiletCat/api/bannerImg/getBannerImgByPage.action";
 
 $(function() {
     // 获得总页数和总数量
-    var countAndPageSizeUrl = "/toiletCat/bannerImg/getBannerImgTotalCountAndPageSize.action";
+    var countAndPageSizeUrl = "/toiletCat/api/bannerImg/getBannerImgTotalCountAndPageSize.action";
     getTotalCountAndPageSize(countAndPageSizeUrl);
 
     // 分页获得所有记录

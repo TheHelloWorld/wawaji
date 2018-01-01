@@ -181,7 +181,7 @@ function sendTextWaitTime(o) {
 function sendMobileText() {
 
     $.ajax({
-        url:"/toiletCat/user/sendMobileVerificationCode.action",
+        url:"/toiletCat/api/user/sendMobileVerificationCode.action",
         type:"POST",
         data:{
             mobileNo:$("#mobile").val()
@@ -205,7 +205,7 @@ function sendMobileText() {
 function loginOrRegister() {
 
     $.ajax({
-        url:"/toiletCat/user/registerOrLoginUser.action",
+        url:"/toiletCat/api/user/registerOrLoginUser.action",
         type:"POST",
         async:false,
         data:{

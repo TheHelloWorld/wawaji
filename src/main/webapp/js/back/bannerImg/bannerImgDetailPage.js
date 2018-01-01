@@ -5,7 +5,7 @@ $(function(){
     if(getQueryString("type") == "update") {
 
         var id = getQueryString("id");
-        var getUrl = "/toiletCat/bannerImg/getBannerImgById.action";
+        var getUrl = "/toiletCat/api/bannerImg/getBannerImgById.action";
         getDataByInfo(getUrl, id, "");
     }
 });
@@ -14,10 +14,10 @@ $(function(){
 function updateOrSaveBannerImg() {
 
     if(getQueryString("type") == "add") {
-        var saveUrl = "/toiletCat/bannerImg/addBannerImg.action";
+        var saveUrl = "/toiletCat/api/bannerImg/addBannerImg.action";
         saveThis(saveUrl, returnUrl);
     } else {
-        var updateUrl = "/toiletCat/bannerImg/updateBannerImg.action";
+        var updateUrl = "/toiletCat/api/bannerImg/updateBannerImg.action";
         updateThis(updateUrl, returnUrl);
     }
 }
