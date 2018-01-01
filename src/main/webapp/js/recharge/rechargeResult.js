@@ -69,3 +69,14 @@ function getRechargeResult() {
         }
     });
 }
+
+function returnLastPage() {
+
+    var lastPageUrl = sessionStorage["toiletCatLastPage"];
+
+    if(lastPageUrl == undefined) {
+        lastPageUrl = "/toiletCat/gameRoom/gameRoom.html";
+    }
+
+    window.location.href = lastPageUrl;
+}

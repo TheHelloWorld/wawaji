@@ -158,6 +158,9 @@ function rechargeThis(amount) {
                 return;
             }
 
+            // 将当前url放入前端缓存
+            sessionStorage["toiletCatLastPage"] = window.location.href;
+
             // 跳转到充值页面
             window.location.href = data["result"];
 
