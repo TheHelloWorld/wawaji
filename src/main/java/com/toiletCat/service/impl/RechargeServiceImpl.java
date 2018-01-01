@@ -55,6 +55,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 }
 
                 Long money;
+                // 转换钱
                 try {
                     money = Long.valueOf(rechargeResult.getMoney());
                 } catch (Exception e) {
