@@ -856,7 +856,7 @@ function toiletCatMsg(msg, method) {
     str += "			</div>";
     str += "		</div>";
 	$("body").append(str);
-	$(".toiletCat-msg").height($("body").height());
+	$(".toiletCat-msg").height($(window).height());
 }
 
 // 关闭提示框

@@ -2,13 +2,12 @@ var flag = true;
 
 $(function () {
 
-    $("#recharge-result").append("<img src='/image/loading.gif'>");
+    $("#recharge-result").append("<img style='margin-top: 30%;' width='100%' src='/image/recharge-result-loading.gif'>");
 
     setTimeout(
         function() {
             getRechargeResult()
         }, 1000);
-
 });
 
 // 获得充值结果
