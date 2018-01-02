@@ -108,7 +108,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 TradeStatus tradeStatus = TradeStatus.SUCCESS;
 
                 // 判断结果是否成功
-                if(!BaseConstant.RECHARGE_RESULT_TRADE_STATUS.equals(tradeStatus)) {
+                if(!BaseConstant.RECHARGE_RESULT_TRADE_STATUS.equals(rechargeResult.getTradeStatus())) {
                     tradeStatus = TradeStatus.FAIL;
                 }
 
