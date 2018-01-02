@@ -82,7 +82,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     user.setUserCoin(defaultUserCoin);
 
                     String defaultUserImg = systemProperties.getProperty("user_default_img")
-                            + "defaultHead" + RandomIntUtil.getRandomNum(0) + ".png";
+                            + "defaultHead" + RandomIntUtil.getRandomNumByHighBound(5) + ".png";
 
                     // 用户头像
                     user.setUserImg(defaultUserImg);
