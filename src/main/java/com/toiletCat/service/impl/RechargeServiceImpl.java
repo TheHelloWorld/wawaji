@@ -104,13 +104,23 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
+                // 防止重复请求 获得充值结果
+                CommonResult<Integer> commonRechargeResult = userRechargeRecordService.
+                        getTradeStatusByOrderNo(userNo, orderNo);
+
+                // 若已有终态则不执行后续操作
+                if(commonRechargeResult.getValue() != TradeStatus.INIT.getStatus()) {
+                    logger.info("getRechargeResultByParam request duplicate param:"+ rechargeResult);
+                    return;
+                }
+
                 // 交易结果
                 String resultTradeStatus = rechargeResult.getTradeStatus();
 
                 TradeStatus tradeStatus = TradeStatus.SUCCESS;
 
                 // 判断结果是否成功
-                if(!BaseConstant.RECHARGE_RESULT_TRADE_STATUS.equals(rechargeResult.getTradeStatus())) {
+                if(!BaseConstant.RECHARGE_RESULT_TRADE_STATUS.equals(resultTradeStatus)) {
                     tradeStatus = TradeStatus.FAIL;
                 }
 
