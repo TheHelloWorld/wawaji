@@ -70,7 +70,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
-                Integer coin = MoneyForCoin.getValueMapByKey(money);
+                Integer coin = MoneyForCoin.getValueMapByKey(Double.valueOf(rechargeResult.getMoney()));
 
                 if(coin == null) {
                     logger.warn("getRechargeResultByParam money is wrong param:"+ rechargeResult);

@@ -691,7 +691,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      * @return
      */
     @Override
-    public CommonResult<String> userRecharge(final String userNo, final Long amount, final String rechargeType) {
+    public CommonResult<String> userRecharge(final String userNo, final Double amount, final String rechargeType) {
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
         json.put("amount", amount);
