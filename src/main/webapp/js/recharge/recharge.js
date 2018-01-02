@@ -22,7 +22,7 @@ function recharge() {
     str += "		</div>";
     str += "	</div>";
     str += "	<div style='float: left;' >";
-    str += "	<div class='recharge-block' ontouchend='rechargeThis(10.00)' >";
+    str += "	<div class='recharge-block' ontouchend='rechargeThis(0.01)' >";
     str += "		<div class='recharge-coin' >";
     str += "			<img src='/image/background/coin.ico' width=100% height=100% />";
     str += "		</div>";
@@ -138,7 +138,7 @@ function closeRecharge() {
 // 充值操作
 function rechargeThis(amount) {
     $.ajax({
-        url:"/toiletCat/api/recharge/userRecharge.action",
+        url:"/toiletCat/api/user/userRecharge.action",
         type:"POST",
         async:false,
         data:{
