@@ -141,6 +141,8 @@ public class RechargeUtil {
         request.append(json.getString("type"));
         request.append("&out_trade_no=");
         request.append(json.getString("out_trade_no"));
+        request.append("&notify_url=");
+        request.append(json.getString("notify_url"));
         request.append("&return_url=");
         request.append(json.getString("return_url"));
         request.append("&name=");
