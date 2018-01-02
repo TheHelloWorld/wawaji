@@ -11,6 +11,7 @@ import com.toiletCat.enums.TradeStatus;
 import com.toiletCat.service.RechargeService;
 import com.toiletCat.service.UserRechargeRecordService;
 import com.toiletCat.service.UserSpendRecordService;
+import com.toiletCat.utils.PropertiesUtil;
 import com.toiletCat.utils.RechargeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -219,7 +220,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
     private Boolean checkSign(RechargeResult rechargeResult) {
         JSONObject json = new JSONObject();
 
-        json.put("pid", rechargeResult.getpId());
+        PropertiesUtil propertiesUtil = new PropertiesUtil("system");
+
+        json.put("pid", propertiesUtil.getProperty("recharge_pid"));
         json.put("money", rechargeResult.getMoney());
         json.put("out_trade_no", rechargeResult.getOrderNo());
         json.put("name", rechargeResult.getName());

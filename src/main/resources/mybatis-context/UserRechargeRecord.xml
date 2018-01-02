@@ -115,7 +115,7 @@
     </update>
 
     <!-- 根据用户编号和订单号获得交易结果 -->
-    <select id="getTradeStatusByOrderNo" resultType="java.math.BigDecimal">
+    <select id="getTradeStatusByOrderNo" resultType="java.lang.Integer">
         select trade_status from user_recharge_record where order_no = #{orderNo} and user_no = #{userNo}
     </select>
 

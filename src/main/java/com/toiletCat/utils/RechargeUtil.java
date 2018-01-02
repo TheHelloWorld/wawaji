@@ -66,14 +66,16 @@ public class RechargeUtil {
 
         TreeMap<String, String> treeMap = new TreeMap<>();
 
-        treeMap.put("pid","");
-        treeMap.put("type","");
-        treeMap.put("out_trade_no","");
-        treeMap.put("notify_url","");
-        treeMap.put("return_url","");
-        treeMap.put("name","");
-        treeMap.put("money","");
-        treeMap.put("sitename","");
+        treeMap.put("pid", "");
+        treeMap.put("type", "");
+        treeMap.put("out_trade_no", "");
+        treeMap.put("trade_no", "");
+        treeMap.put("notify_url", "");
+        treeMap.put("return_url", "");
+        treeMap.put("name", "");
+        treeMap.put("money", "");
+        treeMap.put("sitename", "");
+        treeMap.put("trade_status", "");
 
         for(String key : treeMap.keySet()) {
             if(StringUtils.isBlank(json.getString(key))) {
