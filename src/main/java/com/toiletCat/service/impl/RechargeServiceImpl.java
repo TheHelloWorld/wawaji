@@ -78,6 +78,8 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
+                logger.info("getRechargeResultByParam userNo:" + userNo + ", coin:" + coin);
+
                 // 我方订单号
                 String orderNo = rechargeResult.getOrderNo();
 
