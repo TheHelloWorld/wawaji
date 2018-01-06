@@ -56,7 +56,6 @@ function userAutoLogin() {
             if(typeof(result) == "string") {
                 result = eval("("+result+")");
             }
-            console.info(result);
             userNo = result["userNo"];
 
         }
@@ -131,17 +130,12 @@ function getAllMachineByPage(nowPage) {
             var str = "";
 
             for(var i = 0; i<list.length; i++) {
+
                 if(i % 2 == 0) {
                     str += "<div class='row' style='margin-bottom: 5px'>";
                 }
 
-                if(i % 2 == 0) {
-                    str += "<div class='machine-col-xs-6-left' >";
-                } else if(i % 2 != 0) {
-                    str += "<div class='machine-col-xs-6-right' >";
-                }
-
-
+                str += "<div class='toiletCat-col-xs-6' onclick='toGamePage("+list[i]["gameRoomNo"]+")'>"
                 str += "    <div class='machine-panel panel-info'>";
                 str += "        <div class='panel-body'>";
                 str += "            <div class='toy-img index-img'>"
@@ -173,10 +167,6 @@ function toIndex() {
     window.location.href="/toiletCat/index/machineRoom.html";
 }
 
-function clickBanner() {
-    window.location.href="/toiletCat/index/machineRoom.html";
-}
-
 function getPage(page) {
     nowPage = getPageByNum(nowPage, page, totalPage, step);
     getAllByPage(showUrl, nowPage);
@@ -186,7 +176,6 @@ function getPage(page) {
 function nextPage() {
     nowPage = nextPageNum(nowPage, totalPage, step);
     getAllByPage(showUrl, nowPage);
-
 }
 
 //上一页
