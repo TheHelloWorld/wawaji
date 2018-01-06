@@ -58,7 +58,7 @@
     left:0;
     top:0;
     z-index:99;
-    background:#fe8820;
+    background:#ff3968;
     border: 0.0625rem solid saddlebrown;
 }
 
@@ -67,7 +67,7 @@
     left:0;
     top:0;
     z-index:99;
-    background:#fe8820;
+    background:#ff3968;
 }
 
 .index-footer {
@@ -75,7 +75,7 @@
     left:0;
     bottom:0;
     z-index:99;
-    background:#fe8820;
+    background:#ff3968;
     border: 0.0625rem solid saddlebrown;
 }
 
@@ -108,17 +108,21 @@
     width:100%;
 }
 
+.default-height-footer {
+    height: 10%;
+    width:100%;
+}
+
 .machine-panel {
     margin: 0.3125rem 0.3125rem;
-    background-color: #fff;
-    border: 0.0625rem solid gray;
     border-radius: 1.125rem;
     -webkit-box-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, .05);
     box-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, .05)
 }
 
 .toy-img {
-    border: 0.0625rem solid gray;
+    border-top: 0.1875rem solid #faa44d;
+    border-left: 0.3125rem solid #faa44d;
 }
 
 .machine-col-xs-6 {
@@ -129,18 +133,11 @@
     width: 50%
 }
 
-.machine-col-xs-6-left {
+.toiletCat-col-xs-6 {
+    background: url("/image/background/room-background.png");
+    background-size: 100% 100%;
     position: relative;
     min-height: 0.0625rem;
-    padding-left: 5%;
-    float: left;
-    width: 50%
-}
-
-.machine-col-xs-6-right {
-    position: relative;
-    min-height: 0.0625rem;
-    padding-right: 5%;
     float: left;
     width: 50%
 }
@@ -151,7 +148,7 @@
     margin-left: 8%;
     margin-right: 15%;
     height: 3.75rem;
-    margin-inside: 5%;
+    bottom: 0;
 }
 
 .footer-button-diff {
@@ -162,7 +159,7 @@
 .footer-img {
     z-index: 999;
     position: fixed;
-    bottom: 1%;
+    bottom: 0;
     width: 12%;
 }
 
@@ -298,10 +295,9 @@
 
 .user-info-div-img {
     height: 100%;
-    width: 8%;
+    width: 7%;
     float: left;
     margin-left: 3%;
-//    margin-top:1%;
 }
 
 .user-info-div-text {
