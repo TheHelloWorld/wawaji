@@ -214,9 +214,11 @@ function toRecharge() {
 
     if(loginFlag == "fail") {
         window.location.href = loginUrl;
+    } else {
+        recharge();
     }
 
-    recharge();
+
 }
 
 // 跳转到用户主页
