@@ -82,7 +82,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     user.setUserCoin(defaultUserCoin);
 
                     String defaultUserImg = systemProperties.getProperty("user_default_img")
-                            + "defaultHead" + RandomIntUtil.getRandomNum(0) + ".png";
+                            + "defaultHead" + RandomIntUtil.getRandomNumByHighBound(5) + ".png";
 
                     // 用户头像
                     user.setUserImg(defaultUserImg);
@@ -558,7 +558,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 Integer roomAddLuckyNum = gameRoom.getAddLuckyNum();
 
-                Integer userLucKyNum = RandomIntUtil.getRandomNumByHighBound(15);
+                Integer userLucKyNum = RandomIntUtil.getRandomNumByHighBound(5);
 
                 // 判断当前用户是否在此房间有幸运值
                 CommonResult<Integer> userGameRoomCount = userGameRoomService
@@ -613,7 +613,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 }
 
                 if(userNowLuckyNum >= BaseConstant.USER_ROOM_LUCKY_BORDER) {
-                    userLucKyNum = RandomIntUtil.getRandomNumByHighBound(5);
+                    userLucKyNum = RandomIntUtil.getRandomNumByHighBound(3);
 
                 }
 
@@ -691,7 +691,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      * @return
      */
     @Override
-    public CommonResult<String> userRecharge(final String userNo, final Long amount, final String rechargeType) {
+    public CommonResult<String> userRecharge(final String userNo, final Double amount, final String rechargeType) {
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
         json.put("amount", amount);
@@ -783,7 +783,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 }
 
                 // 获得请求url并返回
-                got(RechargeUtil.getRequestUrl(orderNo, String.valueOf(amount), ""));
+                got(RechargeUtil.getRequestUrl(orderNo, String.valueOf(amount)));
 
             }
         }, "userRecharge", json.toJSONString());

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@RequestMapping("/toiletCat/userAddress")
+@RequestMapping("/toiletCat/api/userAddress")
 @Controller
 public class UserAddressController {
 

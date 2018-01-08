@@ -1,9 +1,10 @@
 package com.toiletCat.controller;
 
-import com.alibaba.fastjson.JSONObject;
+import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.RechargeResult;
 import com.toiletCat.constants.BaseConstant;
-import com.toiletCat.service.UserService;
+import com.toiletCat.service.RechargeService;
+import com.toiletCat.utils.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@RequestMapping("/toiletCat/recharge")
+@RequestMapping("/toiletCat/api/recharge")
 @Controller
 public class RechargeController {
 
     private static final Logger logger = LoggerFactory.getLogger(RechargeController.class);
 
     @Autowired
-    private UserService userService;
+    private RechargeService rechargeService;
 
     /**
      * 充值回调接口
@@ -78,7 +79,21 @@ public class RechargeController {
 
         logger.info(BaseConstant.LOG_MSG + " rechargeResult userNo:" + userNo + ", rechargeResult:" + rechargeResult);
 
+        rechargeService.getRechargeResultByParam(userNo, rechargeResult);
     }
 
+    /**
+     * 根据订单号获得充值结果
+     * @param orderNo 订单号
+     * @return
+     */
+    @RequestMapping(value = "/getRechargeResultByOrderNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getRechargeResultByOrderNo(String orderNo) {
+
+        CommonResult<String> result = rechargeService.getRechargeResultByOrderNo(orderNo);
+
+        return JSONUtil.getReturnBeanString(result);
+    }
 
 }

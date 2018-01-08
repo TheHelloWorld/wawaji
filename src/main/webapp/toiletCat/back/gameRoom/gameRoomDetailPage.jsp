@@ -10,7 +10,7 @@
 
     <title>游戏房间页</title>
 
-    <%@ include file="../../../include/header.jsp"%>
+    <%@ include file="/include/header.jsp"%>
 
     <script type="text/javascript" src="/js/back/gameRoom/gameRoomDetailPage.js"></script>
 </head>

@@ -3,7 +3,7 @@ var pageSize = 0;
 
 var nowPage = 1;
 
-var showUrl = "/toiletCat/machine/getAllMachineByPage.action";
+var showUrl = "/toiletCat/api/machine/getAllMachineByPage.action";
 
 var width = $(window).width() / 2 - 20;
 
@@ -12,7 +12,7 @@ var userNo = "";
 var bannerType = 0;
 
 $(function() {
-    var url = "/toiletCat/machine/getMachineTotalCountAndPageSize.action";
+    var url = "/toiletCat/api/machine/getMachineTotalCountAndPageSize.action";
 
     // 获取banner图
     getBannerByType(bannerType);
@@ -30,7 +30,7 @@ $(function() {
 // 用户自动登陆
 function userAutoLogin() {
     $.ajax({
-        url:"/toiletCat/user/autoLogin.action",
+        url:"/toiletCat/api/user/autoLogin.action",
         type:"POST",
         async:false,
         success:function(data) {
@@ -56,7 +56,6 @@ function userAutoLogin() {
             if(typeof(result) == "string") {
                 result = eval("("+result+")");
             }
-            console.info(result);
             userNo = result["userNo"];
 
         }
@@ -67,7 +66,7 @@ function userAutoLogin() {
 // 用户登陆或注册
 function userLoginOrRegister() {
     $.ajax({
-        url:"/toiletCat/user/registerOrLoginUser.action",
+        url:"/toiletCat/api/user/registerOrLoginUser.action",
         type:"POST",
         async:false,
         data:{
@@ -108,7 +107,7 @@ function getAllMachineByPage(nowPage) {
     var startPage = (nowPage - 1) * pageSize;
 
     $.ajax({
-        url:"/toiletCat/machine/getUserAllMachineByPage.action",
+        url:"/toiletCat/api/machine/getUserAllMachineByPage.action",
         type:"POST",
         async:false,
         data:{
@@ -131,17 +130,12 @@ function getAllMachineByPage(nowPage) {
             var str = "";
 
             for(var i = 0; i<list.length; i++) {
+
                 if(i % 2 == 0) {
                     str += "<div class='row' style='margin-bottom: 5px'>";
                 }
 
-                if(i % 2 == 0) {
-                    str += "<div class='machine-col-xs-6-left' >";
-                } else if(i % 2 != 0) {
-                    str += "<div class='machine-col-xs-6-right' >";
-                }
-
-
+                str += "<div class='toiletCat-col-xs-6' onclick='toGamePage("+list[i]["gameRoomNo"]+")'>"
                 str += "    <div class='machine-panel panel-info'>";
                 str += "        <div class='panel-body'>";
                 str += "            <div class='toy-img index-img'>"
@@ -173,10 +167,6 @@ function toIndex() {
     window.location.href="/toiletCat/index/machineRoom.html";
 }
 
-function clickBanner() {
-    window.location.href="/toiletCat/index/machineRoom.html";
-}
-
 function getPage(page) {
     nowPage = getPageByNum(nowPage, page, totalPage, step);
     getAllByPage(showUrl, nowPage);
@@ -186,7 +176,6 @@ function getPage(page) {
 function nextPage() {
     nowPage = nextPageNum(nowPage, totalPage, step);
     getAllByPage(showUrl, nowPage);
-
 }
 
 //上一页

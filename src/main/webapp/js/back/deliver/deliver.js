@@ -7,7 +7,7 @@ var nowPage = 1;
 
 $(function(){
     // 获得总页数和总数量
-    var countAndPageSizeUrl = "/toiletCat/deliver/getDeliverTotalCountAndPageSize.action";
+    var countAndPageSizeUrl = "/toiletCat/api/deliver/getDeliverTotalCountAndPageSize.action";
     getTotalCountAndPageSize(countAndPageSizeUrl);
 
     // 分页获得所有记录
@@ -23,7 +23,7 @@ function getAllDeliverByPage(startPage) {
     startPage = (startPage - 1) * pageSize;
 
     $.ajax({
-        url:"/toiletCat/deliver/getAllDeliverByPage.action",
+        url:"/toiletCat/api/deliver/getAllDeliverByPage.action",
         type:"POST",
         async:false,
         data:{

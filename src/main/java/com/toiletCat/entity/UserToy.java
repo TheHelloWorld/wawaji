@@ -51,6 +51,11 @@ public class UserToy extends BaseEntity implements Serializable {
      */
     private Integer deliverCoin;
 
+    /**
+     * 免费包邮个数
+     */
+    private Integer freeDeliverNum;
+
     public String getUserNo() {
         return userNo;
     }
@@ -113,5 +118,13 @@ public class UserToy extends BaseEntity implements Serializable {
 
     public void setDeliverCoin(Integer deliverCoin) {
         this.deliverCoin = deliverCoin;
+    }
+
+    public Integer getFreeDeliverNum() {
+        return freeDeliverNum;
+    }
+
+    public void setFreeDeliverNum(Integer freeDeliverNum) {
+        this.freeDeliverNum = freeDeliverNum;
     }
 }

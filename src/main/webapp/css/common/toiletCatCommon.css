@@ -54,12 +54,12 @@
 }
 
 .index-header {
+    background: url("/image/background/header.png");
+    background-size: 100% 100%;
     position:fixed;
     left:0;
     top:0;
     z-index:99;
-    background:#fe8820;
-    border: 0.0625rem solid saddlebrown;
 }
 
 .index-default-header {
@@ -75,8 +75,14 @@
     left:0;
     bottom:0;
     z-index:99;
+    /*background:#ff3968;*/
     background:#fe8820;
     border: 0.0625rem solid saddlebrown;
+}
+
+.footer-height {
+    height: 6%;
+    width:100%;
 }
 
 .background-img {
@@ -93,6 +99,14 @@
     line-height: 3.75rem;
 }
 
+.nav-header-text {
+    float: left;
+    margin-left: 30%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 2%;
+}
+
 .in-use {
     border-radius: 0.75rem;
     background: red;
@@ -104,21 +118,25 @@
 }
 
 .default-height {
-    height: 6%;
+    height: 8%;
+    width:100%;
+}
+
+.default-height-footer {
+    height: 10%;
     width:100%;
 }
 
 .machine-panel {
     margin: 0.3125rem 0.3125rem;
-    background-color: #fff;
-    border: 0.0625rem solid gray;
     border-radius: 1.125rem;
     -webkit-box-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, .05);
     box-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, .05)
 }
 
 .toy-img {
-    border: 0.0625rem solid gray;
+    border-top: 0.1875rem solid #faa44d;
+    border-left: 0.3125rem solid #faa44d;
 }
 
 .machine-col-xs-6 {
@@ -129,18 +147,11 @@
     width: 50%
 }
 
-.machine-col-xs-6-left {
+.toiletCat-col-xs-6 {
+    background: url("/image/background/room-background.png");
+    background-size: 100% 100%;
     position: relative;
     min-height: 0.0625rem;
-    padding-left: 5%;
-    float: left;
-    width: 50%
-}
-
-.machine-col-xs-6-right {
-    position: relative;
-    min-height: 0.0625rem;
-    padding-right: 5%;
     float: left;
     width: 50%
 }
@@ -151,7 +162,7 @@
     margin-left: 8%;
     margin-right: 15%;
     height: 3.75rem;
-    margin-inside: 5%;
+    bottom: 0;
 }
 
 .footer-button-diff {
@@ -162,7 +173,7 @@
 .footer-img {
     z-index: 999;
     position: fixed;
-    bottom: 1%;
+    bottom: 0;
     width: 12%;
 }
 
@@ -197,11 +208,6 @@
     border-radius: 0.9375rem;
 }
 
-.button-user-toy {
-    height: 3.75rem;
-    background: url('/image/button/user-toy.ico') no-repeat;
-}
-
 .my-inline-right {
     margin-right: 10%
 }
@@ -232,7 +238,6 @@
 .div-radius {
     border-radius: 0.9375rem;
 }
-
 
 .my-form-control {
     width:60%;
@@ -297,11 +302,11 @@
 }
 
 .user-info-div-img {
+    padding-top: 1%;
     height: 100%;
-    width: 8%;
+    width: 7%;
     float: left;
     margin-left: 3%;
-//    margin-top:1%;
 }
 
 .user-info-div-text {

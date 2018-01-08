@@ -118,10 +118,15 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
             @Override
             public void exec() {
                 PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
+                // 邮寄娃娃所需游戏币数
                 Integer deliverCoin = Integer.valueOf(systemProperties.getProperty("user_deliver_coin"));
+                // 几个娃娃免费包邮
+                Integer freeDeliverNum = Integer.valueOf(systemProperties.getProperty("free_deliver_num"));
                 UserToy userToy = userToyDao.getUserToyByUserNoAndId(userNo, id);
                 // 设置邮寄所需游戏币数
                 userToy.setDeliverCoin(deliverCoin);
+                // 设置几个娃娃免费包邮
+                userToy.setFreeDeliverNum(freeDeliverNum);
                 got(userToy);
             }
         },"getUserToyByUserNoAndId", json.toJSONString());
@@ -160,10 +165,14 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                     deliverDao.addDeliver(deliver);
 
+                    PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
+
+                    // 几个娃娃免费包邮
+                    Integer freeDeliverNum = Integer.valueOf(systemProperties.getProperty("free_deliver_num"));
+
                     // 若寄送娃娃少于3个则扣除相应游戏币作为邮寄费
-                    if(userToyIdList.size() < 3) {
+                    if(userToyIdList.size() < freeDeliverNum) {
                         // 获取邮寄费
-                        PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
                         Integer deliverCoin = Integer.valueOf(systemProperties.getProperty("user_deliver_coin"));
                         userDao.updateUserCoinByUserNo(-deliverCoin, userNo);
 

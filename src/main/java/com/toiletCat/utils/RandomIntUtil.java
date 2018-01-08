@@ -1,10 +1,7 @@
 package com.toiletCat.utils;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class RandomIntUtil {
 

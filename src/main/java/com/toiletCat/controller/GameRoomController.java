@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@RequestMapping("/toiletCat/gameRoom")
+@RequestMapping("/toiletCat/api/gameRoom")
 @Controller
 public class GameRoomController {
 

@@ -46,8 +46,37 @@
                             <span style="float: left;padding-top: 1%; margin-left: 1%">登陆</span>
                         </div>
                     </div>
+
                 </div>
             </nav>
+            <script type="text/javascript">
+                var nowType = getQueryString("nowType");
+
+                if(nowType == "login") {
+                    // 用户编号
+                    userNo = sessionStorage["toiletCatUserNo"];
+
+                    if(userNo == undefined) {
+                        userNo = getQueryString("userNo");
+                        getUserInfoByUserNo(userNo);
+                    }
+
+                    // 用户名
+                    userName = sessionStorage["toiletCatUserName"];
+                    // 用户游戏币数
+                    userCoin = sessionStorage["toiletCatUserCoin"];
+                    // 用户头像
+                    userImg = sessionStorage["toiletCatUserImg"];
+                    // 用户邀请码
+                    invitationCode = sessionStorage["toiletCatInvitationCode"];
+
+                    setUserInfo();
+
+                } else {
+                    // 用户自动登陆
+                    userAutoLogin();
+                }
+            </script>
             <div class="default-height">
             </div>
             <div class="banner-box">
@@ -61,15 +90,19 @@
             <nav class = "index-footer default-height" >
                 <div class="background-img">
                     <div class="footer-button" >
-                        <img class="footer-img" src="/image/button/cat_phone_48_text.png" onclick="toUserToy()" />
+                        <img class="footer-img" src="/image/button/game-onclick.png" />
                     </div>
                     <div class="footer-button" >
-                        <img class="footer-img" src="/image/button/cat_wizard_48_text.png" onclick="toUserToy()" />
+                        <img class="footer-img" src="/image/button/user-toy-default.png" onclick="toUserToy()" />
                     </div>
                     <div class="footer-button" >
-                        <img class="footer-img" src="/image/button/cat_laptop_48_text.png" onclick="toUserIndex()" />
+                        <img class="footer-img " src="/image/button/recharge-default.png" onclick="toRecharge()" />
+                    </div>
+                    <div class="footer-button" >
+                        <img class="footer-img " src="/image/button/user-index-default.png" onclick="toUserIndex()" />
                     </div>
                 </div>
+
             </nav>
         </div>
     </body>

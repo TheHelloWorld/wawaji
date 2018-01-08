@@ -6,11 +6,11 @@ var step = 5;
 var nowPage = 1;
 
 // 展示url
-var showUrl = "/toiletCat/gameRoom/getAllGameRoomByPage.action";
+var showUrl = "/toiletCat/api/gameRoom/getAllGameRoomByPage.action";
 
 $(function(){
     // 获得总页数和总数量
-    var countAndPageSizeUrl = "/toiletCat/gameRoom/getGameRoomTotalCountAndPageSize.action";
+    var countAndPageSizeUrl = "/toiletCat/api/gameRoom/getGameRoomTotalCountAndPageSize.action";
     getTotalCountAndPageSize(countAndPageSizeUrl);
 
     // 分页获得所有记录

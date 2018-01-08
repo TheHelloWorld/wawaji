@@ -80,4 +80,12 @@ public interface UserRechargeRecordDao {
      * @param tradeStatus 交易状态
      */
     void updateTradeStatusByOrderNo(@Param("orderNo") String orderNo, @Param("tradeStatus") Integer tradeStatus);
+
+    /**
+     * 根据用户编号和订单号获得交易结果
+     * @param userNo 用户编号
+     * @param orderNo 订单编号
+     * @return
+     */
+    Integer getTradeStatusByOrderNo(@Param("userNo") String userNo, @Param("orderNo") String orderNo);
 }

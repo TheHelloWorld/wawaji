@@ -6,20 +6,15 @@ import com.toiletCat.bean.CommonResult;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.dao.UserRechargeRecordDao;
 import com.toiletCat.entity.UserRechargeRecord;
-import com.toiletCat.entity.UserSpendRecord;
-import com.toiletCat.enums.TradeStatus;
-import com.toiletCat.enums.TradeType;
 import com.toiletCat.service.UserRechargeRecordService;
 import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.service.UserSpendRecordService;
-import com.toiletCat.utils.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -202,6 +197,26 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
                 userRechargeRecordDao.updateTradeStatusByOrderNo(orderNo, tradeStatus);
             }
         }, "updateTradeStatusByOrderNo", json.toJSONString());
+    }
+
+    /**
+     * 根据用户编号和订单号获得交易结果
+     * @param userNo 用户编号
+     * @param orderNo 订单编号
+     * @return
+     */
+    @Override
+    public CommonResult<Integer> getTradeStatusByOrderNo(final String userNo, final String orderNo) {
+        JSONObject json = new JSONObject();
+        json.put("orderNo", orderNo);
+        json.put("userNo", userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userRechargeRecordDao.getTradeStatusByOrderNo(userNo, orderNo));
+            }
+        }, "getTradeStatusByOrderNo", json.toJSONString());
     }
 
     @Override

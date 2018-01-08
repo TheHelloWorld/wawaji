@@ -14,6 +14,8 @@ var deliverId = 0;
 
 var deliverCoin = 0;
 
+var freeDeliverNum = 0;
+
 var userCoin = 0;
 
 var flag = true;
@@ -51,7 +53,7 @@ $(function() {
 function getUserToyByUserNoAndId() {
 
     $.ajax({
-        url:"/toiletCat/userToy/getUserToyByUserNoAndId.action",
+        url:"/toiletCat/api/userToy/getUserToyByUserNoAndId.action",
         type:"POST",
         async:false,
         data:{
@@ -84,6 +86,8 @@ function getUserToyByUserNoAndId() {
             deliverId = result["deliverId"];
 
             deliverCoin = result["deliverCoin"];
+
+            freeDeliverNum = result["freeDeliverNum"];
 
             var str = " <div class='row'>";
             str += "        <div class='user-toy-div'>";
@@ -133,7 +137,7 @@ function getDeliverByIdAndUserNo(id) {
     var deliverStr = "";
 
     $.ajax({
-        url:"/toiletCat/deliver/getDeliverByIdAndUserNo.action",
+        url:"/toiletCat/api/deliver/getDeliverByIdAndUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -196,7 +200,7 @@ function choiceDeliver() {
 function getAllUserAddressByUserNo(userNo) {
 
     $.ajax({
-        url:"/toiletCat/userAddress/getUserAddressListByUserNo.action",
+        url:"/toiletCat/api/userAddress/getUserAddressListByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -301,7 +305,7 @@ function reChoiceAddress() {
 function getAllUnHandleUserToyByUserNo() {
 
     $.ajax({
-        url:"/toiletCat/userToy/getAllUnHandleUserToyByUserNo.action",
+        url:"/toiletCat/api/userToy/getAllUnHandleUserToyByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -321,7 +325,7 @@ function getAllUnHandleUserToyByUserNo() {
             }
 
             var list = data["result"];
-            var str = "<div style='text-align: center;color: #666615;font-size: 2.25rem;'>三个以上才包邮哦(邮费<img src='/image/background/coin.ico'>"+deliverCoin+")</div>";
+            var str = "<div style='text-align: center;color: #666615;font-size: 2.25rem;'>" + freeDeliverNum + "个或以上才包邮哦(邮费<img src='/image/background/coin.ico'>"+deliverCoin+")</div>";
 
             flag = false;
             for(var i = 0; i<list.length; i++) {
@@ -358,7 +362,6 @@ function getAllUnHandleUserToyByUserNo() {
                 if(i % 2 != 0 || i == list.length - 1) {
                     str += "</div>";
                 }
-
             }
 
             $("#unHandleUserToy").append(str);
@@ -429,7 +432,7 @@ function updateChoiceType() {
     var userAddressStr = JSON.stringify(userAddressJson);
 
     $.ajax({
-        url:"/toiletCat/userToy/updateChoiceTypeByIdAndUserNo.action",
+        url:"/toiletCat/api/userToy/updateChoiceTypeByIdAndUserNo.action",
         type:"POST",
         async:false,
         data:{

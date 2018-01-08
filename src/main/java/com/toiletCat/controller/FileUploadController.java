@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Map;
 
-@RequestMapping("/toiletCat/fileUpload")
+@RequestMapping("/toiletCat/api/fileUpload")
 @Controller
 public class FileUploadController {
 

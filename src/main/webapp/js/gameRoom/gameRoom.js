@@ -13,7 +13,7 @@ var loginUrl = "/toiletCat/user/login.html?from=gameIndex&type=gameRoom&checkTyp
 
 $(function() {
 
-    var url = "/toiletCat/gameRoom/getUserSeeGameRoomTotalCountAndPageSize.action";
+    var url = "/toiletCat/api/gameRoom/getUserSeeGameRoomTotalCountAndPageSize.action";
 
     // 获取banner图
     getBannerByType(bannerType);
@@ -44,7 +44,7 @@ $(function() {
 function userAutoLogin() {
 
     $.ajax({
-        url:"/toiletCat/user/autoLogin.action",
+        url:"/toiletCat/api/user/autoLogin.action",
         type:"POST",
         async:false,
         success:function(data) {
@@ -108,7 +108,7 @@ function getUserSeeGameRoomListByPage(nowPage) {
     loading += "    </div>";
     $("#main").append(loading);
     $.ajax({
-        url:"/toiletCat/gameRoom/getUserSeeGameRoomListByPage.action",
+        url:"/toiletCat/api/gameRoom/getUserSeeGameRoomListByPage.action",
         type:"POST",
         async:false,
         data:{
@@ -131,19 +131,15 @@ function getUserSeeGameRoomListByPage(nowPage) {
             var str = "";
 
             for(var i = 0; i<list.length; i++) {
+
                 if(i % 2 == 0) {
                     str += "<div class='row' style='margin-bottom: 5px'>";
                 }
 
-                if(i % 2 == 0) {
-                    str += "<div class='machine-col-xs-6-left' onclick='toGamePage("+list[i]["gameRoomNo"]+")'>";
-                } else if(i % 2 != 0) {
-                    str += "<div class='machine-col-xs-6-right' onclick='toGamePage("+list[i]["gameRoomNo"]+")'>";
-                }
-
+                str += "<div class='toiletCat-col-xs-6' onclick='toGamePage("+list[i]["gameRoomNo"]+")'>";
                 str += "    <div class='machine-panel panel-info'>";
                 str += "        <div class='panel-body'>";
-                str += "            <div class='toy-img index-img'>"
+                str += "            <div class='toy-img index-img'>";
                 str += "                <img height='100px' width=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
                 str += "            </div>";
                 str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
@@ -218,9 +214,11 @@ function toRecharge() {
 
     if(loginFlag == "fail") {
         window.location.href = loginUrl;
+    } else {
+        recharge();
     }
 
-    recharge();
+
 }
 
 // 跳转到用户主页

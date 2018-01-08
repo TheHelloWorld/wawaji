@@ -13,7 +13,7 @@ $(function(){
         console.info(id);
         var machineNo = getQueryString("machineNo");
 
-        var getUrl = "/toiletCat/machine/getMachineByIdAndMachineNo.action";
+        var getUrl = "/toiletCat/api/machine/getMachineByIdAndMachineNo.action";
         getDataByInfo(getUrl, id, machineNo);
     }
 });
@@ -22,10 +22,10 @@ $(function(){
 function updateOrSaveMachine() {
 
     if(getQueryString("type") == "add") {
-        var saveUrl = "/toiletCat/machine/addMachine.action";
+        var saveUrl = "/toiletCat/api/machine/addMachine.action";
         saveThis(saveUrl, returnUrl);
     } else {
-        var updateUrl = "/toiletCat/machine/updateMachineByIdAndMachineNo.action";
+        var updateUrl = "/toiletCat/api/machine/updateMachineByIdAndMachineNo.action";
         updateThis(updateUrl, returnUrl);
     }
 

@@ -113,7 +113,7 @@
                         <script type="text/javascript">
 
                             // 上传图片处理controller
-                            var url = "/toiletCat/fileUpload/toyImgUpload.action";
+                            var url = "/toiletCat/api/fileUpload/toyImgUpload.action";
 
                             // input file id
                             var inputId = "uploadToyImg";
@@ -140,7 +140,7 @@
                         <script type="text/javascript">
 
                             // 上传图片处理controller
-                            var url = "/toiletCat/fileUpload/toyImgUpload.action";
+                            var url = "/toiletCat/api/fileUpload/toyImgUpload.action";
 
                             // input file id
                             var inputId = "uploadToyRoomImg";
@@ -167,7 +167,7 @@
                         <script type="text/javascript">
 
                             // 上传图片处理controller
-                            var url = "/toiletCat/fileUpload/toyImgUpload.action";
+                            var url = "/toiletCat/api/fileUpload/toyImgUpload.action";
 
                             // input file id
                             var inputId = "uploadToyDescImg";

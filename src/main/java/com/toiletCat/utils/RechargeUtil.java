@@ -2,6 +2,7 @@ package com.toiletCat.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.constants.BaseConstant;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,22 +66,30 @@ public class RechargeUtil {
 
         TreeMap<String, String> treeMap = new TreeMap<>();
 
-        treeMap.put("pid","");
-        treeMap.put("type","");
-        treeMap.put("out_trade_no","");
-        treeMap.put("notify_url","");
-        treeMap.put("return_url","");
-        treeMap.put("name","");
-        treeMap.put("money","");
-        treeMap.put("sitename","");
+        treeMap.put("pid", "");
+        treeMap.put("type", "");
+        treeMap.put("out_trade_no", "");
+        treeMap.put("trade_no", "");
+        treeMap.put("notify_url", "");
+        treeMap.put("return_url", "");
+        treeMap.put("name", "");
+        treeMap.put("money", "");
+        treeMap.put("sitename", "");
+        treeMap.put("trade_status", "");
 
         for(String key : treeMap.keySet()) {
+            if(StringUtils.isBlank(json.getString(key))) {
+                continue;
+            }
             treeMap.put(key, json.getString(key));
         }
 
         StringBuilder stringBuilder = new StringBuilder();
 
         for(String key : treeMap.keySet()) {
+            if(StringUtils.isBlank(treeMap.get(key))) {
+                continue;
+            }
             stringBuilder.append(key);
             stringBuilder.append("=");
             stringBuilder.append(treeMap.get(key));
@@ -102,10 +111,9 @@ public class RechargeUtil {
      * 获得支付请求url
      * @param orderNo 我方订单号
      * @param money 支付金额
-     * @param returnUrl 返回url
      * @return
      */
-    public static String getRequestUrl(String orderNo, String money, String returnUrl) {
+    public static String getRequestUrl(String orderNo, String money) {
 
         PropertiesUtil propertiesUtil = new PropertiesUtil("system");
 
@@ -114,8 +122,8 @@ public class RechargeUtil {
         json.put("pid", propertiesUtil.getProperty("recharge_pid"));
         json.put("type", propertiesUtil.getProperty("recharge_type"));
         json.put("out_trade_no", orderNo);
-        json.put("notify_url", propertiesUtil.getProperty("notify_url"));
-        json.put("return_url", returnUrl);
+        json.put("notify_url", propertiesUtil.getProperty("recharge_notify_url"));
+        json.put("return_url", propertiesUtil.getProperty("recharge_return_url"));
         json.put("name", propertiesUtil.getProperty("recharge_name"));
         json.put("money", money);
         json.put("sitename", propertiesUtil.getProperty("recharge_sitename"));
@@ -135,6 +143,8 @@ public class RechargeUtil {
         request.append(json.getString("type"));
         request.append("&out_trade_no=");
         request.append(json.getString("out_trade_no"));
+        request.append("&notify_url=");
+        request.append(json.getString("notify_url"));
         request.append("&return_url=");
         request.append(json.getString("return_url"));
         request.append("&name=");
@@ -151,5 +161,15 @@ public class RechargeUtil {
 
         return request.toString();
 
+    }
+
+    /**
+     * 验签
+     * @param resultSign 返回签名
+     * @param json 参数
+     * @return
+     */
+    public static Boolean checkSign(String resultSign, JSONObject json) {
+        return resultSign.equals(getSign(json));
     }
 }

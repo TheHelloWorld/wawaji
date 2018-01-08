@@ -30,7 +30,7 @@ $(function() {
 // 获得当前数据总数量和分页数据
 function getTotalCountAndPageSizeByUserNo() {
     $.ajax({
-        url:"/toiletCat/catchRecord/countCatchRecordByUserNo.action",
+        url:"/toiletCat/api/catchRecord/countCatchRecordByUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -82,7 +82,7 @@ function getAllUserCatchRecordByUserNo(userNo) {
     var startPage = (nowPage - 1) * pageSize;
 
     $.ajax({
-        url:"/toiletCat/catchRecord/getCatchRecordListByUserNo.action",
+        url:"/toiletCat/api/catchRecord/getCatchRecordListByUserNo.action",
         type:"POST",
         async:false,
         data:{

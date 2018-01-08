@@ -19,7 +19,7 @@ $(function() {
 // 根据id和用户编号获得用户地址
 function getUserAddress(id, userNo) {
     $.ajax({
-        url:"/toiletCat/userAddress/getUserAddressByIdAndUserNo.action",
+        url:"/toiletCat/api/userAddress/getUserAddressByIdAndUserNo.action",
         type:"POST",
         async:false,
         data:{
@@ -69,7 +69,7 @@ function saveOrUpdate() {
     }
 
     if(getQueryString("type") == "add") {
-        var saveUrl = "/toiletCat/userAddress/addUserAddress.action";
+        var saveUrl = "/toiletCat/api/userAddress/addUserAddress.action";
 
         if(sessionStorage["toiletCatUserToyAddUserAddress"] == "1") {
             sessionStorage["toiletCatUserToyAddUserAddress"] = "2";
@@ -78,7 +78,7 @@ function saveOrUpdate() {
 
         saveThis(saveUrl, returnUrl);
     } else {
-        var updateUrl = "/toiletCat/userAddress/updateUserAddressByIdAndUserNo.action";
+        var updateUrl = "/toiletCat/api/userAddress/updateUserAddressByIdAndUserNo.action";
         updateThis(updateUrl, returnUrl);
     }
 

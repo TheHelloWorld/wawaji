@@ -19,7 +19,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@RequestMapping("/toiletCat/user")
+@RequestMapping("/toiletCat/api/user")
 @Controller
 public class UserController {
 
@@ -222,7 +222,7 @@ public class UserController {
      */
     @RequestMapping(value = "/userRecharge", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String userRecharge(String userNo, Long amount, String rechargeType) {
+    public String userRecharge(String userNo, Double amount, String rechargeType) {
 
         CommonResult<String> result = userService.userRecharge(userNo, amount, rechargeType);
 
