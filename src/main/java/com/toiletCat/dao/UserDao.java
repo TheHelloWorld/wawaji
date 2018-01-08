@@ -94,4 +94,10 @@ public interface UserDao {
      */
     void updateUserInfoByIdAndUserNo(@Param("userNo") String userNo, @Param("userName") String userName,
                                      @Param("userImg") String userImg);
+
+    /**
+     * 根据用户邀请码获得用户编号
+     * @param invitationCode 邀请码
+     */
+    String getUserNoByInvitationCode(String invitationCode);
 }

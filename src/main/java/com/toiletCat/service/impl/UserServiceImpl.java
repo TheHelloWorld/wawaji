@@ -71,7 +71,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 if (userDao.countUserByMobileNo(mobileNo) == 0) {
                     user = new User();
 
-                    PropertiesUtil systemProperties = new PropertiesUtil("system");
+                    PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
                     // 用户手机号
                     user.setMobileNo(mobileNo);
 
@@ -446,7 +446,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             public void exec() {
 
                 // 通过配置文件获取参数
-                PropertiesUtil systemProperties = new PropertiesUtil("system");
+                PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
 
                 // 获取短信超时参数
                 String redisTimeout = systemProperties.getProperty("sms_redis_time_out");
@@ -787,6 +787,82 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
             }
         }, "userRecharge", json.toJSONString());
+    }
+
+    /**
+     * 用户邀请码
+     * @param userNo 用户编号
+     * @param inviteCode 邀请码
+     * @return
+     */
+    @Override
+    public CommonResult<String> userInvite(final String userNo, final String inviteCode) {
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+        json.put("inviteCode", inviteCode);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
+
+                Integer coin = Integer.valueOf(propertiesUtil.getProperty("user_invite_coin"));
+
+                Date tradeTime = new Date();
+
+                Integer tradeDate = DateUtil.getDate();
+
+                // 给被邀请用户添加游戏币
+                userDao.updateUserCoinByUserNo(coin, userNo);
+
+                UserSpendRecord userSpendRecord = new UserSpendRecord();
+
+                userSpendRecord.setUserNo(userNo);
+
+                // 充值游戏币数
+                userSpendRecord.setCoin(coin);
+
+                // 交易时间
+                userSpendRecord.setTradeTime(tradeTime);
+
+                // 交易日期
+                userSpendRecord.setTradeDate(tradeDate);
+
+                // 被邀请用户订单号
+                String beInviteOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime() + userNo;
+
+                // 设置被邀请用户订单号
+                userSpendRecord.setOrderNo(beInviteOrderNo);
+
+                // 交易类型(邀请码)
+                userSpendRecord.setTradeType(TradeType.INVITE.getType());
+
+                // 交易状态(成功)
+                userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
+
+                // 添加被邀请用户消费记录
+                userSpendRecordService.addUserSpendRecord(userSpendRecord);
+
+                // 根据邀请码获得邀请用户用户编号
+                String inviteUserNo = userDao.getUserNoByInvitationCode(inviteCode);
+
+                // 给邀请用户添加游戏币
+                userDao.updateUserCoinByUserNo(coin, inviteUserNo);
+
+                // 设置邀请用户用户编号
+                userSpendRecord.setUserNo(inviteUserNo);
+
+                String inviteOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime() + inviteUserNo;
+
+                // 设置邀请用户订单编号
+                userSpendRecord.setOrderNo(inviteOrderNo);
+
+                // 添加邀请用户消费记录
+                userSpendRecordService.addUserSpendRecord(userSpendRecord);
+
+            }
+        }, "userInvite", json.toJSONString());
     }
 
     /**

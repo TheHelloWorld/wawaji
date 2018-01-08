@@ -92,12 +92,6 @@ function getAllUserAddressByUserNo(userNo) {
                 str += "</div>"
                 str += "<div id='userAddressImg"+list[i]["id"]+"' style='text-align: center'>";
 
-                if(i%2 == 0) {
-                    str += "<img width='100%' src='/image/line-left.png'>";
-                } else {
-                    str += "<img width='100%' src='/image/line-right.png'>";
-                }
-
                 str += "</div>";
             }
 
