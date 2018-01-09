@@ -14,7 +14,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default" >
                 <div class="panel-heading" id="ph">
-                    <strong>机器管理</strong>
+                    <strong>配置管理</strong>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body" id="row1">
@@ -27,13 +27,9 @@
                             <table class="table table-striped table-bordered table-hover" id="dataTable">
                                 <thead>
                                 <tr id="titleColumn">
-                                    <th><lable name="machineNo">机器编号</lable></th>
-                                    <th><lable name="toyNo">娃娃编号</lable></th>
-                                    <th><lable name="frontUrl">正面直播地址</lable></th>
-                                    <th><lable name="sideUrl">侧面直播地址</lable></th>
-                                    <th><lable name="usePort">占用端口号</lable></th>
-                                    <th><lable name="currentState">是否可用</lable></th>
-                                    <th><lable name="operation">操作</lable></th>
+                                    <th><lable name="configName">配置名称</lable></th>
+                                    <th><lable name="configKey">配置key(程序中用)</lable></th>
+                                    <th><lable name="configValue">配置value</lable></th>
                                 </tr>
                                 </thead>
                                 <tbody id="dataBody">
