@@ -1,5 +1,8 @@
 package com.toiletCat.constants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 基本静态常量
  *
@@ -186,4 +189,9 @@ public class BaseConstant {
 	 * 充值返回结果(成功)
 	 */
 	public static final String RECHARGE_RESULT_TRADE_STATUS = "TRADE_SUCCESS";
+
+	/**
+	 * 配置文件Map
+	 */
+	public static Map<String,String> configMap = new HashMap<>();
 }
