@@ -194,4 +194,24 @@ public class BaseConstant {
 	 * 配置文件Map
 	 */
 	public static Map<String,String> configMap = new HashMap<>();
+
+	/**
+	 * 用户默认游戏币
+	 */
+	public static final String USER_DEFAULT_COIN = "user_default_coin";
+
+	/**
+	 * 用户邀请获得游戏币数
+	 */
+	public static final String USER_INVITE_COIN = "user_invite_coin";
+
+	/**
+	 * 几件以上包邮
+	 */
+	public static final String FREE_DELIVER_NUM = "free_deliver_num";
+
+	/**
+	 * 用户战利品邮费
+	 */
+	public static final String USER_DELIVER_COIN = "user_deliver_coin";
 }

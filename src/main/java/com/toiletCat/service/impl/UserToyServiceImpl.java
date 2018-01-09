@@ -14,11 +14,9 @@ import com.toiletCat.entity.UserAddress;
 import com.toiletCat.entity.UserSpendRecord;
 import com.toiletCat.entity.UserToy;
 import com.toiletCat.enums.*;
-import com.toiletCat.service.UserService;
-import com.toiletCat.service.UserSpendRecordService;
+import com.toiletCat.service.ToiletCatConfigService;
 import com.toiletCat.service.UserToyService;
 import com.toiletCat.utils.DateUtil;
-import com.toiletCat.utils.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +42,9 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
     @Autowired
     private UserSpendRecordDao userSpendRecordDao;
+
+    @Autowired
+    private ToiletCatConfigService toiletCatConfigService;
 
     /**
      * 添加用户娃娃记录
@@ -117,11 +118,12 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
         return exec(new Callback() {
             @Override
             public void exec() {
-                PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
                 // 邮寄娃娃所需游戏币数
-                Integer deliverCoin = Integer.valueOf(systemProperties.getProperty("user_deliver_coin"));
+                Integer deliverCoin = Integer.valueOf(toiletCatConfigService.getConfigByKey(
+                        BaseConstant.USER_DELIVER_COIN));
                 // 几个娃娃免费包邮
-                Integer freeDeliverNum = Integer.valueOf(systemProperties.getProperty("free_deliver_num"));
+                Integer freeDeliverNum = Integer.valueOf(toiletCatConfigService.getConfigByKey(
+                        BaseConstant.FREE_DELIVER_NUM));
                 UserToy userToy = userToyDao.getUserToyByUserNoAndId(userNo, id);
                 // 设置邮寄所需游戏币数
                 userToy.setDeliverCoin(deliverCoin);
@@ -165,15 +167,15 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                     deliverDao.addDeliver(deliver);
 
-                    PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
-
                     // 几个娃娃免费包邮
-                    Integer freeDeliverNum = Integer.valueOf(systemProperties.getProperty("free_deliver_num"));
+                    Integer freeDeliverNum = Integer.valueOf(toiletCatConfigService.getConfigByKey(
+                            BaseConstant.FREE_DELIVER_NUM));
 
                     // 若寄送娃娃少于3个则扣除相应游戏币作为邮寄费
                     if(userToyIdList.size() < freeDeliverNum) {
                         // 获取邮寄费
-                        Integer deliverCoin = Integer.valueOf(systemProperties.getProperty("user_deliver_coin"));
+                        Integer deliverCoin = Integer.valueOf(toiletCatConfigService.getConfigByKey(
+                                BaseConstant.USER_DELIVER_COIN));
                         userDao.updateUserCoinByUserNo(-deliverCoin, userNo);
 
                         logger.info("updateChoiceTypeByIdAndUserNo 扣除用户邮寄费游戏币成功");
