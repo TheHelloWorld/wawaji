@@ -12,14 +12,14 @@
 
     <%@ include file="/include/header.jsp"%>
 
-    <script type="text/javascript" src="/js/back/machine/machineDetailPage.js"></script>
+    <script type="text/javascript" src="/js/back/toiletCatConfig/toiletCatConfigDetailPage.js"></script>
 </head>
 <body>
 <div id="dataInfo">
     <div id="machineDefine">
         <div class="modal-header">
             <h4 class="modal-title">
-                机器页
+                配置详情页
             </h4>
         </div>
         <div id="machine-body" class="modal-body">
@@ -28,54 +28,27 @@
             </span>
             <div class="row">
                 <div class="col-xs-5">
-                    机器编号:
-                    <span name = "machineNo">
-                        <input class="form-control" id = "machineNo">
-                    </span>
-                </div>
-                <div class="col-xs-5">
-                    是否可用:
-                    <span name = "currentState">
-                        <select id="currentState" class="form-control">
-                            <option value="1">可用</option>
-                            <option value="0">禁用</option>
-                        </select>
+                    配置名称:
+                    <span name = "configName">
+                        <input class="form-control" id = "configName">
                     </span>
                 </div>
             </div>
             <br/>
             <div class="row">
                 <div class="col-xs-5">
-                    玩具编号:
-                    <span name = "toyNo">
-                        <input class="form-control" id = "toyNo">
+                    配置key(程序中用):
+                    <span name = "configKey">
+                        <input class="form-control" id = "configKey">
                     </span>
                 </div>
             </div>
             <br/>
             <div class="row">
                 <div class="col-xs-5">
-                    正面直播地址:
-                    <span name = "frontUrl">
-                        <input class="form-control" id = "frontUrl">
-                    </span>
-                </div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-xs-5">
-                    侧面直播地址:
-                    <span name = "sideUrl">
-                        <input class="form-control" id="sideUrl" />
-                    </span>
-                </div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-xs-5">
-                    占用端口号:
-                    <span name = "usePort">
-                        <input class="form-control" id="usePort" />
+                    配置value:
+                    <span name = "configValue">
+                        <input class="form-control" id = "configValue">
                     </span>
                 </div>
             </div>
@@ -84,7 +57,7 @@
     <div class="text-center">
         <button type="button" class="btn btn-danger btn-lg" onclick="cancelThis()">取 消</button>
         &nbsp;&nbsp;&nbsp;
-        <button type="button" class="btn btn-primary btn-lg" onclick="updateOrSaveMachine()">
+        <button type="button" class="btn btn-primary btn-lg" onclick="updateOrSaveConfig()">
             提 交
         </button>
     </div>

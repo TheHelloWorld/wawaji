@@ -10,8 +10,6 @@ $(function(){
     if(getQueryString("type") == "update") {
 
         var id = getQueryString("id");
-        console.info(id);
-        var machineNo = getQueryString("machineNo");
 
         var getUrl = "/toiletCat/api/toiletCatConfig/getMachineByIdAndMachineNo.action";
         getDataByInfo(getUrl, id, machineNo);
@@ -19,13 +17,13 @@ $(function(){
 });
 
 // 储存或修改
-function updateOrSaveMachine() {
+function updateOrSaveConfig() {
 
     if(getQueryString("type") == "add") {
-        var saveUrl = "/toiletCat/api/toiletCatConfig/addMachine.action";
+        var saveUrl = "/toiletCat/api/toiletCatConfig/addToiletCatConfig.action";
         saveThis(saveUrl, returnUrl);
     } else {
-        var updateUrl = "/toiletCat/api/toiletCatConfig/updateMachineByIdAndMachineNo.action";
+        var updateUrl = "/toiletCat/api/toiletCatConfig/updateToiletCatConfig.action";
         updateThis(updateUrl, returnUrl);
     }
 

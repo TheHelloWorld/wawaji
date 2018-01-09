@@ -27,6 +27,13 @@ public interface ToiletCatConfigDao {
     List<ToiletCatConfig> getAllConfig();
 
     /**
+     * 根据id获得配置项
+     * @param id 主键id
+     * @return
+     */
+    ToiletCatConfig getToiletCatConfigById(Long id);
+
+    /**
      * 修改配置项
      * @param toiletCatConfig 配置项
      */
