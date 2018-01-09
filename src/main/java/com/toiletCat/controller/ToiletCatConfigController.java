@@ -34,13 +34,13 @@ public class ToiletCatConfigController {
 
     /**
      * 添加配置项
-     * @param dataStr 配置项
+     * @param paramStr 配置项
      */
     @RequestMapping(value = "/addToiletCatConfig", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String addToiletCatConfig(String dataStr) {
+    public String addToiletCatConfig(String paramStr) {
 
-        CommonResult result = toiletCatConfigService.addToiletCatConfig(JSON.parseObject(dataStr,
+        CommonResult result = toiletCatConfigService.addToiletCatConfig(JSON.parseObject(paramStr,
                 ToiletCatConfig.class));
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
@@ -62,13 +62,13 @@ public class ToiletCatConfigController {
 
     /**
      * 修改配置项
-     * @param dataStr 配置项
+     * @param paramStr 配置项
      */
     @RequestMapping(value = "/updateToiletCatConfig", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String updateToiletCatConfig(String dataStr) {
+    public String updateToiletCatConfig(String paramStr) {
 
-        CommonResult result = toiletCatConfigService.updateToiletCatConfig(JSON.parseObject(dataStr,
+        CommonResult result = toiletCatConfigService.updateToiletCatConfig(JSON.parseObject(paramStr,
                 ToiletCatConfig.class));
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);

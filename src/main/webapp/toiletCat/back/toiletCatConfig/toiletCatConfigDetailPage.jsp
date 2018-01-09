@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>机器页</title>
+    <title>配置页</title>
 
     <%@ include file="/include/header.jsp"%>
 

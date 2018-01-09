@@ -77,6 +77,9 @@
                         <li>
                             <a href="/toiletCat/back/bannerImg/bannerImg.jsp"><i class="fa fa-image fa-fw"></i>Banner图管理</a>
                         </li>
+                        <li>
+                            <a href="/toiletCat/back/toiletCatConfig/toiletCatConfig.jsp"><i class="fa fa-image fa-fw"></i>配置管理</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

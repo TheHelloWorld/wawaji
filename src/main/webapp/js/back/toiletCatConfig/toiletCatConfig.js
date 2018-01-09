@@ -15,11 +15,6 @@ function getAllByPage() {
 
             $("#dataBody").html("");
 
-            if(totalPage == 0){
-                $("#dataDiv").hide();
-                return;
-            }
-
             if(typeof(data) == "string"){
                 data = eval("("+data+")");
             }

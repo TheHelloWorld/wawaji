@@ -37,6 +37,7 @@
     <!-- 获得所有配置 -->
     <select id="getAllConfig" resultMap="toiletCatConfigMap">
         select
+            id,
             config_name,
             config_key,
             config_value
@@ -51,6 +52,7 @@
     <!-- 根据id获得配置项 -->
     <select id="getToiletCatConfigById" parameterType="java.lang.Long" resultMap="toiletCatConfigMap">
         select
+            id,
             config_name,
             config_key,
             config_value

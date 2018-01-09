@@ -30,6 +30,7 @@
                                     <th><lable name="configName">配置名称</lable></th>
                                     <th><lable name="configKey">配置key(程序中用)</lable></th>
                                     <th><lable name="configValue">配置value</lable></th>
+                                    <th><lable name="operation">操作</lable></th>
                                 </tr>
                                 </thead>
                                 <tbody id="dataBody">
