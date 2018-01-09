@@ -76,4 +76,12 @@ public interface UserService {
      * @return
      */
     CommonResult<String> userRecharge(String userNo, Double amount, String rechargeType);
+
+    /**
+     * 用户邀请码
+     * @param userNo 用户编号
+     * @param inviteCode 邀请码
+     * @return
+     */
+    CommonResult<String> userInvite(String userNo, String inviteCode);
 }

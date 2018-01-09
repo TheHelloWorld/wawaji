@@ -1,11 +1,12 @@
 .user-address-line {
-    background: #B1ED0A;
+    background: gainsboro;
     border-radius: 1.875rem;
     border: 0.125rem solid #666615;
+    margin-top: 2%;
 }
 
 .user-address-line-default {
-    background: #B1ED0A;
+    background: gainsboro;
     border-radius: 1.875rem;
     border: 0.0625rem solid silver;
 }

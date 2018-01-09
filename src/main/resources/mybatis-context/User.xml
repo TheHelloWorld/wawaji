@@ -121,7 +121,7 @@
     <!-- 根据id和用户编号修改用户游戏币数(后台操作) -->
     <update id="updateUserCoinByIdAndUserNo">
         update `user` set
-        user_coin = #{userCoin, jdbcType=INTEGER}
+          user_coin = #{userCoin, jdbcType=INTEGER}
         where id = #{id} and user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
@@ -132,5 +132,10 @@
           user_img = #{userImg, jdbcType=VARCHAR}
         where user_no = #{userNo, jdbcType=VARCHAR}
     </update>
+
+    <!-- 根据用户邀请码获得用户编号 -->
+    <select id="getUserNoByInvitationCode" parameterType="java.lang.String" resultType="java.lang.String" >
+        select user_no from `user` where invitation_code = #{invitationCode, jdbcType=VARCHAR}
+    </select>
 
 </mapper>

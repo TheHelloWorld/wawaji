@@ -229,4 +229,19 @@ public class UserController {
         return JSONUtil.getReturnBeanString(result);
     }
 
+    /**
+     * 用户邀请码
+     * @param userNo 用户编号
+     * @param inviteCode 邀请码
+     * @return
+     */
+    @RequestMapping(value = "/userInvite", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String userInvite(String userNo, String inviteCode) {
+
+        CommonResult<String> result = userService.userInvite(userNo, inviteCode);
+
+        return JSONUtil.getReturnBeanString(result);
+    }
+
 }

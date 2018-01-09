@@ -62,7 +62,7 @@ public class RechargeUtil {
      */
     private static String getSign(JSONObject json) {
 
-        PropertiesUtil propertiesUtil = new PropertiesUtil("system");
+        PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
         TreeMap<String, String> treeMap = new TreeMap<>();
 
@@ -115,7 +115,7 @@ public class RechargeUtil {
      */
     public static String getRequestUrl(String orderNo, String money) {
 
-        PropertiesUtil propertiesUtil = new PropertiesUtil("system");
+        PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
         JSONObject json = new JSONObject();
 

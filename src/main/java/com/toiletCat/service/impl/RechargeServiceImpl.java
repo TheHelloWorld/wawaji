@@ -232,7 +232,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
     private Boolean checkSign(RechargeResult rechargeResult) {
         JSONObject json = new JSONObject();
 
-        PropertiesUtil propertiesUtil = new PropertiesUtil("system");
+        PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
         json.put("pid", propertiesUtil.getProperty("recharge_pid"));
         json.put("money", rechargeResult.getMoney());

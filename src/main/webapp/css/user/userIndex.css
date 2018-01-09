@@ -1,5 +1,5 @@
 body {
-    background: #595163;
+    background: #ff3968;
     width: 100%;
     font-size: 2rem;
     margin-top: 0;
@@ -27,7 +27,7 @@ body {
     font-weight: bold;
     margin-top: 10%;
     margin-left: 5%;
-    background: #B1ED0A;
+    background: #fe8820;
     border-radius: 1.875rem;
 }
 
@@ -47,7 +47,7 @@ body {
 
 .center-name {
     margin-top: 1%;
-    color: #666615;
+    color: whitesmoke;
 }
 
 .center-other {
@@ -55,12 +55,12 @@ body {
     font-size: 1.25rem;
     margin-top: 0.625rem;
     margin-left: 5%;
-    background: #B1ED0A;
+    background: #fe8823;
     border-radius: 1.875rem;
 }
 
 .text {
-    color: #666615;
+    color: whitesmoke;
     margin-top: 1%;
     font-size: 2.25rem;
     font-weight: bold;
