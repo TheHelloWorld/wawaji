@@ -47,8 +47,6 @@ function  getDataByInfo(id) {
                 $("#"+col).val(info[col])
             });
 
-            $("#configName").attr("disabled", true);
-
             $("#configKey").attr("disabled", true);
         }
     });

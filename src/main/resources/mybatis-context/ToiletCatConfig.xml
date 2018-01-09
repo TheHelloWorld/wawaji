@@ -62,6 +62,7 @@
     <!-- 修改配置项 -->
     <update id="updateToiletCatConfig" parameterType="com.toiletCat.entity.ToiletCatConfig">
         update toiletCat_config set
+            config_name = #{configName, jdbcType=VARCHAR},
             config_value = #{configValue, jdbcType=VARCHAR}
         where id = #{id}
     </update>
