@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toiletCat.dao.ToiletCatConfigDao">
+
+    <!-- 配置项表 -->
+    <resultMap type="com.toiletCat.entity.ToiletCatConfig" id="toiletCatConfigMap">
+        <!-- 主键Id -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <!-- 配置名称 -->
+        <result property="configName" column="config_name" jdbcType="VARCHAR"/>
+        <!-- 配置key(程序中用) -->
+        <result property="configKey" column="config_key" jdbcType="VARCHAR"/>
+        <!-- 配置value -->
+        <result property="configValue" column="config_value" jdbcType="VARCHAR"/>
+        <!-- 创建时间 -->
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <!-- 最后修改时间 -->
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 添加配置项 -->
+    <insert id="addToiletCatConfig" parameterType="com.toiletCat.entity.ToiletCatConfig">
+        insert into toiletCat_config
+        (
+            config_name,
+            config_key,
+            config_value
+        )
+        values
+        (
+            #{configName, jdbcType=VARCHAR},
+            #{configKey, jdbcType=VARCHAR},
+            #{configValue, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- 获得所有配置 -->
+    <select id="getAllConfig" resultMap="toiletCatConfigMap">
+        select
+            config_name,
+            config_key,
+            config_value
+        from toiletCat_config
+    </select>
+
+    <!-- 获得所有配置项数量 -->
+    <select id="countAllConfig" resultType="java.lang.Integer">
+        select count(*) from toiletCat_config
+    </select>
+
+    <!-- 修改配置项 -->
+    <update id="updateToiletCatConfig" parameterType="com.toiletCat.entity.ToiletCatConfig">
+        update toiletCat_config set
+            config_value = #{configValue, jdbcType=VARCHAR}
+        where id = #{id}
+    </update>
+
+    <!-- 根据id和机器编号删除机器记录 -->
+    <delete id="deleteToiletCatConfig" parameterType="com.toiletCat.entity.ToiletCatConfig">
+        delete from toiletCat_config where id = #{id}
+    </delete>
+
+</mapper>
