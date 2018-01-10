@@ -3,15 +3,32 @@ var userNo = "";
 
 var nowPage = 1;
 
+var type = "";
+
 $(function() {
     // 获得用户编号
     userNo = getQueryString("userNo");
+
+    type = getQueryString("type");
 
     // 获得总页数和总数量
     getTotalCountAndPageSizeByUserNo();
     
     // 获得当前用户所有消费记录
-    getAllUserSpendRecordByUserNo();
+    getAllUserSpendRecordByUserNo(nowPage);
+
+    var indexBodyDivHeight = $(".index-body-div").height();
+
+    var addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+
+
+    $(".index-body-div").scroll(function(){
+
+        if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
+            nextPage();
+            addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+        }
+    });
 
 });
 
@@ -56,7 +73,7 @@ function getTotalCountAndPageSizeByUserNo() {
 }
 
 // 获得当前用户所有消费记录
-function getAllUserSpendRecordByUserNo() {
+function getAllUserSpendRecordByUserNo(nowPage) {
 
     var startPage = (nowPage -1 ) * pageSize;
 
@@ -88,35 +105,40 @@ function getAllUserSpendRecordByUserNo() {
 
                 console.info(list[i]);
 
-                if(i % 2 == 0) {
-                    str += "<div class='row' style='margin-bottom: 5px'>";
+                str += "<div id='userSpendRecord"+list[i]["id"]+"' class='user-spend-row' >";
 
-                }
-
-                if(i % 2 == 0) {
-                    str += "<div class='machine-col-xs-6-left' onclick='toUserToyDetail("+list[i]["id"]+")' >";
-                } else if(i % 2 != 0) {
-                    str += "<div class='machine-col-xs-6-right' onclick='toUserToyDetail("+list[i]["id"]+")' >";
-                }
-
-                str += "    <div class='machine-panel panel-info'>";
-                str += "        <div class='panel-body'>";
-                str += "            <div class='toy-img index-img'>"
-                str += "                <img height='100px' width=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
-                str += "            </div>";
-                str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
+                str += "    <div class='user-spend-div' >";
+                str += "        <div class='catch-toy-img'>";
+                str += "            <img src='" + list[i]["toyImg"] + "' />";
+                str += "        </div>";
                 var newDate = new Date();
-                newDate.setTime(list[i]["createTime"]);
-                str += "            <div style='margin-bottom: 2px'><span>" +newDate.format('yyyy-MM-dd h:m') + "</span></div>";
+                newDate.setTime(list[i]["catchTime"]);
+                str += "        <div class='user-spend-time' ><span>" + newDate.format('yyyy-MM-dd hh:mm:ss') + "</span>";
+                str += "            <div class='user-spend-type' >";
+                if(list[i]["catchResult"] == "1") {
+                    str += "            <span>抓取成功</span>";
+                } else {
+                    str += "            <span>抓取失败</span>";
+                }
+                str += "            </div>";
                 str += "        </div>";
                 str += "    </div>";
                 str += "</div>";
-
-                if(i % 2 != 0) {
-                    str += "</div>";
-                }
             }
             $("#userSpend").append(str);
         }
     });
+}
+
+function nextPage() {
+    nowPage ++;
+    if(nowPage <= totalPage) {
+        getAllUserSpendRecordByUserNo(nowPage);
+    } else {
+        nowPage = totalPage;
+    }
+}
+
+function returnMethod() {
+    window.location.href="/toiletCat/user/userIndex.html?type=" + type + "&userNo" + userNo;
 }

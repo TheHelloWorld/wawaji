@@ -126,9 +126,7 @@ function getAllUserCatchRecordByUserNo(userNo) {
                 str += "        </div>";
                 str += "    </div>";
                 str += "</div>";
-                str += "<div style='text-align: center'>";
 
-                str += "</div>";
             }
 
             $("#catchRecord").append(str);
@@ -140,5 +138,5 @@ function getAllUserCatchRecordByUserNo(userNo) {
 }
 
 function returnMethod() {
-    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom&userNo"+userNo;
+    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom&userNo" + userNo;
 }
