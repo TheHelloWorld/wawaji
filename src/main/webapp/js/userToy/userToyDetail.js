@@ -91,7 +91,7 @@ function getUserToyByUserNoAndId() {
 
             var str = " <div class='row'>";
             str += "        <div class='user-toy-div'>";
-            str += "            <img class='user-toy-img toy-img index-img' src='" + result["toyImg"] + "'>";
+            str += "            <img class='user-toy-img index-img' src='" + result["toyImg"] + "'>";
             str += "        </div>";
             str += "        <div class='user-toy-div' style='color:white;font-size:1.5rem;margin-left:0%;'>";
             str += "            <div>" + result["toyName"] + "</div>";
@@ -325,7 +325,7 @@ function getAllUnHandleUserToyByUserNo() {
             }
 
             var list = data["result"];
-            var str = "<div style='text-align: center;color: #666615;font-size: 2.25rem;'>" + freeDeliverNum + "个或以上才包邮哦(邮费<img src='/image/background/coin.ico'>"+deliverCoin+")</div>";
+            var str = "<div style='text-align: center;color: whitesmoke;font-size: 2.25rem;'>" + freeDeliverNum + "个或以上才包邮哦(邮费<img src='/image/background/coin.ico'>"+deliverCoin+")</div>";
 
             flag = false;
             for(var i = 0; i<list.length; i++) {
@@ -348,7 +348,7 @@ function getAllUnHandleUserToyByUserNo() {
                 }
 
                 str += "    <input type='hidden' id='unHandleToy"+list[i]["id"]+"' value='"+list[i]["toyName"]+"' >";
-                str += "    <div class='machine-panel panel-info'>";
+                str += "    <div class='user-deliver-toy-div panel-info'>";
                 str += "        <div class='panel-body'>";
                 str += "            <div class='toy-img index-img'>";
                 str += "                <img height='100px' width=100% src='" + list[i]["toyImg"] + "' class='index-img' />";

@@ -37,6 +37,7 @@
     <!-- 获得所有配置 -->
     <select id="getAllConfig" resultMap="toiletCatConfigMap">
         select
+            id,
             config_name,
             config_key,
             config_value
@@ -48,9 +49,20 @@
         select count(*) from toiletCat_config
     </select>
 
+    <!-- 根据id获得配置项 -->
+    <select id="getToiletCatConfigById" parameterType="java.lang.Long" resultMap="toiletCatConfigMap">
+        select
+            id,
+            config_name,
+            config_key,
+            config_value
+        from toiletCat_config where id = #{id}
+    </select>
+
     <!-- 修改配置项 -->
     <update id="updateToiletCatConfig" parameterType="com.toiletCat.entity.ToiletCatConfig">
         update toiletCat_config set
+            config_name = #{configName, jdbcType=VARCHAR},
             config_value = #{configValue, jdbcType=VARCHAR}
         where id = #{id}
     </update>

@@ -68,6 +68,24 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
     }
 
     /**
+     * 根据id获得配置项
+     * @param id 主键id
+     * @return
+     */
+    @Override
+    public CommonResult<ToiletCatConfig> getToiletCatConfigById(final Long id) {
+        JSONObject json = new JSONObject();
+        json.put("id", id);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(toiletCatConfigDao.getToiletCatConfigById(id));
+            }
+        }, "getAllConfig", json.toJSONString());
+    }
+
+    /**
      * 修改配置项
      * @param toiletCatConfig 配置项
      */
@@ -114,10 +132,9 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
      */
     @Override
     public String getConfigByKey(String key) {
-
+        logger.info("getConfigByKey: "+key);
         // 初始化配置Map
         initCoinfgMap();
-
         return BaseConstant.configMap.get(key);
     }
 
@@ -125,6 +142,8 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
         if(BaseConstant.configMap.isEmpty()) {
 
             List<ToiletCatConfig> list = new ArrayList<>(toiletCatConfigDao.countAllConfig());
+
+            list = toiletCatConfigDao.getAllConfig();
 
             // 将配置放入配置Map中
             for(ToiletCatConfig toiletCatConfig : list) {

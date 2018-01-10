@@ -62,7 +62,7 @@
             trade_date,
             trade_time
         from user_spend_record
-        where user_no = #{userNo}
+        where user_no = #{userNo} order by trade_time desc
         limit #{startPage}, #{pageSize}
     </select>
 

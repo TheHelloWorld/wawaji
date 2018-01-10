@@ -6,7 +6,6 @@
     margin-right: 10%;
 }
 
-
 .user-toy-img {
     height: 100%;
     width: 100%;
@@ -14,7 +13,7 @@
 
 .user-toy-success {
     border-radius: 0.93rem;
-    border: 0.125rem solid saddlebrown;
+    border: 0.125rem solid sandybrown;
 }
 
 .user-toy-left {
@@ -91,4 +90,13 @@
     background: #FEFE9E;
     border: 0;
     border-radius: 1.25rem;
+}
+
+.user-deliver-toy-div {
+    background: wheat;
+    margin: 0.3125rem 0.3125rem;
+    border-radius: 1.125rem;
+    -webkit-box-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, .05);
+    box-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, .05);
+    border: 0.0625rem solid gray;
 }

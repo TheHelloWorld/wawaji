@@ -51,6 +51,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     @Autowired
     private UserToyService userToyService;
 
+    @Autowired
+    private ToiletCatConfigService toiletCatConfigService;
+
     /**
      * 用户注册或登录
      *
@@ -75,8 +78,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     // 用户手机号
                     user.setMobileNo(mobileNo);
 
-                    Integer defaultUserCoin = Integer.valueOf(Integer.valueOf(
-                            systemProperties.getProperty("user_default_coin")));
+                    Integer defaultUserCoin = Integer.valueOf(
+                            toiletCatConfigService.getConfigByKey(BaseConstant.USER_DEFAULT_COIN));
 
                     // 用户游戏币数
                     user.setUserCoin(defaultUserCoin);
@@ -807,7 +810,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
-                Integer coin = Integer.valueOf(propertiesUtil.getProperty("user_invite_coin"));
+                Integer coin = Integer.valueOf(toiletCatConfigService.getConfigByKey(BaseConstant.USER_INVITE_COIN));
 
                 Date tradeTime = new Date();
 

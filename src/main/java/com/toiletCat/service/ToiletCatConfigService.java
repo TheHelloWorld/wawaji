@@ -26,6 +26,13 @@ public interface ToiletCatConfigService {
     CommonResult<List<ToiletCatConfig>> getAllConfig();
 
     /**
+     * 根据id获得配置项
+     * @param id 主键id
+     * @return
+     */
+    CommonResult<ToiletCatConfig> getToiletCatConfigById(Long id);
+
+    /**
      * 修改配置项
      * @param toiletCatConfig 配置项
      */
