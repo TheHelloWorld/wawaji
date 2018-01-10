@@ -17,37 +17,43 @@ $(function(){
     var hc = $(window).height();
 
     $(".background-div").css(
-        'height',hc
+        'height', hc
     );
 
     $(".center-content").css(
-        'height',hc*0.29
+        'height', hc * 0.29
     );
 
     $(".center-other").css(
-        'height',hc*0.07
+        'height', hc * 0.07
     );
 
     $(".center-img img").css(
-        'height',hc*0.1
+        'height', hc * 0.1
     );
 });
 
+// 返回方法
 function returnMethod() {
-    window.location.href="/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+userNo;
+    window.location.href="/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo=" + userNo;
 }
 
-function toUserToy() {
-    window.location.href="/toiletCat/userToy/userToy.html?type=gameRoom&userNo="+userNo;
-}
-
+// 跳转到用户地址页
 function toUserAddress() {
-    window.location.href="/toiletCat/userAddress/userAddress.html?type=gameRoom&userNo="+userNo;
+    window.location.href="/toiletCat/userAddress/userAddress.html?type=gameRoom&userNo=" + userNo;
 }
 
+// 跳转到用户抓去记录页
 function toUserCatch() {
-    window.location.href="/toiletCat/userCatch/userCatch.html?type=gameRoom&userNo="+userNo;
+    window.location.href="/toiletCat/userCatch/userCatch.html?type=gameRoom&userNo=" + userNo;
 }
+
+// 跳转到用户充值记录页
+function toUserSpend() {
+    window.location.href="/toiletCat/userSpendRecord/userSpendRecord.html?type=gameRoom&userNo=" + userNo;
+}
+
+
 
 // 设置用户信息
 function setUserInfo() {

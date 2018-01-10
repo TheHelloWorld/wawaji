@@ -16,7 +16,7 @@ public interface UserSpendRecordDao {
     void addUserSpendRecord(UserSpendRecord userSpendRecord);
 
     /**
-     * 根据用户编号获得所有用户消费记录
+     * 根据用户编号获得所有用户消费记录数量
      * @param userNo 用户编号
      * @return
      */

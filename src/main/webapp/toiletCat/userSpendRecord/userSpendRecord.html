@@ -12,7 +12,7 @@
     <meta name="description" content="描述" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="format-detection" content="telephone=no" />
-    <title>我的战利品</title>
+    <title>消费记录</title>
 
     <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css" >
 
@@ -26,16 +26,19 @@
     <script type="text/javascript" src="/vendor/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/common/js/commonUtil.js"></script>
 
-    <script type="text/javascript" src="/js/userToy/userToy.js"></script>
+    <script type="text/javascript" src="/js/userSpend/userSpend.js"></script>
 </head>
     <body >
         <div class="index-body-div">
             <nav class = "index-header default-height" >
-                消费记录
+                <div class="background-img">
+                    <img class="return-button" id="returnButton" src="/image/background/returnButton.ico" onclick="returnMethod()" />
+                    <span class="nav-header-text">消费记录</span>
+                </div>
             </nav>
             <div class="default-height">
             </div>
-            <div id="userToy">
+            <div id="userSpend">
 
             </div>
             <div class="default-height">

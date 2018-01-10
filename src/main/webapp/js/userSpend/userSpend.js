@@ -31,7 +31,7 @@ function getTotalCountAndPageSizeByUserNo() {
             }
 
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -55,7 +55,7 @@ function getTotalCountAndPageSizeByUserNo() {
     });
 }
 
-// 获得当前用户所有战利品
+// 获得当前用户所有消费记录
 function getAllUserSpendRecordByUserNo() {
 
     var startPage = (nowPage -1 ) * pageSize;
@@ -77,7 +77,7 @@ function getAllUserSpendRecordByUserNo() {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
-                alert(data["result"]);
+                toiletCatMsg(data["result"], null);
                 return;
             }
 
@@ -85,6 +85,8 @@ function getAllUserSpendRecordByUserNo() {
             var str = "";
 
             for(var i = 0; i<list.length; i++) {
+
+                console.info(list[i]);
 
                 if(i % 2 == 0) {
                     str += "<div class='row' style='margin-bottom: 5px'>";
@@ -114,7 +116,7 @@ function getAllUserSpendRecordByUserNo() {
                     str += "</div>";
                 }
             }
-            $("#userToy").append(str);
+            $("#userSpend").append(str);
         }
     });
 }

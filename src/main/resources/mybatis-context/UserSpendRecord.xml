@@ -66,6 +66,11 @@
         limit #{startPage}, #{pageSize}
     </select>
 
+    <!-- 根据用户编号获得所有用户消费记录数量 -->
+    <select id="countUserSpendRecordByUserNo" resultType="java.lang.Integer">
+        select count(*) from user_spend_record where user_no = #{userNo}
+    </select>
+
     <!-- 根据订单编号修改交易状态 -->
     <update id="updateTradeStatusByOrderNo">
         update user_spend_record set
