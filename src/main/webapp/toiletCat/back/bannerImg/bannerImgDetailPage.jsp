@@ -13,6 +13,8 @@
 
     <%@ include file="/include/header.jsp"%>
 
+    <%@ include file="/include/checkLogin.jsp"%>
+
     <link href="/dist/css/fileInput/fileinput.css" media="all"rel="stylesheet" type="text/css" />
 
     <script src="/dist/js/fileInput/fileinput.js" type="text/javascript"></script>
@@ -22,6 +24,7 @@
     <script src="/common/js/fileUpload.js" type="text/javascript"></script>
 
     <script type="text/javascript" src="/js/back/bannerImg/bannerImgDetailPage.js"></script>
+
 </head>
 <body>
     <div id="dataInfo">

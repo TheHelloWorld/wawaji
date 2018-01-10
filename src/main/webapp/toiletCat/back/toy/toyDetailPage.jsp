@@ -11,7 +11,9 @@
 
     <title>玩具页</title>
 
-    <%@ include file="../../../include/header.jsp"%>
+    <%@ include file="/include/header.jsp"%>
+
+    <%@ include file="/include/checkLogin.jsp"%>
 
     <link href="/dist/css/fileInput/fileinput.css" media="all"rel="stylesheet" type="text/css" />
 

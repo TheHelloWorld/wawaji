@@ -13,6 +13,8 @@
 
     <%@ include file="header.jsp"%>
 
+    <%@ include file="checkLogin.jsp"%>
+
 </head>
 
 <body>
@@ -63,7 +65,7 @@
                             <a href="/toiletCat/back/user/user.jsp"><i class="fa fa-group fa-fw"></i> 用户管理</a>
                         </li>
                         <li>
-                            <a href="/toiletCat/back/machine/machine.jsp"><i class="fa fa-gear fa-fw"></i> 娃娃机管理</a>
+                            <a href="/toiletCat/back/machine/machine.jsp"><i class="fa fa-wrench fa-fw"></i> 娃娃机管理</a>
                         </li>
                         <li>
                             <a href="/toiletCat/back/toy/toy.jsp"><i class="fa fa-paw fa-fw"></i> 玩具管理</a>
@@ -78,7 +80,7 @@
                             <a href="/toiletCat/back/bannerImg/bannerImg.jsp"><i class="fa fa-image fa-fw"></i>Banner图管理</a>
                         </li>
                         <li>
-                            <a href="/toiletCat/back/toiletCatConfig/toiletCatConfig.jsp"><i class="fa fa-image fa-fw"></i>配置管理</a>
+                            <a href="/toiletCat/back/toiletCatConfig/toiletCatConfig.jsp"><i class="fa fa-gear fa-fw"></i>配置管理</a>
                         </li>
                     </ul>
                 </div>

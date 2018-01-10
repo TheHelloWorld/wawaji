@@ -9,7 +9,7 @@ var bannerType = 1;
 
 var loginFlag = "";
 
-var loginUrl = "/toiletCat/user/login.html?from=gameIndex&type=gameRoom&checkType=checkCode";
+var loginUrl = "/toiletCat/user/login.jsp?from=gameIndex&type=gameRoom&checkType=checkCode";
 
 $(function() {
 
