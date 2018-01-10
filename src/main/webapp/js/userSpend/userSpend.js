@@ -105,24 +105,27 @@ function getAllUserSpendRecordByUserNo(nowPage) {
 
                 console.info(list[i]);
 
+                var newDate = new Date();
+                newDate.setTime(list[i]["tradeTime"]);
+
                 str += "<div id='userSpendRecord"+list[i]["id"]+"' class='user-spend-row' >";
 
-                str += "    <div class='user-spend-div' >";
-                str += "        <div class='catch-toy-img'>";
-                str += "            <img src='" + list[i]["toyImg"] + "' />";
-                str += "        </div>";
-                var newDate = new Date();
-                newDate.setTime(list[i]["catchTime"]);
-                str += "        <div class='user-spend-time' ><span>" + newDate.format('yyyy-MM-dd hh:mm:ss') + "</span>";
-                str += "            <div class='user-spend-type' >";
-                if(list[i]["catchResult"] == "1") {
-                    str += "            <span>抓取成功</span>";
+                str += "		<div class='user-spend-div'>";
+                str += "			<div class='user-spend-title'>";
+                str += "                <p>" + list[i]["tradeTypeDesc"] + "</p>";
+                str += "                <p>" + newDate.format('yyyy-MM-dd hh:mm:ss') + "</p>";
+                str += "			</div>";
+                str += "			<div class='user-spend-coin'>";
+                str += "                <span><img src='/image/background/user_spend_coin.ico'>" + list[i]["coin"] + "</span>";
+                str += "			</div>";
+                str += "			<div class='user-spend-result'>";
+                if(list[i]["tradeStatus"] == "10") {
+                    str += "            <span>成功</span>";
                 } else {
-                    str += "            <span>抓取失败</span>";
+                    str += "            <span>失败</span>";
                 }
-                str += "            </div>";
-                str += "        </div>";
-                str += "    </div>";
+                str += "			</div>";
+                str += "		</div>";
                 str += "</div>";
             }
             $("#userSpend").append(str);

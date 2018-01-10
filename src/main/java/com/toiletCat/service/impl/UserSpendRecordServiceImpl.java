@@ -7,6 +7,7 @@ import com.toiletCat.bean.CommonResult;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.dao.UserSpendRecordDao;
 import com.toiletCat.entity.UserSpendRecord;
+import com.toiletCat.enums.TradeType;
 import com.toiletCat.service.UserSpendRecordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +76,16 @@ public class UserSpendRecordServiceImpl extends BaseServiceImpl implements UserS
         return exec(new Callback() {
             @Override
             public void exec() {
-                got(userSpendRecordDao.getUserSpendRecordByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
+
+                List<UserSpendRecord> list = userSpendRecordDao.getUserSpendRecordByUserNo(userNo,
+                        startPage, BaseConstant.DEFAULT_PAGE_SIZE);
+
+                for(UserSpendRecord userSpendRecord : list) {
+                    userSpendRecord.setTradeTypeDesc(TradeType.getValueMapByKey(userSpendRecord.getTradeType()).
+                            getDesc());
+                }
+
+                got(list);
             }
         }, "getUserSpendRecordByUserNo", json.toJSONString());
     }

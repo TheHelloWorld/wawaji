@@ -1,39 +1,37 @@
 .user-spend-row {
     float: left;
     width: 100%;
-    background: gainsboro;
     margin-top: 2%;
     border-radius: 1.875rem;
+    text-align: center;
 }
 
 .user-spend-div {
-    width: 100%;
-    float: left;
+    margin: auto auto;
+    text-align: center;
     height: 100%;
-    margin-left: 5%;
-}
-
-.catch-toy-img {
-    float: left;
-    width: 30%;
-    height: 100%;
+    width: 70%;
+    border: 0.1875rem solid black;
     border-radius: 1.875rem;
-    border: 0.3125rem solid #666615;
+    background: white;
 }
 
-.catch-toy-img img {
-    border-radius: 1.875rem;
-    float: left;
-    width: 100%;
-    height: 100%;
+.user-spend-title {
+    font-size: 2rem;
+    border-bottom: 0.0625rem solid saddlebrown;
 }
 
-.user-spend-time {
-    float: left;
-    margin-left: 25%;
-    margin-top: 8%;
+.user-spend-coin {
+    margin-top: 5%;
+    font-size: 2.25rem;
+    opacity: 1;
 }
 
-.user-spend-type {
-    margin-top: 13%;
+.user-spend-result {
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 5%;
+    font-size: 2.25rem;
+    border-radius: 0.9375rem;
+    opacity: 1;
 }

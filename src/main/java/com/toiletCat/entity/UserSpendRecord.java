@@ -31,6 +31,11 @@ public class UserSpendRecord extends BaseEntity implements Serializable {
     private Integer tradeType;
 
     /**
+     * 交易类型描述
+     */
+    private String tradeTypeDesc;
+
+    /**
      * 交易状态
      */
     private Integer tradeStatus;
@@ -75,6 +80,14 @@ public class UserSpendRecord extends BaseEntity implements Serializable {
 
     public void setTradeType(Integer tradeType) {
         this.tradeType = tradeType;
+    }
+
+    public String getTradeTypeDesc() {
+        return tradeTypeDesc;
+    }
+
+    public void setTradeTypeDesc(String tradeTypeDesc) {
+        this.tradeTypeDesc = tradeTypeDesc;
     }
 
     public Integer getTradeStatus() {
