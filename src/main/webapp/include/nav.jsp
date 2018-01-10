@@ -13,6 +13,8 @@
 
     <%@ include file="header.jsp"%>
 
+    <%@ include file="checkLogin.jsp"%>
+
 </head>
 
 <body>

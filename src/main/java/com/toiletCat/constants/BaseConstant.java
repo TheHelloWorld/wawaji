@@ -214,4 +214,16 @@ public class BaseConstant {
 	 * 用户战利品邮费
 	 */
 	public static final String USER_DELIVER_COIN = "user_deliver_coin";
+
+	/**
+	 * 后台登录用户名
+	 */
+	public static final String BACK_USER_NAME = "toiletCat_Back_Admin_Root_Name";
+
+	/**
+	 * 后台登录密码
+	 */
+	public static final String BACK_USER_PASSWORD = "asdkljfhalksjvoiualknxcvlkj123lsjchvlkjasdf";
+
+
 }
