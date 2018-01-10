@@ -12,6 +12,8 @@
 
     <%@ include file="/include/header.jsp"%>
 
+    <%@ include file="/include/checkLogin.jsp"%>
+
     <script type="text/javascript" src="/js/back/machine/machineDetailPage.js"></script>
 </head>
 <body>
