@@ -216,6 +216,23 @@ public class BaseConstant {
 	public static final String USER_DELIVER_COIN = "user_deliver_coin";
 
 	/**
+	 * 到达阈值前用户幸运值添加随机数上限
+	 */
+	public static final String USER_LUCKY_NUM_BEFORE_THRESHOLD = "user_lucky_num_before_threshold";
+
+	/**
+	 * 用户幸运值阈值
+	 */
+	public static final String USER_LUCKY_NUM_THRESHOLD = "user_lucky_num_threshold";
+
+	/**
+	 * 到达阈值后用户幸运值添加随机数上限
+	 */
+	public static final String USER_LUCKY_NUM_AFTER_THRESHOLD = "user_lucky_num_after_threshold";
+
+
+
+	/**
 	 * 后台登录用户名
 	 */
 	public static final String BACK_USER_NAME = "toiletCat_Back_Admin_Root_Name";

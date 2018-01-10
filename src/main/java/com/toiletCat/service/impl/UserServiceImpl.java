@@ -601,7 +601,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 Integer roomAddLuckyNum = gameRoom.getAddLuckyNum();
 
-                Integer userLucKyNum = RandomIntUtil.getRandomNumByHighBound(5);
+                Integer userLucKyNum = RandomIntUtil.getRandomNumByHighBound(Integer.valueOf(
+                        toiletCatConfigService.getConfigByKey(BaseConstant.USER_LUCKY_NUM_BEFORE_THRESHOLD)));
 
                 // 判断当前用户是否在此房间有幸运值
                 CommonResult<Integer> userGameRoomCount = userGameRoomService
@@ -655,8 +656,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     userNowLuckyNum = userGameLucyNumResult.getValue();
                 }
 
-                if(userNowLuckyNum >= BaseConstant.USER_ROOM_LUCKY_BORDER) {
-                    userLucKyNum = RandomIntUtil.getRandomNumByHighBound(3);
+                // 幸运值大于阈值后
+                if(userNowLuckyNum >= Integer.valueOf(
+                        toiletCatConfigService.getConfigByKey(BaseConstant.USER_LUCKY_NUM_THRESHOLD))) {
+
+                    // 按幸运值大于阈值后幸运值最大随机数上限进行累加
+                    userLucKyNum = RandomIntUtil.getRandomNumByHighBound(Integer.valueOf(
+                            toiletCatConfigService.getConfigByKey(BaseConstant.USER_LUCKY_NUM_AFTER_THRESHOLD)));
 
                 }
 
