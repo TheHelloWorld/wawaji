@@ -10,7 +10,6 @@ import java.util.Map;
  */
 public class BaseConstant {
 
-	//************************* session中存放的变量名 *********************************
 	/**
 	 * 用户id
 	 */
@@ -35,26 +34,10 @@ public class BaseConstant {
 	 */
 	public static final String TICKET = "ticket";
 
-	// ******** 没有权限的struts2返回结果，需要在struts.xml中配置  ******************
-	/**
-	 * 没有登录
-	 */
-	public static final String UNLOGIN = "unLogin";
-
 	/**
 	 * 异常信息
 	 **/
 	public static final String ERROR_MAG = "服务器维护中,请稍后重试";
-
-	/**
-	 * 默认用户首次去向
-	 **/
-	public static final Long DEDAULT_FIRST_TARGET = -1L;
-
-	/**
-	 * 用户信息已存在
-	 **/
-	public static final String USER_INFO_REPEAT = "用户信息已提交,请勿重复提交";
 
 	/**
 	 * 成功标志
@@ -116,6 +99,9 @@ public class BaseConstant {
 	 */
 	public static final String DEDUCTION_COIN_FAIL = "扣除游戏币失败,请新操作";
 
+	/**
+	 * 游戏币不足提示
+	 */
 	public static final String NOT_ENOUGH_COIN = "当前游戏币不足,请充值";
 
 	/**
@@ -134,24 +120,9 @@ public class BaseConstant {
 	public static final String MACHINE_ALREADY_IN_UES = "机器已被占用";
 
 	/**
-	 * 游戏房间被占用提示语
-	 */
-	public static final String GAME_ROOM_ALREADY_IN_UES = "游戏房间已被占用";
-
-	/**
 	 * 用户游戏房间最大幸运值
 	 */
 	public static final Integer MAX_USER_ROOM_LUCKY_NUM = 100;
-
-	/**
-	 * 用户幸运值边界
-	 */
-	public static final Integer USER_ROOM_LUCKY_BORDER = 70;
-
-	/**
-	 * 游戏房间幸运累加值
-	 */
-	public static Integer GAME_ROOM_LUCKY_ADD_NUM = 1;
 
 	/**
 	 * redis配置文件名
@@ -173,6 +144,9 @@ public class BaseConstant {
 	 */
 	public static final String GAME_ROOM_VIEWER = "game_room_viewer_#{}";
 
+	/**
+	 * 放入cookie中的key
+	 */
 	public static final String COOKIE_USER_NO = "toilet_cat_user_no";
 
 	/**
@@ -229,8 +203,6 @@ public class BaseConstant {
 	 * 到达阈值后用户幸运值添加随机数上限
 	 */
 	public static final String USER_LUCKY_NUM_AFTER_THRESHOLD = "user_lucky_num_after_threshold";
-
-
 
 	/**
 	 * 后台登录用户名
