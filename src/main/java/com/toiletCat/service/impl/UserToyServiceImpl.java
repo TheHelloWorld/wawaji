@@ -171,7 +171,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                     Integer freeDeliverNum = Integer.valueOf(toiletCatConfigService.getConfigByKey(
                             BaseConstant.FREE_DELIVER_NUM));
 
-                    // 若寄送娃娃少于3个则扣除相应游戏币作为邮寄费
+                    // 若寄送娃娃少于包邮个数则扣除相应游戏币作为邮寄费
                     if(userToyIdList.size() < freeDeliverNum) {
                         // 获取邮寄费
                         Integer deliverCoin = Integer.valueOf(toiletCatConfigService.getConfigByKey(
@@ -181,12 +181,26 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                         logger.info("updateChoiceTypeByIdAndUserNo 扣除用户邮寄费游戏币成功");
                         UserSpendRecord userSpendRecord = new UserSpendRecord();
 
+                        Date tradeTime = new Date();
+
                         userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
+
                         userSpendRecord.setTradeType(TradeType.DELIVER_COIN.getType());
-                        userSpendRecord.setTradeTime(new Date());
+
+                        userSpendRecord.setTradeTime(tradeTime);
+
                         userSpendRecord.setTradeDate(DateUtil.getDate());
+
                         userSpendRecord.setUserNo(userNo);
+
+                        // 邮寄游戏币数
                         userSpendRecord.setCoin(deliverCoin);
+
+                        // 订单号
+                        String deliverOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime() + userNo;
+
+                        // 设置订单号
+                        userSpendRecord.setOrderNo(deliverOrderNo);
 
                         userSpendRecordDao.addUserSpendRecord(userSpendRecord);
 
@@ -204,6 +218,9 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                     }
 
                 } else if(ChoiceType.FOR_COIN.getStatus() == choiceType) {
+
+                    Date tradeTime = new Date();
+
                     // 添加相应的游戏币给用户
                     userDao.updateUserCoinByUserNo((userToy.getToyForCoin()), userNo);
 
@@ -215,18 +232,23 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                     // 交易日期
                     userSpendRecord.setTradeDate(DateUtil.getDate());
                     // 交易时间
-                    userSpendRecord.setTradeTime(new Date());
+                    userSpendRecord.setTradeTime(tradeTime);
                     // 交易状态 成功
                     userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
                     // 交易类型 玩具兑换成游戏币
                     userSpendRecord.setTradeType(TradeType.TOY_FOR_COIN.getType());
 
+                    // 订单号
+                    String toyForCoinOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime() + userNo;
+
+                    // 设置订单号
+                    userSpendRecord.setOrderNo(toyForCoinOrderNo);
+
+
                     userSpendRecordDao.addUserSpendRecord(userSpendRecord);
 
                     userToyDao.updateChoiceTypeByIdAndUserNo(userToy);
                 }
-
-
 
             }
         }, "updateChoiceTypeByIdAndUserNo", JSON.toJSONString(userToy));

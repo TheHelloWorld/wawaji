@@ -247,41 +247,61 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 UserSpendRecord userSpendRecord = new UserSpendRecord();
 
                 Date date = new Date();
+
                 // 用户编号
                 userSpendRecord.setUserNo(userNo);
+
                 // 消费游戏币数
                 userSpendRecord.setCoin(needCoin);
+
                 // 消费类型
                 userSpendRecord.setTradeType(TradeType.SPEND.getType());
+
                 // 消费日期
                 userSpendRecord.setTradeDate(DateUtil.getDateByTime(date));
+
                 // 消费时间
                 userSpendRecord.setTradeTime(date);
+
+                // 订单号
+                String spendOrderNo = BaseConstant.TOILER_CAT + date.getTime() + userNo;
+
+                userSpendRecord.setOrderNo(spendOrderNo);
 
                 try {
                     // 扣除用户游戏币
                     userDao.updateUserCoinByUserNo(-needCoin, userNo);
 
                     userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
+
                     userSpendRecordService.addUserSpendRecord(userSpendRecord);
 
                     // 添加娃娃抓取记录
                     CatchRecord catchRecord = new CatchRecord();
+
                     // 抓取id
                     String catchId = UUIDUtil.generateUUID();
+
                     catchRecord.setCatchId(catchId);
+
                     // 用户编号
                     catchRecord.setUserNo(userNo);
+
                     // 玩具编号
                     catchRecord.setToyNo(userMachine.getToyNo());
+
                     // 玩具名称
                     catchRecord.setToyName(userMachine.getToyName());
+
                     // 玩具图片
                     catchRecord.setToyImg(userMachine.getToyImg());
+
                     // 抓取状态 默认为等待
                     catchRecord.setCatchResult(CatchResult.CATCH_WAIT.getStatus());
+
                     // 抓取状态
                     catchRecord.setCatchStatus(CatchStatus.NORMAL.getStatus());
+
                     // 抓取时间
                     catchRecord.setCatchTime(new Date());
 
@@ -369,16 +389,26 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 UserSpendRecord userSpendRecord = new UserSpendRecord();
 
                 Date date = new Date();
+
                 // 用户编号
                 userSpendRecord.setUserNo(userNo);
+
                 // 消费游戏币数
                 userSpendRecord.setCoin(needCoin);
+
                 // 消费类型
                 userSpendRecord.setTradeType(TradeType.SPEND.getType());
+
                 // 消费日期
                 userSpendRecord.setTradeDate(DateUtil.getDateByTime(date));
+
                 // 消费时间
                 userSpendRecord.setTradeTime(date);
+
+                // 订单号
+                String spendOrderNo = BaseConstant.TOILER_CAT + date.getTime() + userNo;
+
+                userSpendRecord.setOrderNo(spendOrderNo);
 
                 try {
                     // 扣除用户游戏币
@@ -389,21 +419,30 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     // 添加娃娃抓取记录
                     CatchRecord catchRecord = new CatchRecord();
+
                     // 抓取id
                     String catchId = UUIDUtil.generateUUID();
+
                     catchRecord.setCatchId(catchId);
+
                     // 用户编号
                     catchRecord.setUserNo(userNo);
+
                     // 玩具编号
                     catchRecord.setToyNo(userSeeGameRoom.getToyNo());
+
                     // 玩具名称
                     catchRecord.setToyName(userSeeGameRoom.getToyName());
+
                     // 玩具图片
                     catchRecord.setToyImg(userSeeGameRoom.getToyImg());
+
                     // 抓取结果 默认为等待
                     catchRecord.setCatchResult(CatchResult.CATCH_WAIT.getStatus());
+
                     // 抓取时间
                     catchRecord.setCatchTime(new Date());
+
                     // 抓取状态
                     catchRecord.setCatchStatus(CatchStatus.NORMAL.getStatus());
 
@@ -540,6 +579,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      * @param userNo 用户编号
      * @param gameRoomNo 游戏房间号
      * @param catchId 抓取id
+     * @param status 状态
      * @return
      */
     @Override
