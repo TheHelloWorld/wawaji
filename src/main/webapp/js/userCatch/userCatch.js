@@ -137,6 +137,7 @@ function getAllUserCatchRecordByUserNo(userNo) {
     });
 }
 
+// 返回用户主页
 function returnMethod() {
-    window.location.href="/toiletCat/user/userIndex.html?type=gameRoom&userNo" + userNo;
+    window.location.href = "/toiletCat/user/userIndex.html?type=gameRoom&userNo" + userNo;
 }
