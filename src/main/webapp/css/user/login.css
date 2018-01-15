@@ -1,5 +1,5 @@
 body {
-    background: #595163;
+    background: #ff3968;
     width: 100%;
     font-size: 2rem;
     margin-top: 0;
@@ -20,8 +20,6 @@ body {
 }
 
 .login-content {
-    position: fixed;
-    top: 60%;
     width: 100%;
 }
 
@@ -29,7 +27,6 @@ body {
     height: 5rem;
     line-height: 5rem;
     font-size: 3.4rem;
-    border-radius: 1.25rem;
     color: black
 }
 
@@ -37,7 +34,6 @@ body {
     height: 5%;
     line-height: 5%;
     font-size: 3.4rem;
-    border-radius: 1.25rem;
 }
 
 .safe-img {
@@ -49,7 +45,6 @@ body {
     height: 5rem;
     line-height: 5rem;
     font-size: 3.4rem;
-    border-radius: 1.25rem;
 }
 
 .login-get-code {
