@@ -161,7 +161,7 @@ function getUserSeeGameRoomListByPage(nowPage) {
 
 function toGamePage(gameRoomNo) {
 
-    var gameRoomUrl = "/toiletCat/game/game.html?userNo=" + userNo + "&gameRoomNo=" + gameRoomNo;
+    var gameRoomUrl = "/toiletCat/game/bin/index.html?userNo=" + userNo + "&gameRoomNo=" + gameRoomNo;
 
     if(loginFlag == "fail") {
         gameRoomUrl = loginUrl;
