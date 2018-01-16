@@ -33,9 +33,15 @@
 
                     var result = data["result"];
 
-                    if(result == "login_success") {
+                    if(typeof(result) == "string") {
+                        result = eval("("+result+")");
+                    }
 
-                        sessionStorage["toiletCatBackLogin"] = "toiletCat_true";
+                    if(result["result_flag"] == "login_success") {
+
+                        sessionStorage["toiletCatBackLogin"] = result["result_msg"];
+
+                        sessionStorage["toiletCatBackLogin_Local"] = result["result_msg"];
 
                         window.location.href = "/toiletCat/back/toiletCatConfig/toiletCatConfig.jsp";
 

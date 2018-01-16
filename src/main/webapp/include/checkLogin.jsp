@@ -5,7 +5,7 @@
     var loginFlag = sessionStorage["toiletCatBackLogin"];
 
     // 若未登录则跳转到登录页面
-    if(loginFlag == undefined || loginFlag != "toiletCat_true") {
+    if(loginFlag == undefined || loginFlag == null || loginFlag != sessionStorage["toiletCatBackLogin_Local"]) {
         window.location.href = "/toiletCat/back/login.jsp";
     }
 
