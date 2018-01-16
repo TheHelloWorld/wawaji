@@ -3,15 +3,15 @@ var shadowObj,toyNo,toyNowCoin,toyName,toyRoomImg,luckyNum,coinObj,curNumObj,add
 var socketJs = (function(_super){
     function socketJs(){
         socketJs.super(this);
-        
+
     }
     //注册类
     Laya.class(socketJs,"socketJs", _super);
     var _proto = socketJs.prototype;
-var curPlayer = 0;
+    var curPlayer = 0;
     _proto.toyInit = function(data){
         this.toyImg = new Laya.Sprite();
-        this.toyImg.loadImage("http://45.77.16.55"+data.result.toyRoomImg);
+        this.toyImg.loadImage(data.result.toyRoomImg);
         this.addChild(this.toyImg);
         if(toySize[0] == 0){
             var size = this.toyImg.getBounds();
@@ -24,9 +24,10 @@ var curPlayer = 0;
         toyRoomImg = data.result.toyRoomImg;
         luckyNum = data.result.userGameRoomLuckyNumB;
         curPlayer = data.result.curPlayer
+
     }
 
-    
+
 
     _proto.toyShadow = function(data){
         this.toyShadow = new Laya.Animation();
@@ -98,9 +99,9 @@ var curPlayer = 0;
     function getCatchStatus(){
         canMoveStatus = 0;
         Laya.timer.clear(this,startGameDjs);
-        
+
         if(selectToy > -1){
-            var status_toy = 1; 
+            var status_toy = 1;
         }else{
             var status_toy = 0;
         }
@@ -119,7 +120,7 @@ var curPlayer = 0;
     }
     Laya.class(getCatchStatus,"getCatchStatus", _super);
 
-var startdjs = 30;
+    var startdjs = 30;
     function startGameStatus(data){
         if(data.is_success == 'fail'){
             recharge();
@@ -141,7 +142,7 @@ var startdjs = 30;
                 timePngTxtObj.visible = true;
                 Laya.timer.loop(1000,this,startGameDjs);
                 //扣除页面游戏币和 session中游戏币 
-                
+
             }else{
                 recharge();
             }
@@ -157,16 +158,16 @@ var startdjs = 30;
             getCatchStatus();
         }
     }
-   
+
     function coinFont (){
         coinFont.super(this);
         this.txt = new Laya.Text();
         this.txt.color = "#FFFFFF";
-		this.txt.font = "Impact";
+        this.txt.font = "Impact";
         this.txt.fontSize = 30;
-		this.txt.wordWrap = true;
-		this.txt.text = sessionStorage["toiletCatUserCoin"];
-		this.txt.leading = 5;
+        this.txt.wordWrap = true;
+        this.txt.text = sessionStorage["toiletCatUserCoin"];
+        this.txt.leading = 5;
         coinObj = this.txt;
         this.addChild(this.txt);
     }
@@ -176,12 +177,12 @@ var startdjs = 30;
         curNumFont.super(this);
         this.txt = new Laya.Text();
         this.txt.color = "#FFFFFF";
-		this.txt.font = "Impact";
+        this.txt.font = "Impact";
         this.txt.width = 200;
         this.txt.fontSize = 25;
-		this.txt.wordWrap = true;
-		this.txt.text = "在线人数:"+curPlayer;
-		this.txt.leading = 5;
+        this.txt.wordWrap = true;
+        this.txt.text = "在线人数:"+curPlayer;
+        this.txt.leading = 5;
         curNumObj = this.txt;
         this.addChild(this.txt);
     }
@@ -191,11 +192,11 @@ var startdjs = 30;
         singlePlayFont.super(this);
         this.txt = new Laya.Text();
         this.txt.color = "#FFFFFF";
-		this.txt.font = "Impact";
+        this.txt.font = "Impact";
         this.txt.fontSize = 25;
-		this.txt.wordWrap = true;
-		this.txt.text = data.result.toyNowCoin+"/局";
-		this.txt.leading = 5;
+        this.txt.wordWrap = true;
+        this.txt.text = data.result.toyNowCoin+"/局";
+        this.txt.leading = 5;
         singlePlayFonttxt = this.txt;
         this.addChild(this.txt);
     }
@@ -205,11 +206,11 @@ var startdjs = 30;
         addLuckyNumFont.super(this);
         this.txt = new Laya.Text();
         this.txt.color = "#FFFFFF";
-		this.txt.font = "Impact";
+        this.txt.font = "Impact";
         this.txt.fontSize = 40;
-		this.txt.wordWrap = true;
-		this.txt.text = "+6";
-		this.txt.leading = 5;
+        this.txt.wordWrap = true;
+        this.txt.text = "+6";
+        this.txt.leading = 5;
         addLuckyNumFontObj = this.txt;
         this.addChild(this.txt);
     }
@@ -219,11 +220,11 @@ var startdjs = 30;
         timePngTxt.super(this);
         this.txt = new Laya.Text();
         this.txt.color = "#FFFFFF";
-		this.txt.font = "Impact";
+        this.txt.font = "Impact";
         this.txt.fontSize = 35;
-		this.txt.wordWrap = true;
-		this.txt.text = "30";
-		this.txt.leading = 5;
+        this.txt.wordWrap = true;
+        this.txt.text = "30";
+        this.txt.leading = 5;
         this.txt.visible = false;
         timePngTxtObj = this.txt;
         this.addChild(this.txt);
@@ -246,19 +247,19 @@ var startdjs = 30;
 
         this.successtxt = new Laya.Text();
         this.successtxt.color = "#FF3B30";
-		this.successtxt.font = "Impact";
+        this.successtxt.font = "Impact";
         this.successtxt.fontSize = 35;
         this.successtxt.width = Laya.stage.width-90;
         this.successtxt.x = 90;
-		this.successtxt.wordWrap = true;
+        this.successtxt.wordWrap = true;
         this.successtxt.stroke = 2;
-		this.successtxt.strokeColor = "#E6DB74";
-		this.successtxt.text = "恭喜哈哈哈哈哈哈哈 获得了方熊暖手抱枕（随机）";
-		this.successtxt.leading = 5;
+        this.successtxt.strokeColor = "#E6DB74";
+        this.successtxt.text = "恭喜哈哈哈哈哈哈哈 获得了方熊暖手抱枕（随机）";
+        this.successtxt.leading = 5;
         newSuccessTxt = this.successtxt;
         this.addChild(this.successtxt);
     }
     Laya.class(newSuccess,"newSuccess",_super);
-    
+
     return socketJs;
 })(Laya.Sprite);

@@ -9,8 +9,8 @@ var Background = (function(_super){
         //加载到容器中
         this.bg.zOrder = 100;
         this.addChild(this.bg);
-        
-        
+
+
     }
 
     function Background2(){
@@ -27,6 +27,6 @@ var Background = (function(_super){
     //注册类
     Laya.class(Background1,"Background1", _super);
     Laya.class(Background2,"Background2", _super);
-   
+
     return Background;
 })(Laya.Sprite);

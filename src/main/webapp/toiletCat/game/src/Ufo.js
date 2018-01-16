@@ -35,10 +35,10 @@ var Ufo = (function(_super){
         this.armright = new Laya.Sprite();
         armright = this.armright;
         this.armright.loadImage("comp/armright.png");
-        
+
         this.armright.zOrder = 89;
         this.addChild(this.armright);
-        
+
         //this.bound = this.getBounds();console.log(this.bound);
         this.ufo.pos(10,0);
         this.armleft.pivot(57,0);
@@ -46,9 +46,9 @@ var Ufo = (function(_super){
         this.armright.pos(155,70);
         ufoBounds = this.getBounds();
 
-        
+
     }
-    
+
     //注册
     Laya.class(Ufo, "Ufo", _super);
     Laya.class(UfoShadow, "UfoShadow", _super);
@@ -58,7 +58,7 @@ var Ufo = (function(_super){
     Laya.class(stopMoveLeft, "stopMoveLeft", _super);
 
     //向右移动
-    Laya.class(moveRight, "moveRight", _super);   
+    Laya.class(moveRight, "moveRight", _super);
     Laya.class(stopMoveRight, "stopMoveRight", _super);
 
     Laya.class(moveBig, "moveBig", _super);
@@ -69,7 +69,7 @@ var Ufo = (function(_super){
     Laya.class(catchToy, "catchToy", _super);
 
     var _proto = Ufo.prototype;
-    
+
     function UfoShadow(){
         UfoShadow.super(this);
         this.di = new Laya.Sprite();
@@ -153,10 +153,10 @@ var Ufo = (function(_super){
             shadowBounds = shadow.getBounds();
         }
         if((ufoAll.x + ufoBounds.width) < (595-(0.78*((1-x)/0.005)))){
-             ufoAll.x +=1.5;
-             shadow.x += 1.5;
-             shadowBounds.x = shadow.x+100;
-             checkHit();
+            ufoAll.x +=1.5;
+            shadow.x += 1.5;
+            shadowBounds.x = shadow.x+100;
+            checkHit();
         }
     }
 
@@ -218,20 +218,20 @@ var Ufo = (function(_super){
     //ufo下降
     function downUfo(){
         if(selectToy == -1){
-           if(downY <=diff){
-               downY+=2;
-               ufoAll.y+=2;
-           }else{
-               Laya.timer.clear(this,downUfo);
-               Laya.timer.frameLoop(1,this,onLoopCatch);
-           }
+            if(downY <=diff){
+                downY+=2;
+                ufoAll.y+=2;
+            }else{
+                Laya.timer.clear(this,downUfo);
+                Laya.timer.frameLoop(1,this,onLoopCatch);
+            }
         }else{
             if(downY <=diff){
-               downY+=2;
-               ufoAll.y+=2;
-           }else{
-               Laya.timer.clear(this,downUfo);
-               if(selectToy > -1){
+                downY+=2;
+                ufoAll.y+=2;
+            }else{
+                Laya.timer.clear(this,downUfo);
+                if(selectToy > -1){
                     var c =  Math.sqrt((Math.pow(parseFloat(57*ufoAll.scaleX),2) + Math.pow(parseFloat(120*ufoAll.scaleY),2)));
                     sin = 360 * (1 - Math.cos(((toyImgCreate[selectToy].x-ufoAll.x-80)/c)))/2 +5;
                     if(ufoAll.x+80 - toyImgCreate[selectToy].x > 0){
@@ -242,9 +242,9 @@ var Ufo = (function(_super){
                     if(gift_right-ufoAll.x-80-ufoBounds.width > 0 ){
                         sin_right = 2;
                     }
-               }
-               Laya.timer.frameLoop(1,this,onLoopCatch);
-           }
+                }
+                Laya.timer.frameLoop(1,this,onLoopCatch);
+            }
         }
     }
 
@@ -274,14 +274,14 @@ var Ufo = (function(_super){
                 if(upToyY > downY){
                     upToyY = upToyY % downY;
                 }
-                
+
                 Laya.timer.frameLoop(1,this,upUfo);
                 toyImgCreate[selectToy].zOrder = ufoAll.zOrder+2;
                 toyShadowCurPos[selectToy]['obj'].visible = false;
                 if(catch_status == 0){
                     Laya.timer.frameLoop(1,this,upToy);
                 }
-                
+
             }
         }
     }
@@ -393,7 +393,7 @@ var Ufo = (function(_super){
         }else{
             resety = 1;
         }
-        
+
         if(ufoAll.x>0 && resety == 1 ){
             ufoAll.x-=1.5;
             shadow.x -= 1.5;
@@ -436,8 +436,8 @@ var Ufo = (function(_super){
             Laya.timer.clear(this,initArm);
         }
     }
-var addinity = 0;
-var djs_time = 10;
+    var addinity = 0;
+    var djs_time = 10;
     function luckyNumChange(){
         if(catch_status == 1){
             luckyNumPNG.x = 30;
@@ -505,7 +505,7 @@ var djs_time = 10;
             }
         }
     }
-var successList = [];
+    var successList = [];
     //碰撞检查
     function checkHit(){
         current_status = 0;
