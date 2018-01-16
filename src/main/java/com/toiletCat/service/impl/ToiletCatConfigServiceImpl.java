@@ -35,6 +35,8 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
             @Override
             public void exec() {
                 toiletCatConfigDao.addToiletCatConfig(toiletCatConfig);
+                // 添加对应key value
+                BaseConstant.configMap.put(toiletCatConfig.getConfigKey(), toiletCatConfig.getConfigValue());
             }
         }, "addToiletCatConfig", JSON.toJSONString(toiletCatConfig));
     }
