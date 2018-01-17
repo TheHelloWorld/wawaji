@@ -287,7 +287,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 return;
             }
 
-            Integer coin = MoneyForCoin.getValueMapByKey(Double.valueOf(amount.toString()));
+            Integer coin = MoneyForCoin.getValueMapByKey(Double.valueOf(amount.longValue()));
 
             if(tradeStatus == TradeStatus.SUCCESS) {
                 // 添加用户游戏币
