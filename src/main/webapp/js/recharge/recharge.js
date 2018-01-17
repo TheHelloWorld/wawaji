@@ -30,7 +30,7 @@ function recharge() {
     str += "			100";
     str += "		</div>";
     str += "		<div class='recharge-coin-text' >";
-    str += "			充100游戏币";
+    str += "			充100马桶币";
     str += "		</div>";
     str += "		<div class='recharge-money' >";
     str += "			¥10.00";
@@ -46,7 +46,7 @@ function recharge() {
     str += "			200+10";
     str += "		</div>";
     str += "		<div class='recharge-coin-text' >";
-    str += "			充210游戏币";
+    str += "			充210马桶币";
     str += "		</div>";
     str += "		<div class='recharge-money' >";
     str += "			¥20.00";
@@ -62,7 +62,7 @@ function recharge() {
     str += "			300+30";
     str += "		</div>";
     str += "		<div class='recharge-coin-text' >";
-    str += "			充330游戏币";
+    str += "			充330马桶币";
     str += "		</div>";
     str += "		<div class='recharge-money' >";
     str += "			¥30.00";
@@ -78,7 +78,7 @@ function recharge() {
     str += "			500+50";
     str += "		</div>";
     str += "		<div class='recharge-coin-text' >";
-    str += "			充550游戏币";
+    str += "			充550马桶币";
     str += "		</div>";
     str += "		<div class='recharge-money' >";
     str += "			¥50.00";
@@ -94,7 +94,7 @@ function recharge() {
     str += "			1000+180";
     str += "		</div>";
     str += "		<div class='recharge-coin-text' >";
-    str += "			充1180游戏币";
+    str += "			充1180马桶币";
     str += "		</div>";
     str += "		<div class='recharge-money' >";
     str += "			¥100.00";
@@ -110,7 +110,7 @@ function recharge() {
     str += "			2000+400";
     str += "		</div>";
     str += "		<div class='recharge-coin-text' >";
-    str += "			充2400游戏币";
+    str += "			充2400马桶币";
     str += "		</div>";
     str += "		<div class='recharge-money' >";
     str += "			¥200.00";
@@ -143,7 +143,7 @@ function rechargeThis(amount) {
         async:false,
         data:{
             amount:amount,
-            rechargeType:"alipay",
+            rechargeType:"wxpay",
             userNo:userNo
         },
         success:function(data) {

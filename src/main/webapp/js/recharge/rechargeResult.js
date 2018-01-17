@@ -52,7 +52,7 @@ function getRechargeResult() {
                 toiletCatMsg("充值失败 QAQ", "returnLastPage()");
 
 
-            } else {
+            } else if(result["result"] == "success"){
                 flag = false;
 
                 // 用户游戏币数
