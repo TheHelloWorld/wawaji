@@ -11,6 +11,7 @@ import com.toiletCat.enums.TradeStatus;
 import com.toiletCat.service.RechargeService;
 import com.toiletCat.service.UserRechargeRecordService;
 import com.toiletCat.service.UserSpendRecordService;
+import com.toiletCat.utils.HttpClientUtil;
 import com.toiletCat.utils.PropertiesUtil;
 import com.toiletCat.utils.RechargeUtil;
 import org.slf4j.Logger;
@@ -197,6 +198,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
+                // 查询交易结果
+                queryRechargeResult(orderNo, orderAmount.getValue());
+
                 // 获得充值结果
                 CommonResult<Integer> rechargeResult = userRechargeRecordService.
                         getTradeStatusByOrderNo(userNo, orderNo);
@@ -222,6 +226,93 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
             }
         }, "getRechargeResultByOrderNo", json.toJSONString());
+    }
+
+    /**
+     * 查询获得交易结果
+     * @param orderNo 订单号
+     * @param amount 交易金额
+     * @return
+     */
+    private void queryRechargeResult(String orderNo, BigDecimal amount) {
+        try {
+
+            String userNo = orderNo.substring(22);
+
+            PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
+
+            String pid = propertiesUtil.getProperty("recharge_pid");
+
+            String key = propertiesUtil.getProperty("recharge_key");
+
+            StringBuilder sb = new StringBuilder("");
+            sb.append("http://tx87.cn/api.php?act=order&pid=");
+            sb.append(pid);
+            sb.append("&key=");
+            sb.append(key);
+            sb.append("&out_trade_no=");
+            sb.append(orderNo);
+
+            logger.info("queryRechargeResult request:" + sb.toString());
+
+            String response = HttpClientUtil.sendHttpGet(sb.toString());
+
+            logger.info("queryRechargeResult response:" + response);
+
+            JSONObject json = JSONObject.parseObject(response);
+
+            if(!orderNo.equals(json.getString("out_trade_no"))) {
+                logger.warn("queryRechargeResult wrong orderNo:" + orderNo + ", response:" + json);
+                return;
+            }
+
+            if(Long.valueOf(json.getString("money")) != amount.longValue()) {
+                logger.warn("queryRechargeResult wrong amount:" + amount + ", response:" + json);
+                return;
+            }
+
+            TradeStatus tradeStatus = TradeStatus.SUCCESS;
+
+            if(!"1".equals(json.getString("status"))) {
+                tradeStatus = TradeStatus.FAIL;
+            }
+
+            // 防止重复请求 获得充值结果
+            CommonResult<Integer> commonRechargeResult = userRechargeRecordService.
+                    getTradeStatusByOrderNo(userNo, orderNo);
+
+            // 若已有终态则不执行后续操作
+            if(commonRechargeResult.getValue() != TradeStatus.INIT.getStatus()) {
+                logger.info("queryRechargeResult request duplicate param:"+ json);
+                return;
+            }
+
+            Integer coin = MoneyForCoin.getValueMapByKey(Double.valueOf(amount.toString()));
+
+            if(tradeStatus == TradeStatus.SUCCESS) {
+                // 添加用户游戏币
+                userDao.updateUserCoinByUserNo(coin, userNo);
+            }
+
+            // 修改充值记录交易状态
+            CommonResult updateRechargeResult = userRechargeRecordService.
+                    updateTradeStatusByOrderNo(orderNo, tradeStatus.getStatus());
+
+            if(!updateRechargeResult.success()) {
+                logger.warn("queryRechargeResult recharge updateTradeStatusByOrderNo error:" + json);
+            }
+
+            // 修改用户游戏币记录交易状态
+            CommonResult updateSpendResult = userSpendRecordService.
+                    updateTradeStatusByOrderNo(orderNo, tradeStatus.getStatus());
+
+            if(!updateSpendResult.success()) {
+                logger.warn("queryRechargeResult spend updateTradeStatusByOrderNo error:" + json);
+            }
+
+        } catch (Exception e) {
+            logger.error("queryRechargeResult error:" + e, e);
+        }
     }
 
     /**
