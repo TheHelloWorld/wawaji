@@ -266,7 +266,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 return;
             }
 
-            if(Long.valueOf(json.getString("money")) != amount.longValue()) {
+            if(Double.valueOf(json.getString("money")) != amount.doubleValue()) {
                 logger.warn("queryRechargeResult wrong amount:" + amount + ", response:" + json);
                 return;
             }
@@ -287,7 +287,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 return;
             }
 
-            Integer coin = MoneyForCoin.getValueMapByKey(Double.valueOf(amount.longValue()));
+            Integer coin = MoneyForCoin.getValueMapByKey(amount.doubleValue());
 
             if(tradeStatus == TradeStatus.SUCCESS) {
                 // 添加用户游戏币
