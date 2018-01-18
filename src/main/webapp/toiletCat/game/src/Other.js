@@ -1,8 +1,8 @@
 var leftButton,rightButton,upButton,downButton,catchButton,startButton,luckyNumPNG,againtxt,curnumpng,timepng;
-var Other = (function(_super){
+    var Other = (function(_super){
     function Other(){
         Other.super(this);
-
+        
         this.coin = new Laya.Sprite();
         this.coin.loadImage("comp/coin.png");
         this.coin.x = 20;
@@ -41,7 +41,7 @@ var Other = (function(_super){
         this.recharge.loadImage("comp/recharge.png");
         this.recharge.x = 500;
         this.recharge.y = 980;
-        this.recharge.on(Laya.Event.MOUSE_UP, this, recharge);
+        this.recharge.on(Laya.Event.MOUSE_UP, this, gameRechargeInit);
         this.addChild(this.recharge);
 
         this.my = new Laya.Sprite();
@@ -50,7 +50,7 @@ var Other = (function(_super){
         this.my.y = 980;
         this.my.on(Laya.Event.MOUSE_UP, this, clickMy);
         this.addChild(this.my);
-
+        
         this.go = new Laya.Sprite();
         this.go.loadImage("comp/go.png");
         this.go.x = 260;
@@ -58,7 +58,7 @@ var Other = (function(_super){
         this.go.on(Laya.Event.MOUSE_UP, this, startGame);
         startButton = this.go;
         this.addChild(this.go);
-
+        
         this.up = new Laya.Sprite();
         this.up.loadImage("comp/up.png");
         this.up.pos(180, 845);
@@ -116,7 +116,7 @@ var Other = (function(_super){
         luckyNumPNG = this.luckyNum;
         this.addChild(this.luckyNum);
     }
-
+    
     function OtherCave(){
         OtherCave.super(this);
         this.glass = new Laya.Sprite();
@@ -137,10 +137,6 @@ var Other = (function(_super){
         toUserIndex();
     }
 
-    function recharge(){
-        toRecharge();
-    }
-
     function prize(){
         toUserToy();
     }
@@ -153,7 +149,7 @@ var Other = (function(_super){
         catchButton.visible = true;
         startButton.visible = false;
     }
-
+    
     function resetGameButton(){
         leftButton.visible = false;
         rightButton.visible = false;
@@ -183,15 +179,15 @@ var Other = (function(_super){
 
         this.failtxt = new Laya.Text();
         this.failtxt.color = "#FFFFFF";
-        this.failtxt.font = "Impact";
+		this.failtxt.font = "Impact";
         this.failtxt.fontSize = 40;
         this.failtxt.width = 300;
-        this.failtxt.wordWrap = true;
-        this.failtxt.text = "蓝瘦~~香菇！！";
-        this.failtxt.leading = 5;
+		this.failtxt.wordWrap = true;
+		this.failtxt.text = "蓝瘦~~香菇！！";
+		this.failtxt.leading = 5;
         this.failtxt.pos(250,600);
         this.addChild(this.failtxt);
-
+        
         this.againButton = new Laya.Sprite();
         this.againButton.graphics.drawRect(230, 700, 300, 80, "#FF3968");
         this.againButton.graphics.drawRect(230, 800, 300, 80, "#FF3968");
@@ -200,26 +196,26 @@ var Other = (function(_super){
 
         this.againtxt = new Laya.Text();
         this.againtxt.color = "#FFFFFF";
-        this.againtxt.font = "Impact";
+		this.againtxt.font = "Impact";
         this.againtxt.fontSize = 40;
         this.againtxt.width = 300;
-        this.againtxt.wordWrap = true;
-        this.againtxt.text = "再来一次（10）";
+		this.againtxt.wordWrap = true;
+		this.againtxt.text = "再来一次（10）";
         this.againtxt.on(Laya.Event.CLICK,this,playAgain);
-        this.againtxt.leading = 5;
+		this.againtxt.leading = 5;
         this.againtxt.pos(240,710);
         againtxt = this.againtxt
         this.addChild(this.againtxt);
 
         this.closetxt = new Laya.Text();
         this.closetxt.color = "#FFFFFF";
-        this.closetxt.font = "Impact";
+		this.closetxt.font = "Impact";
         this.closetxt.fontSize = 40;
         this.closetxt.width = 300;
-        this.closetxt.wordWrap = true;
-        this.closetxt.text = "一会再玩";
+		this.closetxt.wordWrap = true;
+		this.closetxt.text = "一会再玩";
         this.closetxt.on(Laya.Event.CLICK,this,closeFailInfo);
-        this.closetxt.leading = 5;
+		this.closetxt.leading = 5;
         this.closetxt.pos(300,810);
         this.addChild(this.closetxt);
     }
@@ -248,12 +244,12 @@ var Other = (function(_super){
 
         this.successtxt = new Laya.Text();
         this.successtxt.color = "#FFFFFF";
-        this.successtxt.font = "Impact";
+		this.successtxt.font = "Impact";
         this.successtxt.fontSize = 40;
         this.successtxt.width = 300;
-        this.successtxt.wordWrap = true;
-        this.successtxt.text = "恭喜您获得~~";
-        this.successtxt.leading = 5;
+		this.successtxt.wordWrap = true;
+		this.successtxt.text = "恭喜您获得~~";
+		this.successtxt.leading = 5;
         this.successtxt.pos(250,550);
         this.addChild(this.successtxt);
 
@@ -265,25 +261,25 @@ var Other = (function(_super){
 
         this.againtxt = new Laya.Text();
         this.againtxt.color = "#FFFFFF";
-        this.againtxt.font = "Impact";
+		this.againtxt.font = "Impact";
         this.againtxt.fontSize = 40;
         this.againtxt.width = 300;
-        this.againtxt.wordWrap = true;
-        this.againtxt.text = "查看战利品";
+		this.againtxt.wordWrap = true;
+		this.againtxt.text = "查看战利品";
         this.againtxt.on(Laya.Event.CLICK,this,seeMyPrize);
-        this.againtxt.leading = 5;
+		this.againtxt.leading = 5;
         this.againtxt.pos(280,710);
         this.addChild(this.againtxt);
 
         this.closetxt = new Laya.Text();
         this.closetxt.color = "#FFFFFF";
-        this.closetxt.font = "Impact";
+		this.closetxt.font = "Impact";
         this.closetxt.fontSize = 40;
         this.closetxt.width = 300;
-        this.closetxt.wordWrap = true;
-        this.closetxt.text = "关闭";
+		this.closetxt.wordWrap = true;
+		this.closetxt.text = "关闭";
         this.closetxt.on(Laya.Event.CLICK,this,closeFailInfo);
-        this.closetxt.leading = 5;
+		this.closetxt.leading = 5;
         this.closetxt.pos(340,810);
         this.addChild(this.closetxt);
     }
@@ -301,6 +297,20 @@ var Other = (function(_super){
         this.addChild(this.backgroundToy);
     }
     Laya.class(addToyBackground,"addToyBackground", _super);
+
+    function gameRechargeInit(){
+        gameRechargeObj.visible =  true;
+        Laya.timer.frameLoop(1,this,gameRechargeshow);
+    }
+    Laya.class(gameRechargeInit,"gameRechargeInit", _super);
+
+    function gameRechargeshow(){
+        if(gameRechargeObj.y < 20 ){
+            Laya.timer.clear(this,gameRechargeshow);
+        }else{
+            gameRechargeObj.y -=20;
+        }
+    }
 
     Laya.class(startGameButton,"startGameButton", _super);
     Laya.class(Other,"Other", _super);

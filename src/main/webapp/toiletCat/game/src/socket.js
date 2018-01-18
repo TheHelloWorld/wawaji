@@ -123,7 +123,7 @@ var socketJs = (function(_super){
     var startdjs = 30;
     function startGameStatus(data){
         if(data.is_success == 'fail'){
-            recharge();
+            gameRechargeInit(); 
         }else{
             if(data.result.result == "success"){
                 startdjs = 30;
@@ -144,7 +144,7 @@ var socketJs = (function(_super){
                 //扣除页面游戏币和 session中游戏币 
 
             }else{
-                recharge();
+                gameRechargeInit();
             }
         }
     }
