@@ -8,35 +8,35 @@ import java.util.Map;
  */
 public enum MoneyForCoin {
 
-    EXCHANGE_10(10.00, 100),
-    EXCHANGE_20(20.00, 210),
-    EXCHANGE_30(30.00, 330),
-    EXCHANGE_50(50.00, 550),
-    EXCHANGE_100(100.00, 1180),
-    EXCHANGE_200(200.00, 2400);
+    EXCHANGE_10("10.00", 100),
+    EXCHANGE_20("20.00", 210),
+    EXCHANGE_30("30.00", 330),
+    EXCHANGE_50("50.00", 550),
+    EXCHANGE_100("100.00", 1180),
+    EXCHANGE_200("200.00", 2400);
 
     /**
      * 状态
      **/
-    private Double money;
+    private String money;
 
     /**
      * 描述
      **/
     private Integer coin;
 
-    private static Map<Double,Integer> valueMap = new HashMap<>();
+    private static Map<String,Integer> valueMap = new HashMap<>();
 
-    MoneyForCoin(Double money, int coin) {
+    MoneyForCoin(String money, int coin) {
         this.money = money;
         this.coin = coin;
     }
 
-    public Double getMoney() {
+    public String getMoney() {
         return money;
     }
 
-    public void setMoney(Double money) {
+    public void setMoney(String money) {
         this.money = money;
     }
 
@@ -57,12 +57,12 @@ public enum MoneyForCoin {
         }
     }
 
-    public static Map<Double,Integer> getValueMap() {
+    public static Map<String,Integer> getValueMap() {
         initValueMap();
         return valueMap;
     }
 
-    public static Integer getValueMapByKey(Double key) {
+    public static Integer getValueMapByKey(String key) {
         initValueMap();
         return valueMap.get(key);
     }

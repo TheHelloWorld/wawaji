@@ -72,7 +72,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
-                Integer coin = MoneyForCoin.getValueMapByKey(Double.valueOf(rechargeResult.getMoney()));
+                Integer coin = MoneyForCoin.getValueMapByKey(rechargeResult.getMoney());
 
                 if(coin == null) {
                     logger.warn("getRechargeResultByParam money is wrong param:"+ rechargeResult);
@@ -287,7 +287,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 return;
             }
 
-            Integer coin = MoneyForCoin.getValueMapByKey(amount.doubleValue());
+            Integer coin = MoneyForCoin.getValueMapByKey(json.getString("money"));
 
             if(tradeStatus == TradeStatus.SUCCESS) {
                 // 添加用户游戏币

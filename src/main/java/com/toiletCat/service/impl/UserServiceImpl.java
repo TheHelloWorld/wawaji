@@ -740,7 +740,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      * @return
      */
     @Override
-    public CommonResult<String> userRecharge(final String userNo, final Double amount, final String rechargeType) {
+    public CommonResult<String> userRecharge(final String userNo, final String amount, final String rechargeType) {
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
         json.put("amount", amount);
@@ -770,7 +770,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 UserRechargeRecord userRechargeRecord = new UserRechargeRecord();
 
                 // 金额
-                userRechargeRecord.setAmount(BigDecimal.valueOf(amount));
+                userRechargeRecord.setAmount(BigDecimal.valueOf(Double.valueOf(amount)));
 
                 // 充值类型(支付宝/微信)
                 userRechargeRecord.setRechargeType(rechargeType);

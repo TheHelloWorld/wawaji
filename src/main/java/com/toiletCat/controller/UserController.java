@@ -222,7 +222,7 @@ public class UserController {
      */
     @RequestMapping(value = "/userRecharge", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String userRecharge(String userNo, Double amount, String rechargeType) {
+    public String userRecharge(String userNo, String amount, String rechargeType) {
 
         CommonResult<String> result = userService.userRecharge(userNo, amount, rechargeType);
 
