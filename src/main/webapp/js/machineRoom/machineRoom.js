@@ -143,7 +143,7 @@ function getAllMachineByPage(nowPage) {
                 str += "            </div>";
                 str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
                 str += "            <div><span>围观:" + list[i]["viewer"] + "</span></div>";
-                str += "            <div><span class='my-inline-right' ><img src='/image/background/coin.ico' />:" + list[i]["toyNowCoin"] + "</span>";
+                str += "            <div><span class='my-inline-right' ><img src='/image/background/coin-img.png' />:" + list[i]["toyNowCoin"] + "</span>";
                 if(list[i]["available"] == "true") {
                     str += "        空闲</div>";
                 } else {

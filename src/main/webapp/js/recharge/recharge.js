@@ -12,7 +12,7 @@ function recharge() {
     str += "			</div>";
     str += "		<div class='recharge-user-coin' >";
     str += "			<div class='recharge-coin' >";
-    str += "				<img src='/image/background/coin.ico' width=100% height=100% />";
+    str += "				<img src='/image/background/coin-img.png' width=100% height=100% />";
     str += "			</div>";
     str += "			<div class='recharge-coin' id='user-recharge-coin' >";
     str += "				"+sessionStorage["toiletCatUserCoin"];
@@ -24,7 +24,7 @@ function recharge() {
     str += "	<div style='float: left;' >";
     str += "	<div class='recharge-block' ontouchend='rechargeThis(10.00)' >";
     str += "		<div class='recharge-coin' >";
-    str += "			<img src='/image/background/coin.ico' width=100% height=100% />";
+    str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
     str += "		</div>";
     str += "		<div class='recharge-coin' >";
     str += "			100";
@@ -40,7 +40,7 @@ function recharge() {
     str += "	</div>";
     str += "	<div class='recharge-block' ontouchend='rechargeThis(20.00)' >";
     str += "		<div class='recharge-coin' >";
-    str += "			<img src='/image/background/coin.ico' width=100% height=100% />";
+    str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
     str += "		</div>";
     str += "		<div class='recharge-coin' >";
     str += "			200+10";
@@ -56,7 +56,7 @@ function recharge() {
     str += "	</div>";
     str += "	<div class='recharge-block' ontouchend='rechargeThis(30.00)' >";
     str += "		<div class='recharge-coin' >";
-    str += "			<img src='/image/background/coin.ico' width=100% height=100% />";
+    str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
     str += "		</div>";
     str += "		<div class='recharge-coin' >";
     str += "			300+30";
@@ -72,7 +72,7 @@ function recharge() {
     str += "	</div>";
     str += "	<div class='recharge-block' ontouchend='rechargeThis(50.00)' >";
     str += "		<div class='recharge-coin' >";
-    str += "			<img src='/image/background/coin.ico' width=100% height=100% />";
+    str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
     str += "		</div>";
     str += "		<div class='recharge-coin' >";
     str += "			500+50";
@@ -88,7 +88,7 @@ function recharge() {
     str += "	</div>";
     str += "	<div class='recharge-block' ontouchend='rechargeThis(100.00)' >";
     str += "		<div class='recharge-coin' >";
-    str += "			<img src='/image/background/coin.ico' width=100% height=100% />";
+    str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
     str += "		</div>";
     str += "		<div class='recharge-coin' >";
     str += "			1000+180";
@@ -104,7 +104,7 @@ function recharge() {
     str += "	</div>";
     str += "	<div class='recharge-block' ontouchend='rechargeThis(200.00)' >";
     str += "		<div class='recharge-coin' >";
-    str += "			<img src='/image/background/coin.ico' width=100% height=100% />";
+    str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
     str += "		</div>";
     str += "		<div class='recharge-coin' >";
     str += "			2000+400";
