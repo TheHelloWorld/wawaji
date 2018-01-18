@@ -854,6 +854,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             @Override
             public void exec() {
 
+                // 根据邀请码获得邀请用户用户编号
+                String inviteUserNo = userDao.getUserNoByInvitationCode(inviteCode);
+
+                // 判断邀请用户和被邀请用户是否是同一个用户
+                if(inviteUserNo.equals(userNo)) {
+                    setOtherMsg();
+                    got("不能填写自己的邀请码");
+                    return;
+                }
+
                 PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
                 Integer coin = Integer.valueOf(toiletCatConfigService.getConfigByKey(BaseConstant.USER_INVITE_COIN));
@@ -893,8 +903,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 添加被邀请用户消费记录
                 userSpendRecordService.addUserSpendRecord(userSpendRecord);
 
-                // 根据邀请码获得邀请用户用户编号
-                String inviteUserNo = userDao.getUserNoByInvitationCode(inviteCode);
+
 
                 // 给邀请用户添加游戏币
                 userDao.updateUserCoinByUserNo(coin, inviteUserNo);
