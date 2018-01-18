@@ -938,6 +938,15 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 添加邀请用户消费记录
                 userSpendRecordService.addUserSpendRecord(userSpendRecord);
 
+                // 获得当前用户游戏币并返回前端
+                Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+
+                JSONObject json = new JSONObject();
+
+                json.put("userCoin", userCoin);
+
+                got(json.toJSONString());
+
             }
         }, "userInvite", json.toJSONString());
     }

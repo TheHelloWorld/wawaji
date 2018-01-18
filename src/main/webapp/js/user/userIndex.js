@@ -3,6 +3,8 @@ $(function(){
 
     checkSession();
 
+    getUserInfoByUserNo(userNo);
+
     // 用户名
     userName = sessionStorage["toiletCatUserName"];
     // 用户游戏币数
@@ -52,8 +54,6 @@ function toUserCatch() {
 function toUserSpend() {
     window.location.href="/toiletCat/userSpendRecord/userSpendRecord.html?type=gameRoom&userNo=" + userNo;
 }
-
-
 
 // 设置用户信息
 function setUserInfo() {

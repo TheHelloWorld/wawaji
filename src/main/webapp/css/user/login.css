@@ -31,8 +31,8 @@ body {
 }
 
 .login-check-code{
-    height: 5%;
-    line-height: 5%;
+    height: 5rem;
+    line-height: 5rem;
     font-size: 3.4rem;
 }
 
@@ -67,7 +67,7 @@ body {
     font-family: Arial;
     font-style: italic;
     font-weight: bold;
-    font-size: 4rem;
+    font-size: 3.4rem;
     border: 0;
     letter-spacing: 0.125rem;
     color: darkred;
