@@ -860,7 +860,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 判断邀请用户和被邀请用户是否是同一个用户
                 if(inviteUserNo.equals(userNo)) {
                     setOtherMsg();
-                    got("不能填写自己的邀请码");
+                    got("不能填写自己的邀请码喵");
                     return;
                 }
 
