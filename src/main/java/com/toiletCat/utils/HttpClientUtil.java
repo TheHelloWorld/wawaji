@@ -149,6 +149,7 @@ public class HttpClientUtil {
 
                 // 配置请求信息
                 httpGet.setConfig(requestConfig);
+
                 // 执行请求
                 response = httpClient.execute(httpGet);
 
