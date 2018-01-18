@@ -44,7 +44,7 @@
         <div style="margin-left:5%;width:25%;float:left;">
             <img style="-webkit-transform:rotate(-90deg);" src="/image/game/returnButton.ico" width=40% onclick="returnMethod()" />
         </div>
-        <div style="float:left;width:33%;background:#B1ED0A;color:white;font-size:20px;height:70%;border-radius:40px;">
+        <div style="float:left;width:33%;background:#fe8820;color:white;font-size:20px;height:70%;border-radius:40px;">
             <div style="float:left;margin-top:5%;margin-left:10%;">
                 <img src="/image/background/coin-img.png" width=100% height=100% />
             </div>
@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    <div class="center-other" style="margin-top:10%;" onclick="recharge()">
+    <div class="center-other" style="margin-top:5%;" onclick="recharge()">
         <div style="height:100%;">
             <div style="float:left;margin-top:3%;margin-left:5%;">
                 <img src="/image/background/coin-img.png" width=100% height=100% />
@@ -102,6 +102,15 @@
             <div style="clear:both"></div>
         </div>
     </div>
+    <div class="center-other">
+        <div style="height:100%;" onclick="showInvite()">
+            <div style="float:left;margin-top:1%;margin-left:3%;">
+                <img src="/image/background/spend_record.ico" width=100% height=100% />
+            </div>
+            <div class="text" >邀请码</div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
 
 </div>
 <div class="default-height">
@@ -122,6 +131,37 @@
         </div>
     </div>
 </nav>
+
+<div style="width:100%;height:100%;background:#ccc;position:fixed;top:0px;left:0px;opacity:0.8;padding-top:2%;display:none;" id="inviteZzc">
+    <div style="margin-left:5%;width:25%;float:left;">
+        <img style="-webkit-transform:rotate(-90deg);" src="/image/game/returnButton.ico" width="40%" onclick="javascript:hideInvite()">
+    </div>
+    <div style="width:100%;text-align:center;font-size:4rem;font-weight:bold;margin-top:30%;">
+        请输入好友邀请码
+    </div>
+
+    <div style="width:100%;text-align:center;font-size:3rem;font-weight:bold;margin-top:10%;">
+        <input type="text" id="invite" style="border:0px;background:#ccc;opacity:0.7;width:50%;height:5rem;outline:medium;font-size:3rem;color:red;border-bottom:1px solid black;text-align:center"/>
+    </div>
+    <div style="width:100%;margin-top:5%;text-align:center;">
+        <div id="inviteResultMsg" style="color:red;"></div><!--这里可以填写邀请结果-->
+    </div>
+    <div style="width:100%;margin-top:5%;text-align:center;">
+        <button style="border:0px;font-size:3rem;background: #B1ED0A;">点击提交</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function showInvite(){
+        $('#inviteZzc').show();$(".index-footer").hide();
+    }
+    function hideInvite(){
+        $('#inviteZzc').hide();$(".index-footer").show();
+    }
+
+
+</script>
+
 </body>
 
 </html>
