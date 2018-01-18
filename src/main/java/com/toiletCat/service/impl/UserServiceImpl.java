@@ -12,6 +12,7 @@ import com.toiletCat.entity.*;
 import com.toiletCat.enums.*;
 import com.toiletCat.service.*;
 import com.toiletCat.utils.*;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -854,8 +855,26 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             @Override
             public void exec() {
 
+                // 判断用户编号是否正确
+                Integer count = userDao.countUserByUserNo(userNo);
+
+                if(count == 0) {
+                    logger.warn("userInvite " + userNo + " is wrong");
+                    setOtherMsg();
+                    got("userNo is wrong");
+                    return;
+                }
+
+
                 // 根据邀请码获得邀请用户用户编号
                 String inviteUserNo = userDao.getUserNoByInvitationCode(inviteCode);
+
+                // 判断该邀请码是否正确
+                if(StringUtils.isBlank(inviteUserNo)) {
+                    setOtherMsg();
+                    got("请填写正确的邀请码喵");
+                    return;
+                }
 
                 // 判断邀请用户和被邀请用户是否是同一个用户
                 if(inviteUserNo.equals(userNo)) {

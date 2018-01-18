@@ -100,4 +100,5 @@ public interface UserDao {
      * @param invitationCode 邀请码
      */
     String getUserNoByInvitationCode(String invitationCode);
+
 }
