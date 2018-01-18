@@ -868,3 +868,11 @@ function closeToiletCatMsg(method) {
     	eval(method);
 	}
 }
+
+// 动态加载js
+function load_js(src) {
+    var script_elem = document.createElement('script');
+    script_elem.type = 'text/javascript';
+    script_elem.src = src;
+    document.getElementsByTagName('head')[0].appendChild(script_elem);
+}
