@@ -30,7 +30,9 @@ body {
     color: black
 }
 
-.login-check-code{
+.login-check-code {
+    margin-left: 25%;
+    float: left;
     height: 5rem;
     line-height: 5rem;
     font-size: 3.4rem;
@@ -63,14 +65,10 @@ body {
 }
 
 .checkCode {
-    background: white;
-    font-family: Arial;
-    font-style: italic;
-    font-weight: bold;
-    font-size: 3.4rem;
-    border: 0;
-    letter-spacing: 0.125rem;
-    color: darkred;
+    float: left;
+    margin-left: 2%;
+    height: 5rem;
+    width: 20%;
 }
 
 .login-div {

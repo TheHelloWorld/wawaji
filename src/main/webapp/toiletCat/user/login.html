@@ -7,18 +7,20 @@
 	<meta http-equiv="expires" content="0">
 	<title>登陆/注册</title>
 
-	<link rel="stylesheet" type="text/css" href="/css/user/login.css?v=1.0.0.1" >
+	<link rel="stylesheet" type="text/css" href="/css/common/toiletCatCommon.css?v=1.0.0.1" >
+
+	<link rel="stylesheet" type="text/css" href="/css/user/login.css?v=1.0.0.2" >
 
 	<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 
 	<script type="text/javascript" src="/common/js/commonUtil.js?v=1.0.0.1"></script>
 
-	<script type="text/javascript" src="/js/user/login.js?v=1.0.0.1"></script>
+	<script type="text/javascript" src="/js/user/login.js?v=1.0.0.2"></script>
 </head>
 <body>
 <div class="background-div">
 	<div class="login-div">
-		<img src="/image/logo.png" class="logo"/>
+		<img src="/image/logo-test.png" class="logo"/>
 	</div>
 	<div class="login-content">
 		<div class="login-content-div" >
@@ -27,7 +29,7 @@
 		<div id="checkCodeDiv" class="login-content-div" style="margin-top:1rem;">
 			<div>
 				<input type="text" name="check-code" id="checkCodeText" class="login-check-code" placeholder="图片验证码"/>
-				<input type="button" id="checkCode" class="checkCode" onclick="createCode()" />
+				<div id="v_container" class="checkCode" ></div>
 			</div>
 		</div>
 
