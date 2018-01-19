@@ -464,6 +464,7 @@
 
     // 充值操作
     function rechargeThis(amount) {
+        sessionStorage["toiletCatLastPage"] = window.location.href;
         $.ajax({
             url:"/toiletCat/api/user/userRecharge.action",
             type:"POST",

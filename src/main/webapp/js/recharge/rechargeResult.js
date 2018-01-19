@@ -1,21 +1,35 @@
 var flag = true;
 
+var firstFlag = false;
+
+
 $(function () {
 
     $("#recharge-result").append("<img style='margin-top: 30%;' width='100%' src='/image/recharge-result-loading.gif'>");
 
+    getRechargeResult();
+
     setTimeout(
         function() {
-            getRechargeResult()
+            getRechargeResultByTime()
         }, 1000);
 });
 
-// 获得充值结果
-function getRechargeResult() {
+function getRechargeResultByTime() {
+
+    if(!firstFlag) {
+        return;
+    }
 
     if(!flag) {
         return;
     }
+
+    getRechargeResult();
+}
+
+// 获得充值结果
+function getRechargeResult() {
 
     // 订单号
     var orderNo = getQueryString("out_trade_no");
@@ -47,12 +61,13 @@ function getRechargeResult() {
 
             $("#recharge-result").html("");
 
+            firstFlag = true;
+
             if(result["result"] == "fail") {
                 flag = false;
                 toiletCatMsg("充值失败 QAQ", "returnLastPage()");
 
-
-            } else if(result["result"] == "success"){
+            } else if(result["result"] == "success") {
                 flag = false;
 
                 // 用户游戏币数
