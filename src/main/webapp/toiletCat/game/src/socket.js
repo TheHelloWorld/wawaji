@@ -26,9 +26,6 @@ var socketJs = (function(_super){
         curPlayer = data.result.curPlayer
 
     }
-
-
-
     _proto.toyShadow = function(data){
         this.toyShadow = new Laya.Animation();
         Laya.Animation.createFrames(["comp/wawadi.png"],"shadowStop");
@@ -67,7 +64,7 @@ var socketJs = (function(_super){
             catch_status = 1;
         }else{
             catch_status = 0;
-            luckyNum = luckyNum+data.result.addNum;
+            luckyNum = parseInt(luckyNum)+parseInt(data.result.addNum);
             addLuckyNum = data.result.addNum;
         }
         upToyX = 0;
@@ -82,6 +79,9 @@ var socketJs = (function(_super){
     Laya.class(catchStatus,"catchStatus", _super);
 
     function startGame(){
+        if(failInfoObj.visible == true || successInfoObj.visible == true){
+            return;
+        }
         toyNowCoin = toyNowCoin;
         canMoveStatus = 1;
         var sign = 'start&'+uId+"&"+toyNowCoin+"&"+rId;
