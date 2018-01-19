@@ -205,6 +205,16 @@ public class BaseConstant {
 	public static final String USER_LUCKY_NUM_AFTER_THRESHOLD = "user_lucky_num_after_threshold";
 
 	/**
+	 * 特殊用户编号集合(以,分割)
+	 */
+	public static final String VIP_USER_NO_LIST = "vip_user_no_list";
+
+	/**
+	 * 特殊用户用户游戏房间增长值
+	 */
+	public static final String VIP_USER_GAME_ROOM_ADD_NUM = "vip_user_game_room_add_num";
+
+	/**
 	 * 后台登录用户名
 	 */
 	public static final String BACK_USER_NAME = "toiletCat_Back_Admin_Root_Name";

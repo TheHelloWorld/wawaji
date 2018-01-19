@@ -137,7 +137,7 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
         logger.info("getConfigByKey: "+key);
         // 初始化配置Map
         initCoinfgMap();
-        return BaseConstant.configMap.get(key);
+        return BaseConstant.configMap.get(key) == null ? "0":BaseConstant.configMap.get(key);
     }
 
     private void initCoinfgMap() {

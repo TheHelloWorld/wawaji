@@ -667,6 +667,18 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 }
 
+                // 若当前用户是特殊用户
+                if(toiletCatConfigService.getConfigByKey(BaseConstant.VIP_USER_NO_LIST).contains(userNo)) {
+
+                    // 用户游戏房间幸运累加值则为特殊值
+                    userLucKyNum = Integer.valueOf(toiletCatConfigService.getConfigByKey(
+                            BaseConstant.VIP_USER_GAME_ROOM_ADD_NUM));
+
+                    // 日志记录
+                    logger.info("getGameCatchResultByUserNoAndGameRoomNo user is vip userNo:" + userNo +
+                            ", userLucKyNum:" + userLucKyNum);
+                }
+
                 logger.info("getGameCatchResultByUserNoAndGameRoomNo userLucKyNum:" + userLucKyNum +
                         ",userNowLuckyNum:" + userNowLuckyNum + ",status:" + status);
 
