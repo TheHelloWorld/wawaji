@@ -118,6 +118,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     // 用户邀请码
                     user.setInvitationCode(invitationCode);
+
+                    // 用户邀请状态
+                    user.setInvitationStatus(InvitationStatus.UN_INVITE.getStatus());
                     userDao.addUser(user);
 
                 } else {
@@ -877,6 +880,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     return;
                 }
 
+                Integer invitationStatus = userDao.getInvitationStatusByUserNo(userNo);
+
+                // 判断当前用户是否已被邀请过
+                if(invitationStatus == InvitationStatus.INVITED.getStatus()) {
+                    setOtherMsg();
+                    got("只能填写一次邀请码喵");
+                    return;
+                }
 
                 // 根据邀请码获得邀请用户用户编号
                 String inviteUserNo = userDao.getUserNoByInvitationCode(inviteCode);
@@ -906,6 +917,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 给被邀请用户添加游戏币
                 userDao.updateUserCoinByUserNo(coin, userNo);
 
+                // 更新用户邀请状态为已邀请
+                userDao.updateInvitationStatusByUserNo(userNo, InvitationStatus.INVITED.getStatus());
+
                 UserSpendRecord userSpendRecord = new UserSpendRecord();
 
                 userSpendRecord.setUserNo(userNo);
@@ -933,8 +947,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 // 添加被邀请用户消费记录
                 userSpendRecordService.addUserSpendRecord(userSpendRecord);
-
-
 
                 // 给邀请用户添加游戏币
                 userDao.updateUserCoinByUserNo(coin, inviteUserNo);

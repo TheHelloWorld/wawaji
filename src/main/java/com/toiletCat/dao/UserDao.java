@@ -101,4 +101,19 @@ public interface UserDao {
      */
     String getUserNoByInvitationCode(String invitationCode);
 
+    /**
+     * 根据用户编号修改用户邀请状态
+     * @param userNo 用户编号
+     * @param invitationStatus 用户邀请状态
+     */
+    void updateInvitationStatusByUserNo(@Param("userNo") String userNo,
+                                        @Param("invitationStatus") Integer invitationStatus);
+
+    /**
+     * 根据用户编号获得用户邀请状态
+     * @param userNo 用户编号
+     * @return
+     */
+    Integer getInvitationStatusByUserNo(String userNo);
+
 }

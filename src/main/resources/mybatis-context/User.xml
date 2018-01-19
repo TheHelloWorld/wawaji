@@ -14,6 +14,8 @@
         <result property="userName" column="user_name" jdbcType="VARCHAR"/>
         <!-- 用户邀请码 -->
         <result property="invitationCode" column="invitation_code" jdbcType="VARCHAR"/>
+        <!-- 用户是否已填写邀请码 -->
+        <result property="invitationStatus" column="invitation_status" jdbcType="INTEGER"/>
         <!-- 用户图片 -->
         <result property="userImg" column="user_img" jdbcType="VARCHAR"/>
         <!-- 用户游戏币数 -->
@@ -32,6 +34,7 @@
                 mobile_no,
                 user_name,
                 invitation_code,
+                invitation_status,
                 user_img,
                 user_coin
             )
@@ -41,6 +44,7 @@
                 #{mobileNo, jdbcType=VARCHAR},
                 #{userName, jdbcType=VARCHAR},
                 #{invitationCode, jdbcType=VARCHAR},
+                #{invitationStatus, jdbcType=INTEGER},
                 #{userImg, jdbcType=VARCHAR},
                 #{userCoin, jdbcType=INTEGER}
             )
@@ -69,6 +73,7 @@
             mobile_no,
             user_name,
             invitation_code,
+            invitation_status,
             user_img,
             user_coin
         from `user`
@@ -93,6 +98,7 @@
           mobile_no,
           user_name,
           invitation_code,
+          invitation_status,
           user_img,
           user_coin
         from `user` where user_no = #{userNo, jdbcType=VARCHAR}
@@ -106,6 +112,7 @@
           mobile_no,
           user_name,
           invitation_code,
+          invitation_status,
           user_img,
           user_coin
         from `user` where mobile_no = #{mobileNo, jdbcType=VARCHAR}
@@ -133,9 +140,21 @@
         where user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
+    <!-- 根据用户编号修改用户邀请状态 -->
+    <update id="updateInvitationStatusByUserNo" >
+        update `user` set
+          invitation_status = #{invitationStatus, jdbcType=INTEGER}
+        where user_no = #{userNo, jdbcType=VARCHAR}
+    </update>
+
     <!-- 根据用户邀请码获得用户编号 -->
     <select id="getUserNoByInvitationCode" parameterType="java.lang.String" resultType="java.lang.String" >
         select user_no from `user` where invitation_code = #{invitationCode, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据用户编号获得用户邀请状态 -->
+    <select id="getInvitationStatusByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer" >
+        select invitation_status from `user` where user_no = #{userNo, jdbcType=VARCHAR}
     </select>
 
 </mapper>
