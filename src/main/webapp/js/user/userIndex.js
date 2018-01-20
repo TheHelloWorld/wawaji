@@ -131,6 +131,8 @@ function userInvite() {
 
             $("#invite").val("");
 
+            $("#userInviteCode").remove();
+
             toiletCatMsg("成功", "hideInvite()");
 
         }
