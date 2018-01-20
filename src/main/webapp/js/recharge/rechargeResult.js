@@ -1,6 +1,6 @@
 var flag = true;
 
-var firstFlag = false;
+var runFlag = false;
 
 
 $(function () {
@@ -17,7 +17,7 @@ $(function () {
 
 function getRechargeResultByTime() {
 
-    if(!firstFlag) {
+    if(!runFlag) {
         return;
     }
 
@@ -30,6 +30,8 @@ function getRechargeResultByTime() {
 
 // 获得充值结果
 function getRechargeResult() {
+
+    runFlag = false;
 
     // 订单号
     var orderNo = getQueryString("out_trade_no");
@@ -61,8 +63,6 @@ function getRechargeResult() {
 
             $("#recharge-result").html("");
 
-            firstFlag = true;
-
             if(result["result"] == "fail") {
                 flag = false;
                 toiletCatMsg("充值失败 QAQ", "returnLastPage()");
@@ -74,6 +74,8 @@ function getRechargeResult() {
                 sessionStorage["toiletCatUserCoin"] = result["userCoin"];
                 toiletCatMsg("充值成功", "returnLastPage()");
             }
+
+            runFlag = true;
 
         }
     });

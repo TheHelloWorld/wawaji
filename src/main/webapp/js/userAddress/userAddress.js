@@ -86,7 +86,7 @@ function getAllUserAddressByUserNo(userNo) {
                 str += "        <div class='my-margin-bottom' >地址:" + list[i]["address"] + "</div>";
                 str += "        <div>";
                 str += "            <a class='my-edit-right' href='javascript:void(0);' onclick='toEditUserAddressPage(" + list[i]["id"] + ")'><img src='/image/background/edit.png' />修改</a>";
-                str += "            <a href='javascript:void(0);' onclick='deleteUserAddress(" + list[i]["id"] + ")'><img src='/image/background/remove.png' />删除</a>";
+                str += "            <a href='javascript:void(0);' onclick='confirmDeleteUserAddress(" + list[i]["id"] + ")'><img src='/image/background/remove.png' />删除</a>";
                 str += "        </div>";
                 str += "    </div>";
                 str += "</div>"
@@ -117,12 +117,13 @@ function toEditUserAddressPage(id) {
 }
 
 // 删除元素
+function confirmDeleteUserAddress(id) {
+
+    toiletCatConfirmMsg("确定要删除喵?","deleteUserAddress(" + id + ")");
+
+}
+
 function deleteUserAddress(id) {
-
-    if(!confirm("确定要删除吗?")) {
-        return;
-    }
-
     $.ajax({
         url:"/toiletCat/api/userAddress/deleteUserAddressByIdAndUserNo.action",
         type:"POST",

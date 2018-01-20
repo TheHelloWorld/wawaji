@@ -836,10 +836,10 @@ function getUserInfoByUserNo(userNo) {
     });
 }
 
+// 跳转到登陆页
 function toLoginPage() {
 	window.location.href = "/toiletCat/user/login.html?from=gameIndex&type=gameRoom&checkType=checkCode";
 }
-
 
 // 弹出提示框
 function toiletCatMsg(msg, method) {
@@ -866,9 +866,32 @@ function closeToiletCatMsg(method) {
     $(".toiletCat-msg").remove();
     $(".toiletCat-msg-div").remove();
 
-    if(method != null) {
+    if(method != null && method != "null") {
     	eval(method);
 	}
+}
+
+// 弹出确认提示框
+function toiletCatConfirmMsg(msg, method) {
+    var str = "	<div class='toiletCat-msg' >";
+
+    str += "	</div>";
+    str += "		<div class='toiletCat-msg-div'>";
+    str += "			<div class='toiletCat-msg-alert'>";
+    str += "				提示";
+    str += "			</div>";
+    str += "			<div class='toiletCat-msg-text'>";
+    str += 					msg;
+    str += "			</div>";
+    str += "			<div class='toiletCat-confirm-sure-button' ontouchend='closeToiletCatMsg("+method+")'>";
+    str += "				确定";
+    str += "			</div>";
+    str += "			<div class='toiletCat-confirm-cancel-button' ontouchend='closeToiletCatMsg(null)'>";
+    str += "				取消";
+    str += "			</div>";
+    str += "		</div>";
+    $("body").append(str);
+    $(".toiletCat-msg").height($(window).height());
 }
 
 // 动态加载js

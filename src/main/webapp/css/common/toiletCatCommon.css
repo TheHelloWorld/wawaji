@@ -46,6 +46,28 @@
     opacity: 1;
 }
 
+.toiletCat-confirm-sure-button {
+    float: left;
+    width: 37.5%;
+    margin-left: 10%;
+    margin-top: 10%;
+    font-size: 3.25rem;
+    background: yellowgreen;
+    border-radius: 0.9375rem;
+    opacity: 1;
+}
+
+.toiletCat-confirm-cancel-button {
+    float: left;
+    width: 37.5%;
+    margin-left: 5%;
+    margin-top: 10%;
+    font-size: 3.25rem;
+    background: indianred;
+    border-radius: 0.9375rem;
+    opacity: 1;
+}
+
 .index-body-div {
     background: url("/image/background/background-big.png");
     background-size: 35% 35%;
