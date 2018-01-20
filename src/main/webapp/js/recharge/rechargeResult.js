@@ -4,7 +4,7 @@ var runFlag = true;
 
 $(function () {
 
-    $("#recharge-result").append("<img style='margin-top: 30%;' width='100%' src='/image/recharge-result-loading.gif'>");
+    $("#recharge-result").append("");
 
     setTimeout(
         function() {
@@ -58,7 +58,7 @@ function getRechargeResult() {
                 result = eval("("+result+")");
             }
 
-            $("#recharge-result").html("");
+            $("#loading-img").remove();
 
             if(result["result"] == "fail") {
                 flag = false;
