@@ -35,6 +35,9 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
             @Override
             public void exec() {
                 toiletCatConfigDao.addToiletCatConfig(toiletCatConfig);
+
+                initCoinfgMap();
+
                 // 添加对应key value
                 BaseConstant.configMap.put(toiletCatConfig.getConfigKey(), toiletCatConfig.getConfigValue());
             }
@@ -134,23 +137,43 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
      */
     @Override
     public String getConfigByKey(String key) {
-        logger.info("getConfigByKey: "+key);
-        // 初始化配置Map
-        initCoinfgMap();
-        return BaseConstant.configMap.get(key) == null ? "0":BaseConstant.configMap.get(key);
+        logger.info("getConfigByKey: "+ key);
+
+        // 若获得的key目前为空则重新获取一遍配置Map
+        if(BaseConstant.configMap.get(key) == null) {
+            refreshConfigMap();
+        }
+
+        // 若获取后依旧为空则日志报警并返回0
+        if(BaseConstant.configMap.get(key) == null) {
+            logger.warn("getConfigByKey key is null:" + key);
+            return "0";
+        }
+
+        return BaseConstant.configMap.get(key);
     }
 
+    /**
+     * 初始化map
+     */
     private void initCoinfgMap() {
         if(BaseConstant.configMap.isEmpty()) {
 
-            List<ToiletCatConfig> list = new ArrayList<>(toiletCatConfigDao.countAllConfig());
+            refreshConfigMap();
+        }
+    }
 
-            list = toiletCatConfigDao.getAllConfig();
+    /**
+     * 重新刷新Map
+     */
+    private void refreshConfigMap() {
+        List<ToiletCatConfig> list = new ArrayList<>(toiletCatConfigDao.countAllConfig());
 
-            // 将配置放入配置Map中
-            for(ToiletCatConfig toiletCatConfig : list) {
-                BaseConstant.configMap.put(toiletCatConfig.getConfigKey(), toiletCatConfig.getConfigValue());
-            }
+        list = toiletCatConfigDao.getAllConfig();
+
+        // 将配置放入配置Map中
+        for(ToiletCatConfig toiletCatConfig : list) {
+            BaseConstant.configMap.put(toiletCatConfig.getConfigKey(), toiletCatConfig.getConfigValue());
         }
     }
 
