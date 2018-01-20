@@ -19,13 +19,13 @@ $(function() {
 
     var indexBodyDivHeight = $(".index-body-div").height();
 
-    var addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+    var addHeight = $("#userToy").height() + ($(".default-height").height() * 2);
 
     $(".index-body-div").scroll(function(){
 
         if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
             nextPage();
-            addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+            addHeight = $("#userToy").height() + ($(".default-height").height() * 2);
         }
     });
 
@@ -109,8 +109,8 @@ function getAllUserToyByUserNo(nowPage) {
                 str += "<div class='toiletCat-col-xs-6' onclick='toUserToyDetail("+list[i]["id"]+")' >";
                 str += "    <div class='machine-panel panel-info'>";
                 str += "        <div class='panel-body'>";
-                str += "            <div class='toy-img index-img'>"
-                str += "                <img height='100px' width=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
+                str += "            <div class='toy-img index-img' style='text-align: center'>";
+                str += "                <img height='100px' maxwidth=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
                 str += "            </div>";
                 str += "            <div style='margin-bottom: 1%'><span>" + list[i]["toyName"] + "</span></div>";
                 var newDate = new Date();
