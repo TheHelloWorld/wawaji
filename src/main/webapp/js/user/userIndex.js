@@ -5,6 +5,12 @@ $(function(){
 
     getUserInfoByUserNo(userNo);
 
+    // 若已经填过邀请码则邀请码不展示
+    if(sessionStorage["toiletCatInvitationStatus"] == 1) {
+        $("#userInviteCode").remove();
+        $("#inviteZzc").remove();
+    }
+
     // 用户名
     userName = sessionStorage["toiletCatUserName"];
     // 用户游戏币数
@@ -61,4 +67,72 @@ function setUserInfo() {
     $("#userImg").append("<img src='"+userImg+"' />");
     $("#userName").html(userName);
     $("#invitationCode").html(invitationCode);
+}
+
+// 填写邀请码页面
+function showInvite() {
+    // 判断用户邀请状态
+    if(sessionStorage["toiletCatInvitationStatus"] == 1) {
+        toiletCatMsg("只能填写一次邀请码喵", null);
+        return;
+    }
+
+    $('#inviteZzc').show();$(".index-footer").hide();
+}
+
+// 隐藏邀请码
+function hideInvite(){
+    $('#inviteZzc').hide();$(".index-footer").show();
+}
+
+// 用户填写邀请码
+function userInvite() {
+    if(!isNotNull("invite")) {
+        toiletCatMsg("请填写邀请码", null);
+        return;
+    }
+
+    if($("#invite").val().trim().length != 5) {
+        toiletCatMsg("请填写正确邀请码", null);
+        return;
+    }
+
+    $.ajax({
+        url:"/toiletCat/api/user/userInvite.action",
+        type:"POST",
+        async:false,
+        data:{
+            inviteCode:$("#invite").val(),
+            userNo:sessionStorage["toiletCatUserNo"]
+        },
+        success:function(data) {
+            // 转换数据
+            if(typeof(data) == "string") {
+                data = eval("("+data+")");
+            }
+
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+                toiletCatMsg(data["result"], null);
+                return;
+            }
+
+            var result = data["result"];
+            // 转换数据
+            if(typeof(result) == "string") {
+                result = eval("("+result+")");
+            }
+
+            var userCoin = result["userCoin"];
+
+            sessionStorage["toiletCatUserCoin"] = userCoin;
+
+            $("#userIndexUserCoin").html(userCoin);
+
+            $("#invite").val("");
+
+            toiletCatMsg("成功", "hideInvite()");
+
+        }
+    });
 }

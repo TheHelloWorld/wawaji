@@ -111,7 +111,7 @@ function getAllUserCatchRecordByUserNo(userNo) {
 
                 str += "    <div class='catch-toy-div' >";
                 str += "        <div class='catch-toy-img'>";
-                str += "            <img src='" + list[i]["toyImg"] + "' />";
+                str += "            <img maxwidth=100% src='" + list[i]["toyImg"] + "' />";
                 str += "        </div>";
                 var newDate = new Date();
                 newDate.setTime(list[i]["catchTime"]);

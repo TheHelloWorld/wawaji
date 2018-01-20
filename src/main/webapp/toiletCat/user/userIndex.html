@@ -31,7 +31,7 @@
 
     <script type="text/javascript" src="/common/js/commonUtil.js?v=1.0.0.2"></script>
 
-    <script type="text/javascript" src="/js/user/userIndex.js?v=1.0.0.1"></script>
+    <script type="text/javascript" src="/js/user/userIndex.js?v=1.0.0.2"></script>
 
     <script type="text/javascript" src="/js/recharge/recharge.js?v=1.0.0.1"></script>
 
@@ -102,7 +102,7 @@
             <div style="clear:both"></div>
         </div>
     </div>
-    <div class="center-other">
+    <div id="userInviteCode" class="center-other">
         <div style="height:100%;" onclick="showInvite()">
             <div style="float:left;margin-top:1%;margin-left:3%;">
                 <img src="/image/background/invite.ico" width=100% height=100% />
@@ -150,75 +150,6 @@
         <button style="border:0;font-size:3rem;background: #B1ED0A;" onclick="userInvite()">点击提交</button>
     </div>
 </div>
-
-<script type="text/javascript">
-
-    function showInvite() {
-        // 判断用户邀请状态
-        if(sessionStorage["toiletCatInvitationStatus"] == 1) {
-            toiletCatMsg("只能填写一次邀请码喵", null);
-            return;
-        }
-
-        $('#inviteZzc').show();$(".index-footer").hide();
-    }
-
-    function hideInvite(){
-        $('#inviteZzc').hide();$(".index-footer").show();
-    }
-
-    function userInvite() {
-        if(!isNotNull("invite")) {
-            toiletCatMsg("请填写邀请码", null);
-            return;
-        }
-
-        if($("#invite").val().trim().length != 5) {
-            toiletCatMsg("请填写正确邀请码", null);
-            return;
-        }
-
-        $.ajax({
-            url:"/toiletCat/api/user/userInvite.action",
-            type:"POST",
-            async:false,
-            data:{
-                inviteCode:$("#invite").val(),
-                userNo:sessionStorage["toiletCatUserNo"]
-            },
-            success:function(data) {
-                // 转换数据
-                if(typeof(data) == "string") {
-                    data = eval("("+data+")");
-                }
-
-                // 判断是否成功
-                if(data["is_success"] != "success") {
-                    toiletCatMsg(data["result"], null);
-                    return;
-                }
-
-                var result = data["result"];
-                // 转换数据
-                if(typeof(result) == "string") {
-                    result = eval("("+result+")");
-                }
-
-                var userCoin = result["userCoin"];
-
-                sessionStorage["toiletCatUserCoin"] = userCoin;
-
-                $("#userIndexUserCoin").html(userCoin);
-
-                $("#invite").val("");
-
-                toiletCatMsg("成功", "hideInvite()");
-
-            }
-        });
-    }
-
-</script>
 
 </body>
 
