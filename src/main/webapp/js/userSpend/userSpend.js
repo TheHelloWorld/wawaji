@@ -19,14 +19,13 @@ $(function() {
 
     var indexBodyDivHeight = $(".index-body-div").height();
 
-    var addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
-
+    var addHeight = $("#userSpend").height() + ($(".default-height").height() * 2);
 
     $(".index-body-div").scroll(function(){
 
         if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
             nextPage();
-            addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+            addHeight = $("#userSpend").height() + ($(".default-height").height() * 2);
         }
     });
 
@@ -102,8 +101,6 @@ function getAllUserSpendRecordByUserNo(nowPage) {
             var str = "";
 
             for(var i = 0; i<list.length; i++) {
-
-                console.info(list[i]);
 
                 var newDate = new Date();
                 newDate.setTime(list[i]["tradeTime"]);
