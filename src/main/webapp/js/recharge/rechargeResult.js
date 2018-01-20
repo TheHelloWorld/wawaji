@@ -1,13 +1,10 @@
 var flag = true;
 
-var runFlag = false;
-
+var runFlag = true;
 
 $(function () {
 
     $("#recharge-result").append("<img style='margin-top: 30%;' width='100%' src='/image/recharge-result-loading.gif'>");
-
-    getRechargeResult();
 
     setTimeout(
         function() {
