@@ -853,7 +853,7 @@ function toiletCatMsg(msg, method) {
     str += "			<div class='toiletCat-msg-text'>";
     str += 					msg;
     str += "			</div>";
-    str += "			<div class='toiletCat-msg-button' ontouchend='closeToiletCatMsg("+method+")'>";
+    str += "			<div class='toiletCat-msg-button' onclick='closeToiletCatMsg("+method+")'>";
     str += "				确定";
     str += "			</div>";
     str += "		</div>";
@@ -883,10 +883,10 @@ function toiletCatConfirmMsg(msg, method) {
     str += "			<div class='toiletCat-msg-text'>";
     str += 					msg;
     str += "			</div>";
-    str += "			<div class='toiletCat-confirm-sure-button' ontouchend='closeToiletCatMsg("+method+")'>";
+    str += "			<div class='toiletCat-confirm-sure-button' onclick='closeToiletCatMsg("+method+")'>";
     str += "				确定";
     str += "			</div>";
-    str += "			<div class='toiletCat-confirm-cancel-button' ontouchend='closeToiletCatMsg(null)'>";
+    str += "			<div class='toiletCat-confirm-cancel-button' onclick='closeToiletCatMsg(null)'>";
     str += "				取消";
     str += "			</div>";
     str += "		</div>";
