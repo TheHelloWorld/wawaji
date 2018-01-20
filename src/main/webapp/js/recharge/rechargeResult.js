@@ -4,8 +4,6 @@ var runFlag = true;
 
 $(function () {
 
-    $("#recharge-result").append("");
-
     setTimeout(
         function() {
             getRechargeResultByTime()
