@@ -8,6 +8,7 @@ import java.util.Map;
  */
 public enum MoneyForCoin {
 
+    EXCHANGE_TEsT("0.01", 100),
     EXCHANGE_10("10.00", 100),
     EXCHANGE_20("20.00", 210),
     EXCHANGE_30("30.00", 330),

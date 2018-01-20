@@ -829,8 +829,8 @@ function getUserInfoByUserNo(userNo) {
             sessionStorage["toiletCatUserImg"] = user["userImg"];
             // 用户邀请码
             sessionStorage["toiletCatInvitationCode"] = user["invitationCode"];
-            // 用户邀请状态
-            sessionStorage["toiletCatInvitationStatus"] = user["invitationStatus"];
+            // 用户邀请码用户编号
+            sessionStorage["toiletCatInvitationUserNo"] = user["invitationUserNo"];
 
         }
     });

@@ -14,8 +14,8 @@
         <result property="userName" column="user_name" jdbcType="VARCHAR"/>
         <!-- 用户邀请码 -->
         <result property="invitationCode" column="invitation_code" jdbcType="VARCHAR"/>
-        <!-- 用户是否已填写邀请码 -->
-        <result property="invitationStatus" column="invitation_status" jdbcType="INTEGER"/>
+        <!-- 用户填写邀请码的用户 -->
+        <result property="invitationUserNo" column="invitation_user_no" jdbcType="VARCHAR"/>
         <!-- 用户图片 -->
         <result property="userImg" column="user_img" jdbcType="VARCHAR"/>
         <!-- 用户游戏币数 -->
@@ -34,7 +34,7 @@
                 mobile_no,
                 user_name,
                 invitation_code,
-                invitation_status,
+                invitation_user_no,
                 user_img,
                 user_coin
             )
@@ -44,7 +44,7 @@
                 #{mobileNo, jdbcType=VARCHAR},
                 #{userName, jdbcType=VARCHAR},
                 #{invitationCode, jdbcType=VARCHAR},
-                #{invitationStatus, jdbcType=INTEGER},
+                #{invitationUserNo, jdbcType=VARCHAR},
                 #{userImg, jdbcType=VARCHAR},
                 #{userCoin, jdbcType=INTEGER}
             )
@@ -73,7 +73,7 @@
             mobile_no,
             user_name,
             invitation_code,
-            invitation_status,
+            invitation_user_no,
             user_img,
             user_coin
         from `user`
@@ -98,7 +98,7 @@
           mobile_no,
           user_name,
           invitation_code,
-          invitation_status,
+          invitation_user_no,
           user_img,
           user_coin
         from `user` where user_no = #{userNo, jdbcType=VARCHAR}
@@ -112,7 +112,7 @@
           mobile_no,
           user_name,
           invitation_code,
-          invitation_status,
+          invitation_user_no,
           user_img,
           user_coin
         from `user` where mobile_no = #{mobileNo, jdbcType=VARCHAR}
@@ -140,10 +140,10 @@
         where user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
-    <!-- 根据用户编号修改用户邀请状态 -->
-    <update id="updateInvitationStatusByUserNo" >
+    <!-- 根据用户编号修改用户邀请用户编码 -->
+    <update id="updateInvitationUserNoByUserNo" >
         update `user` set
-          invitation_status = #{invitationStatus, jdbcType=INTEGER}
+          invitation_user_no = #{invitationUserNo, jdbcType=VARCHAR}
         where user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
@@ -153,8 +153,13 @@
     </select>
 
     <!-- 根据用户编号获得用户邀请状态 -->
-    <select id="getInvitationStatusByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer" >
-        select invitation_status from `user` where user_no = #{userNo, jdbcType=VARCHAR}
+    <select id="getInvitationUserNoByUserNo" parameterType="java.lang.String" resultType="java.lang.String" >
+        select invitation_user_no from `user` where user_no = #{userNo, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 获得用户邀请数量 -->
+    <select id="countByInvitationUserNo" parameterType="java.lang.String" resultType="java.lang.Integer" >
+        select count(*) from `user` where invitation_user_no = #{invitationUserNo, jdbcType=VARCHAR}
     </select>
 
 </mapper>

@@ -72,7 +72,7 @@ function setUserInfo() {
 // 填写邀请码页面
 function showInvite() {
     // 判断用户邀请状态
-    if(sessionStorage["toiletCatInvitationStatus"] == 1) {
+    if(sessionStorage["toiletCatInvitationUserNo"] != "0") {
         toiletCatMsg("只能填写一次邀请码喵", null);
         return;
     }

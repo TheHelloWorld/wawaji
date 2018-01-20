@@ -120,7 +120,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     user.setInvitationCode(invitationCode);
 
                     // 用户邀请状态
-                    user.setInvitationStatus(InvitationStatus.UN_INVITE.getStatus());
+                    user.setInvitationUserNo(BaseConstant.DEFAULT_INVITATION_USER_NO);
                     userDao.addUser(user);
 
                 } else {
@@ -880,10 +880,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     return;
                 }
 
-                Integer invitationStatus = userDao.getInvitationStatusByUserNo(userNo);
+                String invitationUserNo = userDao.getInvitationUserNoByUserNo(userNo);
 
                 // 判断当前用户是否已被邀请过
-                if(invitationStatus == InvitationStatus.INVITED.getStatus()) {
+                if(!BaseConstant.DEFAULT_INVITATION_USER_NO.equals(invitationUserNo)) {
                     setOtherMsg();
                     got("只能填写一次邀请码喵");
                     return;
@@ -917,8 +917,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 给被邀请用户添加游戏币
                 userDao.updateUserCoinByUserNo(coin, userNo);
 
-                // 更新用户邀请状态为已邀请
-                userDao.updateInvitationStatusByUserNo(userNo, InvitationStatus.INVITED.getStatus());
+                // 更新用户邀请用户编号
+                userDao.updateInvitationUserNoByUserNo(userNo, inviteUserNo);
 
                 UserSpendRecord userSpendRecord = new UserSpendRecord();
 
@@ -948,19 +948,26 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 添加被邀请用户消费记录
                 userSpendRecordService.addUserSpendRecord(userSpendRecord);
 
-                // 给邀请用户添加游戏币
-                userDao.updateUserCoinByUserNo(coin, inviteUserNo);
+                // 获得邀请用户当前已邀请用户数量
+                Integer invitationCount = userDao.countByInvitationUserNo(invitationUserNo);
 
-                // 设置邀请用户用户编号
-                userSpendRecord.setUserNo(inviteUserNo);
+                // 若数量小于最大邀请数量则给邀请用户添加游戏币
+                if(invitationCount < BaseConstant.INVITE_MAX_NUM) {
 
-                String inviteOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime() + inviteUserNo;
+                    // 给邀请用户添加游戏币
+                    userDao.updateUserCoinByUserNo(coin, inviteUserNo);
 
-                // 设置邀请用户订单编号
-                userSpendRecord.setOrderNo(inviteOrderNo);
+                    // 设置邀请用户用户编号
+                    userSpendRecord.setUserNo(inviteUserNo);
 
-                // 添加邀请用户消费记录
-                userSpendRecordService.addUserSpendRecord(userSpendRecord);
+                    String inviteOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime() + inviteUserNo;
+
+                    // 设置邀请用户订单编号
+                    userSpendRecord.setOrderNo(inviteOrderNo);
+
+                    // 添加邀请用户消费记录
+                    userSpendRecordService.addUserSpendRecord(userSpendRecord);
+                }
 
                 // 获得当前用户游戏币并返回前端
                 Integer userCoin = userDao.getUserCoinByUserNo(userNo);

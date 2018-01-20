@@ -30,9 +30,9 @@ public class User extends BaseEntity implements Serializable {
 	private String invitationCode;
 
 	/**
-	 * 用户是否已填写邀请码
+	 * 用户填写邀请码的用户
 	 */
-	private Integer invitationStatus;
+	private String invitationUserNo;
 
 	/**
 	 * 用户头像
@@ -76,12 +76,12 @@ public class User extends BaseEntity implements Serializable {
 		this.invitationCode = invitationCode;
 	}
 
-	public Integer getInvitationStatus() {
-		return invitationStatus;
+	public String getInvitationUserNo() {
+		return invitationUserNo;
 	}
 
-	public void setInvitationStatus(Integer invitationStatus) {
-		this.invitationStatus = invitationStatus;
+	public void setInvitationUserNo(String invitationUserNo) {
+		this.invitationUserNo = invitationUserNo;
 	}
 
 	public String getUserImg() {

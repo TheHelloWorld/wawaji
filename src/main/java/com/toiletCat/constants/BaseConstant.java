@@ -224,5 +224,14 @@ public class BaseConstant {
 	 */
 	public static final String BACK_USER_PASSWORD = "asdkljfhalksjvoiualknxcvlkj123lsjchvlkjasdf";
 
+	/**
+	 * 默认用户邀请码
+	 */
+	public static final String DEFAULT_INVITATION_USER_NO = "0";
+
+	/**
+	 * 最大邀请数量
+	 */
+	public static final Integer INVITE_MAX_NUM = 10;
 
 }
