@@ -15,13 +15,13 @@ $(function() {
 
     var indexBodyDivHeight = $(".index-body-div").height();
 
-    var addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+    var addHeight = $("#catchRecord").height() + ($(".default-height").height() * 2);
 
     $(".index-body-div").scroll(function(){
 
         if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
             nextPage();
-            addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+            addHeight = $("#catchRecord").height() + ($(".default-height").height() * 2);
         }
     });
 
