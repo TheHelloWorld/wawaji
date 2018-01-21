@@ -88,4 +88,11 @@ public interface UserRechargeRecordDao {
      * @return
      */
     Integer getTradeStatusByOrderNo(@Param("userNo") String userNo, @Param("orderNo") String orderNo);
+
+    /**
+     * 根据用户编号获得所有非终态订单
+     * @param userNo 用户编号
+     * @return
+     */
+    List<UserRechargeRecord> getAllInitRecordByUserNo(String userNo);
 }

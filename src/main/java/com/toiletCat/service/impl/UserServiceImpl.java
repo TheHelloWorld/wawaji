@@ -55,6 +55,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     @Autowired
     private ToiletCatConfigService toiletCatConfigService;
 
+    @Autowired
+    private RechargeService rechargeService;
+
     /**
      * 用户注册或登录
      *
@@ -124,6 +127,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     userDao.addUser(user);
 
                 } else {
+
                     user = userDao.getUserByMobileNo(mobileNo);
                 }
 

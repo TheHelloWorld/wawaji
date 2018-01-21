@@ -6,6 +6,7 @@ import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.RechargeResult;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.dao.UserDao;
+import com.toiletCat.entity.UserRechargeRecord;
 import com.toiletCat.enums.MoneyForCoin;
 import com.toiletCat.enums.TradeStatus;
 import com.toiletCat.service.RechargeService;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @SuppressWarnings("all")
 @Service("rechargeService")
@@ -226,6 +228,48 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
             }
         }, "getRechargeResultByOrderNo", json.toJSONString());
+    }
+
+    /**
+     * 获得所有状态不为终态的交易的结果
+     * @param userNo 用户编号
+     * @return
+     */
+    @Override
+    public CommonResult getInitRechargeResultByOrderInfo(final String userNo) {
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                JSONObject returnJSON = new JSONObject();
+
+                // 判断用户编号是否存在
+                if(userDao.countUserByUserNo(userNo) == 0) {
+                    logger.warn("getInitRechargeResultByOrderInfo userNo not exists userNo:"+ userNo);
+                    return;
+                }
+
+                // 获得所有当前用户非终态订单
+                CommonResult<List<UserRechargeRecord>> result = userRechargeRecordService.
+                        getAllInitRecordByUserNo(userNo);
+
+                List<UserRechargeRecord> list = result.getValue();
+
+                if(list == null || list.size() == 0) {
+                    logger.info("getInitRechargeResultByOrderInfo userNo:" + userNo + " no init order");
+                    return;
+                }
+
+                for(UserRechargeRecord userRechargeRecord : list) {
+                    // 查询交易结果
+                    queryRechargeResult(userRechargeRecord.getOrderNo(), userRechargeRecord.getAmount());
+                }
+
+            }
+        }, "getInitRechargeResultByOrderInfo", json.toJSONString());
     }
 
     /**

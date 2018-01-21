@@ -219,6 +219,24 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
         }, "getTradeStatusByOrderNo", json.toJSONString());
     }
 
+    /**
+     * 根据用户编号获得所有非终态订单
+     * @param userNo 用户编号
+     * @return
+     */
+    @Override
+    public CommonResult<List<UserRechargeRecord>> getAllInitRecordByUserNo(final String userNo) {
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userRechargeRecordDao.getAllInitRecordByUserNo(userNo));
+            }
+        }, "getAllInitRecordByUserNo", json.toJSONString());
+    }
+
     @Override
     protected Logger getLogger() {
         return logger;

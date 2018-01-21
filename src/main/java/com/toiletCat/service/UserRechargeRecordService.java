@@ -78,4 +78,11 @@ public interface UserRechargeRecordService {
      * @return
      */
     CommonResult<Integer> getTradeStatusByOrderNo(String userNo, String orderNo);
+
+    /**
+     * 根据用户编号获得所有非终态订单
+     * @param userNo 用户编号
+     * @return
+     */
+    CommonResult<List<UserRechargeRecord>> getAllInitRecordByUserNo(String userNo);
 }

@@ -4,7 +4,7 @@ var runFlag = true;
 
 $(function () {
 
-    setTimeout(
+    setInterval(
         function() {
             getRechargeResultByTime()
         }, 1000);
@@ -39,6 +39,9 @@ function getRechargeResult() {
         },
         async:false,
         success:function(data) {
+
+            runFlag = true;
+
             // 转换数据
             if(typeof(data) == "string") {
                 data = eval("("+data+")");
@@ -69,8 +72,6 @@ function getRechargeResult() {
                 toiletCatMsg("充值成功", "returnLastPage()");
                 $("#loading-img").remove();
             }
-
-            runFlag = true;
 
         }
     });

@@ -119,4 +119,12 @@
         select trade_status from user_recharge_record where order_no = #{orderNo} and user_no = #{userNo}
     </select>
 
+    <!-- 根据用户编号获得所有非终态订单 -->
+    <select id="getAllInitRecordByUserNo" parameterType="java.lang.String" resultMap="userRechargeRecordMap">
+        select
+            order_no,
+            amount
+        from user_recharge_record where user_no = #{userNo} and trade_status = 0
+    </select>
+
 </mapper>
