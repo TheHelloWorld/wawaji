@@ -153,9 +153,9 @@ public class UserToyController {
 
         UserToy userToy = JSON.parseObject(userToyStr, UserToy.class);
 
-        CommonResult result =  userToyService.updateChoiceTypeByIdAndUserNo(userToy, userAddress, toyNameArray, userToyIdList);
+        CommonResult<String> result =  userToyService.updateChoiceTypeByIdAndUserNo(userToy, userAddress, toyNameArray, userToyIdList);
 
-        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
+        return JSONUtil.getReturnBeanString(result);
     }
 
 }

@@ -36,16 +36,19 @@ $(function() {
 
     id = getQueryString("id");
 
+    // 根据用户编号和id获得记录信息
+    getUserToyByUserNoAndId();
+
     if(sessionStorage["toiletCatUserToyAddUserAddress"] == "2") {
 
         sessionStorage["toiletCatUserToyAddUserAddress"] = "null";
         getAllUserAddressByUserNo(userNo);
         clickAddress(onlyOneUserAddressId);
+        $("#choiceType").val("2");
         $("#submitButton").show();
     }
 
-    // 根据用户编号和id获得记录信息
-    getUserToyByUserNoAndId();
+
 
 });
 
@@ -446,12 +449,21 @@ function updateChoiceType() {
                 return;
             }
 
-            window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
+            var result = data["result"];
+
+            if(typeof(result) == "string") {
+                result = eval("("+result+")");
+            }
+
+            // 更新用户游戏币数
+            sessionStorage["toiletCatUserCoin"] = result["userCoin"];
+
+            window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo=" + userNo + "&id=" + id;
         }
     });
 }
 
 // 返回用户战利品也
 function returnMethod() {
-    window.location.href = "/toiletCat/userToy/userToy.html?userNo="+userNo;
+    window.location.href = "/toiletCat/userToy/userToy.html?userNo=" + userNo;
 }

@@ -44,7 +44,7 @@ public interface UserToyService {
      * @param toyNameArray 玩具名集合
      * @param userToyIdList 用户战利品id集合
      */
-    CommonResult updateChoiceTypeByIdAndUserNo(UserToy userToy, UserAddress userAddress, String toyNameArray,
+    CommonResult<String> updateChoiceTypeByIdAndUserNo(UserToy userToy, UserAddress userAddress, String toyNameArray,
                                                List<Long> userToyIdList);
     
     /**

@@ -142,7 +142,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
      * @param userToyIdList 用户战利品id集合
      */
     @Override
-    public CommonResult updateChoiceTypeByIdAndUserNo(final UserToy userToy, final UserAddress userAddress,
+    public CommonResult<String> updateChoiceTypeByIdAndUserNo(final UserToy userToy, final UserAddress userAddress,
                                                       final String toyNameArray, final List<Long> userToyIdList) {
 
         return exec(new Callback() {
@@ -153,8 +153,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                 Integer choiceType = userToy.getChoiceType();
                 // 用户编号
                 String userNo = userToy.getUserNo();
-
-
+                
                 if(ChoiceType.FOR_DELIVER.getStatus() == choiceType) {
 
                     Deliver deliver = new Deliver();
@@ -249,6 +248,14 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                     userToyDao.updateChoiceTypeByIdAndUserNo(userToy);
                 }
+
+                Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+
+                JSONObject json = new JSONObject();
+
+                json.put("userCoin",userCoin);
+
+                got(json.toJSONString());
 
             }
         }, "updateChoiceTypeByIdAndUserNo", JSON.toJSONString(userToy));
