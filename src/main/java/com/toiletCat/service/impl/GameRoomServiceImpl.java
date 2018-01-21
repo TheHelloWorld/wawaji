@@ -11,6 +11,7 @@ import com.toiletCat.dao.UserGameRoomDao;
 import com.toiletCat.entity.GameRoom;
 import com.toiletCat.enums.HandleType;
 import com.toiletCat.service.GameRoomService;
+import com.toiletCat.service.ToiletCatConfigService;
 import com.toiletCat.utils.RandomIntUtil;
 import com.toiletCat.utils.RedisUtil;
 import org.apache.commons.lang.StringUtils;
@@ -32,6 +33,9 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
     @Autowired
     private UserGameRoomDao userGameRoomDao;
+
+    @Autowired
+    private ToiletCatConfigService toiletCatConfigService;
 
     /**
      * 添加游戏房间
@@ -278,13 +282,15 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
         JSONObject json = new JSONObject();
         json.put("gameRoomNo",gameRoomNo);
 
-        final Integer roomLuckyNum = RandomIntUtil.getRandomNum(40);
-
-        json.put("roomLuckyNum",roomLuckyNum);
-
         return exec(new Callback() {
             @Override
             public void exec() {
+
+                Integer roomLuckyNum = Integer.valueOf(toiletCatConfigService.getConfigByKey(
+                        BaseConstant.RESET_GAME_ROOM_LUCKY_NUM));
+
+                logger.info("resetRoomLuckyNumByGameRoomNo roomLuckyNum:" + roomLuckyNum);
+
                 gameRoomDao.resetRoomLuckyNumByGameRoomNo(gameRoomNo, roomLuckyNum);
             }
         }, "resetRoomLuckyNumByGameRoomNo", json.toJSONString());
