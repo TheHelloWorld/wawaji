@@ -215,7 +215,7 @@ public class BaseConstant {
 	public static final String VIP_USER_GAME_ROOM_ADD_NUM = "vip_user_game_room_add_num";
 
 	/**
-	 * 充值游戏房间幸运值下限(上限为下限+10以内的一个数)
+	 * 重置游戏房间幸运值下限(上限为下限+10以内的一个数)
 	 */
 	public static final String RESET_GAME_ROOM_LUCKY_NUM = "reset_game_room_lucky_num";
 
