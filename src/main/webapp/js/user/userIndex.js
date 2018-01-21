@@ -6,7 +6,7 @@ $(function(){
     getUserInfoByUserNo(userNo);
 
     // 若已经填过邀请码则邀请码不展示
-    if(sessionStorage["toiletCatInvitationStatus"] != "0") {
+    if(sessionStorage["toiletCatInvitationUserNo"] != "0") {
         $("#userInviteCode").remove();
         $("#inviteZzc").remove();
     }

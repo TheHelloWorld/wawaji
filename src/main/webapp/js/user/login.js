@@ -237,7 +237,7 @@ function validate() {
     }
 
     // 获取输入框内验证码
-    var inputCode = $("#checkCodeText").val();
+    var inputCode = $("#checkCodeText").val().trim().replace(" ","");
 
     var res = verifyCode.validate(inputCode);
 
