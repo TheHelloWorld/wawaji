@@ -544,8 +544,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 判断当前用户编号是否正确
                 if(userDao.countUserByUserNo(userNo) == 0) {
                     logger.warn("getUserByUserNo user not exists userNo:" + userNo);
-                    got("登录超时,请重新登录");
-                    setOtherMsg();
                     return;
                 }
 
