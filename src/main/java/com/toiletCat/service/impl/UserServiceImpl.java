@@ -129,6 +129,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 } else {
 
                     user = userDao.getUserByMobileNo(mobileNo);
+
+                    rechargeService.getInitRechargeResultByOrderInfo(user.getUserNo());
+
+                    user = userDao.getUserByUserNo(user.getUserNo());
                 }
 
                 got(user);
@@ -550,6 +554,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     logger.warn("getUserByUserNo user not exists userNo:" + userNo);
                     return;
                 }
+
+                // 处理非终态订单
+                rechargeService.getInitRechargeResultByOrderInfo(userNo);
 
                 got(userDao.getUserByUserNo(userNo));
 
