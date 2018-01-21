@@ -20,7 +20,7 @@ $(function() {
     $(".index-body-div").scroll(function(){
 
         if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
-            nextPage();
+            nextPage(userNo);
             addHeight = $("#catchRecord").height() + ($(".default-height").height() * 2);
         }
     });
@@ -107,7 +107,7 @@ function getAllUserCatchRecordByUserNo(userNo) {
 
             for(var i = 0; i<list.length; i++) {
 
-                str += "<div id='userCatchRecord"+list[i]["id"]+"' class='catch-toy-row' >";
+                str += "<div id='userCatchRecord"+list[i]["id"]+"' class='catch-toy-row' style='height: " + $('.my-body').height()/5 + "px;' >";
 
                 str += "    <div class='catch-toy-div' >";
                 str += "        <div class='catch-toy-img'>";
@@ -130,8 +130,6 @@ function getAllUserCatchRecordByUserNo(userNo) {
             }
 
             $("#catchRecord").append(str);
-
-            $(".catch-toy-row").height($(".catch-toy-div").height());
         }
 
     });
