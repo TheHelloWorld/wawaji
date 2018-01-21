@@ -150,6 +150,8 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
             return "0";
         }
 
+        logger.info("getConfigByKey: "+ key + ", value:" + BaseConstant.configMap.get(key));
+
         return BaseConstant.configMap.get(key);
     }
 
