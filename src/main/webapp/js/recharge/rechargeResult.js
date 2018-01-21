@@ -56,11 +56,10 @@ function getRechargeResult() {
                 result = eval("("+result+")");
             }
 
-            $("#loading-img").remove();
-
             if(result["result"] == "fail") {
                 flag = false;
                 toiletCatMsg("充值失败 QAQ", "returnLastPage()");
+                $("#loading-img").remove();
 
             } else if(result["result"] == "success") {
                 flag = false;
@@ -68,6 +67,7 @@ function getRechargeResult() {
                 // 用户游戏币数
                 sessionStorage["toiletCatUserCoin"] = result["userCoin"];
                 toiletCatMsg("充值成功", "returnLastPage()");
+                $("#loading-img").remove();
             }
 
             runFlag = true;
