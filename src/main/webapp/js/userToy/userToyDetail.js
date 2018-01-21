@@ -334,13 +334,8 @@ function getAllUnHandleUserToyByUserNo() {
                     str += "<div class='row' style='margin-bottom: 5px'>";
                 }
 
-                if(i % 2 == 0) {
-                    str += "<div class='machine-col-xs-6-left' >";
-                } else if(i % 2 != 0) {
-                    str += "<div class='machine-col-xs-6-right' >";
-                }
-
-                str += "<label>";
+                str += "<div class='machine-col-xs-6' >";
+                str += "<label style='width: 100%;'>";
                 if(list[i]["id"] == id) {
                     str += "    <input type='checkbox' name='unHandleToy' value='"+list[i]["id"]+"' checked>";
                 } else {
@@ -350,8 +345,8 @@ function getAllUnHandleUserToyByUserNo() {
                 str += "    <input type='hidden' id='unHandleToy"+list[i]["id"]+"' value='"+list[i]["toyName"]+"' >";
                 str += "    <div class='user-deliver-toy-div panel-info'>";
                 str += "        <div class='panel-body'>";
-                str += "            <div class='toy-img index-img'>";
-                str += "                <img height='100px' width=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
+                str += "            <div class='toy-img index-img' style='text-align: center'>";
+                str += "                <img height='100px' maxwidth=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
                 str += "            </div>";
                 str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
                 str += "        </div>";
