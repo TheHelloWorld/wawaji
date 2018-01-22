@@ -1,22 +1,14 @@
 package com.toiletCat.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.toiletCat.constants.BaseConstant;
-import com.toiletCat.utils.JSONUtil;
-import com.toiletCat.utils.UUIDUtil;
-import com.toiletCat.utils.WxConfig;
+import com.toiletCat.utils.WxUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 @RequestMapping("/toiletCat/api/weChat")
 @Controller
@@ -41,7 +33,7 @@ public class WeChatController {
         // 排序
         String sortString = sort(token, timestamp, nonce);
         // 加密
-        String myToken = WxConfig.SHA1(sortString);
+        String myToken = WxUtil.SHA1(sortString);
         // 校验签名
         if (StringUtils.isNotBlank(myToken) && myToken.equals(signature)) {
             System.out.println("签名校验通过。");

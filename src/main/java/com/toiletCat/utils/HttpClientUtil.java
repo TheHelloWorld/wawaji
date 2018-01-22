@@ -1,6 +1,7 @@
 package com.toiletCat.utils;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -9,6 +10,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.config.RequestConfig;
@@ -28,6 +31,12 @@ import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -105,6 +114,86 @@ public class HttpClientUtil {
                 // 设置重试次数
                 .setRetryHandler(new DefaultHttpRequestRetryHandler(0, false))
                 .build();
+    }
+
+    /**
+     * 发送https请求
+     *
+     * @param requestUrl
+     *            请求地址
+     * @param requestMethod
+     *            请求方式（GET、POST）
+     * @param outputStr
+     *            提交的数据
+     * @return rootNode(通过rootNode.get(key)的方式获取json对象的属性值)
+     */
+    public static JsonNode httpsRequest(String requestUrl, String requestMethod, String outputStr) {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = null;
+        StringBuffer buffer = new StringBuffer();
+        try {
+            // 创建SSLContext对象，并使用我们指定的信任管理器初始化
+            TrustManager[] tm = { new MyX509TrustManager() };
+            SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+
+            sslContext.init(null, tm, new java.security.SecureRandom());
+            // 从上述SSLContext对象中得到SSLSocketFactory对象
+            SSLSocketFactory ssf = sslContext.getSocketFactory();
+
+            URL url = new URL(requestUrl);
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+            conn.setSSLSocketFactory(ssf);
+
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setUseCaches(false);
+            // 设置请求方式（GET/POST）
+            conn.setRequestMethod(requestMethod);
+            //conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            if ("GET".equalsIgnoreCase(requestMethod))
+                conn.connect();
+
+            // 当outputStr不为null时向输出流写数据
+            if (null != outputStr) {
+
+                OutputStream outputStream = conn.getOutputStream();
+
+                // 注意编码格式
+                outputStream.write(outputStr.getBytes("UTF-8"));
+
+                outputStream.close();
+            }
+
+            // 从输入流读取返回内容
+            InputStream inputStream = conn.getInputStream();
+
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");
+
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+            String str;
+
+            while ((str = bufferedReader.readLine()) != null) {
+
+                buffer.append(str);
+            }
+
+            // 释放资源
+            bufferedReader.close();
+
+            inputStreamReader.close();
+
+            inputStream.close();
+
+            conn.disconnect();
+
+            rootNode = mapper.readTree(buffer.toString());
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        return rootNode;
     }
 
     /**
@@ -318,6 +407,32 @@ public class HttpClientUtil {
             }
         }
         return parameterBuffer.toString();
+    }
+
+    /**
+     * 获取Ip
+     *
+     * @param request 请求
+     * @return
+     * @throws Exception
+     */
+    public static String getUserIp(HttpServletRequest request) throws Exception {
+        String ip = "";
+
+        if (request.getHeader("x-forwarded-for") != null && (!request.getHeader("x-forwarded-for").trim().equals("")
+        )) {
+            ip = request.getHeader("x-forwarded-for").split(",")[0];
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        return ip;
     }
 
 }
