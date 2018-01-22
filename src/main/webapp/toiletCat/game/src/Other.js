@@ -134,11 +134,15 @@ var leftButton,rightButton,upButton,downButton,catchButton,startButton,luckyNumP
 
     //点击我的
     function clickMy(){
-        toUserIndex();
+		if(startButton.visible == true){
+				toUserIndex();
+		}
     }
 
     function prize(){
-        toUserToy();
+		if(startButton.visible == true){
+				toUserToy();
+		}
     }
 
     function startGameButton(){

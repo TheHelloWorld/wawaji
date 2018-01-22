@@ -138,3 +138,19 @@ function userInvite() {
         }
     });
 }
+
+// 分享到朋友圈
+function shareToWeChat() {
+
+    var str = "	<div onclick='closeShare()' class='toiletCat-msg' >";
+    str += "        <img style='float:right;' src='/image/guide.png'>";
+    str += "	</div>";
+
+    $("body").append(str);
+    $(".toiletCat-msg").height($(window).height());
+}
+
+// 取消分享
+function closeShare() {
+    $(".toiletCat-msg").remove();
+}
