@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.MessageDigest;
@@ -20,7 +21,12 @@ public class WeChatController {
 
     private static final Logger logger = LoggerFactory.getLogger(WeChatController.class);
 
-    @RequestMapping("/getWxShareInfo")
+    /**
+     * 获得微信朋友圈分享信息
+     * @param url 链接
+     * @return
+     */
+    @RequestMapping(value = "/getWxShareInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getWxShareInfo(String url) {
 
