@@ -1,9 +1,9 @@
 package com.toiletCat.controller;
 
-import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.utils.PropertiesUtil;
-import com.toiletCat.utils.RedisUtil;
 import com.toiletCat.utils.UUIDUtil;
+import com.toiletCat.utils.WxUtil;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -28,13 +28,22 @@ public class WeChatController {
 
         String jsapi_ticket = null;
 
-        try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+        PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
-            jsapi_ticket = redisUtil.get("jsapi_ticket");
+        String app_id = propertiesUtil.getProperty("wei_xin_app_id");
 
-        } catch (Exception e) {
-            logger.error("init redis error:" + e, e);
+        String app_secret = propertiesUtil.getProperty("wei_xin_app_secret");
+
+        String access_token = WxUtil.getAccessToken(app_id, app_secret);
+
+        if(StringUtils.isBlank(access_token)) {
+
+            logger.warn("init getAccessToken fail");
+
+            return null;
         }
+
+        jsapi_ticket = WxUtil.getJsApiTicket(access_token);
 
         Map<String, String> ret = sign(jsapi_ticket, url);
 

@@ -2,6 +2,7 @@ package com.toiletCat.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.toiletCat.constants.BaseConstant;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,21 +29,29 @@ public class WxUtil {
      */
     public static String getAccessToken(String app_id, String app_secret) {
 
-        String requestUrl = ACCESS_TOKEN_URL.replace("APPID", app_id).replace("APPSECRET", app_secret);
-        // 发起GET请求获取凭证
-        JsonNode rootNode = HttpClientUtil.httpsRequest(requestUrl, "GET", null);
+        try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
-        if (null != rootNode.get("access_token")) {
+            if(StringUtils.isNotBlank(redisUtil.get("access_token"))) {
 
-            try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                return redisUtil.get("access_token");
+            }
+
+            String requestUrl = ACCESS_TOKEN_URL.replace("APPID", app_id).replace("APPSECRET", app_secret);
+            // 发起GET请求获取凭证
+            JsonNode rootNode = HttpClientUtil.httpsRequest(requestUrl, "GET", null);
+
+            if (null != rootNode.get("access_token")) {
 
                 redisUtil.set(118*60, "access_token", rootNode.get("access_token").textValue());
 
-            } catch(Exception e) {
-                logger.error("getAccessToken redis error:" + e, e);
+                return rootNode.get("access_token").textValue();
+
             }
+
+        } catch(Exception e) {
+            logger.error("getAccessToken redis error:" + e, e);
         }
-        return rootNode.get("access_token").textValue();
+        return null;
     }
 
     /**
@@ -53,21 +62,37 @@ public class WxUtil {
      */
     public static String getJsApiTicket(String access_token) {
 
-        String requestUrl = JSAPI_TICKET_URL.replace("ACCESS_TOKEN", access_token);
-        // 发起GET请求获取凭证
-        JsonNode rootNode = HttpClientUtil.httpsRequest(requestUrl, "GET", null);
+        // 判断参数是否为空
+        if(StringUtils.isBlank(access_token)) {
 
-        if (null != rootNode.get("jsapi_ticket")) {
+            logger.warn("getJsApiTicket access_token is null!");
 
-            try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+            return null;
+        }
+
+        try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+
+            if(StringUtils.isNotBlank(redisUtil.get("jsapi_ticket"))) {
+
+                return redisUtil.get("jsapi_ticket");
+            }
+
+            String requestUrl = JSAPI_TICKET_URL.replace("ACCESS_TOKEN", access_token);
+            // 发起GET请求获取凭证
+            JsonNode rootNode = HttpClientUtil.httpsRequest(requestUrl, "GET", null);
+
+            if (null != rootNode.get("jsapi_ticket")) {
 
                 redisUtil.set(118*60, "jsapi_ticket", rootNode.get("jsapi_ticket").textValue());
 
-            } catch(Exception e) {
-                logger.error("getAccessToken redis error:" + e, e);
+                return rootNode.get("jsapi_ticket").textValue();
             }
+
+        } catch(Exception e) {
+            logger.error("getAccessToken redis error:" + e, e);
         }
-        return rootNode.get("jsapi_ticket").textValue();
+
+        return null;
     }
 
     private static Integer toInt(String str) {
