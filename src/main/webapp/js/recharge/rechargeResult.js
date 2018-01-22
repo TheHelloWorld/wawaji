@@ -2,9 +2,11 @@ var flag = true;
 
 var runFlag = true;
 
+var s;
+
 $(function () {
 
-    setInterval(
+    s = setInterval(
         function() {
             getRechargeResultByTime()
         }, 1000);
@@ -61,12 +63,16 @@ function getRechargeResult() {
 
             if(result["result"] == "fail") {
                 flag = false;
+                // 停止定时
+                clearInterval(s);
                 toiletCatMsg("充值失败 QAQ", "returnLastPage()");
                 $("#loading-img").remove();
 
+
             } else if(result["result"] == "success") {
                 flag = false;
-
+                // 停止定时
+                clearInterval(s);
                 // 用户游戏币数
                 sessionStorage["toiletCatUserCoin"] = result["userCoin"];
                 toiletCatMsg("充值成功", "returnLastPage()");
