@@ -1,5 +1,6 @@
 package com.toiletCat.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.utils.PropertiesUtil;
 import com.toiletCat.utils.UUIDUtil;
 import com.toiletCat.utils.WxUtil;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.MessageDigest;
 import java.util.Formatter;
-import java.util.HashMap;
-import java.util.Map;
 
 @RequestMapping("/toiletCat/api/weChat")
 @Controller
@@ -21,12 +20,11 @@ public class WeChatController {
 
     private static final Logger logger = LoggerFactory.getLogger(WeChatController.class);
 
-
-    @RequestMapping("/initWXJSInterface")
+    @RequestMapping("/getWxShareInfo")
     @ResponseBody
-    public Map<String, String> init(String url) {
+    public String getWxShareInfo(String url) {
 
-        String jsapi_ticket = null;
+        String jsapi_ticket;
 
         PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
@@ -38,25 +36,27 @@ public class WeChatController {
 
         if(StringUtils.isBlank(access_token)) {
 
-            logger.warn("init getAccessToken fail");
+            logger.warn("getWxShareInfo getAccessToken fail");
 
             return null;
         }
 
+        logger.info("getWxShareInfo get access_token:" + access_token);
+
         jsapi_ticket = WxUtil.getJsApiTicket(access_token);
 
-        Map<String, String> ret = sign(jsapi_ticket, url);
-
-        logger.info("init currurl = "+ url);
-
-        logger.info("init signature =" + ret.get("signature"));
-
-        return ret;
+        return wxSign(jsapi_ticket, url);
     }
 
-    public Map<String, String> sign(String jsapi_ticket, String url) {
+    /**
+     * 根据参数获得微信分享所需信息
+     * @param jsapi_ticket js ticket
+     * @param url url
+     * @return
+     */
+    private String wxSign(String jsapi_ticket, String url) {
 
-        Map<String, String> ret = new HashMap<>();
+        JSONObject json = new JSONObject();
 
         String nonce_str = UUIDUtil.generateUUID();
 
@@ -72,7 +72,7 @@ public class WeChatController {
                 "×tamp=" + timestamp +
                 "&url=" + url;
 
-        logger.info("sign "+string1);
+        logger.info("wxSign sign "+string1);
 
         try {
             MessageDigest crypt = MessageDigest.getInstance("SHA-1");
@@ -89,19 +89,23 @@ public class WeChatController {
 
         PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
-        ret.put("url", url);
+        json.put("url", url);
 
-        ret.put("appId",propertiesUtil.getProperty("wei_xin_app_id"));
+        json.put("appId",propertiesUtil.getProperty("wei_xin_app_id"));
 
-        ret.put("jsapi_ticket", jsapi_ticket);
+        json.put("jsapi_ticket", jsapi_ticket);
 
-        ret.put("nonceStr", nonce_str);
+        json.put("nonceStr", nonce_str);
 
-        ret.put("timestamp", timestamp);
+        json.put("timestamp", timestamp);
 
-        ret.put("signature", signature);
+        json.put("signature", signature);
 
-        return ret;
+        logger.info("wxSign currurl = "+ url);
+
+        logger.info("wxSign signature =" + signature);
+
+        return json.toJSONString();
     }
 
     private static String byteToHex(final byte[] hash) {
