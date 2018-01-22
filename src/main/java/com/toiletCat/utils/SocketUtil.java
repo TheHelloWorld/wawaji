@@ -11,7 +11,7 @@ public class SocketUtil {
     private static final Logger logger = LoggerFactory.getLogger(SocketUtil.class);
 
     // ip地址
-    private final static String IP = "45.76.51.107";
+    private final static String IP = "127.0.0.1";
 
     // 端口号
     private final static int PORT = 20001;
