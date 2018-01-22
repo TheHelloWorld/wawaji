@@ -1,14 +1,19 @@
 package com.toiletCat.controller;
 
-import com.toiletCat.utils.WxUtil;
-import org.apache.commons.lang.StringUtils;
+import com.toiletCat.constants.BaseConstant;
+import com.toiletCat.utils.PropertiesUtil;
+import com.toiletCat.utils.RedisUtil;
+import com.toiletCat.utils.UUIDUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
+import java.security.MessageDigest;
+import java.util.Formatter;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequestMapping("/toiletCat/api/weChat")
 @Controller
@@ -16,54 +21,99 @@ public class WeChatController {
 
     private static final Logger logger = LoggerFactory.getLogger(WeChatController.class);
 
-    private final static String token = "syncoToken";
 
-    protected String doGet(HttpServletRequest request) throws Exception{
-        System.out.println("开始签名校验");
-        String signature = request.getParameter("signature");
-        String timestamp = request.getParameter("timestamp");
-        String nonce = request.getParameter("nonce");
-        String echostr = request.getParameter("echostr");
+    @RequestMapping("/initWXJSInterface")
+    @ResponseBody
+    public Map<String, String> init(String url) {
 
-        System.out.println("signature=" + signature);
-        System.out.println("timestamp=" + timestamp);
-        System.out.println("nonce=" + nonce);
-        System.out.println("echostr=" + echostr);
+        String jsapi_ticket = null;
 
-        // 排序
-        String sortString = sort(token, timestamp, nonce);
-        // 加密
-        String myToken = WxUtil.SHA1(sortString);
-        // 校验签名
-        if (StringUtils.isNotBlank(myToken) && myToken.equals(signature)) {
-            System.out.println("签名校验通过。");
-            // 如果检验成功输出echostr，微信服务器接收到此输出，才会确认检验完成。
-            return echostr;
+        try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
-        } else {
-            System.out.println("签名校验失败。");
+            jsapi_ticket = redisUtil.get("jsapi_ticket");
+
+        } catch (Exception e) {
+            logger.error("init redis error:" + e, e);
         }
-        return "fail";
+
+        Map<String, String> ret = sign(jsapi_ticket, url);
+
+        logger.info("init currurl = "+ url);
+
+        logger.info("init signature =" + ret.get("signature"));
+
+        return ret;
     }
 
-    /**
-     * 排序方法
-     *
-     * @param token
-     * @param timestamp
-     * @param nonce
-     * @return
-     */
-    public static String sort(String token, String timestamp, String nonce) {
-        String[] strArray = { token, timestamp, nonce };
-        Arrays.sort(strArray);
+    public Map<String, String> sign(String jsapi_ticket, String url) {
 
-        StringBuilder builder = new StringBuilder();
-        for (String str : strArray) {
-            builder.append(str);
+        Map<String, String> ret = new HashMap<>();
+
+        String nonce_str = UUIDUtil.generateUUID();
+
+        String timestamp = create_timestamp();
+
+        String string1;
+
+        String signature = "";
+
+        // 注意这里参数名必须全部小写，且必须有序
+        string1 = "jsapi_ticket=" + jsapi_ticket +
+                "&noncestr=" + nonce_str +
+                "×tamp=" + timestamp +
+                "&url=" + url;
+
+        logger.info("sign "+string1);
+
+        try {
+            MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+
+            crypt.reset();
+
+            crypt.update(string1.getBytes("UTF-8"));
+
+            signature = byteToHex(crypt.digest());
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        return builder.toString();
+        PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
+
+        ret.put("url", url);
+
+        ret.put("appId",propertiesUtil.getProperty("wei_xin_app_id"));
+
+        ret.put("jsapi_ticket", jsapi_ticket);
+
+        ret.put("nonceStr", nonce_str);
+
+        ret.put("timestamp", timestamp);
+
+        ret.put("signature", signature);
+
+        return ret;
+    }
+
+    private static String byteToHex(final byte[] hash) {
+
+        Formatter formatter = new Formatter();
+
+        for (byte b : hash) {
+
+            formatter.format("%02x", b);
+        }
+
+        String result = formatter.toString();
+
+        formatter.close();
+
+        return result;
+    }
+
+    private static String create_timestamp() {
+
+        return Long.toString(System.currentTimeMillis() / 1000);
     }
 
 }
