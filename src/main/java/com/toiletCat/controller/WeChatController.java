@@ -75,7 +75,7 @@ public class WeChatController {
         // 注意这里参数名必须全部小写，且必须有序
         string1 = "jsapi_ticket=" + jsapi_ticket +
                 "&noncestr=" + nonce_str +
-                "×tamp=" + timestamp +
+                "&timestamp=" + timestamp +
                 "&url=" + url;
 
         logger.info("wxSign sign "+string1);
