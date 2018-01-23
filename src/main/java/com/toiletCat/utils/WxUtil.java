@@ -29,9 +29,6 @@ public class WxUtil {
      */
     public static String getAccessToken(String app_id, String app_secret) {
 
-        System.out.println("app_id:"+app_id);
-
-        System.out.println("app_secret:"+app_secret);
 
         try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
@@ -42,15 +39,16 @@ public class WxUtil {
 
             String requestUrl = ACCESS_TOKEN_URL.replace("APPID", app_id).replace("APPSECRET", app_secret);
 
-            System.out.println("requestUrl:"+requestUrl);
+            logger.info("requestUrl:" + requestUrl);
 
             // 发起GET请求获取凭证
             JsonNode rootNode = HttpClientUtil.httpsRequest(requestUrl, "GET", null);
 
-            System.out.println("rootNode:"+rootNode);
+            logger.info("rootNode:" + rootNode);
 
             if (null != rootNode.get("access_token")) {
 
+                // 缓存118分钟
                 redisUtil.set(118*60, "access_token", rootNode.get("access_token").textValue());
 
                 return rootNode.get("access_token").textValue();
@@ -90,10 +88,11 @@ public class WxUtil {
             // 发起GET请求获取凭证
             JsonNode rootNode = HttpClientUtil.httpsRequest(requestUrl, "GET", null);
 
-            System.out.println("jjj rootNode:"+rootNode);
+            logger.info("getJsApiTicket rootNode:" + rootNode);
 
             if (null != rootNode.get("ticket")) {
 
+                // 缓存118分钟
                 redisUtil.set(118*60, "jsapi_ticket", rootNode.get("ticket").textValue());
 
                 return rootNode.get("ticket").textValue();
