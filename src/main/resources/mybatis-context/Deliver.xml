@@ -111,6 +111,7 @@
             user_name,
             mobile_no,
             address,
+            toy_name_array,
             deliver_no,
             company,
             deliver_msg,
