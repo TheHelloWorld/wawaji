@@ -68,7 +68,7 @@
 		this.rechargeFont1.wordWrap = true;
 		this.rechargeFont1.text = "￥10.00";
 		this.rechargeFont1.leading = 5;
-        this.rechargeFont1.zOrder = 2
+        this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(150,320);
         this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,['10.00']);
         this.addChild(this.rechargeFont1);
@@ -121,7 +121,7 @@
 		this.rechargeFont1.wordWrap = true;
 		this.rechargeFont1.text = "￥20.00";
 		this.rechargeFont1.leading = 5;
-        this.rechargeFont1.zOrder = 2
+        this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(500,320);
         this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,['20.00']);
         this.addChild(this.rechargeFont1);
@@ -174,7 +174,7 @@
 		this.rechargeFont1.wordWrap = true;
 		this.rechargeFont1.text = "￥30.00";
 		this.rechargeFont1.leading = 5;
-        this.rechargeFont1.zOrder = 2
+        this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(150,590);
         this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,['30.00']);
         this.addChild(this.rechargeFont1);
@@ -227,7 +227,7 @@
 		this.rechargeFont1.wordWrap = true;
 		this.rechargeFont1.text = "￥50.00";
 		this.rechargeFont1.leading = 5;
-        this.rechargeFont1.zOrder = 2
+        this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(500,590);
         this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,['50.00']);
         this.addChild(this.rechargeFont1);
@@ -280,7 +280,7 @@
 		this.rechargeFont1.wordWrap = true;
 		this.rechargeFont1.text = "￥100.00";
 		this.rechargeFont1.leading = 5;
-        this.rechargeFont1.zOrder = 2
+        this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(150,860);
         this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,['100.00']);
         this.addChild(this.rechargeFont1);
@@ -333,7 +333,7 @@
 		this.rechargeFont1.wordWrap = true;
 		this.rechargeFont1.text = "￥200.00";
 		this.rechargeFont1.leading = 5;
-        this.rechargeFont1.zOrder = 2
+        this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(500,860);
         this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,['200.00']);
         this.addChild(this.rechargeFont1);
