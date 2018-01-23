@@ -1,7 +1,7 @@
 document.write("<script src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js'></script>")
 var configData = [];
 var shareUrl = "www.9w83c6.cn/toiletCat/share/share.html?shareId="+sessionStorage["toiletCatInvitationCode"];
-var current = window.location.href;
+var currurl = window.location.href;
 $.ajax({
     url:"/toiletCat/api/weChat/getWxShareInfo.action",
     type:"post",
