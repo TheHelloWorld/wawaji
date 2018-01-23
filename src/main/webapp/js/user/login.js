@@ -395,9 +395,46 @@ function loginOrRegister() {
                 url = "/toiletCat/machineRoom/machineRoom.html?nowType=login&userNo=" + user["userNo"];
 
             }
-
             window.location.href = url;
         }
-
     });
+}
+
+// 展示用户协议
+function showAgreement() {
+    var agreementContent = $("#agreement").html();
+
+    var height = $("body").height()/4*3;
+
+    var str = "	<div class='toiletCat-msg' >";
+
+    str += "	</div>";
+    str += "		<div class='agreement-msg-div'>";
+    str += "			<div class='toiletCat-msg-alert'>";
+    str += "				用户协议";
+    str += "			</div>";
+    str += "			<div class='agreement-text' style='height: " + height + "px'>";
+    str += 					agreementContent;
+    str += "			</div>";
+    str += "			<div class='toiletCat-msg-button' onclick='closeAgreement()'>";
+    str += "				我知道了";
+    str += "			</div>";
+    str += "		</div>";
+    $("body").append(str);
+    $(".toiletCat-msg").height($(window).height());
+
+}
+
+function changeAgreement() {
+   if(!$("#userAgreement").is(':checked')) {
+       $("#login").attr("disabled", true);
+   } else {
+       $("#login").attr("disabled", false);
+   }
+}
+
+// 关闭提示框
+function closeAgreement() {
+    $(".toiletCat-msg").remove();
+    $(".agreement-msg-div").remove();
 }
