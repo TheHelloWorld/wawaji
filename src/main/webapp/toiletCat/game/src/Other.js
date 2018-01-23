@@ -58,6 +58,14 @@ var leftButton,rightButton,upButton,downButton,catchButton,startButton,luckyNumP
         this.go.on(Laya.Event.MOUSE_UP, this, startGame);
         startButton = this.go;
         this.addChild(this.go);
+
+        this.back = new Laya.Sprite();
+        this.back.loadImage("comp/back.png");
+        this.back.x = 50;
+        this.back.y = 850;
+        this.back.on(Laya.Event.MOUSE_UP, this, returnToIndex);
+        backButton = this.back;
+        this.addChild(this.back);
         
         this.up = new Laya.Sprite();
         this.up.loadImage("comp/up.png");
@@ -134,15 +142,19 @@ var leftButton,rightButton,upButton,downButton,catchButton,startButton,luckyNumP
 
     //点击我的
     function clickMy(){
-		if(startButton.visible == true){
-				toUserIndex();
-		}
+        if(startButton.visible == true){
+            toUserIndex();
+        }
     }
 
     function prize(){
-		if(startButton.visible == true){
-				toUserToy();
-		}
+        if(startButton.visible == true){
+            toUserToy();
+        }
+    }
+
+    function returnToIndex(){
+        location.href="/";
     }
 
     function startGameButton(){
@@ -152,6 +164,7 @@ var leftButton,rightButton,upButton,downButton,catchButton,startButton,luckyNumP
         downButton.visible = true;
         catchButton.visible = true;
         startButton.visible = false;
+        backButton.visible = false;
     }
     
     function resetGameButton(){
@@ -161,6 +174,7 @@ var leftButton,rightButton,upButton,downButton,catchButton,startButton,luckyNumP
         downButton.visible = false;
         catchButton.visible = false;
         startButton.visible = true;
+        backButton.visible = true;
     }
     Laya.class(resetGameButton,"resetGameButton", _super);
 
