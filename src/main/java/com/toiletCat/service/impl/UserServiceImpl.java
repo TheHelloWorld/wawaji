@@ -797,8 +797,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                         String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace("#{}", userNo);
 
+                        String nowNum = redisUtil.get(key);
+
+                        if(nowNum == null) {
+                            nowNum = "0";
+                        }
+
                         // 如果达到上限
-                        if(String.valueOf(coin.getRechargeLimit()).equals(redisUtil.get(key))) {
+                        if(coin.getRechargeLimit() <= Integer.valueOf(nowNum)) {
                             setOtherMsg();
                             got("当前选项每天只能充" + coin.getRechargeLimit() + "次哦");
                             return;
@@ -811,7 +817,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                         cal.set(Calendar.MINUTE, 0);
                         cal.set(Calendar.MILLISECOND, 0);
 
-                        Integer second = (int)(cal.getTimeInMillis() - System.currentTimeMillis())/1000;
+                        Integer second = (int)(cal.getTimeInMillis() - System.currentTimeMillis()) / 1000;
 
                         // 设置超时时间为当前时间到第二天0点的时间并累加数量
                         redisUtil.incr(second, key);
@@ -887,7 +893,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                         // 添加赠送的游戏币数
                         rechargeCoin += coin.getGiveCoin();
                     }
-
                 }
 
                 // 消费游戏币

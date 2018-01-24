@@ -6,21 +6,24 @@ import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.RechargeResult;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.dao.UserDao;
+import com.toiletCat.entity.MoneyForCoin;
 import com.toiletCat.entity.UserRechargeRecord;
-import com.toiletCat.enums.MoneyForCoin;
 import com.toiletCat.enums.TradeStatus;
+import com.toiletCat.service.MoneyForCoinService;
 import com.toiletCat.service.RechargeService;
 import com.toiletCat.service.UserRechargeRecordService;
 import com.toiletCat.service.UserSpendRecordService;
 import com.toiletCat.utils.HttpClientUtil;
 import com.toiletCat.utils.PropertiesUtil;
 import com.toiletCat.utils.RechargeUtil;
+import com.toiletCat.utils.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
 
 @SuppressWarnings("all")
@@ -37,6 +40,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
     @Autowired
     private UserRechargeRecordService userRechargeRecordService;
+
+    @Autowired
+    private MoneyForCoinService moneyForCoinService;
 
     /**
      * 充值返回结果
@@ -65,16 +71,16 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
-                Long money;
+                Double money;
                 // 转换钱
                 try {
-                    money = BigDecimal.valueOf(Double.valueOf(rechargeResult.getMoney())).longValue();
+                    money = Double.valueOf(rechargeResult.getMoney());
                 } catch (Exception e) {
                     logger.error("getRechargeResultByParam transMoney err param:" + rechargeResult, e);
                     return;
                 }
 
-                Integer coin = MoneyForCoin.getValueMapByKey(rechargeResult.getMoney());
+                MoneyForCoin coin = moneyForCoinService.getMoneyForCoinByMoney(rechargeResult.getMoney());
 
                 if(coin == null) {
                     logger.warn("getRechargeResultByParam money is wrong param:"+ rechargeResult);
@@ -101,7 +107,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 }
 
                 // 判断返回金额是否正确
-                if(orderAmount.getValue().longValue() != money) {
+                if(orderAmount.getValue().doubleValue() != money) {
                     logger.warn("getRechargeResultByParam return money not match our amount:" + orderAmount.getValue()
                             + " param:"+ rechargeResult);
                     return;
@@ -125,11 +131,15 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 // 判断结果是否成功
                 if(!BaseConstant.RECHARGE_RESULT_TRADE_STATUS.equals(resultTradeStatus)) {
                     tradeStatus = TradeStatus.FAIL;
+
+                    // 如果有充值限制次数(不为0)
+                    rollBackLimitNum(coin, userNo);
+
                 }
 
                 if(tradeStatus == TradeStatus.SUCCESS) {
                     // 添加用户游戏币
-                    userDao.updateUserCoinByUserNo(coin, userNo);
+                    userDao.updateUserCoinByUserNo(coin.getCoin(), userNo);
                 }
 
                 // 修改充值记录交易状态
@@ -305,10 +315,15 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
             JSONObject json = JSONObject.parseObject(response);
 
+            MoneyForCoin myCoin = moneyForCoinService.getMoneyForCoinByMoney(String.valueOf(amount.doubleValue()));
+
             // 若返回code不为1
             if(!"1".equals(json.getString("code"))) {
                 // 将充值结果置为失败
                 updateRechargeAndSpendResult(orderNo, TradeStatus.FAIL);
+
+                // 如果有充值限制次数(不为0)
+                rollBackLimitNum(myCoin, userNo);
                 return;
             }
 
@@ -326,6 +341,10 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
             if(!"1".equals(json.getString("status"))) {
                 tradeStatus = TradeStatus.FAIL;
+
+                // 如果有充值限制次数(不为0)
+                rollBackLimitNum(myCoin, userNo);
+
             }
 
             // 防止重复请求 获得充值结果
@@ -338,11 +357,14 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 return;
             }
 
-            Integer coin = MoneyForCoin.getValueMapByKey(json.getString("money"));
+            MoneyForCoin coin = moneyForCoinService.getMoneyForCoinByMoney(json.getString("money"));
 
             if(tradeStatus == TradeStatus.SUCCESS) {
+
+                Integer rechargeCoin = getCoinByMoneyForCoin(userNo, coin);
+
                 // 添加用户游戏币
-                userDao.updateUserCoinByUserNo(coin, userNo);
+                userDao.updateUserCoinByUserNo(rechargeCoin, userNo);
             }
 
             updateRechargeAndSpendResult(orderNo, tradeStatus);
@@ -350,6 +372,64 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
         } catch (Exception e) {
             logger.error("queryRechargeResult error:" + e, e);
         }
+    }
+
+    /**
+     * 获得应充游戏币数
+     * @param userNo 用户编号
+     * @param moneyForCoin 对应关系bean
+     * @return
+     */
+    private Integer getCoinByMoneyForCoin(String userNo, MoneyForCoin moneyForCoin) {
+        Integer rechargeCoin = moneyForCoin.getCoin();
+
+        // 判断是否有首充活动
+        if(moneyForCoin.getFirstFlag() != 0) {
+
+            CommonResult<Integer> rechargeCount = userRechargeRecordService.
+                    countUserRechargeRecordByUserNoAndTradeStatus(userNo, TradeStatus.SUCCESS.getStatus());
+
+            // 若是首充
+            if(rechargeCount.getValue() == 0) {
+                // 添加赠送的游戏币数
+                rechargeCoin += moneyForCoin.getGiveCoin();
+            }
+        }
+
+        return rechargeCoin;
+    }
+
+    /**
+     * 回退限制次数
+     * @param userNo
+     */
+    private void rollBackLimitNum(MoneyForCoin coin, String userNo) {
+
+        if(coin.getRechargeLimit() != 0) {
+            try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+
+                String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace("#{}", userNo);
+
+                Long num = redisUtil.decr(key);
+
+                if(num <= 0) {
+                    Calendar cal = Calendar.getInstance();
+                    cal.add(Calendar.DAY_OF_YEAR, 1);
+                    cal.set(Calendar.HOUR_OF_DAY, 0);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.set(Calendar.MINUTE, 0);
+                    cal.set(Calendar.MILLISECOND, 0);
+
+                    Integer second = (int)(cal.getTimeInMillis() - System.currentTimeMillis()) / 1000;
+
+                    redisUtil.set(second, key, "0");
+                }
+
+            } catch (Exception e) {
+                logger.error("rollBackLimitNum redis error:" + e, e);
+            }
+        }
+
     }
 
     /**
