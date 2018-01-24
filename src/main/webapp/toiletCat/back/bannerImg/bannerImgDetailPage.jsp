@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="zikun.liu">
 
-    <title>玩具页</title>
+    <title>Banner图管理</title>
 
     <%@ include file="/include/header.jsp"%>
 
