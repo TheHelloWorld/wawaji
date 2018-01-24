@@ -305,6 +305,12 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
             JSONObject json = JSONObject.parseObject(response);
 
+            // 若返回code不为1
+            if(!"1".equals(json.getString("code"))) {
+                // 将充值结果置为失败
+                updateRechargeAndSpendResult(orderNo, TradeStatus.FAIL);
+            }
+
             if(!orderNo.equals(json.getString("out_trade_no"))) {
                 logger.warn("queryRechargeResult wrong orderNo:" + orderNo + ", response:" + json);
                 return;
@@ -338,24 +344,35 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 userDao.updateUserCoinByUserNo(coin, userNo);
             }
 
-            // 修改充值记录交易状态
-            CommonResult updateRechargeResult = userRechargeRecordService.
-                    updateTradeStatusByOrderNo(orderNo, tradeStatus.getStatus());
-
-            if(!updateRechargeResult.success()) {
-                logger.warn("queryRechargeResult recharge updateTradeStatusByOrderNo error:" + json);
-            }
-
-            // 修改用户游戏币记录交易状态
-            CommonResult updateSpendResult = userSpendRecordService.
-                    updateTradeStatusByOrderNo(orderNo, tradeStatus.getStatus());
-
-            if(!updateSpendResult.success()) {
-                logger.warn("queryRechargeResult spend updateTradeStatusByOrderNo error:" + json);
-            }
+            updateRechargeAndSpendResult(orderNo, tradeStatus);
 
         } catch (Exception e) {
             logger.error("queryRechargeResult error:" + e, e);
+        }
+    }
+
+    /**
+     * 修改充值结果
+     * @param orderNo
+     * @param tradeStatus
+     */
+    private void updateRechargeAndSpendResult(String orderNo, TradeStatus tradeStatus) {
+        // 修改充值记录交易状态
+        CommonResult updateRechargeResult = userRechargeRecordService.
+                updateTradeStatusByOrderNo(orderNo, tradeStatus.getStatus());
+
+        if(!updateRechargeResult.success()) {
+            logger.warn("queryRechargeResult recharge updateTradeStatusByOrderNo error orderNo:" + orderNo +
+                    ", tradeStatus" + tradeStatus.name());
+        }
+
+        // 修改用户游戏币记录交易状态
+        CommonResult updateSpendResult = userSpendRecordService.
+                updateTradeStatusByOrderNo(orderNo, tradeStatus.getStatus());
+
+        if(!updateSpendResult.success()) {
+            logger.warn("queryRechargeResult spend updateTradeStatusByOrderNo error orderNo:" + orderNo +
+                    ", tradeStatus" + tradeStatus.name());
         }
     }
 
