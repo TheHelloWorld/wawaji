@@ -417,7 +417,7 @@ function showAgreement() {
     str += 					agreementContent;
     str += "			</div>";
     str += "			<div class='toiletCat-msg-button' onclick='closeAgreement()'>";
-    str += "				我知道了";
+    str += "				同意";
     str += "			</div>";
     str += "		</div>";
     $("body").append(str);
