@@ -66,6 +66,28 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
     }
 
     /**
+     * 根据用户编号和交易状态获得用户充值记录数
+     * @param userNo 用户编号
+     * @param tradeStatus 交易状态
+     * @return
+     */
+    @Override
+    public CommonResult<Integer> countUserRechargeRecordByUserNoAndTradeStatus(final String userNo,
+                                                                               final Integer tradeStatus) {
+
+        JSONObject json = new JSONObject();
+        json.put("userNo",userNo);
+        json.put("tradeStatus",tradeStatus);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(userRechargeRecordDao.countUserRechargeRecordByUserNoAndTradeStatus(userNo, tradeStatus));
+            }
+        }, "countUserRechargeRecordByUserNoAndTradeStatus", json.toJSONString());
+    }
+
+    /**
      * 根据用户编号分页获得用户充值记录
      * @param userNo 用户编号
      * @param startPage 开始页

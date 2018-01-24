@@ -9,6 +9,7 @@ import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.dao.CatchRecordDao;
 import com.toiletCat.dao.UserDao;
 import com.toiletCat.entity.*;
+import com.toiletCat.entity.MoneyForCoin;
 import com.toiletCat.enums.*;
 import com.toiletCat.service.*;
 import com.toiletCat.utils.*;
@@ -58,6 +59,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     @Autowired
     private RechargeService rechargeService;
+
+    @Autowired
+    private MoneyForCoinService moneyForCoinService;
 
     /**
      * 用户注册或登录
@@ -777,7 +781,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 logger.info("userRecharge userNo:" + userNo + ", amount:" + amount);
 
-                Integer coin = MoneyForCoin.getValueMapByKey(amount);
+                MoneyForCoin coin = moneyForCoinService.getMoneyForCoinByMoney(amount);
 
                 if(coin == null) {
                     setOtherMsg();
@@ -787,19 +791,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 logger.info("userRecharge userNo:" + userNo + ", amount:" + amount + ", coin:" + coin);
 
-                // 如果充的是2元
-                if(amount.equals(MoneyForCoin.EXCHANGE_2.getMoney())) {
+                // 如果有充值限制次数(不为0)
+                if(coin.getRechargeLimit() != 0) {
                     try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
                         String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace("#{}", userNo);
 
-                        // 上限
-                        String limit = toiletCatConfigService.getConfigByKey(BaseConstant.RECHARGE_LIMIT_NUM);
-
                         // 如果达到上限
-                        if(limit.equals(redisUtil.get(key))) {
+                        if(String.valueOf(coin.getRechargeLimit()).equals(redisUtil.get(key))) {
                             setOtherMsg();
-                            got("当前选项每天只能充" + limit + "次哦");
+                            got("当前选项每天只能充" + coin.getRechargeLimit() + "次哦");
                             return;
                         }
 
@@ -873,8 +874,24 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 消费类型(充值)
                 userSpendRecord.setTradeType(TradeType.RECHARGE.getType());
 
+                Integer rechargeCoin = coin.getCoin();
+
+                // 判断是否有首充活动
+                if(coin.getFirstFlag() != 0) {
+
+                    CommonResult<Integer> rechargeCount = userRechargeRecordService.
+                            countUserRechargeRecordByUserNoAndTradeStatus(userNo, TradeStatus.SUCCESS.getStatus());
+
+                    // 若是首充
+                    if(rechargeCount.getValue() == 0) {
+                        // 添加赠送的游戏币数
+                        rechargeCoin += coin.getGiveCoin();
+                    }
+
+                }
+
                 // 消费游戏币
-                userSpendRecord.setCoin(coin);
+                userSpendRecord.setCoin(rechargeCoin);
 
                 // 用户编号
                 userSpendRecord.setUserNo(userNo);

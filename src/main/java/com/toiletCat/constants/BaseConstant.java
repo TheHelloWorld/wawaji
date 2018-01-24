@@ -227,11 +227,6 @@ public class BaseConstant {
 	public static final String RESET_GAME_ROOM_LUCKY_NUM = "reset_game_room_lucky_num";
 
 	/**
-	 * 限制充值的次数
-	 */
-	public static final String RECHARGE_LIMIT_NUM = "recharge_limit_num";
-
-	/**
 	 * 后台登录用户名
 	 */
 	public static final String BACK_USER_NAME = "toiletCat_Back_Admin_Root_Name";

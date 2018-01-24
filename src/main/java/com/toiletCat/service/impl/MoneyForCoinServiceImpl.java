@@ -38,6 +38,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
             @Override
             public void exec() {
                 moneyForCoinDao.addMoneyForCoin(moneyForCoin);
+                BaseConstant.moneyForCoinMap.put(moneyForCoin.getMoney(), moneyForCoin);
             }
         }, "addMoneyForCoin", JSON.toJSONString(moneyForCoin));
     }
@@ -84,6 +85,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
             @Override
             public void exec() {
                 moneyForCoinDao.updateMoneyForCoin(moneyForCoin);
+                BaseConstant.moneyForCoinMap.put(moneyForCoin.getMoney(), moneyForCoin);
             }
         }, "updateMoneyForCoin", JSON.toJSONString(moneyForCoin));
     }
@@ -121,6 +123,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
      * 刷新对应关系Map
      */
     private void refreshMap() {
+        // 获得所有可用的对应关系
         List<MoneyForCoin> list = moneyForCoinDao.getAllCanSeeMoneyForCoin();
 
         for(MoneyForCoin moneyForCoin : list) {

@@ -30,9 +30,9 @@ public class MoneyForCoin extends BaseEntity implements Serializable {
     private Integer rechargeLimit;
 
     /**
-     * 活动标志位
+     * 首充标志位
      */
-    private Integer activeFlag;
+    private Integer firstFlag;
 
     /**
      * 赠送的游戏币数
@@ -76,12 +76,12 @@ public class MoneyForCoin extends BaseEntity implements Serializable {
         this.rechargeLimit = rechargeLimit;
     }
 
-    public Integer getActiveFlag() {
-        return activeFlag;
+    public Integer getFirstFlag() {
+        return firstFlag;
     }
 
-    public void setActiveFlag(Integer activeFlag) {
-        this.activeFlag = activeFlag;
+    public void setFirstFlag(Integer firstFlag) {
+        this.firstFlag = firstFlag;
     }
 
     public Integer getGiveCoin() {

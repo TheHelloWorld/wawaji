@@ -14,8 +14,8 @@
         <result property="showText" column="show_text" jdbcType="VARCHAR"/>
         <!-- 每天充值限制次数 -->
         <result property="rechargeLimit" column="recharge_limit" jdbcType="INTEGER"/>
-        <!-- 活动标志位 -->
-        <result property="activeFlag" column="active_flag" jdbcType="INTEGER"/>
+        <!-- 首充标志位 -->
+        <result property="firstFlag" column="first_flag" jdbcType="INTEGER"/>
         <!-- 赠送的游戏币数 -->
         <result property="giveCoin" column="give_coin" jdbcType="INTEGER"/>
         <!-- 是否可用 可用 禁用 -->
@@ -34,7 +34,7 @@
             coin,
             show_text,
             recharge_limit,
-            active_flag,
+            first_flag,
             give_coin,
             current_state
             )
@@ -44,7 +44,7 @@
             #{coin, jdbcType=INTEGER},
             #{showText, jdbcType=VARCHAR},
             #{rechargeLimit, jdbcType=INTEGER},
-            #{activeFlag, jdbcType=INTEGER},
+            #{firstFlag, jdbcType=INTEGER},
             #{giveCoin, jdbcType=INTEGER},
             #{currentState, jdbcType=INTEGER}
             )
@@ -58,7 +58,7 @@
             coin,
             show_text,
             recharge_limit,
-            active_flag,
+            first_flag,
             give_coin,
             current_state
         from money_for_coin
@@ -72,7 +72,7 @@
             coin,
             show_text,
             recharge_limit,
-            active_flag,
+            first_flag,
             give_coin,
             current_state
         from money_for_coin where id = #{id}
@@ -85,7 +85,7 @@
             coin = #{coin, jdbcType=INTEGER},
             show_text = #{showText, jdbcType=VARCHAR},
             recharge_limit = #{rechargeLimit, jdbcType=INTEGER},
-            active_flag = #{activeFlag, jdbcType=INTEGER},
+            first_flag = #{firstFlag, jdbcType=INTEGER},
             give_coin = #{giveCoin, jdbcType=INTEGER},
             current_state = #{currentState, jdbcType=INTEGER}
         where id = #{id}
@@ -99,7 +99,7 @@
             coin,
             show_text,
             recharge_limit,
-            active_flag,
+            first_flag,
             give_coin
         from money_for_coin where current_state = 1
     </select>

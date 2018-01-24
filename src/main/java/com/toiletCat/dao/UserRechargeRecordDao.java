@@ -25,6 +25,15 @@ public interface UserRechargeRecordDao {
     Integer countUserRechargeRecordByUserNo(String userNo);
 
     /**
+     * 根据用户编号和交易状态获得用户充值记录数
+     * @param userNo 用户编号
+     * @param tradeStatus 交易状态
+     * @return
+     */
+    Integer countUserRechargeRecordByUserNoAndTradeStatus(@Param("userNo") String userNo,
+                                                          @Param("tradeStatus") Integer tradeStatus);
+
+    /**
      * 根据用户编号分页获得用户充值记录
      * @param userNo 用户编号
      * @param startPage 开始页

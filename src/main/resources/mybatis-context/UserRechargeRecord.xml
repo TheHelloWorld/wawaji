@@ -55,6 +55,11 @@
         select count(*) from user_recharge_record where user_no = #{userNo}
     </select>
 
+    <!-- 根据用户编号和交易状态获得用户充值记录数 -->
+    <select id="countUserRechargeRecordByUserNoAndTradeStatus" resultType="java.lang.Integer">
+        select count(*) from user_recharge_record where user_no = #{userNo} and trade_status = #{tradeStatus}
+    </select>
+
     <!-- 根据用户编号和订单号获得金额 -->
     <select id="getAmountByUserNoAndOrderNo" resultType="java.math.BigDecimal">
         select amount from user_recharge_record where order_no = #{orderNo} and user_no = #{userNo}

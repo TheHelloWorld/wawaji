@@ -23,6 +23,14 @@ public interface UserRechargeRecordService {
     CommonResult<Integer> countUserRechargeRecordByUserNo(String userNo);
 
     /**
+     * 根据用户编号和交易状态获得用户充值记录数
+     * @param userNo 用户编号
+     * @param tradeStatus 交易状态
+     * @return
+     */
+    CommonResult<Integer> countUserRechargeRecordByUserNoAndTradeStatus(String userNo, Integer tradeStatus);
+
+    /**
      * 根据用户编号分页获得用户充值记录
      * @param userNo 用户编号
      * @param startPage 开始页
@@ -36,7 +44,7 @@ public interface UserRechargeRecordService {
      * @param tradeStatus 交易状态
      * @return
      */
-    CommonResult<Integer> countUserRechargeRecordByTradeDateAndTradeStatus(Integer tradeDate,  Integer tradeStatus);
+    CommonResult<Integer> countUserRechargeRecordByTradeDateAndTradeStatus(Integer tradeDate, Integer tradeStatus);
 
     /**
      * 根据交易日期和交易状态分页获得所有充值记录
@@ -45,8 +53,9 @@ public interface UserRechargeRecordService {
      * @param startPage 开始页
      * @return
      */
-    CommonResult<List<UserRechargeRecord>> getUserRechargeRecordByTradeDateAndTradeStatus(Integer tradeDate, Integer tradeStatus,
-                                                                            int startPage);
+    CommonResult<List<UserRechargeRecord>> getUserRechargeRecordByTradeDateAndTradeStatus(Integer tradeDate,
+                                                                                          Integer tradeStatus,
+                                                                                          int startPage);
 
     /**
      * 根据交易日期和交易状态获得汇总信息
@@ -54,7 +63,8 @@ public interface UserRechargeRecordService {
      * @param tradeStatus 交易状态
      * @return
      */
-    CommonResult<Map<String, Object>> getSumRechargeAmountAndCountByTradeDateAndTradeStatus(Integer tradeDate, Integer tradeStatus);
+    CommonResult<Map<String, Object>> getSumRechargeAmountAndCountByTradeDateAndTradeStatus(Integer tradeDate,
+                                                                                            Integer tradeStatus);
 
     /**
      * 根据用户编号和订单号获得金额
