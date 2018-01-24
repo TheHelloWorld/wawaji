@@ -10,12 +10,16 @@
         <result property="gameRoomNo" column="game_room_no" jdbcType="VARCHAR"/>
         <!-- 玩具编号 -->
         <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
+        <!-- 玩具名称 -->
+        <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
         <!-- 房间幸运值 -->
         <result property="roomLuckyNum" column="room_lucky_num" jdbcType="INTEGER"/>
         <!-- 房间当前幸运值 -->
         <result property="roomNowLuckyNum" column="room_now_lucky_num" jdbcType="INTEGER"/>
         <!-- 每次累加幸运值 -->
         <result property="addLuckyNum" column="add_lucky_num" jdbcType="INTEGER"/>
+        <!-- 房间顺序 -->
+        <result property="roomOrder" column="room_order" jdbcType="INTEGER"/>
         <!-- 当前状态 -->
         <result property="currentState" column="current_state" jdbcType="INTEGER"/>
         <!-- 创建时间 -->
@@ -32,7 +36,7 @@
         <result property="gameRoomNo" column="game_room_no" jdbcType="VARCHAR"/>
         <!-- 玩具编号 -->
         <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
-        <!-- 玩具编号 -->
+        <!-- 玩具名称 -->
         <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
         <!-- 娃娃图片地址 -->
         <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
@@ -48,6 +52,8 @@
         <result property="roomLuckyNum" column="room_lucky_num" jdbcType="INTEGER"/>
         <!-- 房间当前幸运值 -->
         <result property="roomNowLuckyNum" column="room_now_lucky_num" jdbcType="INTEGER"/>
+        <!-- 房间顺序 -->
+        <result property="roomOrder" column="room_order" jdbcType="INTEGER"/>
         <!-- 当前状态 -->
         <result property="currentState" column="current_state" jdbcType="INTEGER"/>
         <!-- 创建时间 -->
@@ -65,6 +71,7 @@
             room_lucky_num,
             room_now_lucky_num,
             add_lucky_num,
+            room_order,
             current_state
             )
         values
@@ -74,6 +81,7 @@
             #{roomLuckyNum, jdbcType=INTEGER},
             #{roomNowLuckyNum, jdbcType=INTEGER},
             #{addLuckyNum, jdbcType=INTEGER},
+            #{roomOrder, jdbcType=INTEGER},
             #{currentState, jdbcType=INTEGER}
             )
     </insert>
@@ -86,14 +94,16 @@
     <!-- 分页获得所有游戏房间 -->
     <select id="getGameRoomListByPage" resultMap="gameRoomMap">
         select
-            id,
-            game_room_no,
-            toy_no,
-            room_lucky_num,
-            room_now_lucky_num,
-            add_lucky_num,
-            current_state
-        from game_room
+            g.id,
+            g.game_room_no,
+            g.toy_no,
+            t.toy_name,
+            g.room_lucky_num,
+            g.room_now_lucky_num,
+            g.add_lucky_num,
+            g.room_order,
+            g.current_state
+        from game_room g, toy t where g.toy_no = t.toy_no
         limit #{startPage}, #{pageSize}
     </select>
 
@@ -120,7 +130,7 @@
             t.toy_name,
             t.toy_now_coin,
             t.toy_origin_coin
-        from game_room g, toy t where g.toy_no = t.toy_no and g.current_state = 1
+        from game_room g, toy t where g.toy_no = t.toy_no and g.current_state = 1 order by g.room_order asc
         limit #{startPage}, #{pageSize}
     </select>
 
@@ -174,6 +184,7 @@
             room_lucky_num = #{roomLuckyNum, jdbcType=INTEGER},
             room_now_lucky_num = #{roomNowLuckyNum, jdbcType=INTEGER},
             add_lucky_num = #{addLuckyNum, jdbcType=INTEGER},
+            room_order = #{roomOrder, jdbcType=INTEGER},
             current_state = #{currentState, jdbcType=INTEGER}
         where id = #{id} and game_room_no = #{gameRoomNo}
     </update>

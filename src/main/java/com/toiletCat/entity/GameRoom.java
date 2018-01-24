@@ -20,6 +20,11 @@ public class GameRoom extends BaseEntity implements Serializable {
     private String toyNo;
 
     /**
+     * 玩具名称
+     */
+    private String toyName;
+
+    /**
      * 房间幸运值
      */
     private Integer roomLuckyNum;
@@ -33,6 +38,11 @@ public class GameRoom extends BaseEntity implements Serializable {
      * 房间每次累加幸运值
      */
     private Integer addLuckyNum;
+
+    /**
+     * 房间顺序
+     */
+    private Integer roomOrder;
 
     /**
      * 是否可用 可用 禁用
@@ -53,6 +63,22 @@ public class GameRoom extends BaseEntity implements Serializable {
 
     public void setToyNo(String toyNo) {
         this.toyNo = toyNo;
+    }
+
+    public String getToyName() {
+        return toyName;
+    }
+
+    public void setToyName(String toyName) {
+        this.toyName = toyName;
+    }
+
+    public Integer getRoomOrder() {
+        return roomOrder;
+    }
+
+    public void setRoomOrder(Integer roomOrder) {
+        this.roomOrder = roomOrder;
     }
 
     public Integer getRoomLuckyNum() {
@@ -86,4 +112,5 @@ public class GameRoom extends BaseEntity implements Serializable {
     public void setCurrentState(Integer currentState) {
         this.currentState = currentState;
     }
+
 }

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 @SuppressWarnings("all")
@@ -786,6 +787,38 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 logger.info("userRecharge userNo:" + userNo + ", amount:" + amount + ", coin:" + coin);
 
+                // 如果充的是2元
+                if(amount.equals(MoneyForCoin.EXCHANGE_2.getMoney())) {
+                    try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+
+                        String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace("#{}", userNo);
+
+                        // 上限
+                        String limit = toiletCatConfigService.getConfigByKey(BaseConstant.RECHARGE_LIMIT_NUM);
+
+                        // 如果达到上限
+                        if(limit.equals(redisUtil.get(key))) {
+                            setOtherMsg();
+                            got("当前选项每天只能充" + limit + "次哦");
+                            return;
+                        }
+
+                        Calendar cal = Calendar.getInstance();
+                        cal.add(Calendar.DAY_OF_YEAR, 1);
+                        cal.set(Calendar.HOUR_OF_DAY, 0);
+                        cal.set(Calendar.SECOND, 0);
+                        cal.set(Calendar.MINUTE, 0);
+                        cal.set(Calendar.MILLISECOND, 0);
+
+                        Integer second = (int)(cal.getTimeInMillis() - System.currentTimeMillis())/1000;
+
+                        // 设置超时时间为当前时间到第二天0点的时间并累加数量
+                        redisUtil.incr(second, key);
+                    } catch (Exception e) {
+                        logger.error("userRecharge redis error:" + e, e);
+                    }
+                }
+
                 Integer tradeDate = DateUtil.getDate();
 
                 Date tradeTime = new Date();
@@ -894,7 +927,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 判断当前用户是否已被邀请过
                 if(!BaseConstant.DEFAULT_INVITATION_USER_NO.equals(invitationUserNo)) {
                     setOtherMsg();
-                    got("只能填写一次邀请码喵");
+                    got("只能填写一次邀请码");
                     return;
                 }
 
@@ -904,14 +937,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 判断该邀请码是否正确
                 if(StringUtils.isBlank(inviteUserNo)) {
                     setOtherMsg();
-                    got("请填写正确的邀请码喵");
+                    got("请填写正确的邀请码");
                     return;
                 }
 
                 // 判断邀请用户和被邀请用户是否是同一个用户
                 if(inviteUserNo.equals(userNo)) {
                     setOtherMsg();
-                    got("不能填写自己的邀请码喵");
+                    got("不能填写自己的邀请码");
                     return;
                 }
 

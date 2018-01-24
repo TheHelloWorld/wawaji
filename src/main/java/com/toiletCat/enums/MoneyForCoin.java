@@ -8,12 +8,12 @@ import java.util.Map;
  */
 public enum MoneyForCoin {
 
-    EXCHANGE_10("10.00", 100),
-    EXCHANGE_20("20.00", 210),
-    EXCHANGE_30("30.00", 330),
-    EXCHANGE_50("50.00", 550),
-    EXCHANGE_100("100.00", 1180),
-    EXCHANGE_200("200.00", 2400);
+    EXCHANGE_2("2.00", 30),
+    EXCHANGE_9("9.99", 100),
+    EXCHANGE_19("19.99", 210),
+    EXCHANGE_29("29.99", 330),
+    EXCHANGE_49("49.99", 550),
+    EXCHANGE_99("99.99", 1180);
 
     /**
      * 状态

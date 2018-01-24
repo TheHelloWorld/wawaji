@@ -1,5 +1,7 @@
 package com.toiletCat.constants;
 
+import com.toiletCat.entity.MoneyForCoin;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -145,6 +147,11 @@ public class BaseConstant {
 	public static final String GAME_ROOM_VIEWER = "game_room_viewer_#{}";
 
 	/**
+	 * 每天限制充值的key
+	 */
+	public static final String RECHARGE_LIMIT_NUM_BY_USER = "recharge_limit_num_#{}";
+
+	/**
 	 * 放入cookie中的key
 	 */
 	public static final String COOKIE_USER_NO = "toilet_cat_user_no";
@@ -220,6 +227,11 @@ public class BaseConstant {
 	public static final String RESET_GAME_ROOM_LUCKY_NUM = "reset_game_room_lucky_num";
 
 	/**
+	 * 限制充值的次数
+	 */
+	public static final String RECHARGE_LIMIT_NUM = "recharge_limit_num";
+
+	/**
 	 * 后台登录用户名
 	 */
 	public static final String BACK_USER_NAME = "toiletCat_Back_Admin_Root_Name";
@@ -238,5 +250,10 @@ public class BaseConstant {
 	 * 最大邀请数量
 	 */
 	public static final Integer INVITE_MAX_NUM = 10;
+
+	/**
+	 * 钱和游戏币对应关系map
+	 */
+	public static Map<String, MoneyForCoin> moneyForCoinMap = new HashMap<>();
 
 }

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toiletCat.dao.MoneyForCoinDao">
+
+    <!-- 抓取记录表 -->
+    <resultMap type="com.toiletCat.entity.MoneyForCoin" id="moneyForCoinMap">
+        <!-- 主键id -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <!-- 钱数 -->
+        <result property="money" column="money" jdbcType="VARCHAR"/>
+        <!-- 游戏币数 -->
+        <result property="coin" column="coin" jdbcType="INTEGER"/>
+        <!-- 前端展示的游戏币文案 -->
+        <result property="showText" column="show_text" jdbcType="VARCHAR"/>
+        <!-- 每天充值限制次数 -->
+        <result property="rechargeLimit" column="recharge_limit" jdbcType="INTEGER"/>
+        <!-- 活动标志位 -->
+        <result property="activeFlag" column="active_flag" jdbcType="INTEGER"/>
+        <!-- 赠送的游戏币数 -->
+        <result property="giveCoin" column="give_coin" jdbcType="INTEGER"/>
+        <!-- 是否可用 可用 禁用 -->
+        <result property="currentState" column="current_state" jdbcType="INTEGER"/>
+        <!-- 创建时间 -->
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <!-- 最后修改时间 -->
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 添加对应关系 -->
+    <insert id="addMoneyForCoin" parameterType="com.toiletCat.entity.MoneyForCoin">
+        insert into money_for_coin
+            (
+            money,
+            coin,
+            show_text,
+            recharge_limit,
+            active_flag,
+            give_coin,
+            current_state
+            )
+        values
+            (
+            #{money, jdbcType=VARCHAR},
+            #{coin, jdbcType=INTEGER},
+            #{showText, jdbcType=VARCHAR},
+            #{rechargeLimit, jdbcType=INTEGER},
+            #{activeFlag, jdbcType=INTEGER},
+            #{giveCoin, jdbcType=INTEGER},
+            #{currentState, jdbcType=INTEGER}
+            )
+    </insert>
+
+    <!-- 获得所有对应关系 -->
+    <select id="getAllMoneyForCoin" resultMap="moneyForCoinMap">
+        select
+            id,
+            money,
+            coin,
+            show_text,
+            recharge_limit,
+            active_flag,
+            give_coin,
+            current_state
+        from money_for_coin
+    </select>
+
+    <!-- 根据id获得对应关系 -->
+    <select id="getMoneyForCoinById" parameterType="java.lang.Long" resultMap="moneyForCoinMap">
+        select
+            id,
+            money,
+            coin,
+            show_text,
+            recharge_limit,
+            active_flag,
+            give_coin,
+            current_state
+        from money_for_coin where id = #{id}
+    </select>
+
+    <!-- 修改对应关系 -->
+    <update id="updateMoneyForCoin" parameterType="com.toiletCat.entity.MoneyForCoin">
+        update money_for_coin set
+            money = #{money, jdbcType=VARCHAR},
+            coin = #{coin, jdbcType=INTEGER},
+            show_text = #{showText, jdbcType=VARCHAR},
+            recharge_limit = #{rechargeLimit, jdbcType=INTEGER},
+            active_flag = #{activeFlag, jdbcType=INTEGER},
+            give_coin = #{giveCoin, jdbcType=INTEGER},
+            current_state = #{currentState, jdbcType=INTEGER}
+        where id = #{id}
+    </update>
+
+    <!-- 获得所有可用的对应关系 -->
+    <select id="getAllCanSeeMoneyForCoin" resultMap="moneyForCoinMap">
+        select
+            id,
+            money,
+            coin,
+            show_text,
+            recharge_limit,
+            active_flag,
+            give_coin
+        from money_for_coin where current_state = 1
+    </select>
+
+</mapper>
