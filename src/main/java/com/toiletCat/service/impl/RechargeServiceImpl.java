@@ -309,6 +309,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
             if(!"1".equals(json.getString("code"))) {
                 // 将充值结果置为失败
                 updateRechargeAndSpendResult(orderNo, TradeStatus.FAIL);
+                return;
             }
 
             if(!orderNo.equals(json.getString("out_trade_no"))) {
