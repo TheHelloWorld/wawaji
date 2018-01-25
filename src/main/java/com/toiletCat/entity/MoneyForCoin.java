@@ -25,6 +25,11 @@ public class MoneyForCoin extends BaseEntity implements Serializable {
     private String showText;
 
     /**
+     * 前端展示的游戏币充值文案
+     */
+    private String coinText;
+
+    /**
      * 每天充值限制次数
      */
     private Integer rechargeLimit;
@@ -66,6 +71,14 @@ public class MoneyForCoin extends BaseEntity implements Serializable {
 
     public void setShowText(String showText) {
         this.showText = showText;
+    }
+
+    public String getCoinText() {
+        return coinText;
+    }
+
+    public void setCoinText(String coinText) {
+        this.coinText = coinText;
     }
 
     public Integer getRechargeLimit() {

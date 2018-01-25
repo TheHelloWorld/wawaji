@@ -12,6 +12,8 @@
         <result property="coin" column="coin" jdbcType="INTEGER"/>
         <!-- 前端展示的游戏币文案 -->
         <result property="showText" column="show_text" jdbcType="VARCHAR"/>
+        <!-- 前端展示的游戏币充值文案 -->
+        <result property="coinText" column="coin_text" jdbcType="VARCHAR"/>
         <!-- 每天充值限制次数 -->
         <result property="rechargeLimit" column="recharge_limit" jdbcType="INTEGER"/>
         <!-- 首充标志位 -->
@@ -33,6 +35,7 @@
             money,
             coin,
             show_text,
+            coin_text,
             recharge_limit,
             first_flag,
             give_coin,
@@ -43,6 +46,7 @@
             #{money, jdbcType=VARCHAR},
             #{coin, jdbcType=INTEGER},
             #{showText, jdbcType=VARCHAR},
+            #{coinText, jdbcType=VARCHAR},
             #{rechargeLimit, jdbcType=INTEGER},
             #{firstFlag, jdbcType=INTEGER},
             #{giveCoin, jdbcType=INTEGER},
@@ -57,6 +61,7 @@
             money,
             coin,
             show_text,
+            coin_text,
             recharge_limit,
             first_flag,
             give_coin,
@@ -71,6 +76,7 @@
             money,
             coin,
             show_text,
+            coin_text,
             recharge_limit,
             first_flag,
             give_coin,
@@ -84,6 +90,7 @@
             money = #{money, jdbcType=VARCHAR},
             coin = #{coin, jdbcType=INTEGER},
             show_text = #{showText, jdbcType=VARCHAR},
+            coin_text = #{coinText, jdbcType=VARCHAR},
             recharge_limit = #{rechargeLimit, jdbcType=INTEGER},
             first_flag = #{firstFlag, jdbcType=INTEGER},
             give_coin = #{giveCoin, jdbcType=INTEGER},
@@ -98,6 +105,7 @@
             money,
             coin,
             show_text,
+            coin_text,
             recharge_limit,
             first_flag,
             give_coin
