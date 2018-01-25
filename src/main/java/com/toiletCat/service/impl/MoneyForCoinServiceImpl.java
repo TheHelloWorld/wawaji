@@ -36,7 +36,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
             @Override
             public void exec() {
                 moneyForCoinDao.addMoneyForCoin(moneyForCoin);
-                BaseConstant.moneyForCoinMap.put(moneyForCoin.getMoney(), moneyForCoin);
+                BaseConstant.moneyForCoinMap.put(Double.valueOf(moneyForCoin.getMoney()), moneyForCoin);
             }
         }, "addMoneyForCoin", moneyForCoin);
     }
@@ -83,16 +83,17 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
             @Override
             public void exec() {
 
+                // 获取更改前数据
+                MoneyForCoin old = moneyForCoinDao.getMoneyForCoinById(moneyForCoin.getId());
+
                 moneyForCoinDao.updateMoneyForCoin(moneyForCoin);
 
-                // 若为不可用则去除key
-                if(moneyForCoin.getCurrentState() == CurrentState.UNAVAILABLE.getStatus()) {
+                BaseConstant.moneyForCoinMap.remove(old.getMoney());
+                BaseConstant.moneyForCoinMap.remove(moneyForCoin.getMoney());
 
-                    BaseConstant.moneyForCoinMap.remove(moneyForCoin.getMoney());
-
-                } else {
-
-                    BaseConstant.moneyForCoinMap.put(moneyForCoin.getMoney(), moneyForCoin);
+                // 若为可用则去更新key
+                if(moneyForCoin.getCurrentState() == CurrentState.AVAILABLE.getStatus()) {
+                    BaseConstant.moneyForCoinMap.put(Double.valueOf(moneyForCoin.getMoney()), moneyForCoin);
                 }
 
             }
@@ -113,7 +114,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
 
                 List<MoneyForCoin> list = new ArrayList<>();
 
-                for(Map.Entry<String, MoneyForCoin> entry : BaseConstant.moneyForCoinMap.entrySet()) {
+                for(Map.Entry<Double, MoneyForCoin> entry : BaseConstant.moneyForCoinMap.entrySet()) {
                     list.add(entry.getValue());
                 }
 
@@ -130,12 +131,14 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
     @Override
     public MoneyForCoin getMoneyForCoinByMoney(String money) {
 
-        if(BaseConstant.moneyForCoinMap.get(money) == null) {
+        logger.info("getMoneyForCoinByMoney money:" + money);
+
+        if(BaseConstant.moneyForCoinMap.get(Double.valueOf(money)) == null) {
 
             refreshMap();
         }
 
-        return BaseConstant.moneyForCoinMap.get(money);
+        return BaseConstant.moneyForCoinMap.get(Double.valueOf(money));
     }
 
     /**
@@ -165,7 +168,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
 
         for(MoneyForCoin moneyForCoin : list) {
 
-            BaseConstant.moneyForCoinMap.put(moneyForCoin.getMoney(), moneyForCoin);
+            BaseConstant.moneyForCoinMap.put(Double.valueOf(moneyForCoin.getMoney()), moneyForCoin);
         }
     }
 
