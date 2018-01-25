@@ -1,6 +1,5 @@
 package com.toiletCat.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
@@ -36,7 +35,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
             public void exec() {
                 deliverDao.addDeliver(deliver);
             }
-        }, "addDeliver", JSON.toJSONString(deliver));
+        }, "addDeliver", deliver);
     }
 
     /**
@@ -55,7 +54,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
             public void exec() {
                 got(deliverDao.countDeliverByUserNo(userNo));
             }
-        },"countDeliverByUserNo", json.toJSONString());
+        },"countDeliverByUserNo", json);
     }
 
     /**
@@ -93,7 +92,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
             public void exec() {
                 got(deliverDao.getDeliverByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        },"getDeliverByUserNo", json.toJSONString());
+        },"getDeliverByUserNo", json);
 
     }
 
@@ -114,7 +113,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
             public void exec() {
                 got(deliverDao.getAllDeliverByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        },"getAllDeliverByPage", json.toJSONString());
+        },"getAllDeliverByPage", json);
     }
 
     /**
@@ -135,7 +134,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
             public void exec() {
                 got(deliverDao.getDeliverByIdAndUserNo(id, userNo));
             }
-        },"getDeliverByIdAndUserNo", json.toJSONString());
+        },"getDeliverByIdAndUserNo", json);
     }
 
     /**
@@ -150,7 +149,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
             public void exec() {
                 deliverDao.updateDeliverMsgByIdAndUserNo(deliver);
             }
-        }, "updateDeliverMsgByIdAndUserNo", JSON.toJSONString(deliver));
+        }, "updateDeliverMsgByIdAndUserNo", deliver);
     }
 
     @Override

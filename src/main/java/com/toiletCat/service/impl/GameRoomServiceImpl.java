@@ -12,7 +12,6 @@ import com.toiletCat.entity.GameRoom;
 import com.toiletCat.enums.HandleType;
 import com.toiletCat.service.GameRoomService;
 import com.toiletCat.service.ToiletCatConfigService;
-import com.toiletCat.utils.RandomIntUtil;
 import com.toiletCat.utils.RedisUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -49,7 +48,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 gameRoomDao.addGameRoom(gameRoom);
             }
-        }, "addGameRoom", JSON.toJSONString(gameRoom));
+        }, "addGameRoom", gameRoom);
     }
 
     /**
@@ -84,7 +83,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 got(gameRoomDao.getGameRoomListByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        }, "getGameRoomListByPage", json.toJSONString());
+        }, "getGameRoomListByPage", json);
     }
 
     /**
@@ -146,7 +145,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
                 got(userSeeGameRoomList);
             }
-        }, "getUserSeeGameRoomListByPage", json.toJSONString());
+        }, "getUserSeeGameRoomListByPage", json);
     }
 
 
@@ -167,7 +166,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
                 got(gameRoomDao.getUserSeeGameRoomByGameRoomNo(gameRoomNo));
             }
-        }, "getUserSeeGameRoomByGameRoomNo", json.toJSONString());
+        }, "getUserSeeGameRoomByGameRoomNo", json);
     }
 
     /**
@@ -199,7 +198,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
                 got(returnJSON.toJSONString());
             }
-        }, "getUserSeeGameRoomByGameRoomNo", json.toJSONString());
+        }, "getUserSeeGameRoomByGameRoomNo", json);
     }
 
     /**
@@ -217,7 +216,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 got(gameRoomDao.getCoinByGameRoomNo(gameRoomNo));
             }
-        }, "getCoinByGameRoomNo", json.toJSONString());
+        }, "getCoinByGameRoomNo", json);
     }
 
     /**
@@ -238,7 +237,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
                 got(gameRoomDao.getGameRoomByGameRoomNoAndId(gameRoomNo, id));
             }
-        }, "getGameRoomByGameRoomNoAndId", json.toJSONString());
+        }, "getGameRoomByGameRoomNoAndId", json);
     }
 
     /**
@@ -253,7 +252,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 gameRoomDao.updateGameRoomByGameRoomNoAndId(gameRoom);
             }
-        }, "updateGameRoomByGameRoomNoAndId", JSON.toJSONString(gameRoom));
+        }, "updateGameRoomByGameRoomNoAndId", gameRoom);
     }
 
     /**
@@ -270,7 +269,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 gameRoomDao.addRoomLuckyNumByGameRoomNo(gameRoomNo);
             }
-        }, "addRoomLuckyNumByGameRoomNo", json.toJSONString());
+        }, "addRoomLuckyNumByGameRoomNo", json);
     }
 
     /**
@@ -293,7 +292,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
                 gameRoomDao.resetRoomLuckyNumByGameRoomNo(gameRoomNo, roomLuckyNum);
             }
-        }, "resetRoomLuckyNumByGameRoomNo", json.toJSONString());
+        }, "resetRoomLuckyNumByGameRoomNo", json);
     }
 
     /**
@@ -311,7 +310,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 got(gameRoomDao.getLuckyNumByGameRoomNo(gameRoomNo));
             }
-        }, "getLuckyNumByGameRoomNo", json.toJSONString());
+        }, "getLuckyNumByGameRoomNo", json);
     }
 
     /**
@@ -329,7 +328,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 got(gameRoomDao.getToyNameByGameRoomNo(gameRoomNo));
             }
-        }, "getToyNameByGameRoomNo", json.toJSONString());
+        }, "getToyNameByGameRoomNo", json);
     }
 
     /**
@@ -369,7 +368,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
                     return;
                 }
             }
-        }, "handleGameRoomViewer", json.toJSONString());
+        }, "handleGameRoomViewer", json);
     }
 
     @Override

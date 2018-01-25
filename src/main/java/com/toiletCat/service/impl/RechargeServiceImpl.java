@@ -159,7 +159,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 }
 
             }
-        }, "getRechargeResultByParam", json.toJSONString());
+        }, "getRechargeResultByParam", json);
 
     }
 
@@ -237,7 +237,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 got(returnJSON.toJSONString());
 
             }
-        }, "getRechargeResultByOrderNo", json.toJSONString());
+        }, "getRechargeResultByOrderNo", json);
     }
 
     /**
@@ -279,7 +279,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 }
 
             }
-        }, "getInitRechargeResultByOrderInfo", json.toJSONString());
+        }, "getInitRechargeResultByOrderInfo", json);
     }
 
     /**

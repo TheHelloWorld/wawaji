@@ -1,6 +1,5 @@
 package com.toiletCat.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
@@ -32,7 +31,7 @@ public class UserGameRoomServiceImpl extends BaseServiceImpl implements UserGame
             public void exec() {
                 userGameRoomDao.addUserGameRoom(userGameRoom);
             }
-        }, "addUserGameRoom", JSON.toJSONString(userGameRoom));
+        }, "addUserGameRoom", userGameRoom);
     }
 
     /**
@@ -53,7 +52,7 @@ public class UserGameRoomServiceImpl extends BaseServiceImpl implements UserGame
             public void exec() {
                 got(userGameRoomDao.countUserGameRoomByUserNo(userNo, gameRoomNo));
             }
-        }, "countUserGameRoomByUserNo", json.toJSONString());
+        }, "countUserGameRoomByUserNo", json);
     }
 
     /**
@@ -74,7 +73,7 @@ public class UserGameRoomServiceImpl extends BaseServiceImpl implements UserGame
             public void exec() {
                 got(userGameRoomDao.getUserGameRoomByUserNoAndGameRoomNo(userNo, gameRoomNo));
             }
-        }, "countUserGameRoomByUserNo", json.toJSONString());
+        }, "countUserGameRoomByUserNo", json);
     }
 
     /**
@@ -96,7 +95,7 @@ public class UserGameRoomServiceImpl extends BaseServiceImpl implements UserGame
             public void exec() {
                 userGameRoomDao.addUserRoomLuckyNumByUserNoAndGameRoomNo(userNo, gameRoomNo, userRoomLuckyNum);
             }
-        }, "addUserRoomLuckyNumByUserNoAndGameRoomNo", json.toJSONString());
+        }, "addUserRoomLuckyNumByUserNoAndGameRoomNo", json);
     }
 
     /**
@@ -116,7 +115,7 @@ public class UserGameRoomServiceImpl extends BaseServiceImpl implements UserGame
             public void exec() {
                 got(userGameRoomDao.getUserGameRoomLuckyNumByUserNo(userNo, gameRoomNo));
             }
-        }, "getUserGameRoomLuckyNumByUserNo", json.toJSONString());
+        }, "getUserGameRoomLuckyNumByUserNo", json);
     }
 
     /**
@@ -136,7 +135,7 @@ public class UserGameRoomServiceImpl extends BaseServiceImpl implements UserGame
             public void exec() {
                 userGameRoomDao.resetUserRoomLuckyNum(userNo, gameRoomNo);
             }
-        }, "resetUserRoomLuckyNum", json.toJSONString());
+        }, "resetUserRoomLuckyNum", json);
     }
 
     @Override

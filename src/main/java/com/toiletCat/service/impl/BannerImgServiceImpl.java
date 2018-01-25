@@ -36,7 +36,7 @@ public class BannerImgServiceImpl extends BaseServiceImpl implements BannerImgSe
             public void exec() {
                 bannerImgDao.addBannerImg(bannerImg);
             }
-        }, "addBannerImg", JSON.toJSONString(bannerImg));
+        }, "addBannerImg", bannerImg);
     }
 
     /**
@@ -55,7 +55,7 @@ public class BannerImgServiceImpl extends BaseServiceImpl implements BannerImgSe
             public void exec() {
                 got(bannerImgDao.getBannerImgByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        },"getBannerImgByPage", json.toJSONString());
+        },"getBannerImgByPage", json);
     }
 
     /**
@@ -88,7 +88,7 @@ public class BannerImgServiceImpl extends BaseServiceImpl implements BannerImgSe
             public void exec() {
                 got(bannerImgDao.getBannerImgById(id));
             }
-        },"getBannerImgById", json.toJSONString());
+        },"getBannerImgById", json);
     }
 
     /**
@@ -102,7 +102,7 @@ public class BannerImgServiceImpl extends BaseServiceImpl implements BannerImgSe
             public void exec() {
                 bannerImgDao.updateBannerImg(bannerImg);
             }
-        }, "updateBannerImg", JSON.toJSONString(bannerImg));
+        }, "updateBannerImg", bannerImg);
     }
 
     /**
@@ -121,7 +121,7 @@ public class BannerImgServiceImpl extends BaseServiceImpl implements BannerImgSe
             public void exec() {
                 got(bannerImgDao.getBannerImgByBannerType(bannerType.getStatus()));
             }
-        }, "getBannerImgByBannerType", json.toJSONString());
+        }, "getBannerImgByBannerType", json);
     }
 
     @Override

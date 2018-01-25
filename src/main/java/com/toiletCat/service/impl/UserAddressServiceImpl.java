@@ -1,6 +1,5 @@
 package com.toiletCat.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.constants.BaseConstant;
@@ -49,7 +48,7 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
                 got(BaseConstant.OVER_MAX_USER_ADDRESS);
                 return;
             }
-        }, "addUserAddressService", JSON.toJSONString(userAddress));
+        }, "addUserAddressService", userAddress);
 
     }
 
@@ -69,7 +68,7 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
             public void exec() {
                 got(userAddressDao.getUserAddressByUserNo(userNo));
             }
-        }, "getUserAddressByUserNo", json.toJSONString());
+        }, "getUserAddressByUserNo", json);
     }
 
     /**
@@ -88,7 +87,7 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
             public void exec() {
                 got(userAddressDao.countUserAddressByUserNo(userNo));
             }
-        }, "countUserAddressByUserNo", json.toJSONString());
+        }, "countUserAddressByUserNo", json);
     }
 
     /**
@@ -109,7 +108,7 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
             public void exec() {
                 got(userAddressDao.getUserAddressByIdAndUserNo(id, userNo));
             }
-        }, "getUserAddressByIdAndUserNo", json.toJSONString());
+        }, "getUserAddressByIdAndUserNo", json);
 
     }
 
@@ -125,7 +124,7 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
             public void exec() {
                 userAddressDao.updateUserAddressByIdAndUserNo(userAddress);
             }
-        }, "updateUserAddressByIdAndUserNo", JSON.toJSONString(userAddress));
+        }, "updateUserAddressByIdAndUserNo", userAddress);
 
     }
 
@@ -146,7 +145,7 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
             public void exec() {
                 userAddressDao.deleteUserAddressByIdAndUserNo(id, userNo);
             }
-        }, "deleteUserAddressByIdAndUserNo", json.toJSONString());
+        }, "deleteUserAddressByIdAndUserNo", json);
     }
 
     @Override

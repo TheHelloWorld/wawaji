@@ -1,6 +1,5 @@
 package com.toiletCat.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
@@ -37,7 +36,7 @@ public class UserSpendRecordServiceImpl extends BaseServiceImpl implements UserS
             public void exec() {
                 userSpendRecordDao.addUserSpendRecord(userSpendRecord);
             }
-        }, "addUserSpendRecord", JSON.toJSONString(userSpendRecord));
+        }, "addUserSpendRecord", userSpendRecord);
     }
 
     /**
@@ -56,7 +55,7 @@ public class UserSpendRecordServiceImpl extends BaseServiceImpl implements UserS
             public void exec() {
                 got(userSpendRecordDao.countUserSpendRecordByUserNo(userNo));
             }
-        }, "countUserSpendRecordByUserNo", json.toJSONString());
+        }, "countUserSpendRecordByUserNo", json);
 
     }
 
@@ -87,7 +86,7 @@ public class UserSpendRecordServiceImpl extends BaseServiceImpl implements UserS
 
                 got(list);
             }
-        }, "getUserSpendRecordByUserNo", json.toJSONString());
+        }, "getUserSpendRecordByUserNo", json);
     }
 
     /**
@@ -106,7 +105,7 @@ public class UserSpendRecordServiceImpl extends BaseServiceImpl implements UserS
             public void exec() {
                 userSpendRecordDao.updateTradeStatusByOrderNo(orderNo, tradeStatus);
             }
-        }, "updateTradeStatusByOrderNo", json.toJSONString());
+        }, "updateTradeStatusByOrderNo", json);
     }
 
     @Override

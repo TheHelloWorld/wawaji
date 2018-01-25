@@ -143,7 +143,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 got(user);
                 return;
             }
-        }, "registerOrLoginUser", json.toJSONString());
+        }, "registerOrLoginUser", json);
     }
 
     /**
@@ -185,7 +185,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     return;
                 }
             }
-        }, "verifyCode", json.toJSONString());
+        }, "verifyCode", json);
     }
 
     /**
@@ -344,7 +344,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     return;
                 }
             }
-        }, "userPlayMachine", json.toJSONString());
+        }, "userPlayMachine", json);
     }
 
     /**
@@ -485,7 +485,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     return;
                 }
             }
-        }, "userPlayGame", json.toJSONString());
+        }, "userPlayGame", json);
     }
 
     /**
@@ -536,7 +536,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 return;
             }
-        }, "userRegisterOrLogin", json.toJSONString());
+        }, "userRegisterOrLogin", json);
     }
 
     /**
@@ -566,7 +566,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 got(userDao.getUserByUserNo(userNo));
 
             }
-        }, "getUserByUserNo", json.toJSONString());
+        }, "getUserByUserNo", json);
     }
 
     /**
@@ -589,7 +589,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 userDao.updateUserInfoByIdAndUserNo(userNo, userName, userImg);
 
             }
-        }, "updateUserInfoByIdAndUserNo", json.toJSONString());
+        }, "updateUserInfoByIdAndUserNo", json);
     }
 
     /**
@@ -729,7 +729,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 return;
 
             }
-        }, "getGameCatchResultByUserNoAndGameRoomNo", json.toJSONString());
+        }, "getGameCatchResultByUserNoAndGameRoomNo", json);
     }
 
     /**
@@ -915,7 +915,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 got(RechargeUtil.getRequestUrl(orderNo, String.valueOf(amount)));
 
             }
-        }, "userRecharge", json.toJSONString());
+        }, "userRecharge", json);
     }
 
     /**
@@ -1043,7 +1043,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 got(json.toJSONString());
 
             }
-        }, "userInvite", json.toJSONString());
+        }, "userInvite", json);
     }
 
     /**

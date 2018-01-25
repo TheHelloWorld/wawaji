@@ -1,6 +1,5 @@
 package com.toiletCat.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.constants.BaseConstant;
@@ -43,7 +42,7 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
                 userRechargeRecordDao.addUserRechargeRecord(userRechargeRecord);
 
             }
-        }, "addUserRechargeRecord", JSON.toJSONString(userRechargeRecord));
+        }, "addUserRechargeRecord", userRechargeRecord);
     }
 
     /**
@@ -62,7 +61,7 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
             public void exec() {
                 got(userRechargeRecordDao.countUserRechargeRecordByUserNo(userNo));
             }
-        }, "countUserRechargeRecordByUserNo", json.toJSONString());
+        }, "countUserRechargeRecordByUserNo", json);
     }
 
     /**
@@ -84,7 +83,7 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
             public void exec() {
                 got(userRechargeRecordDao.countUserRechargeRecordByUserNoAndTradeStatus(userNo, tradeStatus));
             }
-        }, "countUserRechargeRecordByUserNoAndTradeStatus", json.toJSONString());
+        }, "countUserRechargeRecordByUserNoAndTradeStatus", json);
     }
 
     /**
@@ -106,7 +105,7 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
             public void exec() {
                 got(userRechargeRecordDao.getUserRechargeRecordByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        }, "getUserRechargeRecordByUserNo", json.toJSONString());
+        }, "getUserRechargeRecordByUserNo", json);
     }
 
     /**
@@ -128,7 +127,7 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
             public void exec() {
                 got(userRechargeRecordDao.countUserRechargeRecordByTradeDateAndTradeStatus(tradeDate, tradeStatus));
             }
-        }, "countUserRechargeRecordByTradeDateAndTradeStatus", json.toJSONString());
+        }, "countUserRechargeRecordByTradeDateAndTradeStatus", json);
     }
 
     /**
@@ -154,7 +153,7 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
                 got(userRechargeRecordDao.getUserRechargeRecordByTradeDateAndTradeStatus(tradeDate,
                         tradeStatus, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        }, "getUserRechargeRecordByTradeDateAndTradeStatus", json.toJSONString());
+        }, "getUserRechargeRecordByTradeDateAndTradeStatus", json);
 
     }
 
@@ -177,7 +176,7 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
             public void exec() {
                 got(userRechargeRecordDao.getSumRechargeAmountAndCountByTradeDateAndTradeStatus(tradeDate, tradeStatus));
             }
-        }, "getSumRechargeAmountAndCountByTradeDateAndTradeStatus", json.toJSONString());
+        }, "getSumRechargeAmountAndCountByTradeDateAndTradeStatus", json);
 
     }
 
@@ -198,7 +197,7 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
             public void exec() {
                 got(userRechargeRecordDao.getAmountByUserNoAndOrderNo(userNo, orderNo));
             }
-        }, "countNumByUserNoAndOrderNo", json.toJSONString());
+        }, "countNumByUserNoAndOrderNo", json);
 
     }
 
@@ -218,7 +217,7 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
             public void exec() {
                 userRechargeRecordDao.updateTradeStatusByOrderNo(orderNo, tradeStatus);
             }
-        }, "updateTradeStatusByOrderNo", json.toJSONString());
+        }, "updateTradeStatusByOrderNo", json);
     }
 
     /**
@@ -238,7 +237,7 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
             public void exec() {
                 got(userRechargeRecordDao.getTradeStatusByOrderNo(userNo, orderNo));
             }
-        }, "getTradeStatusByOrderNo", json.toJSONString());
+        }, "getTradeStatusByOrderNo", json);
     }
 
     /**
@@ -256,7 +255,7 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
             public void exec() {
                 got(userRechargeRecordDao.getAllInitRecordByUserNo(userNo));
             }
-        }, "getAllInitRecordByUserNo", json.toJSONString());
+        }, "getAllInitRecordByUserNo", json);
     }
 
     @Override

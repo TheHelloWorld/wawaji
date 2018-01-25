@@ -14,7 +14,7 @@ public abstract class BaseServiceImpl {
      * @param params 参数
      * @return
      */
-    protected CommonResult exec(Callback callback, String method, String params) {
+    protected CommonResult exec(Callback callback, String method, Object params) {
         return ExecTemplate.exec(callback, getLogger(), method, params);
     }
 

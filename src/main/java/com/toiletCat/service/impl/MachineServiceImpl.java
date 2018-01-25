@@ -1,6 +1,5 @@
 package com.toiletCat.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
@@ -40,7 +39,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             public void exec() {
                 machineDao.addMachine(machine);
             }
-        }, "addMachine", JSON.toJSONString(machine));
+        }, "addMachine", machine);
 
     }
 
@@ -76,7 +75,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             public void exec() {
                 got(machineDao.getAllMachineByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        }, "getAllMachineByPage", json.toJSONString());
+        }, "getAllMachineByPage", json);
     }
 
     /**
@@ -138,7 +137,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
 
                 got(userMachineList);
             }
-        }, "getUserAllMachineByPage", json.toJSONString());
+        }, "getUserAllMachineByPage", json);
     }
     /**
      * 根据id,机器编号获得机器信息
@@ -158,7 +157,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             public void exec() {
                 got(machineDao.getMachineByIdAndMachineNo(id, machineNo));
             }
-        }, "getMachineByIdAndMachineNo", json.toJSONString());
+        }, "getMachineByIdAndMachineNo", json);
     }
 
     /**
@@ -173,7 +172,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             public void exec() {
                 machineDao.updateMachineByIdAndMachineNo(machine);;
             }
-        }, "updateMachineByIdAndMachineNo", JSON.toJSONString(machine));
+        }, "updateMachineByIdAndMachineNo", machine);
 
     }
 
@@ -194,7 +193,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             public void exec() {
                 machineDao.deleteMachineByIdAndToyNo(id, machineNo);
             }
-        }, "deleteMachineByIdAndMachineNo", json.toJSONString());
+        }, "deleteMachineByIdAndMachineNo", json);
 
     }
 
@@ -214,7 +213,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             public void exec() {
                 got(machineDao.getCoinByMachineNo(machineNo));
             }
-        }, "getCoinByMachineNo", json.toJSONString());
+        }, "getCoinByMachineNo", json);
     }
 
     /**
@@ -247,7 +246,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
                     return;
                 }
             }
-        }, "getMachineInUse", json.toJSONString());
+        }, "getMachineInUse", json);
     }
 
     /**
@@ -266,7 +265,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
                 UserMachine userMachine = machineDao.getToyNoAndToyImgByMachineNo(machineNo);
                 got(userMachine);
             }
-        }, "getToyNoAndToyImgByMachineNo", json.toJSONString());
+        }, "getToyNoAndToyImgByMachineNo", json);
     }
 
     /**
@@ -306,7 +305,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
                     return;
                 }
             }
-        }, "handleMachineViewer", json.toJSONString());
+        }, "handleMachineViewer", json);
     }
 
     @Override

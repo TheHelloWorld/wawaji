@@ -2,6 +2,7 @@ package com.toiletCat.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.constants.BaseConstant;
@@ -43,7 +44,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
                 moneyForCoinDao.addMoneyForCoin(moneyForCoin);
                 BaseConstant.moneyForCoinMap.put(moneyForCoin.getMoney(), moneyForCoin);
             }
-        }, "addMoneyForCoin", JSON.toJSONString(moneyForCoin));
+        }, "addMoneyForCoin", moneyForCoin);
     }
 
     /**
@@ -75,7 +76,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
             public void exec() {
                 got(moneyForCoinDao.getMoneyForCoinById(id));
             }
-        }, "getMoneyForCoinById", json.toJSONString());
+        }, "getMoneyForCoinById", json);
     }
 
     /**
@@ -101,7 +102,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
                 }
 
             }
-        }, "updateMoneyForCoin", JSON.toJSONString(moneyForCoin));
+        }, "updateMoneyForCoin", moneyForCoin);
     }
 
     /**
@@ -172,5 +173,16 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
     @Override
     protected Logger getLogger() {
         return logger;
+    }
+
+    public static void main(String[] args) {
+
+        JSONObject jsonObject  = new JSONObject();
+
+        jsonObject.put("123" , "123");
+        jsonObject.put("321", null);
+
+        System.out.println(JSON.toJSONString(jsonObject, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteNullListAsEmpty));
+
     }
 }

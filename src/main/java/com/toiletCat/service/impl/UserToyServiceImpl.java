@@ -1,6 +1,5 @@
 package com.toiletCat.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
@@ -59,7 +58,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                 userToy.setDeliverId(0L);
                 userToyDao.addUserToy(userToy);
             }
-        }, "addUserToy", JSON.toJSONString(userToy));
+        }, "addUserToy", userToy);
     }
 
     /**
@@ -78,7 +77,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
             public void exec() {
                 got(userToyDao.countUserToyByUserNo(userNo));
             }
-        },"countUserToyByUserNo", json.toJSONString());
+        },"countUserToyByUserNo", json);
     }
 
     /**
@@ -100,7 +99,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
             public void exec() {
                 got(userToyDao.getUserToyListByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        },"getUserToyByUserNo", json.toJSONString());
+        },"getUserToyByUserNo", json);
     }
 
     /**
@@ -131,7 +130,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                 userToy.setFreeDeliverNum(freeDeliverNum);
                 got(userToy);
             }
-        },"getUserToyByUserNoAndId", json.toJSONString());
+        },"getUserToyByUserNoAndId", json);
     }
 
     /**
@@ -258,7 +257,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                 got(json.toJSONString());
 
             }
-        }, "updateChoiceTypeByIdAndUserNo", JSON.toJSONString(userToy));
+        }, "updateChoiceTypeByIdAndUserNo", userToy);
     }
 
     /**
@@ -276,7 +275,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
             public void exec() {
                 got(userToyDao.getAllUnHandleUserToyByUserNo(userNo));
             }
-        }, "getAllUnHandleUserToyByUserNo", json.toJSONString());
+        }, "getAllUnHandleUserToyByUserNo", json);
     }
 
     @Override

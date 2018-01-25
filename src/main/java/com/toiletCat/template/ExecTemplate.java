@@ -1,5 +1,7 @@
 package com.toiletCat.template;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.constants.BaseConstant;
@@ -16,8 +18,12 @@ public final class ExecTemplate {
      * @param params 参数
      * @return
      */
-    public static CommonResult exec(Callback callback, Logger logger, String method, String params) {
-        logger.info(method + " start params:" + params);
+    public static CommonResult exec(Callback callback, Logger logger, String method, Object params) {
+
+        String inputParam = JSON.toJSONString(params, SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteNullListAsEmpty);
+
+        logger.info(method + " start params:" + inputParam);
 
         CommonResult commonResult = new CommonResult();
 
@@ -25,7 +31,7 @@ public final class ExecTemplate {
             callback.setResult(commonResult);
             callback.exec();
         } catch (Throwable e) {
-            logger.error(BaseConstant.LOG_ERR_MSG +" "+ method + " params:" + params + "error: " + e, e);
+            logger.error(BaseConstant.LOG_ERR_MSG +" "+ method + " params:" + inputParam + "error: " + e, e);
             callback.setCodeMessage(CommonCodeMessage.SYSTEM_ERROR);
         }
 

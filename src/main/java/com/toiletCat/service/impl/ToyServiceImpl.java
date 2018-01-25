@@ -1,6 +1,5 @@
 package com.toiletCat.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
@@ -36,7 +35,7 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
             public void exec() {
                 toyDao.addToy(toy);
             }
-        }, "addToy", JSON.toJSONString(toy));
+        }, "addToy", toy);
     }
 
     /**
@@ -72,7 +71,7 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
             public void exec() {
                 got(toyDao.getAllToyByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        }, "getAllToyByPage", json.toJSONString());
+        }, "getAllToyByPage", json);
     }
 
     /**
@@ -93,7 +92,7 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
             public void exec() {
                 got(toyDao.getToyByIdAndToyNo(id, toyNo));
             }
-        }, "getToyByIdAndToyNo", json.toJSONString());
+        }, "getToyByIdAndToyNo", json);
     }
 
     /**
@@ -107,7 +106,7 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
             public void exec() {
                 toyDao.updateToyByIdAndToyNo(toy);
             }
-        }, "updateToyByIdAndToyNo", JSON.toJSONString(toy));
+        }, "updateToyByIdAndToyNo", toy);
     }
 
     /**
@@ -127,7 +126,7 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
             public void exec() {
                 toyDao.deleteToyByIdAndToyNo(id, toyNo);
             }
-        }, "deleteToyByIdAndToyNo", json.toJSONString());
+        }, "deleteToyByIdAndToyNo", json);
     }
 
     @Override

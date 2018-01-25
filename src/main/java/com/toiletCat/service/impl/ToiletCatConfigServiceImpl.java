@@ -1,6 +1,5 @@
 package com.toiletCat.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
@@ -41,7 +40,7 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
                 // 添加对应key value
                 BaseConstant.configMap.put(toiletCatConfig.getConfigKey(), toiletCatConfig.getConfigValue());
             }
-        }, "addToiletCatConfig", JSON.toJSONString(toiletCatConfig));
+        }, "addToiletCatConfig", toiletCatConfig);
     }
 
     /**
@@ -87,7 +86,7 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
             public void exec() {
                 got(toiletCatConfigDao.getToiletCatConfigById(id));
             }
-        }, "getAllConfig", json.toJSONString());
+        }, "getAllConfig", json);
     }
 
     /**
@@ -107,7 +106,7 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
                 // 更新对应key value
                 BaseConstant.configMap.put(toiletCatConfig.getConfigKey(), toiletCatConfig.getConfigValue());
             }
-        }, "updateToiletCatConfig", JSON.toJSONString(toiletCatConfig));
+        }, "updateToiletCatConfig", toiletCatConfig);
     }
 
     /**
@@ -127,7 +126,7 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
                 // 删除对应key value
                 BaseConstant.configMap.remove(toiletCatConfig.getConfigKey());
             }
-        }, "deleteToiletCatConfig", JSON.toJSONString(toiletCatConfig));
+        }, "deleteToiletCatConfig", toiletCatConfig);
     }
 
     /**
