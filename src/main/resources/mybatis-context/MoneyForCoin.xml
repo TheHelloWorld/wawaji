@@ -70,7 +70,7 @@
     </select>
 
     <!-- 获得可用对应关系数量 -->
-    <select id="countAvailableMoneyForCoin" resultMap="java.lang.Integer">
+    <select id="countAvailableMoneyForCoin" resultType="java.lang.Integer">
         select count(*) from money_for_coin where current_state = 1
     </select>
 

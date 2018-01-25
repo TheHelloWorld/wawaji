@@ -4,125 +4,73 @@ var recharge_height = $(window).height();
 
 function recharge() {
 
-    var recharge_hc = recharge_height + recharge_scroll;
-    var str = "	<div style='top:"+recharge_hc+"px;' class='recharge'>";
-    str += "		<div class='recharge-first-line' >";
-    str += "			<div style='float:left;height: 100%'>";
-    str += "				<img style='-webkit-transform:rotate(-90deg);' src='/image/game/returnButton.ico' class='rechargeReturn' ontouchend='closeRecharge()'/>";
-    str += "			</div>";
-    str += "		<div class='recharge-user-coin' >";
-    str += "			<div class='recharge-coin' >";
-    str += "				<img src='/image/background/coin-img.png' width=100% height=100% />";
-    str += "			</div>";
-    str += "			<div class='recharge-coin' id='user-recharge-coin' >";
-    str += "				" + sessionStorage["toiletCatUserCoin"];
-    str += "			</div>";
-    str += "		</div>";
-    str += "		<div class='clear:both'>";
-    str += "		</div>";
-    str += "	</div>";
-    str += "	<div style='float: left;' >";
-    str += "	<div class='recharge-block' onclick=rechargeThis('10.00') >";
-    str += "		<div class='recharge-coin' >";
-    str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
-    str += "		</div>";
-    str += "		<div class='recharge-coin' >";
-    str += "			100";
-    str += "		</div>";
-    str += "		<div class='recharge-coin-text' >";
-    str += "			充100马桶币";
-    str += "		</div>";
-    str += "		<div class='recharge-money' >";
-    str += "			¥10.00";
-    str += "		</div>";
-    str += "		<div class='clear:both'>";
-    str += "		</div>";
-    str += "	</div>";
-    str += "	<div class='recharge-block' onclick=rechargeThis('20.00') >";
-    str += "		<div class='recharge-coin' >";
-    str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
-    str += "		</div>";
-    str += "		<div class='recharge-coin' >";
-    str += "			200+10";
-    str += "		</div>";
-    str += "		<div class='recharge-coin-text' >";
-    str += "			充210马桶币";
-    str += "		</div>";
-    str += "		<div class='recharge-money' >";
-    str += "			¥20.00";
-    str += "		</div>";
-    str += "		<div class='clear:both'>";
-    str += "		</div>";
-    str += "	</div>";
-    str += "	<div class='recharge-block' onclick=rechargeThis('30.00') >";
-    str += "		<div class='recharge-coin' >";
-    str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
-    str += "		</div>";
-    str += "		<div class='recharge-coin' >";
-    str += "			300+30";
-    str += "		</div>";
-    str += "		<div class='recharge-coin-text' >";
-    str += "			充330马桶币";
-    str += "		</div>";
-    str += "		<div class='recharge-money' >";
-    str += "			¥30.00";
-    str += "		</div>";
-    str += "		<div class='clear:both'>";
-    str += "		</div>";
-    str += "	</div>";
-    str += "	<div class='recharge-block' onclick=rechargeThis('50.00') >";
-    str += "		<div class='recharge-coin' >";
-    str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
-    str += "		</div>";
-    str += "		<div class='recharge-coin' >";
-    str += "			500+50";
-    str += "		</div>";
-    str += "		<div class='recharge-coin-text' >";
-    str += "			充550马桶币";
-    str += "		</div>";
-    str += "		<div class='recharge-money' >";
-    str += "			¥50.00";
-    str += "		</div>";
-    str += "		<div class='clear:both'>";
-    str += "		</div>";
-    str += "	</div>";
-    str += "	<div class='recharge-block' onclick=rechargeThis('100.00') >";
-    str += "		<div class='recharge-coin' >";
-    str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
-    str += "		</div>";
-    str += "		<div class='recharge-coin' >";
-    str += "			1000+180";
-    str += "		</div>";
-    str += "		<div class='recharge-coin-text' >";
-    str += "			充1180马桶币";
-    str += "		</div>";
-    str += "		<div class='recharge-money' >";
-    str += "			¥100.00";
-    str += "		</div>";
-    str += "		<div class='clear:both'>";
-    str += "		</div>";
-    str += "	</div>";
-    str += "	<div class='recharge-block' onclick=rechargeThis('200.00') >";
-    str += "		<div class='recharge-coin' >";
-    str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
-    str += "		</div>";
-    str += "		<div class='recharge-coin' >";
-    str += "			2000+400";
-    str += "		</div>";
-    str += "		<div class='recharge-coin-text' >";
-    str += "			充2400马桶币";
-    str += "		</div>";
-    str += "		<div class='recharge-money' >";
-    str += "			¥200.00";
-    str += "		</div>";
-    str += "		<div class='clear:both'>";
-    str += "		</div>";
-    str += "	</div>";
-    str += "</div>";
-    $("body").append(str);
-    $(".recharge").animate({
-        top:recharge_scroll + "px"
-    },500)
+    $.ajax({
+        url:"/toiletCat/api/moneyForCoin/getAllCanSeeMoneyForCoin.action",
+        type:"POST",
+        async:false,
+        success:function(data) {
+
+            if(typeof(data) == "string"){
+                data = eval("("+data+")");
+            }
+
+            if(data["is_success"] != "success") {
+                toiletCatMsg(data["result"], null);
+                return;
+            }
+
+            var list = data["result"];
+
+            var recharge_hc = recharge_height + recharge_scroll;
+            var str = "	<div style='top:"+recharge_hc+"px;' class='recharge'>";
+            str += "		<div class='recharge-first-line' >";
+            str += "			<div style='float:left;height: 100%'>";
+            str += "				<img style='-webkit-transform:rotate(-90deg);' src='/image/game/returnButton.ico' class='rechargeReturn' onclick='closeRecharge()'/>";
+            str += "			</div>";
+            str += "		<div class='recharge-user-coin' >";
+            str += "			<div class='recharge-coin' >";
+            str += "				<img src='/image/background/coin-img.png' width=100% height=100% />";
+            str += "			</div>";
+            str += "			<div class='recharge-coin' id='user-recharge-coin' >";
+            str += "				" + sessionStorage["toiletCatUserCoin"];
+            str += "			</div>";
+            str += "		</div>";
+            str += "		<div class='clear:both'>";
+            str += "		</div>";
+            str += "	</div>";
+            str += "	<div style='float: left;' >";
+
+            for(var i = 0; i<list.length; i++) {
+
+                str += "	<div class='recharge-block' onclick=rechargeThis('" + list[i]["money"] + "') >";
+                str += "		<div class='recharge-coin' >";
+                str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
+                str += "		</div>";
+                str += "		<div class='recharge-coin' >";
+                str +=              list[i]["coinText"];
+                str += "		</div>";
+                str += "		<div class='recharge-coin-text' >";
+                str +=               list[i]["showText"];
+                str += "		</div>";
+                str += "		<div class='recharge-money' >";
+                str += "			¥" + list[i]["money"];
+                str += "		</div>";
+                str += "		<div class='clear:both'>";
+                str += "		</div>";
+                str += "	</div>";
+
+            }
+
+            str += "</div>";
+
+            $("body").append(str);
+            $(".recharge").animate({
+                top:recharge_scroll + "px"
+            },500);
+        }
+    });
+
+
 }
 
 function closeRecharge() {
