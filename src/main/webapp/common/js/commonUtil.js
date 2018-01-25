@@ -672,10 +672,8 @@ function updateThis(updateUrl, returnUrl) {
                 toiletCatMsg(data["result"], null);
                 return;
             }
-
 			window.location.href = returnUrl;
         }
-
     });
 }
 
@@ -711,6 +709,38 @@ function  getDataByInfo(url, id, dataNo) {
                 var col = $(this).attr("name");
                 $("#"+col).val(info[col])
             });
+        }
+    });
+}
+
+// 获得所有可用玩具信息
+function getAllAvailableToy() {
+    $.ajax({
+        url:"/toiletCat/api/toy/getAllAvailableToy.action",
+        type:"POST",
+        async:false,
+        success:function(data){
+
+            if(typeof(data) == "string"){
+                data = eval("("+data+")");
+            }
+
+            if(data["is_success"] != "success") {
+                alert(data["result"]);
+                return;
+            }
+
+            var list = data["result"];
+            var str = "";
+
+            for(var i = 0; i<list.length; i++) {
+
+                str += "<option value='"+list[i]["toyNo"]+"'>";
+                str +=      list[i]["toyName"];
+                str += "</option>";
+            }
+
+            $("#toyNo").append(str);
         }
     });
 }

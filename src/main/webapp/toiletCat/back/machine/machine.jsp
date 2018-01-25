@@ -28,7 +28,7 @@
                                 <thead>
                                 <tr id="titleColumn">
                                     <th><lable name="machineNo">机器编号</lable></th>
-                                    <th><lable name="toyNo">娃娃编号</lable></th>
+                                    <th><lable name="toyName">玩具</lable></th>
                                     <th><lable name="frontUrl">正面直播地址</lable></th>
                                     <th><lable name="sideUrl">侧面直播地址</lable></th>
                                     <th><lable name="usePort">占用端口号</lable></th>

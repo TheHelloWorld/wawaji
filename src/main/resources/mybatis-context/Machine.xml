@@ -8,8 +8,10 @@
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 机器编号 -->
         <result property="machineNo" column="machine_no" jdbcType="VARCHAR"/>
-        <!-- 娃娃编号 -->
+        <!-- 玩具编号 -->
         <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
+        <!-- 玩具名称 -->
+        <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
         <!-- 正面直播url -->
         <result property="frontUrl" column="front_url" jdbcType="VARCHAR"/>
         <!-- 侧面直播url -->
@@ -89,17 +91,18 @@
         select count(*) from machine
     </select>
 
-    <!-- 用户分页获得所有机器记录 -->
+    <!-- 分页获得所有机器记录 -->
     <select id="getAllMachineByPage" resultMap="machineMap">
         select
             m.id,
             m.machine_no,
             m.toy_no,
+            t.toy_name,
             m.front_url,
             m.side_url,
             m.use_port,
             m.current_state
-        from machine m
+        from machine m, toy t where m.toy_no = t.toy_no
         limit #{startPage}, #{pageSize}
     </select>
 

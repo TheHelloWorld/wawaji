@@ -48,9 +48,10 @@
             <br/>
             <div class="row">
                 <div class="col-xs-5">
-                    玩具编号:
+                    玩具:
                     <span name = "toyNo">
-                        <input class="form-control" id = "toyNo">
+                        <select id="toyNo" class="form-control">
+                        </select>
                     </span>
                 </div>
             </div>

@@ -5,7 +5,10 @@ function cancelThis() {
     window.location.href = returnUrl;
 }
 
-$(function(){
+$(function() {
+
+    getAllAvailableToy();
+
     // 判断当前类型为修改
     if(getQueryString("type") == "update") {
 

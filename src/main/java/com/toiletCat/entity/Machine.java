@@ -15,9 +15,14 @@ public class Machine extends BaseEntity implements Serializable {
     private String machineNo;
 
     /**
-     * 娃娃编号
+     * 玩具编号
      */
     private String toyNo;
+
+    /**
+     * 玩具名称
+     */
+    private String toyName;
 
     /**
      * 正面直播地址
@@ -54,6 +59,14 @@ public class Machine extends BaseEntity implements Serializable {
 
     public void setToyNo(String toyNo) {
         this.toyNo = toyNo;
+    }
+
+    public String getToyName() {
+        return toyName;
+    }
+
+    public void setToyName(String toyName) {
+        this.toyName = toyName;
     }
 
     public String getFrontUrl() {
