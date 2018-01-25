@@ -4,6 +4,7 @@ import com.toiletCat.entity.MoneyForCoin;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * 基本静态常量
@@ -249,6 +250,6 @@ public class BaseConstant {
 	/**
 	 * 钱和游戏币对应关系map
 	 */
-	public static Map<String, MoneyForCoin> moneyForCoinMap = new HashMap<>();
+	public static Map<String, MoneyForCoin> moneyForCoinMap = new TreeMap<>();
 
 }

@@ -10,6 +10,7 @@ import com.toiletCat.dao.MoneyForCoinDao;
 import com.toiletCat.entity.BannerImg;
 import com.toiletCat.entity.MoneyForCoin;
 import com.toiletCat.enums.BannerType;
+import com.toiletCat.enums.CurrentState;
 import com.toiletCat.service.BannerImgService;
 import com.toiletCat.service.MoneyForCoinService;
 import org.slf4j.Logger;
@@ -17,7 +18,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("all")
 @Service("moneyForCoinService")
@@ -84,8 +87,19 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
         return exec(new Callback() {
             @Override
             public void exec() {
+
                 moneyForCoinDao.updateMoneyForCoin(moneyForCoin);
-                BaseConstant.moneyForCoinMap.put(moneyForCoin.getMoney(), moneyForCoin);
+
+                // 若为不可用则去除key
+                if(moneyForCoin.getCurrentState() == CurrentState.UNAVAILABLE.getStatus()) {
+
+                    BaseConstant.moneyForCoinMap.remove(moneyForCoin.getMoney());
+
+                } else {
+
+                    BaseConstant.moneyForCoinMap.put(moneyForCoin.getMoney(), moneyForCoin);
+                }
+
             }
         }, "updateMoneyForCoin", JSON.toJSONString(moneyForCoin));
     }
@@ -99,7 +113,17 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
         return exec(new Callback() {
             @Override
             public void exec() {
-                got(moneyForCoinDao.getAllCanSeeMoneyForCoin());
+                // 初始化Map
+                initMap();
+
+                List<MoneyForCoin> list = new ArrayList<>();
+
+                for(Map.Entry<String, MoneyForCoin> entry : BaseConstant.moneyForCoinMap.entrySet()) {
+                    list.add(entry.getValue());
+                }
+
+
+                got(list);
             }
         }, "getAllCanSeeMoneyForCoin", new JSONObject().toJSONString());
     }
@@ -113,6 +137,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
     public MoneyForCoin getMoneyForCoinByMoney(String money) {
 
         if(BaseConstant.moneyForCoinMap.get(money) == null) {
+
             refreshMap();
         }
 
@@ -120,13 +145,26 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
     }
 
     /**
+     * 初始化Map
+     */
+    private void initMap() {
+
+        if(BaseConstant.moneyForCoinMap.isEmpty()) {
+
+            refreshMap();
+        }
+    }
+
+    /**
      * 刷新对应关系Map
      */
     private void refreshMap() {
+
         // 获得所有可用的对应关系
         List<MoneyForCoin> list = moneyForCoinDao.getAllCanSeeMoneyForCoin();
 
         for(MoneyForCoin moneyForCoin : list) {
+
             BaseConstant.moneyForCoinMap.put(moneyForCoin.getMoney(), moneyForCoin);
         }
     }
