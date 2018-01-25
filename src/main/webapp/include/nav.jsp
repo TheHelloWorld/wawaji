@@ -62,7 +62,7 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="/toiletCat/back/user/user.jsp"><i class="fa fa-group fa-fw"></i> 用户管理</a>
+                            <a href="#"><i class="fa fa-group fa-fw"></i> 用户管理</a>
                         </li>
                         <li>
                             <a href="/toiletCat/back/machine/machine.jsp"><i class="fa fa-wrench fa-fw"></i> 娃娃机管理</a>
