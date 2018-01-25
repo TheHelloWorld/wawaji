@@ -116,7 +116,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
                 for(Map.Entry<String, MoneyForCoin> entry : BaseConstant.moneyForCoinMap.entrySet()) {
                     list.add(entry.getValue());
                 }
-                
+
                 got(list);
             }
         }, "getAllCanSeeMoneyForCoin", new JSONObject());
