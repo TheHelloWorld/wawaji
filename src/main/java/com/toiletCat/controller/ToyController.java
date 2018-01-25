@@ -105,4 +105,17 @@ public class ToyController {
 
         return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
+
+    /**
+     * 获得所有可用玩具信息
+     * @return
+     */
+    @RequestMapping(value = "/getAllAvailableToy", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getAllAvailableToy() {
+
+        CommonResult<List<Toy>> result = toyService.getAllAvailableToy();
+
+        return JSONUtil.getReturnBeanString(result);
+    }
 }

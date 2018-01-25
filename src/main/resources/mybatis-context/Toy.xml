@@ -123,4 +123,12 @@
         delete from toy where toy_no = #{toyNo} and id = #{id}
     </delete>
 
+    <!-- 获得所有可用玩具信息 -->
+    <select id="getAllAvailableToy" resultMap="toyMap">
+        select
+            toy_no,
+            toy_name
+        from toy where current_state = 1
+    </select>
+
 </mapper>

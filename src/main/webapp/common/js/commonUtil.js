@@ -673,7 +673,7 @@ function updateThis(updateUrl, returnUrl) {
                 return;
             }
 
-			window.location.href=returnUrl;
+			window.location.href = returnUrl;
         }
 
     });

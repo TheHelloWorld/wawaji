@@ -49,4 +49,10 @@ public interface ToyDao {
      * @param toyNo 玩具编号
      */
     void deleteToyByIdAndToyNo(@Param("id") Long id, @Param("toyNo") String toyNo);
+
+    /**
+     * 获得所有可用玩具信息
+     * @return
+     */
+    List<Toy> getAllAvailableToy();
 }

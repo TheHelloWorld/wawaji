@@ -129,6 +129,20 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
         }, "deleteToyByIdAndToyNo", json);
     }
 
+    /**
+     * 获得所有可用玩具信息
+     * @return
+     */
+    @Override
+    public CommonResult<List<Toy>> getAllAvailableToy() {
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                got(toyDao.getAllAvailableToy());
+            }
+        }, "getAllAvailableToy", new JSONObject());
+    }
+
     @Override
     protected Logger getLogger() {
         return logger;

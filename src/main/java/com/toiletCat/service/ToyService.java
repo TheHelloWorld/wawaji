@@ -46,4 +46,10 @@ public interface ToyService {
      * @param toyNo 玩具编号
      */
     CommonResult deleteToyByIdAndToyNo(Long id, String toyNo);
+
+    /**
+     * 获得所有可用玩具信息
+     * @return
+     */
+    CommonResult<List<Toy>> getAllAvailableToy();
 }
