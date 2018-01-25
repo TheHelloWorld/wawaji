@@ -63,7 +63,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 got(gameRoomDao.countAllGameRoom());
             }
-        }, "countAllGameRoom", new JSONObject().toJSONString());
+        }, "countAllGameRoom", new JSONObject());
     }
 
     /**
@@ -98,7 +98,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 got(gameRoomDao.countAllUserSeeGamRoom());
             }
-        }, "countAllUserSeeGamRoom", new JSONObject().toJSONString());
+        }, "countAllUserSeeGamRoom", new JSONObject());
     }
 
     /**

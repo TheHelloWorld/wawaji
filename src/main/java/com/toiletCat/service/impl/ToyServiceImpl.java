@@ -50,7 +50,7 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
             public void exec() {
                 got(toyDao.countAllToy());
             }
-        },"countAllToy", new JSONObject().toJSONString());
+        },"countAllToy", new JSONObject());
 
     }
 

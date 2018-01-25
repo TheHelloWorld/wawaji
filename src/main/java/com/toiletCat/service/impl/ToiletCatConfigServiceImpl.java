@@ -54,7 +54,7 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
             public void exec() {
                 got(toiletCatConfigDao.countAllConfig());
             }
-        }, "countAllConfig", new JSONObject().toJSONString());
+        }, "countAllConfig", new JSONObject());
     }
 
     /**
@@ -68,7 +68,7 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
             public void exec() {
                 got(toiletCatConfigDao.getAllConfig());
             }
-        }, "getAllConfig", new JSONObject().toJSONString());
+        }, "getAllConfig", new JSONObject());
     }
 
     /**

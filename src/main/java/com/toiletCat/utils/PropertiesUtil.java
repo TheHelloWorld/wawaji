@@ -66,10 +66,4 @@ public class PropertiesUtil {
         return convert;
     }
 
-    public static void main(String[] args) {
-        PropertiesUtil hh = PropertiesUtil.getInstance("redis");
-        String df = hh.getProperty("redis.host");
-        System.out.println(df.split(",").length);
-    }
-
 }

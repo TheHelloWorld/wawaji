@@ -58,7 +58,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
             public void exec() {
                 got(moneyForCoinDao.getAllMoneyForCoin());
             }
-        }, "getAllMoneyForCoin", new JSONObject().toJSONString());
+        }, "getAllMoneyForCoin", new JSONObject());
     }
 
     /**
@@ -126,7 +126,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
 
                 got(list);
             }
-        }, "getAllCanSeeMoneyForCoin", new JSONObject().toJSONString());
+        }, "getAllCanSeeMoneyForCoin", new JSONObject());
     }
 
     /**
@@ -175,14 +175,4 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
         return logger;
     }
 
-    public static void main(String[] args) {
-
-        JSONObject jsonObject  = new JSONObject();
-
-        jsonObject.put("123" , "123");
-        jsonObject.put("321", null);
-
-        System.out.println(JSON.toJSONString(jsonObject, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteNullListAsEmpty));
-
-    }
 }

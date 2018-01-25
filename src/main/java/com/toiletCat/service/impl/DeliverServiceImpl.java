@@ -69,7 +69,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
             public void exec() {
                 got(deliverDao.countAllDeliver());
             }
-        },"countAllDeliver", new JSONObject().toJSONString());
+        },"countAllDeliver", new JSONObject());
 
     }
 

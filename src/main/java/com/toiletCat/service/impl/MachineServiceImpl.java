@@ -55,7 +55,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             public void exec() {
                 got(machineDao.countAllMachine());
             }
-        }, "countAllMachine", new JSONObject().toJSONString());
+        }, "countAllMachine", new JSONObject());
     }
 
     /**

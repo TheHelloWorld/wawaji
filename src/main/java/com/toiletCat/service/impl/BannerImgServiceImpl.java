@@ -70,7 +70,7 @@ public class BannerImgServiceImpl extends BaseServiceImpl implements BannerImgSe
             public void exec() {
                 got(bannerImgDao.countAllBannerImg());
             }
-        },"countAllBannerImg", new JSONObject().toJSONString());
+        },"countAllBannerImg", new JSONObject());
     }
 
     /**
