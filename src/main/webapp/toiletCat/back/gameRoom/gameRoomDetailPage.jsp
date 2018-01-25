@@ -48,9 +48,10 @@
             </div>
             <div class="row">
                 <div class="col-xs-5">
-                    玩具编号:
+                    玩具:
                     <span name = "toyNo">
-                        <input id="toyNo" class="form-control" />
+                        <select id="toyNo" class="form-control">
+                        </select>
                     </span>
                 </div>
             </div>
@@ -69,6 +70,15 @@
                     房间当前幸运值:
                     <span name = "roomNowLuckyNum">
                         <input class="form-control" id = "roomNowLuckyNum">
+                    </span>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-xs-5">
+                    房间顺序:
+                    <span name = "roomOrder">
+                        <input class="form-control" id = "roomOrder">
                     </span>
                 </div>
             </div>

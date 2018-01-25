@@ -25,10 +25,11 @@
                                 <thead>
                                 <tr id="titleColumn">
                                     <th><lable name="gameRoomNo">游戏房间编号</lable></th>
-                                    <th><lable name="toyNo">玩具编号</lable></th>
+                                    <th><lable name="toyName">玩具</lable></th>
                                     <th><lable name="roomLuckyNum">房间幸运值</lable></th>
                                     <th><lable name="roomNowLuckyNum">房间当前幸运值</lable></th>
                                     <th><lable name="addLuckyNum">房间每次累加幸运值</lable></th>
+                                    <th><lable name="roomOrder">房间顺序</lable></th>
                                     <th><lable name="currentState">状态</lable></th>
                                     <th><lable name="operation">操作</lable></th>
                                 </tr>

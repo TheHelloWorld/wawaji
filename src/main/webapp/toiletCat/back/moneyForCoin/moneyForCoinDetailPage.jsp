@@ -68,6 +68,15 @@
                 <br/>
                 <div class="row">
                     <div class="col-xs-5">
+                        前端展示的游戏币充值文案:
+                        <span name = "coinText">
+                            <input class="form-control" id = "coinText">
+                        </span>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-5">
                         每天充值限制次数:
                         <span name = "rechargeLimit">
                             <input class="form-control" id = "rechargeLimit">

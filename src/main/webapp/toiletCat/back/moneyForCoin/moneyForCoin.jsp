@@ -31,6 +31,7 @@
                                     <th><lable name="money">钱数</lable></th>
                                     <th><lable name="coin">游戏币数</lable></th>
                                     <th><lable name="showText">前端展示的游戏币文案</lable></th>
+                                    <th><lable name="coinText">前端展示的游戏币充值文案</lable></th>
                                     <th><lable name="rechargeLimit">每天充值限制次数</lable></th>
                                     <th><lable name="firstFlag">首充标志位</lable></th>
                                     <th><lable name="giveCoin">赠送的游戏币数</lable></th>
