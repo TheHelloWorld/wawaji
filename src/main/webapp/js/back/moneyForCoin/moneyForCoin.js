@@ -27,11 +27,6 @@ function getAllMoneyForCoin(url) {
 
             $("#dataBody").html("");
 
-            if(totalPage == 0){
-                $("#dataDiv").hide();
-                return;
-            }
-
             if(typeof(data) == "string"){
                 data = eval("("+data+")");
             }
@@ -60,6 +55,20 @@ function getAllMoneyForCoin(url) {
 
                         td += "<a href='javascript:void(0);' onclick=updateThis('"+dataStr+"')>修改</a>";
 
+                    } else if(col == "firstFlag") {
+
+                        if(list[i][col] == "0") {
+                            td += "不启用";
+                        } else if(list[i][col] == "1") {
+                            td += "启用首充";
+                        }
+                    }else if(col == "currentState") {
+
+                        if(list[i][col] == "0") {
+                            td += "禁用";
+                        } else if(list[i][col] == "1") {
+                            td += "可用";
+                        }
                     } else {
                         //如果数据为空则写无
                         if((list[i][col] == undefined) || (list[i][col] == null) || (list[i][col] == "null")) {
