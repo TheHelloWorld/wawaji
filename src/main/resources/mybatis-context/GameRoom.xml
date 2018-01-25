@@ -172,6 +172,7 @@
             room_lucky_num,
             room_now_lucky_num,
             add_lucky_num,
+            room_order,
             current_state
         from game_room
         where game_room_no = #{gameRoomNo, jdbcType=VARCHAR} and id = #{id}
