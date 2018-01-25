@@ -30,7 +30,8 @@
                                 <tr id="titleColumn">
                                     <th><lable name="imgUrl">图片地址</lable></th>
                                     <th><lable name="bannerOrder">轮播顺序</lable></th>
-                                    <th><lable name="clickUrl">点击url</lable></th>
+                                    <th><lable name="clickType">点击类型</lable></th>
+                                    <th><lable name="clickUrl">点击触发</lable></th>
                                     <th><lable name="bannerType">banner类型</lable></th>
                                     <th><lable name="operation">操作</lable></th>
                                 </tr>

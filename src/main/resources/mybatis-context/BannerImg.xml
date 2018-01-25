@@ -14,6 +14,8 @@
         <result property="clickUrl" column="click_url" jdbcType="VARCHAR"/>
         <!-- banner类型 娃娃机房间/游戏房间 -->
         <result property="bannerType" column="banner_type" jdbcType="INTEGER"/>
+        <!-- 点击类型 跳转页面/触发方法 -->
+        <result property="clickType" column="click_type" jdbcType="INTEGER"/>
         <!-- 创建时间 -->
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <!-- 最后修改时间 -->
@@ -27,14 +29,16 @@
             img_url,
             banner_order,
             click_url,
-            banner_type
+            banner_type,
+            click_type
             )
         values
             (
             #{imgUrl, jdbcType=VARCHAR},
             #{bannerOrder, jdbcType=INTEGER},
             #{clickUrl, jdbcType=VARCHAR},
-            #{bannerType, jdbcType=INTEGER}
+            #{bannerType, jdbcType=INTEGER},
+            #{clickType, jdbcType=INTEGER}
             )
     </insert>
 
@@ -45,7 +49,8 @@
             img_url,
             banner_order,
             click_url,
-            banner_type
+            banner_type,
+            click_type
         from banner_img limit #{startPage, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </select>
 
@@ -61,7 +66,8 @@
             img_url,
             banner_order,
             click_url,
-            banner_type
+            banner_type,
+            click_type
         from banner_img where id = #{id}
     </select>
 
@@ -71,7 +77,8 @@
             img_url = #{imgUrl, jdbcType=VARCHAR},
             banner_order = #{bannerOrder, jdbcType=INTEGER},
             click_url = #{clickUrl, jdbcType=VARCHAR},
-            banner_type = #{bannerType, jdbcType=INTEGER}
+            banner_type = #{bannerType, jdbcType=INTEGER},
+            click_type = #{clickType, jdbcType=INTEGER}
         where id = #{id}
     </update>
 
@@ -79,7 +86,8 @@
     <select id="getBannerImgByBannerType" parameterType="java.lang.Integer" resultMap="bannerImgMap">
         select
             img_url,
-            click_url
+            click_url,
+            click_type
         from banner_img where banner_type = #{bannerType, jdbcType=INTEGER} order by banner_order asc
     </select>
 

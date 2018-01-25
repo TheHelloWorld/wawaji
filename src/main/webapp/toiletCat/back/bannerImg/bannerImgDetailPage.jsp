@@ -61,11 +61,20 @@
                 <br/>
                 <div class="row">
                     <div class="col-xs-5">
-                        点击url:
+                        点击触发:
                         <span name = "clickUrl">
                             <input class="form-control" id = "clickUrl">
                         </span>
                     </div>
+                </div>
+                <div class="col-xs-5">
+                    点击类型:
+                    <span name = "clickType">
+                        <select id="clickType" class="form-control">
+                            <option value="1">触发方法</option>
+                            <option value="0">跳转页面</option>
+                        </select>
+                    </span>
                 </div>
                 <br/>
                 <div class="row">

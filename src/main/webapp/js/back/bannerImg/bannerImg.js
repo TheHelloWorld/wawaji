@@ -77,7 +77,14 @@ function getAllBannerImgByPage(url, startPage) {
                         } else if(list[i][col] == "1") {
                             td += "游戏房间";
                         }
-                    } else {
+                    } else if(col == "clickType") {
+
+                        if(list[i][col] == "0") {
+                            td += "跳转页面";
+                        } else if(list[i][col] == "1") {
+                            td += "触发方法";
+                        }
+                    }else {
                         //如果数据为空则写无
                         if((list[i][col] == undefined) || (list[i][col] == null) || (list[i][col] == "null")) {
                             td += "无";

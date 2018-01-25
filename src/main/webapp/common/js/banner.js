@@ -9,7 +9,7 @@ function bannerSilder() {
         bottomCtrl: false,//是否需要底部控制按钮
         defaultView: 0,//默认显示的索引
         interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
-        activeClass: "active",//小的控制按钮激活的样式，不包括作用两边，默认active
+        activeClass: "active"//小的控制按钮激活的样式，不包括作用两边，默认active
     });
 }
 
@@ -48,7 +48,7 @@ function getBannerByType(type) {
 
             for(var i = 0; i<list.length; i++) {
                 str += "<div class='silder-main-img'>";
-                str += "    <img class='banner-img' src='"+list[i]["imgUrl"]+"' onclick='bannerClick("+list[i]["clickUrl"]+")' alt=''>";
+                str += "    <img class='banner-img' src='"+list[i]["imgUrl"]+"' onclick=bannerClick('"+list[i]["clickUrl"]+"','"+list[i]["clickType"]+"') alt=''>";
                 str += "</div>";
             }
 
@@ -61,13 +61,21 @@ function getBannerByType(type) {
 
             $("#banner-box").height($(window).height() * 0.3);
 
-            bannerSilder();
-
+            if(list.length > 1) {
+                bannerSilder();
+            }
         }
     });
 }
 
 // 点击banner跳转
-function bannerClick(url) {
-    window.location.href = url;
+function bannerClick(url, type) {
+
+    if(type == "0") {
+        window.location.href = url;
+    } else {
+        eval(url);
+    }
+
+
 }

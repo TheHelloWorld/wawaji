@@ -58,7 +58,6 @@ function recharge() {
                 str += "		<div class='clear:both'>";
                 str += "		</div>";
                 str += "	</div>";
-
             }
 
             str += "</div>";
@@ -69,8 +68,6 @@ function recharge() {
             },500);
         }
     });
-
-
 }
 
 function closeRecharge() {

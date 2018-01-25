@@ -29,6 +29,11 @@ public class BannerImg extends BaseEntity implements Serializable {
      */
     private Integer bannerType;
 
+    /**
+     * 点击类型 跳转页面/触发方法
+     */
+    private Integer clickType;
+
 
     public String getImgUrl() {
         return imgUrl;
@@ -60,5 +65,13 @@ public class BannerImg extends BaseEntity implements Serializable {
 
     public void setBannerType(Integer bannerType) {
         this.bannerType = bannerType;
+    }
+
+    public Integer getClickType() {
+        return clickType;
+    }
+
+    public void setClickType(Integer clickType) {
+        this.clickType = clickType;
     }
 }
