@@ -144,7 +144,10 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
      */
     private void initMap() {
 
-        if(BaseConstant.moneyForCoinMap.isEmpty()) {
+        // 获得当前可用对应关系数量
+        Integer count = moneyForCoinDao.countAvailableMoneyForCoin();
+
+        if(BaseConstant.moneyForCoinMap.size() != count) {
 
             refreshMap();
         }
@@ -157,6 +160,9 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
 
         // 获得所有可用的对应关系
         List<MoneyForCoin> list = moneyForCoinDao.getAllCanSeeMoneyForCoin();
+
+        // 清空Map
+        BaseConstant.moneyForCoinMap.clear();
 
         for(MoneyForCoin moneyForCoin : list) {
 

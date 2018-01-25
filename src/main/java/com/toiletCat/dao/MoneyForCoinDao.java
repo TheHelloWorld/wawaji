@@ -15,6 +15,12 @@ public interface MoneyForCoinDao {
     List<MoneyForCoin> getAllMoneyForCoin();
 
     /**
+     * 获得可用对应关系数量
+     * @return
+     */
+    Integer countAvailableMoneyForCoin();
+
+    /**
      * 添加对应关系
      * @param moneyForCoin bean
      */
