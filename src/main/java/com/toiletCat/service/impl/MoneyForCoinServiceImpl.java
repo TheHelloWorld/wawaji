@@ -8,6 +8,8 @@ import com.toiletCat.dao.MoneyForCoinDao;
 import com.toiletCat.entity.MoneyForCoin;
 import com.toiletCat.enums.CurrentState;
 import com.toiletCat.service.MoneyForCoinService;
+import com.toiletCat.service.RechargeService;
+import com.toiletCat.utils.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
 
     @Autowired
     private MoneyForCoinDao moneyForCoinDao;
+
+    @Autowired
+    private RechargeService rechargeService;
 
     /**
      * 添加对应关系
@@ -102,10 +107,14 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
 
     /**
      * 获得所有可用的对应关系
+     * @param userNo 用户编号
      * @return
      */
     @Override
-    public CommonResult<List<MoneyForCoin>> getAllCanSeeMoneyForCoin() {
+    public CommonResult<List<MoneyForCoin>> getAllCanSeeMoneyForCoin(final String userNo) {
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+
         return exec(new Callback() {
             @Override
             public void exec() {
@@ -114,13 +123,31 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
 
                 List<MoneyForCoin> list = new ArrayList<>();
 
+
                 for(Map.Entry<Double, MoneyForCoin> entry : BaseConstant.moneyForCoinMap.entrySet()) {
+
+                    // 若为首充选项
+                    if(entry.getValue().getFirstFlag() != 0) {
+                        // 获得用户首充标志位
+                        entry.getValue().setUserFirstFlag(rechargeService.getFirstFlag(userNo));
+                    }
+
+                    // 若为限充选项
+                    if(entry.getValue().getRechargeLimit() != 0) {
+                        // 获得用户当前限充数量
+                        entry.getValue().setUserLimitFlag(rechargeService.getLimitRechargeByUserNo(userNo,
+                                entry.getValue()));
+                    }
+
                     list.add(entry.getValue());
                 }
 
+
+
                 got(list);
+
             }
-        }, "getAllCanSeeMoneyForCoin", new JSONObject());
+        }, "getAllCanSeeMoneyForCoin", json);
     }
 
     /**

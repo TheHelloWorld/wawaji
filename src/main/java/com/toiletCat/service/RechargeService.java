@@ -2,6 +2,7 @@ package com.toiletCat.service;
 
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.RechargeResult;
+import com.toiletCat.entity.MoneyForCoin;
 
 import java.math.BigDecimal;
 
@@ -27,4 +28,35 @@ public interface RechargeService {
      * @return
      */
     CommonResult getInitRechargeResultByOrderInfo(String userNo);
+
+    /**
+     * 获得应充游戏币数(判断首充用)
+     * @param userNo 用户编号
+     * @param moneyForCoin 对应关系bean
+     * @return
+     */
+    Integer getCoinByMoneyForCoin(String userNo, MoneyForCoin moneyForCoin);
+
+    /**
+     * 获得用户首充标志位
+     * @param userNo 用户编号
+     * @return
+     */
+    String getFirstFlag(String userNo);
+
+    /**
+     * 获得用户限充当前次数
+     * @param userNo 用户编号
+     * @param moneyForCoin 对应关系bean
+     * @return
+     */
+    Integer getLimitRechargeByUserNo(String userNo, MoneyForCoin moneyForCoin);
+
+    /**
+     * 设置用户限充当前次数
+     * @param userNo 用户编号
+     * @param moneyForCoin 对应关系bean
+     * @return
+     */
+    CommonResult<Integer> setLimitRechargeByUserNo(String userNo, MoneyForCoin moneyForCoin);
 }

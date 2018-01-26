@@ -49,6 +49,16 @@ public class MoneyForCoin extends BaseEntity implements Serializable {
      */
     private Integer currentState;
 
+    /**
+     * 用户首充标志位
+     */
+    private String userFirstFlag;
+
+    /**
+     * 用户现充标志位
+     */
+    private Integer userLimitFlag;
+
     public String getMoney() {
         return money;
     }
@@ -111,5 +121,21 @@ public class MoneyForCoin extends BaseEntity implements Serializable {
 
     public void setCurrentState(Integer currentState) {
         this.currentState = currentState;
+    }
+
+    public String getUserFirstFlag() {
+        return userFirstFlag;
+    }
+
+    public void setUserFirstFlag(String userFirstFlag) {
+        this.userFirstFlag = userFirstFlag;
+    }
+
+    public Integer getUserLimitFlag() {
+        return userLimitFlag;
+    }
+
+    public void setUserLimitFlag(Integer userLimitFlag) {
+        this.userLimitFlag = userLimitFlag;
     }
 }

@@ -380,23 +380,175 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
      * @param moneyForCoin 对应关系bean
      * @return
      */
-    private Integer getCoinByMoneyForCoin(String userNo, MoneyForCoin moneyForCoin) {
+    @Override
+    public Integer getCoinByMoneyForCoin(String userNo, MoneyForCoin moneyForCoin) {
+
         Integer rechargeCoin = moneyForCoin.getCoin();
 
-        // 判断是否有首充活动
-        if(moneyForCoin.getFirstFlag() != 0) {
+        // 若非首充活动
+        if(moneyForCoin.getFirstFlag() == 0) {
+            return rechargeCoin;
+        }
 
-            CommonResult<Integer> rechargeCount = userRechargeRecordService.
-                    countUserRechargeRecordByUserNoAndTradeStatus(userNo, TradeStatus.SUCCESS.getStatus());
+        try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+
+            String key = BaseConstant.FIRST_RECHARGE_FLAG.replace("#{}", userNo);
+
+            String userFirstRecharge = redisUtil.get(key);
+
+            if(userFirstRecharge == null || BaseConstant.IS_FIRST.equals(userFirstRecharge)) {
+
+                CommonResult<Integer> rechargeCount = userRechargeRecordService.
+                            countUserRechargeRecordByUserNoAndTradeStatus(userNo, TradeStatus.SUCCESS.getStatus());
+
+                if(rechargeCount.getValue() == 0) {
+                    userFirstRecharge = BaseConstant.IS_FIRST;
+                } else {
+                    userFirstRecharge = BaseConstant.IS_NOT_FIRST;
+                }
+
+                redisUtil.set(key, userFirstRecharge);
+            }
 
             // 若是首充
-            if(rechargeCount.getValue() == 0) {
+            if(BaseConstant.IS_FIRST.equals(userFirstRecharge)) {
                 // 添加赠送的游戏币数
                 rechargeCoin += moneyForCoin.getGiveCoin();
             }
+
+        } catch(Exception e) {
+            logger.error("getCoinByMoneyForCoin redis error:" + e, e);
         }
 
         return rechargeCoin;
+    }
+
+    /**
+     * 获得用户首充标志位
+     * @param userNo 用户编号
+     * @return
+     */
+    @Override
+    public String getFirstFlag(String userNo) {
+
+        try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+
+            String key = BaseConstant.FIRST_RECHARGE_FLAG.replace("#{}", userNo);
+
+            String userFirstRecharge = redisUtil.get(key);
+
+            if(userFirstRecharge == null || BaseConstant.IS_FIRST.equals(userFirstRecharge)) {
+
+                CommonResult<Integer> rechargeCount = userRechargeRecordService.
+                        countUserRechargeRecordByUserNoAndTradeStatus(userNo, TradeStatus.SUCCESS.getStatus());
+
+                if(rechargeCount.getValue() == 0) {
+                    userFirstRecharge = BaseConstant.IS_FIRST;
+                } else {
+                    userFirstRecharge = BaseConstant.IS_NOT_FIRST;
+                }
+
+                redisUtil.set(key, userFirstRecharge);
+            }
+
+            return userFirstRecharge;
+
+        } catch(Exception e) {
+            logger.error("getFirstFlag redis error:" + e, e);
+        }
+
+        return null;
+    }
+
+    /**
+     * 获得用户限充当前次数
+     * @param userNo 用户编号
+     * @param moneyForCoin 对应关系bean
+     * @return
+     */
+    @Override
+    public Integer getLimitRechargeByUserNo(String userNo, MoneyForCoin moneyForCoin) {
+
+        if(moneyForCoin.getRechargeLimit() == 0) {
+
+            return 0;
+        }
+
+        Integer userLimitNum = 0;
+
+        try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+
+            String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace("#{}", userNo);
+
+            String nowNum = redisUtil.get(key);
+
+            if(nowNum == null) {
+                nowNum = "0";
+            }
+
+            return Integer.valueOf(nowNum);
+
+        } catch (Exception e) {
+            logger.error("getLimitRechargeByUserNo redis error:" + e, e);
+        }
+
+        return 0;
+    }
+
+    /**
+     * 设置用户限充当前次数
+     * @param userNo 用户编号
+     * @param moneyForCoin 对应关系bean
+     * @return
+     */
+    @Override
+    public CommonResult<Integer> setLimitRechargeByUserNo(final String userNo, final MoneyForCoin moneyForCoin) {
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+        json.put("moneyForCoin", moneyForCoin);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                if(moneyForCoin.getRechargeLimit() == 0) {
+
+                    got(0);
+                    return;
+                }
+
+                try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+
+                    String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace("#{}", userNo);
+
+                    String nowNum = redisUtil.get(key);
+
+                    if(nowNum == null) {
+                        nowNum = "0";
+                    }
+
+                    // 如果达到上限
+                    if(Integer.valueOf(nowNum) >= moneyForCoin.getRechargeLimit()) {
+                        got(moneyForCoin.getRechargeLimit());
+                        return;
+                    }
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.add(Calendar.DAY_OF_YEAR, 1);
+                    cal.set(Calendar.HOUR_OF_DAY, 0);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.set(Calendar.MINUTE, 0);
+                    cal.set(Calendar.MILLISECOND, 0);
+
+                    Integer second = (int)(cal.getTimeInMillis() - System.currentTimeMillis()) / 1000;
+
+                    // 设置超时时间为当前时间到第二天0点的时间并累加数量
+                    got(Integer.valueOf(String.valueOf(redisUtil.incr(second, key))));
+                } catch (Exception e) {
+                    logger.error("setLimitRechargeByUserNo redis error:" + e, e);
+                }
+            }
+        }, "setLimitRechargeByUserNo", json);
     }
 
     /**

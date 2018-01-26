@@ -34,9 +34,10 @@ public interface MoneyForCoinService {
 
     /**
      * 获得所有可用的对应关系
+     * @param userNo 用户编号
      * @return
      */
-    CommonResult<List<MoneyForCoin>> getAllCanSeeMoneyForCoin();
+    CommonResult<List<MoneyForCoin>> getAllCanSeeMoneyForCoin(String userNo);
 
     /**
      * 根据钱数获得对应的对应关系

@@ -793,36 +793,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 // 如果有充值限制次数(不为0)
                 if(coin.getRechargeLimit() != 0) {
-                    try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
-                        String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace("#{}", userNo);
+                    CommonResult<Integer> userLimitNum = rechargeService.setLimitRechargeByUserNo(userNo, coin);
 
-                        String nowNum = redisUtil.get(key);
-
-                        if(nowNum == null) {
-                            nowNum = "0";
-                        }
-
-                        // 如果达到上限
-                        if(coin.getRechargeLimit() <= Integer.valueOf(nowNum)) {
-                            setOtherMsg();
-                            got("当前选项每天只能充" + coin.getRechargeLimit() + "次哦");
-                            return;
-                        }
-
-                        Calendar cal = Calendar.getInstance();
-                        cal.add(Calendar.DAY_OF_YEAR, 1);
-                        cal.set(Calendar.HOUR_OF_DAY, 0);
-                        cal.set(Calendar.SECOND, 0);
-                        cal.set(Calendar.MINUTE, 0);
-                        cal.set(Calendar.MILLISECOND, 0);
-
-                        Integer second = (int)(cal.getTimeInMillis() - System.currentTimeMillis()) / 1000;
-
-                        // 设置超时时间为当前时间到第二天0点的时间并累加数量
-                        redisUtil.incr(second, key);
-                    } catch (Exception e) {
-                        logger.error("userRecharge redis error:" + e, e);
+                    // 如果达到上限
+                    if(userLimitNum.getValue() == coin.getRechargeLimit()) {
+                        setOtherMsg();
+                        got("当前选项每天只能充" + coin.getRechargeLimit() + "次哦");
+                        return;
                     }
                 }
 
@@ -880,20 +858,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 消费类型(充值)
                 userSpendRecord.setTradeType(TradeType.RECHARGE.getType());
 
-                Integer rechargeCoin = coin.getCoin();
-
-                // 判断是否有首充活动
-                if(coin.getFirstFlag() != 0) {
-
-                    CommonResult<Integer> rechargeCount = userRechargeRecordService.
-                            countUserRechargeRecordByUserNoAndTradeStatus(userNo, TradeStatus.SUCCESS.getStatus());
-
-                    // 若是首充
-                    if(rechargeCount.getValue() == 0) {
-                        // 添加赠送的游戏币数
-                        rechargeCoin += coin.getGiveCoin();
-                    }
-                }
+                Integer rechargeCoin = rechargeService.getCoinByMoneyForCoin(userNo, coin);
 
                 // 消费游戏币
                 userSpendRecord.setCoin(rechargeCoin);

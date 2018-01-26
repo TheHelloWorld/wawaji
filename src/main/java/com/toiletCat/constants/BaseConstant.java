@@ -153,6 +153,21 @@ public class BaseConstant {
 	public static final String RECHARGE_LIMIT_NUM_BY_USER = "recharge_limit_num_#{}";
 
 	/**
+	 * 用户首充标志位
+	 */
+	public static final String FIRST_RECHARGE_FLAG = "first_recharge_#{}";
+
+	/**
+	 * 是首充
+	 */
+	public static final String IS_FIRST = "is_first";
+
+	/**
+	 * 非首充
+	 */
+	public static final String IS_NOT_FIRST = "is_not_first";
+
+	/**
 	 * 放入cookie中的key
 	 */
 	public static final String COOKIE_USER_NO = "toilet_cat_user_no";

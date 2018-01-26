@@ -76,13 +76,14 @@ public class MoneyForCoinController {
 
     /**
      * 获得所有可用的对应关系
+     * @param userNo 用户编号
      * @return
      */
     @RequestMapping(value = "/getAllCanSeeMoneyForCoin", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String getAllCanSeeMoneyForCoin() {
+    public String getAllCanSeeMoneyForCoin(String userNo) {
 
-        CommonResult<List<MoneyForCoin>> result = moneyForCoinService.getAllCanSeeMoneyForCoin();
+        CommonResult<List<MoneyForCoin>> result = moneyForCoinService.getAllCanSeeMoneyForCoin(userNo);
 
         return JSONUtil.getReturnBeanString(result);
     }
