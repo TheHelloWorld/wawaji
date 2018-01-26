@@ -12,15 +12,19 @@
 <meta name="format-detection" content="telephone=no" />
 <title>马桶猫抓娃娃</title>
 </head>
-<body style="background:url('/image/share.png');background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;width:100%;height:100%;">
-<div style="font-size:2.9rem;position:fixed;top:65%;left:48%;" id="shareNum"></div>
+<body style="margin-top:0px;margin-left:0px;">
+<div style="z-index:1;"><img width="100%" src="/image/share.png" /></div>
+<div style="font-size:2.9rem;position:fixed;top:65%;left:48%;z-index:2" id="shareNum"></div>
 </body>
 <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 <script>
 var height = $(window).height();
+var width = $(window).width();
 $("body").height(height);
 var num = GetQueryString('shareId');
 $("#shareNum").html(num);
+$("img").attr('width',width+'px');
+$("img").attr('height',height+'px');
 
 function GetQueryString(name)
 {
