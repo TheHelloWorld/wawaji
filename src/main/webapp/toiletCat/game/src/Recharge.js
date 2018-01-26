@@ -27,7 +27,7 @@
         this.curCoin1.fontSize = 40;
         this.curCoin1.width = 300;
 		this.curCoin1.wordWrap = true;
-		this.curCoin1.text = "100";
+		this.curCoin1.text = setInitData['result']['rechargeData'][0]["coinText"];
 		this.curCoin1.leading = 5;
         this.curCoin1.pos(170,180);
         this.addChild(this.curCoin1);
@@ -37,7 +37,7 @@
         this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = "充值100马桶币";
+		this.curCoin2.text = setInitData['result']['rechargeData'][0]["showText"];
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(120,250);
         this.addChild(this.curCoin2);
@@ -66,11 +66,11 @@
         this.rechargeFont1.fontSize = 30;
         this.rechargeFont1.width = 300;
 		this.rechargeFont1.wordWrap = true;
-		this.rechargeFont1.text = "￥10.00";
+		this.rechargeFont1.text = "￥"+setInitData['result']['rechargeData'][0]["money"];
 		this.rechargeFont1.leading = 5;
         this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(150,320);
-        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,['10.00']);
+        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][0]["money"]]);
         this.addChild(this.rechargeFont1);
 
         this.coinImg2 = new Laya.Sprite();//图
@@ -83,7 +83,7 @@
         this.curCoin2.fontSize = 40;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = "200+10";
+		this.curCoin2.text = setInitData['result']['rechargeData'][1]["coinText"];
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(520,180);
         this.addChild(this.curCoin2);
@@ -93,7 +93,7 @@
         this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = "充值210马桶币";
+		this.curCoin2.text = setInitData['result']['rechargeData'][1]["showText"];;
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(470,250);
         this.addChild(this.curCoin2);
@@ -119,11 +119,11 @@
         this.rechargeFont1.fontSize = 30;
         this.rechargeFont1.width = 300;
 		this.rechargeFont1.wordWrap = true;
-		this.rechargeFont1.text = "￥20.00";
+		this.rechargeFont1.text = "￥"+setInitData['result']['rechargeData'][1]["money"];
 		this.rechargeFont1.leading = 5;
         this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(500,320);
-        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,['20.00']);
+        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][1]["money"]]);
         this.addChild(this.rechargeFont1);
 
         this.coinImg3 = new Laya.Sprite();//图
@@ -136,7 +136,7 @@
         this.curCoin2.fontSize = 40;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = "300+30";
+		this.curCoin2.text = setInitData['result']['rechargeData'][2]["coinText"];
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(170,450);
         this.addChild(this.curCoin2);
@@ -146,7 +146,7 @@
         this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = "充值330马桶币";
+		this.curCoin2.text = setInitData['result']['rechargeData'][2]["showText"];;
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(120,520);
         this.addChild(this.curCoin2);
@@ -172,11 +172,11 @@
         this.rechargeFont1.fontSize = 30;
         this.rechargeFont1.width = 300;
 		this.rechargeFont1.wordWrap = true;
-		this.rechargeFont1.text = "￥30.00";
+		this.rechargeFont1.text = "￥"+setInitData['result']['rechargeData'][2]["money"];
 		this.rechargeFont1.leading = 5;
         this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(150,590);
-        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,['30.00']);
+        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][2]["money"]]);
         this.addChild(this.rechargeFont1);
 
         this.coinImg4 = new Laya.Sprite();//图
@@ -189,7 +189,7 @@
         this.curCoin2.fontSize = 40;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = "500+50";
+		this.curCoin2.text = setInitData['result']['rechargeData'][3]["coinText"];
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(520,450);
         this.addChild(this.curCoin2);
@@ -199,7 +199,7 @@
         this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = "充值550马桶币";
+		this.curCoin2.text = setInitData['result']['rechargeData'][3]["showText"];;
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(470,520);
         this.addChild(this.curCoin2);
@@ -225,11 +225,11 @@
         this.rechargeFont1.fontSize = 30;
         this.rechargeFont1.width = 300;
 		this.rechargeFont1.wordWrap = true;
-		this.rechargeFont1.text = "￥50.00";
+		this.rechargeFont1.text = "￥"+setInitData['result']['rechargeData'][3]["money"];
 		this.rechargeFont1.leading = 5;
         this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(500,590);
-        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,['50.00']);
+        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][3]["money"]]);
         this.addChild(this.rechargeFont1);
 
         this.coinImg5 = new Laya.Sprite();//图
@@ -242,7 +242,7 @@
         this.curCoin2.fontSize = 40;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = "1000+180";
+		this.curCoin2.text = setInitData['result']['rechargeData'][4]["coinText"];
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(170,720);
         this.addChild(this.curCoin2);
@@ -252,7 +252,7 @@
         this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = "充值1180马桶币";
+		this.curCoin2.text = setInitData['result']['rechargeData'][4]["showText"];;
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(120,790);
         this.addChild(this.curCoin2);
@@ -278,11 +278,11 @@
         this.rechargeFont1.fontSize = 30;
         this.rechargeFont1.width = 300;
 		this.rechargeFont1.wordWrap = true;
-		this.rechargeFont1.text = "￥100.00";
+		this.rechargeFont1.text = "￥"+setInitData['result']['rechargeData'][4]["money"];
 		this.rechargeFont1.leading = 5;
         this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(150,860);
-        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,['100.00']);
+        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][4]["money"]]);
         this.addChild(this.rechargeFont1);
 
         this.coinImg6 = new Laya.Sprite();//图
@@ -295,7 +295,7 @@
         this.curCoin2.fontSize = 40;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = "2000+240";
+		this.curCoin2.text = setInitData['result']['rechargeData'][5]["coinText"];
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(520,720);
         this.addChild(this.curCoin2);
@@ -305,7 +305,7 @@
         this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = "充值2240马桶币";
+		this.curCoin2.text = setInitData['result']['rechargeData'][5]["showText"];;
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(470,790);
         this.addChild(this.curCoin2);
@@ -331,11 +331,11 @@
         this.rechargeFont1.fontSize = 30;
         this.rechargeFont1.width = 300;
 		this.rechargeFont1.wordWrap = true;
-		this.rechargeFont1.text = "￥200.00";
+		this.rechargeFont1.text = "￥"+setInitData['result']['rechargeData'][5]["money"];
 		this.rechargeFont1.leading = 5;
         this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(500,860);
-        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,['200.00']);
+        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][5]["money"]]);
         this.addChild(this.rechargeFont1);
 
         this.bgcolor.graphics.drawPath(280, 20, [
