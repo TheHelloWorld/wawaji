@@ -42,6 +42,14 @@ function recharge() {
 
             for(var i = 0; i<list.length; i++) {
 
+                if(list[i]["rechargeLimit"] != 0) {
+
+                }
+
+                if(list[i]["firstFlag"] != 0) {
+
+                }
+
                 str += "	<div class='recharge-block' onclick=rechargeThis('" + list[i]["money"] + "') >";
                 str += "		<div class='recharge-coin' >";
                 str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
