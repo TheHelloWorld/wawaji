@@ -10,7 +10,7 @@ public enum CatchResult {
 
     CATCH_WAIT(0, "等待"),
     CATCH_SUCCESS(1, "抓取成功"),
-    CATCH_FAIL(2,"抓取失败");
+    CATCH_FAIL(2, "抓取失败");
 
     /**
      * 状态
