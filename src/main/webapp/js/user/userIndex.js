@@ -143,7 +143,7 @@ function userInvite() {
 function shareToWeChat() {
 
     var str = "	<div onclick='closeShare()' class='toiletCat-msg' >";
-    str += "        <img style='float:right;' src='/image/guide.png'>";
+    str += "        <img style='float:right;' src='/image/share/guide.png'>";
     str += "	</div>";
 
     $("body").append(str);

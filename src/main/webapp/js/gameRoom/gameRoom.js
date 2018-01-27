@@ -104,7 +104,7 @@ function getUserSeeGameRoomListByPage(nowPage) {
 
     var startPage = (nowPage - 1) * pageSize;
     var loading = " <div id='loading-div' style='text-align: center;height: 10%'>";
-    loading += "        <img src='/image/loading.gif' height='100%'>";
+    loading += "        <img src='/image/loading/loading.gif' height='100%'>";
     loading += "    </div>";
     $("#main").append(loading);
     $.ajax({
