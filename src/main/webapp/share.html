@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
-<meta http-equiv="expires" content="0">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-<meta name="keywords" content="关键词" />
-<meta name="description" content="描述" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="format-detection" content="telephone=no" />
-<title>马桶猫抓娃娃</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+    <meta http-equiv="expires" content="0">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+    <meta name="keywords" content="关键词" />
+    <meta name="description" content="描述" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>马桶猫抓娃娃</title>
 </head>
-<body style="margin-top:0px;margin-left:0px;">
-<div style="z-index:1;"><img width="100%" src="/image/share.png" /></div>
-<div style="font-size:2.9rem;position:fixed;top:65%;left:48%;z-index:2" id="shareNum"></div>
+<body style="margin-top:0; margin-left:0;">
+    <div style="z-index:1;">
+        <img width="100%" src="/image/share/share.png" />
+    </div>
+    <div style="font-size:2.9rem;position:fixed;top:65%;left:48%;z-index:2" id="shareNum">
+
+    </div>
 </body>
 <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 <script>
@@ -28,15 +32,21 @@
 
     $("#shareNum").html(num);
 
-    $("img").attr('width',width+'px');
+    $("img").attr('width',width + 'px');
 
-    $("img").attr('height',height+'px');
+    $("img").attr('height',height + 'px');
 
-    function GetQueryString(name)
-    {
+    function GetQueryString(name) {
+
          var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+
          var r = window.location.search.substr(1).match(reg);
-         if(r!=null)return  unescape(r[2]); return null;
+
+         if(r != null) {
+             return unescape(r[2]);
+         }
+
+         return null;
     }
 
 </script>
