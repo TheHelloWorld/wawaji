@@ -18,20 +18,26 @@
 </body>
 <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 <script>
-var height = $(window).height();
-var width = $(window).width();
-$("body").height(height);
-var num = GetQueryString('shareId');
-$("#shareNum").html(num);
-$("img").attr('width',width+'px');
-$("img").attr('height',height+'px');
+    var height = $(window).height();
 
-function GetQueryString(name)
-{
-     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-     var r = window.location.search.substr(1).match(reg);
-     if(r!=null)return  unescape(r[2]); return null;
-}
+    var width = $(window).width();
+
+    $("body").height(height);
+
+    var num = GetQueryString('shareId');
+
+    $("#shareNum").html(num);
+
+    $("img").attr('width',width+'px');
+
+    $("img").attr('height',height+'px');
+
+    function GetQueryString(name)
+    {
+         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+         var r = window.location.search.substr(1).match(reg);
+         if(r!=null)return  unescape(r[2]); return null;
+    }
 
 </script>
 </html>
