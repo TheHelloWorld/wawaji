@@ -28,7 +28,7 @@ function recharge() {
             var str = "	<div style='top:"+recharge_hc+"px;' class='recharge'>";
             str += "		<div class='recharge-first-line' >";
             str += "			<div style='float:left;height: 100%'>";
-            str += "				<img style='-webkit-transform:rotate(-90deg);' src='/image/returnButton.ico' class='rechargeReturn' onclick='closeRecharge()'/>";
+            str += "				<img style='-webkit-transform:rotate(-90deg);' src='/image/returnButton.png' class='rechargeReturn' onclick='closeRecharge()'/>";
             str += "			</div>";
             str += "		<div class='recharge-user-coin' >";
             str += "			<div class='recharge-coin' >";
