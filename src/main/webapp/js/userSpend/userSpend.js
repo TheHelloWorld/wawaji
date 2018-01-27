@@ -113,7 +113,7 @@ function getAllUserSpendRecordByUserNo(nowPage) {
                 str += "                <p>" + newDate.format('yyyy-MM-dd hh:mm:ss') + "</p>";
                 str += "			</div>";
                 str += "			<div class='user-spend-coin'>";
-                str += "                <span><img src='/image/background/user_spend_coin.ico'>" + list[i]["coin"] + "</span>";
+                str += "                <span><img src='/image/userSpend/user_spend_coin.png'>" + list[i]["coin"] + "</span>";
                 str += "			</div>";
                 str += "			<div class='user-spend-result'>";
                 if(list[i]["tradeStatus"] == "10") {
