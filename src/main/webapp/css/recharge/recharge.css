@@ -46,12 +46,42 @@
     padding-bottom: 4%;
 }
 
+.recharge-disabled {
+    border-radius: 1.25rem;
+    margin-top: 5%;
+    float: left;
+    border-bottom: 0.1875rem solid #D7D7D7;
+    width: 40%;
+    margin-left: 7%;
+    background: gainsboro;
+    padding-bottom: 4%;
+}
+
+.recharge-limit {
+    float: right;
+}
+
+.recharge-first {
+    float: right;
+}
+
 .recharge-money {
     color: red;
     float: left;
     margin-top: 5%;
     text-align: center;
     background: #FEFE9E;
+    width: 70%;
+    margin-left: 15%;
+    border-radius: 1.25rem;
+}
+
+.recharge-money-disabled {
+    color: gray;
+    float: left;
+    margin-top: 5%;
+    text-align: center;
+    background: gainsboro;
     width: 70%;
     margin-left: 15%;
     border-radius: 1.25rem;
