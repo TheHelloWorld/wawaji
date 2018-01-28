@@ -200,7 +200,6 @@
     <!-- 重置游戏房间幸运值 -->
     <update id="resetRoomLuckyNumByGameRoomNo">
         update game_room set
-            room_lucky_num = #{roomLuckyNum, jdbcType=INTEGER},
             room_now_lucky_num = 0
         where game_room_no = #{gameRoomNo, jdbcType=VARCHAR}
     </update>

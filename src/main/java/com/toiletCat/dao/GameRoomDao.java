@@ -95,7 +95,6 @@ public interface GameRoomDao {
     /**
      * 重置游戏房间幸运值
      * @param gameRoomNo 游戏房间编号
-     * @param roomLuckyNum 房间幸运值
      */
-    void resetRoomLuckyNumByGameRoomNo(@Param("gameRoomNo") String gameRoomNo, @Param("roomLuckyNum") Integer roomLuckyNum);
+    void resetRoomLuckyNumByGameRoomNo(@Param("gameRoomNo") String gameRoomNo);
 }

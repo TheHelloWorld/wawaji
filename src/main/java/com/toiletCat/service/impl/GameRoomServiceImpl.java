@@ -285,12 +285,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             @Override
             public void exec() {
 
-                Integer roomLuckyNum = Integer.valueOf(toiletCatConfigService.getConfigByKey(
-                        BaseConstant.RESET_GAME_ROOM_LUCKY_NUM));
-
-                logger.info("resetRoomLuckyNumByGameRoomNo roomLuckyNum:" + roomLuckyNum);
-
-                gameRoomDao.resetRoomLuckyNumByGameRoomNo(gameRoomNo, roomLuckyNum);
+                gameRoomDao.resetRoomLuckyNumByGameRoomNo(gameRoomNo);
             }
         }, "resetRoomLuckyNumByGameRoomNo", json);
     }

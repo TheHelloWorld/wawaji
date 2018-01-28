@@ -396,7 +396,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 if(!userSeeGameRoomCommonResult.success()) {
                     setOtherMsg();
-                    got(BaseConstant.DEDUCTION_COIN_FAIL);
+                    got(BaseConstant.SYSTEM_ERROR);
                     return;
                 }
 
