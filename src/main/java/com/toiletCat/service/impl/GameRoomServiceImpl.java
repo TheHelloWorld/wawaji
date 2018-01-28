@@ -185,14 +185,18 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             @Override
             public void exec() {
 
-                String str = JSON.toJSONString(gameRoomDao.getUserSeeGameRoomByGameRoomNo(gameRoomNo));
+                UserSeeGameRoom userSeeGameRoom = gameRoomDao.getUserSeeGameRoomByGameRoomNo(gameRoomNo);
+
+                userSeeGameRoom.setRoomNowLuckyNum(null);
+
+                String str = JSON.toJSONString(userSeeGameRoom);
 
                 JSONObject returnJSON = JSONObject.parseObject(str);
 
                 if(userGameRoomDao.countUserGameRoomByUserNo(userNo, gameRoomNo) == 0) {
-                    returnJSON.put("userGameRoomLuckyNumB", "0");
+                    returnJSON.put("userGameRoomLuckyNum", "0");
                 } else {
-                    returnJSON.put("userGameRoomLuckyNumB", userGameRoomDao.getUserGameRoomLuckyNumByUserNo(
+                    returnJSON.put("userGameRoomLuckyNum", userGameRoomDao.getUserGameRoomLuckyNumByUserNo(
                             userNo, gameRoomNo));
                 }
 

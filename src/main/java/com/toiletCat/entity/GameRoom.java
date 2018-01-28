@@ -49,6 +49,11 @@ public class GameRoom extends BaseEntity implements Serializable {
      */
     private Integer currentState;
 
+    /**
+     * 真实在线人数
+     */
+    private Integer realPlayNum;
+
     public String getGameRoomNo() {
         return gameRoomNo;
     }
@@ -113,4 +118,11 @@ public class GameRoom extends BaseEntity implements Serializable {
         this.currentState = currentState;
     }
 
+    public Integer getRealPlayNum() {
+        return realPlayNum;
+    }
+
+    public void setRealPlayNum(Integer realPlayNum) {
+        this.realPlayNum = realPlayNum;
+    }
 }

@@ -22,10 +22,10 @@ var socketJs = (function(_super){
         toyNowCoin = data.result.toyNowCoin;
         toyName = data.result.toyName;
         toyRoomImg = data.result.toyRoomImg;
-        luckyNum = data.result.userGameRoomLuckyNumB;
+        luckyNum = data.result.userGameRoomLuckyNum;
         curPlayer = data.result.curPlayer
 
-    }
+    };
     _proto.toyShadow = function(data){
         this.toyShadow = new Laya.Animation();
         Laya.Animation.createFrames(["comp/wawadi.png"],"shadowStop");
@@ -34,7 +34,7 @@ var socketJs = (function(_super){
         this.addChild(this.toyShadow);
         shadowObj = this.toyShadow;
         shadowObj.play(0,false,'shadowStop');
-    }
+    };
 
     _proto.broadcast = function(data){
         this.broadcastBack = new Laya.Sprite();
@@ -51,7 +51,7 @@ var socketJs = (function(_super){
         this.broadcasttxt.text = data.str;
         this.broadcasttxt.leading = 5;
         this.addChild(this.broadcasttxt);
-    }
+    };
 
     function refreshCurNum(data){
         console.log('刷新在线人数');
