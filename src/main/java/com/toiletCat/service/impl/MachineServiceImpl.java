@@ -105,7 +105,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
 
                             // 获得当前机器围观人数
                             String machineKey = BaseConstant.MACHINE_ROOM_VIEWER.
-                                    replace("#{}", userMachine.getMachineNo());
+                                    replace(BaseConstant.PLACEHOLDER, userMachine.getMachineNo());
 
                             String viewerNum = redisUtil.get(machineKey);
 
@@ -116,7 +116,8 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
                             userMachine.setViewer(Integer.valueOf(viewerNum));
 
                             // 当前机器被占用的锁
-                            String machineLockKey = BaseConstant.MACHINE_IN_USE.replace("#{}", userMachine.getMachineNo());
+                            String machineLockKey = BaseConstant.MACHINE_IN_USE.replace(BaseConstant.PLACEHOLDER,
+                                    userMachine.getMachineNo());
 
                             String isUse = redisUtil.get(machineLockKey);
 
@@ -231,7 +232,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             @Override
             public void exec() {
                 try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
-                    String key = BaseConstant.MACHINE_IN_USE.replace("#{}", machineNo);
+                    String key = BaseConstant.MACHINE_IN_USE.replace(BaseConstant.PLACEHOLDER, machineNo);
                     // 获得当前机器锁
                     String value = redisUtil.get(key);
                     if(value == null) {
@@ -286,7 +287,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
                 try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
                     // 当前娃娃机房间围观人数key
-                    String machineRoomKey = BaseConstant.MACHINE_ROOM_VIEWER.replace("#{}", machineNo);
+                    String machineRoomKey = BaseConstant.MACHINE_ROOM_VIEWER.replace(BaseConstant.PLACEHOLDER, machineNo);
 
                     if(HandleType.CONNECT == handleType) {
                         // 围观人数+1

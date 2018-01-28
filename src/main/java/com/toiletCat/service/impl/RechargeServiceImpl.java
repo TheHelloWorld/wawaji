@@ -140,6 +140,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 if(tradeStatus == TradeStatus.SUCCESS) {
                     // 添加用户游戏币
                     userDao.updateUserCoinByUserNo(coin.getCoin(), userNo);
+
+                    // 将用户首充标志位置为非首充
+                    setUserNotFirstRechargeFlag(userNo);
                 }
 
                 // 修改充值记录交易状态
@@ -283,6 +286,25 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
     }
 
     /**
+     * 将用户首充标志位置为 非首充
+     * @param userNo 用户编号
+     */
+    private void setUserNotFirstRechargeFlag(String userNo) {
+        try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+            String key = BaseConstant.FIRST_RECHARGE_FLAG.replace(BaseConstant.PLACEHOLDER, userNo);
+
+            String userFirstFlag = redisUtil.get(key);
+
+            if(userFirstFlag == null || BaseConstant.IS_FIRST.equals(userFirstFlag)) {
+                redisUtil.set(key, BaseConstant.IS_NOT_FIRST);
+            }
+
+        } catch (Exception e) {
+            logger.error("setUserNotFirstRechargeFlag error: " + e, e);
+        }
+    }
+
+    /**
      * 查询获得交易结果
      * @param orderNo 订单号
      * @param amount 交易金额
@@ -353,7 +375,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
             // 若已有终态则不执行后续操作
             if(commonRechargeResult.getValue() != TradeStatus.INIT.getStatus()) {
-                logger.info("queryRechargeResult request duplicate param:"+ json);
+                logger.info("queryRechargeResult request duplicate param: "+ json);
                 return;
             }
 
@@ -365,6 +387,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 // 添加用户游戏币
                 userDao.updateUserCoinByUserNo(rechargeCoin, userNo);
+
+                // 将用户首充标志位置为 非首充
+                setUserNotFirstRechargeFlag(userNo);
             }
 
             updateRechargeAndSpendResult(orderNo, tradeStatus);
@@ -392,28 +417,22 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
         try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
-            String key = BaseConstant.FIRST_RECHARGE_FLAG.replace("#{}", userNo);
+            String key = BaseConstant.FIRST_RECHARGE_FLAG.replace(BaseConstant.PLACEHOLDER, userNo);
 
             String userFirstRecharge = redisUtil.get(key);
 
             if(userFirstRecharge == null || BaseConstant.IS_FIRST.equals(userFirstRecharge)) {
 
+                // 获得用户之前所有成功充值记录数量
                 CommonResult<Integer> rechargeCount = userRechargeRecordService.
                             countUserRechargeRecordByUserNoAndTradeStatus(userNo, TradeStatus.SUCCESS.getStatus());
 
                 if(rechargeCount.getValue() == 0) {
-                    userFirstRecharge = BaseConstant.IS_FIRST;
+                    // 添加赠送的游戏币数
+                    rechargeCoin += moneyForCoin.getGiveCoin();
                 } else {
-                    userFirstRecharge = BaseConstant.IS_NOT_FIRST;
+                    redisUtil.set(key, BaseConstant.IS_NOT_FIRST);
                 }
-
-                redisUtil.set(key, userFirstRecharge);
-            }
-
-            // 若是首充
-            if(BaseConstant.IS_FIRST.equals(userFirstRecharge)) {
-                // 添加赠送的游戏币数
-                rechargeCoin += moneyForCoin.getGiveCoin();
             }
 
         } catch(Exception e) {
@@ -433,12 +452,13 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
         try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
-            String key = BaseConstant.FIRST_RECHARGE_FLAG.replace("#{}", userNo);
+            String key = BaseConstant.FIRST_RECHARGE_FLAG.replace(BaseConstant.PLACEHOLDER, userNo);
 
             String userFirstRecharge = redisUtil.get(key);
 
             if(userFirstRecharge == null || BaseConstant.IS_FIRST.equals(userFirstRecharge)) {
 
+                // 获得用户之前所有成功充值记录数量
                 CommonResult<Integer> rechargeCount = userRechargeRecordService.
                         countUserRechargeRecordByUserNoAndTradeStatus(userNo, TradeStatus.SUCCESS.getStatus());
 
@@ -478,7 +498,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
         try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
-            String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace("#{}", userNo);
+            String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace(BaseConstant.PLACEHOLDER, userNo);
 
             String nowNum = redisUtil.get(key);
 
@@ -489,7 +509,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
             return Integer.valueOf(nowNum);
 
         } catch (Exception e) {
-            logger.error("getLimitRechargeByUserNo redis error:" + e, e);
+            logger.error("getLimitRechargeByUserNo redis error: " + e, e);
         }
 
         return 0;
@@ -519,7 +539,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
-                    String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace("#{}", userNo);
+                    String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace(BaseConstant.PLACEHOLDER, userNo);
 
                     String nowNum = redisUtil.get(key);
 
@@ -560,7 +580,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
         if(coin.getRechargeLimit() != 0) {
             try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
-                String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace("#{}", userNo);
+                String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace(BaseConstant.PLACEHOLDER, userNo);
 
                 Long num = redisUtil.decr(key);
 

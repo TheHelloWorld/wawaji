@@ -126,7 +126,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
                         for(UserSeeGameRoom userSeeGameRoom : userSeeGameRoomList) {
 
                             String gameRoomkey = BaseConstant.GAME_ROOM_VIEWER.
-                                    replace("#{}", userSeeGameRoom.getGameRoomNo());
+                                    replace(BaseConstant.PLACEHOLDER, userSeeGameRoom.getGameRoomNo());
 
                             String viewerNum = redisUtil.get(gameRoomkey);
 
@@ -349,7 +349,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
                 try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
                     // 当前游戏房间围观人数key
-                    String gameRoomkey = BaseConstant.GAME_ROOM_VIEWER.replace("#{}", gameRoomNo);
+                    String gameRoomkey = BaseConstant.GAME_ROOM_VIEWER.replace(BaseConstant.PLACEHOLDER, gameRoomNo);
 
                     if(HandleType.CONNECT == handleType) {
                         // 围观人数+1

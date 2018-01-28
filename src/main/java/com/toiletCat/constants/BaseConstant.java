@@ -14,13 +14,9 @@ import java.util.TreeMap;
 public class BaseConstant {
 
 	/**
-	 * 用户id
+	 * 占位符
 	 */
-	public static final String USER_ID = "userId";
-
-	public static final String REASON = "reason";
-
-	public static final String USER_INFO = "user_info";
+	public static final String PLACEHOLDER = "#{}";
 
 	/**
 	 * 管理员id
@@ -36,11 +32,6 @@ public class BaseConstant {
 	 * 手机验证码
 	 */
 	public static final String TICKET = "ticket";
-
-	/**
-	 * 异常信息
-	 **/
-	public static final String ERROR_MAG = "服务器维护中,请稍后重试";
 
 	/**
 	 * 成功标志
@@ -135,27 +126,27 @@ public class BaseConstant {
 	/**
 	 * 机器正在被使用key
 	 */
-	public static final String MACHINE_IN_USE = "machine_#{}_in_use";
+	public static final String MACHINE_IN_USE = "machine_" + PLACEHOLDER + "_in_use";
 
 	/**
 	 * 娃娃机房间围观人数
 	 */
-	public static final String MACHINE_ROOM_VIEWER = "machine_room_viewer_#{}";
+	public static final String MACHINE_ROOM_VIEWER = "machine_room_viewer_" + PLACEHOLDER;
 
 	/**
 	 * 游戏房间围观人数
 	 */
-	public static final String GAME_ROOM_VIEWER = "game_room_viewer_#{}";
+	public static final String GAME_ROOM_VIEWER = "game_room_viewer_" + PLACEHOLDER;
 
 	/**
 	 * 每天限制充值的key
 	 */
-	public static final String RECHARGE_LIMIT_NUM_BY_USER = "recharge_limit_num_#{}";
+	public static final String RECHARGE_LIMIT_NUM_BY_USER = "recharge_limit_num_" + PLACEHOLDER;
 
 	/**
 	 * 用户首充标志位
 	 */
-	public static final String FIRST_RECHARGE_FLAG = "first_recharge_#{}";
+	public static final String FIRST_RECHARGE_FLAG = "first_recharge_" + PLACEHOLDER;
 
 	/**
 	 * 是首充
@@ -180,7 +171,7 @@ public class BaseConstant {
 	/**
 	 * 短信验证相关
 	 */
-	public static final String SMS_MOBILE_NO = "sms_#{}";
+	public static final String SMS_MOBILE_NO = "sms_" + PLACEHOLDER;
 
 	/**
 	 * 充值返回结果(成功)

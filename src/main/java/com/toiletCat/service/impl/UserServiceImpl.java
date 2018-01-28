@@ -166,7 +166,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
-                    String verifyCode = redisUtil.get(BaseConstant.SMS_MOBILE_NO.replace("#{}", mobileNo));
+                    String verifyCode = redisUtil.get(BaseConstant.SMS_MOBILE_NO.replace(BaseConstant.PLACEHOLDER, mobileNo));
 
                     // 若验证码不对
                     if (!ticket.equals(verifyCode)) {
@@ -233,7 +233,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 }
 
                 try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
-                    String key = BaseConstant.MACHINE_IN_USE.replace("#{}", machineNo);
+                    String key = BaseConstant.MACHINE_IN_USE.replace(BaseConstant.PLACEHOLDER, machineNo);
                     // 判断当前机器是否已有用户使用
                     if (redisUtil.setnx(key, userNo) == 0) {
                         setOtherMsg();
@@ -521,7 +521,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     if (SDKTestSendTemplateSMS.sendMobileVerificationCode(mobileNo, random, textTimeout)) {
 
                         redisUtil.set(Integer.valueOf(redisTimeout),
-                                BaseConstant.SMS_MOBILE_NO.replace("#{}", mobileNo), random);
+                                BaseConstant.SMS_MOBILE_NO.replace(BaseConstant.PLACEHOLDER, mobileNo), random);
 
                         got(BaseConstant.SUCCESS);
 
