@@ -175,7 +175,8 @@
     position: relative;
     min-height: 0.0625rem;
     float: left;
-    width: 50%
+    margin: 0 1%;
+    width: 48%
 }
 
 .footer-button {
