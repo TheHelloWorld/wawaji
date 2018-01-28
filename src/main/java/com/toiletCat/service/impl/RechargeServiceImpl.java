@@ -290,6 +290,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
      * @param userNo 用户编号
      */
     private void setUserNotFirstRechargeFlag(String userNo) {
+
+        logger.info("setUserNotFirstRechargeFlag start userNo: " + userNo);
+
         try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
             String key = BaseConstant.FIRST_RECHARGE_FLAG.replace(BaseConstant.PLACEHOLDER, userNo);
 
@@ -311,6 +314,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
      * @return
      */
     private void queryRechargeResult(String orderNo, BigDecimal amount) {
+
+        logger.info("queryRechargeResult start orderNo: " + orderNo + ", amount: " + amount.doubleValue());
+
         try {
 
             String userNo = orderNo.substring(22);
@@ -408,6 +414,8 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
     @Override
     public Integer getCoinByMoneyForCoin(String userNo, MoneyForCoin moneyForCoin) {
 
+        logger.info("getCoinByMoneyForCoin start userNo: " + userNo + ", moneyForCoin: " + moneyForCoin);
+
         Integer rechargeCoin = moneyForCoin.getCoin();
 
         // 若非首充活动
@@ -450,6 +458,8 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
     @Override
     public String getFirstFlag(String userNo) {
 
+        logger.info("getFirstFlag start userNo: " + userNo);
+
         try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
 
             String key = BaseConstant.FIRST_RECHARGE_FLAG.replace(BaseConstant.PLACEHOLDER, userNo);
@@ -488,6 +498,8 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
      */
     @Override
     public Integer getLimitRechargeByUserNo(String userNo, MoneyForCoin moneyForCoin) {
+
+        logger.info("getLimitRechargeByUserNo start userNo: " + userNo + ", moneyForCoin: " + moneyForCoin);
 
         if(moneyForCoin.getRechargeLimit() == 0) {
 
