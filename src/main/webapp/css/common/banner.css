@@ -1,3 +1,15 @@
+.banner-box {
+    width: 100%;
+    position:relative;
+    overflow:hidden;
+    margin-bottom: 2%;
+}
+
+.banner {
+    width:100%; /*图片宽度*/
+    height: 100%;
+    position:absolute;
+}
 
 .banner-img {
     height:100%;

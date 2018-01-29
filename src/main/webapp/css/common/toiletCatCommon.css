@@ -210,18 +210,6 @@
     margin: 0;
 }
 
-.banner-box {
-    width: 100%;
-    position:relative;
-    overflow:hidden;
-}
-
-.banner {
-    width:100%; /*图片宽度*/
-    height: 100%;
-    position:absolute;
-}
-
 .nav-center {
     text-align: center;
     vertical-align: middle;
