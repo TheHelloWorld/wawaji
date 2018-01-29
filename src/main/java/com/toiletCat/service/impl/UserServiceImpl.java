@@ -794,6 +794,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 如果有充值限制次数(不为0)
                 if(coin.getRechargeLimit() != 0) {
 
+                    // 获得当前用户限充次数
                     Integer userLimitNum = rechargeService.getLimitRechargeByUserNo(userNo, coin);
 
                     // 如果达到上限
