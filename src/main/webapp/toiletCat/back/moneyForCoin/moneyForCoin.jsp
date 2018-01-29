@@ -35,6 +35,7 @@
                                     <th><lable name="rechargeLimit">每天充值限制次数</lable></th>
                                     <th><lable name="firstFlag">首充标志位</lable></th>
                                     <th><lable name="giveCoin">赠送的游戏币数</lable></th>
+                                    <th><lable name="showOrder">展示顺序</lable></th>
                                     <th><lable name="currentState">是否可用</lable></th>
                                     <th><lable name="operation">操作</lable></th>
                                 </tr>

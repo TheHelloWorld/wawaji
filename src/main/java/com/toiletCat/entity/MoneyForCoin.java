@@ -59,6 +59,11 @@ public class MoneyForCoin extends BaseEntity implements Serializable {
      */
     private Integer userLimitFlag;
 
+    /**
+     * 展示顺序
+     */
+    private Integer showOrder;
+
     public String getMoney() {
         return money;
     }
@@ -137,5 +142,13 @@ public class MoneyForCoin extends BaseEntity implements Serializable {
 
     public void setUserLimitFlag(Integer userLimitFlag) {
         this.userLimitFlag = userLimitFlag;
+    }
+
+    public Integer getShowOrder() {
+        return showOrder;
+    }
+
+    public void setShowOrder(Integer showOrder) {
+        this.showOrder = showOrder;
     }
 }

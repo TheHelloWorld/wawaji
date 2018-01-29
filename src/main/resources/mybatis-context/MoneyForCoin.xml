@@ -20,6 +20,8 @@
         <result property="firstFlag" column="first_flag" jdbcType="INTEGER"/>
         <!-- 赠送的游戏币数 -->
         <result property="giveCoin" column="give_coin" jdbcType="INTEGER"/>
+        <!-- 展示顺序 -->
+        <result property="showOrder" column="show_order" jdbcType="INTEGER"/>
         <!-- 是否可用 可用 禁用 -->
         <result property="currentState" column="current_state" jdbcType="INTEGER"/>
         <!-- 创建时间 -->
@@ -39,6 +41,7 @@
             recharge_limit,
             first_flag,
             give_coin,
+            show_order,
             current_state
             )
         values
@@ -50,6 +53,7 @@
             #{rechargeLimit, jdbcType=INTEGER},
             #{firstFlag, jdbcType=INTEGER},
             #{giveCoin, jdbcType=INTEGER},
+            #{showOrder, jdbcType=INTEGER},
             #{currentState, jdbcType=INTEGER}
             )
     </insert>
@@ -65,6 +69,7 @@
             recharge_limit,
             first_flag,
             give_coin,
+            show_order,
             current_state
         from money_for_coin
     </select>
@@ -85,6 +90,7 @@
             recharge_limit,
             first_flag,
             give_coin,
+            show_order,
             current_state
         from money_for_coin where id = #{id}
     </select>
@@ -99,6 +105,7 @@
             recharge_limit = #{rechargeLimit, jdbcType=INTEGER},
             first_flag = #{firstFlag, jdbcType=INTEGER},
             give_coin = #{giveCoin, jdbcType=INTEGER},
+            show_order = #{showOrder, jdbcType=INTEGER},
             current_state = #{currentState, jdbcType=INTEGER}
         where id = #{id}
     </update>
@@ -114,7 +121,7 @@
             recharge_limit,
             first_flag,
             give_coin
-        from money_for_coin where current_state = 1
+        from money_for_coin where current_state = 1 order by show_order asc
     </select>
 
 </mapper>

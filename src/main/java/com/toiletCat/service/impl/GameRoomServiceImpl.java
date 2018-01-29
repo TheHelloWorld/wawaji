@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("all")
@@ -81,7 +82,36 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
         return exec(new Callback() {
             @Override
             public void exec() {
-                got(gameRoomDao.getGameRoomListByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
+
+                List<GameRoom> list = new ArrayList<>();
+
+                list = gameRoomDao.getGameRoomListByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE);
+
+                if(list == null || list.size() == 0) {
+
+                    got(list);
+                    return;
+                }
+                try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                    for(GameRoom gameRoom : list) {
+
+                        String key = BaseConstant.REAL_GAME_ROOM_VIEWER.replace(BaseConstant.PLACEHOLDER,
+                                gameRoom.getGameRoomNo());
+
+                            String realNum = redisUtil.get(key);
+
+                            if(realNum == null) {
+                                realNum = "0";
+                            }
+
+                        gameRoom.setRealPlayNum(realNum);
+
+                    }
+                } catch (Exception e) {
+                    logger.error("getGameRoomListByPage redis error:" + e, e);
+                }
+
+                got(list);
             }
         }, "getGameRoomListByPage", json);
     }

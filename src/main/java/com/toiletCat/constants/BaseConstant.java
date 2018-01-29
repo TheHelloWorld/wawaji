@@ -139,6 +139,11 @@ public class BaseConstant {
 	public static final String GAME_ROOM_VIEWER = "game_room_viewer_" + PLACEHOLDER;
 
 	/**
+	 * 游戏房间真实在线人数
+	 */
+	public static final String REAL_GAME_ROOM_VIEWER = "real_game_room_viewer_" + PLACEHOLDER;
+
+	/**
 	 * 每天限制充值的key
 	 */
 	public static final String RECHARGE_LIMIT_NUM_BY_USER = "recharge_limit_num_" + PLACEHOLDER;

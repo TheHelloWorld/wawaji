@@ -102,6 +102,15 @@
                     </div>
                 </div>
                 <br/>
+                <div class="row">
+                    <div class="col-xs-5">
+                        展示顺序:
+                        <span name = "showOrder">
+                            <input class="form-control" id = "showOrder">
+                        </span>
+                    </div>
+                </div>
+                <br/>
             </div>
         </div>
         <div class="text-center">

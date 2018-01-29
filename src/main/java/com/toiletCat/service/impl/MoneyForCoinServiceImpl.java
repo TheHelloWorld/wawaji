@@ -88,18 +88,10 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
             @Override
             public void exec() {
 
-                // 获取更改前数据
-                MoneyForCoin old = moneyForCoinDao.getMoneyForCoinById(moneyForCoin.getId());
-
                 moneyForCoinDao.updateMoneyForCoin(moneyForCoin);
 
-                BaseConstant.moneyForCoinMap.remove(old.getMoney());
-                BaseConstant.moneyForCoinMap.remove(moneyForCoin.getMoney());
-
-                // 若为可用则去更新key
-                if(moneyForCoin.getCurrentState() == CurrentState.AVAILABLE.getStatus()) {
-                    BaseConstant.moneyForCoinMap.put(Double.valueOf(moneyForCoin.getMoney()), moneyForCoin);
-                }
+                // 刷新配置
+                refreshMap();
 
             }
         }, "updateMoneyForCoin", moneyForCoin);
