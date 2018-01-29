@@ -33,6 +33,7 @@
     margin-top: 10%;
     margin-left: 5%;
     font-size: 1.5rem;
+    margin-bottom: 6%;
 }
 
 .recharge-block {
@@ -55,6 +56,11 @@
     margin-left: 7%;
     background: gainsboro;
     padding-bottom: 4%;
+}
+
+.recharge-limit-div {
+    float: right;
+    height: 2%;
 }
 
 .recharge-limit {
