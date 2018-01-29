@@ -41,7 +41,7 @@
         this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = setInitData['result']['rechargeData'][0]["showText"]+"("+setInitData['result']['rechargeData'][0]["userLimitFlag"]+"/"+setInitData['result']['rechargeData'][0]["rechargeLimit"]+")";
+		this.curCoin2.text = setInitData['result']['rechargeData'][0]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][0]['coin'])+"("+setInitData['result']['rechargeData'][0]["userLimitFlag"]+"/"+setInitData['result']['rechargeData'][0]["rechargeLimit"]+")";
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(120,250);
         this.addChild(this.curCoin2);
@@ -80,7 +80,7 @@
 		this.rechargeFont1.leading = 5;
         this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(150,320);
-        if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["userLimitFlag"]["rechargeLimit"]){
+        if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["rechargeLimit"]){
             //判断限冲次数
             this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][0]["money"]]);
         }
@@ -107,9 +107,10 @@
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
         if(setInitData['result']['rechargeData'][1]["userFirstFlag"] == 'is_first'){
-		    this.curCoin2.text = setInitData['result']['rechargeData'][1]["showText"]+setInitData['result']['rechargeData'][1]["giveCoin"];
+			var first_coin = setInitData['result']['rechargeData'][1]["giveCoin"] + setInitData['result']['rechargeData'][1]['coin'];
+		    this.curCoin2.text = setInitData['result']['rechargeData'][1]["showText"].replace("#{coin}",first_coin);
         }else{
-            this.curCoin2.text = setInitData['result']['rechargeData'][1]["showText"];
+            this.curCoin2.text = setInitData['result']['rechargeData'][1]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][1]['coin']);
         }
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(470,250);
@@ -173,7 +174,7 @@
         this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = setInitData['result']['rechargeData'][2]["showText"];;
+		this.curCoin2.text = this.curCoin2.text = setInitData['result']['rechargeData'][2]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][2]['coin']);
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(120,520);
         this.addChild(this.curCoin2);
@@ -226,7 +227,7 @@
         this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = setInitData['result']['rechargeData'][3]["showText"];;
+		this.curCoin2.text = this.curCoin2.text = setInitData['result']['rechargeData'][3]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][3]['coin']);
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(470,520);
         this.addChild(this.curCoin2);
@@ -279,7 +280,7 @@
         this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = setInitData['result']['rechargeData'][4]["showText"];;
+		this.curCoin2.text = this.curCoin2.text = setInitData['result']['rechargeData'][4]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][4]['coin']);
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(120,790);
         this.addChild(this.curCoin2);
@@ -332,7 +333,7 @@
         this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = setInitData['result']['rechargeData'][5]["showText"];;
+		this.curCoin2.text = this.curCoin2.text = setInitData['result']['rechargeData'][5]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][5]['coin']);
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(470,790);
         this.addChild(this.curCoin2);

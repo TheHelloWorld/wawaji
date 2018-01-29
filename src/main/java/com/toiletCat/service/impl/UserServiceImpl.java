@@ -794,10 +794,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 如果有充值限制次数(不为0)
                 if(coin.getRechargeLimit() != 0) {
 
-                    CommonResult<Integer> userLimitNum = rechargeService.setLimitRechargeByUserNo(userNo, coin);
+                    Integer userLimitNum = rechargeService.getLimitRechargeByUserNo(userNo, coin);
 
                     // 如果达到上限
-                    if(userLimitNum.getValue() > coin.getRechargeLimit()) {
+                    if(userLimitNum == coin.getRechargeLimit()) {
                         setOtherMsg();
                         got("当前选项每天只能充" + coin.getRechargeLimit() + "次哦");
                         return;

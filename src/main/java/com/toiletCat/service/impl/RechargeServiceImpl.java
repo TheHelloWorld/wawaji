@@ -132,14 +132,14 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 if(!BaseConstant.RECHARGE_RESULT_TRADE_STATUS.equals(resultTradeStatus)) {
                     tradeStatus = TradeStatus.FAIL;
 
-                    // 如果有充值限制次数(不为0)
-                    rollBackLimitNum(coin, userNo);
-
                 }
 
                 if(tradeStatus == TradeStatus.SUCCESS) {
                     // 添加用户游戏币
                     userDao.updateUserCoinByUserNo(coin.getCoin(), userNo);
+
+                    // 设置限充
+                    setLimitRechargeByUserNo(userNo, coin);
 
                     // 将用户首充标志位置为非首充
                     setUserNotFirstRechargeFlag(userNo);
@@ -350,8 +350,6 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 // 将充值结果置为失败
                 updateRechargeAndSpendResult(orderNo, TradeStatus.FAIL);
 
-                // 如果有充值限制次数(不为0)
-                rollBackLimitNum(myCoin, userNo);
                 return;
             }
 
@@ -369,9 +367,6 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
             if(!"1".equals(json.getString("status"))) {
                 tradeStatus = TradeStatus.FAIL;
-
-                // 如果有充值限制次数(不为0)
-                rollBackLimitNum(myCoin, userNo);
 
             }
 
@@ -393,6 +388,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 // 添加用户游戏币
                 userDao.updateUserCoinByUserNo(rechargeCoin, userNo);
+
+                // 如果有充值限制次数
+                setLimitRechargeByUserNo(userNo, myCoin);
 
                 // 将用户首充标志位置为 非首充
                 setUserNotFirstRechargeFlag(userNo);
@@ -533,88 +531,45 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
      * @param moneyForCoin 对应关系bean
      * @return
      */
-    @Override
-    public CommonResult<Integer> setLimitRechargeByUserNo(final String userNo, final MoneyForCoin moneyForCoin) {
+    private void setLimitRechargeByUserNo(String userNo, MoneyForCoin moneyForCoin) {
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
         json.put("moneyForCoin", moneyForCoin);
 
-        return exec(new Callback() {
-            @Override
-            public void exec() {
-
-                if(moneyForCoin.getRechargeLimit() == 0) {
-
-                    got(0);
-                    return;
-                }
-
-                try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
-
-                    String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace(BaseConstant.PLACEHOLDER, userNo);
-
-                    String nowNum = redisUtil.get(key);
-
-                    if(nowNum == null) {
-                        nowNum = "0";
-                    }
-
-                    // 如果达到上限
-                    if(Integer.valueOf(nowNum) >= moneyForCoin.getRechargeLimit()) {
-                        got(moneyForCoin.getRechargeLimit());
-                        return;
-                    }
-
-                    Calendar cal = Calendar.getInstance();
-                    cal.add(Calendar.DAY_OF_YEAR, 1);
-                    cal.set(Calendar.HOUR_OF_DAY, 0);
-                    cal.set(Calendar.SECOND, 0);
-                    cal.set(Calendar.MINUTE, 0);
-                    cal.set(Calendar.MILLISECOND, 0);
-
-                    Integer second = (int)(cal.getTimeInMillis() - System.currentTimeMillis()) / 1000;
-
-                    // 设置超时时间为当前时间到第二天0点的时间并累加数量
-                    got(Integer.valueOf(String.valueOf(redisUtil.incr(second, key))));
-                } catch (Exception e) {
-                    logger.error("setLimitRechargeByUserNo redis error:" + e, e);
-                }
-            }
-        }, "setLimitRechargeByUserNo", json);
-    }
-
-    /**
-     * 回退限制次数
-     * @param userNo
-     */
-    private void rollBackLimitNum(MoneyForCoin coin, String userNo) {
-
-        if(coin.getRechargeLimit() != 0) {
-            try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
-
-                String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace(BaseConstant.PLACEHOLDER, userNo);
-
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.DAY_OF_YEAR, 1);
-                cal.set(Calendar.HOUR_OF_DAY, 0);
-                cal.set(Calendar.SECOND, 0);
-                cal.set(Calendar.MINUTE, 0);
-                cal.set(Calendar.MILLISECOND, 0);
-
-                Integer second = (int)(cal.getTimeInMillis() - System.currentTimeMillis()) / 1000;
-
-                Long num = redisUtil.decr(second, key);
-
-                if(num <= 0) {
-
-                    redisUtil.set(second, key, "0");
-                }
-
-            } catch (Exception e) {
-                logger.error("rollBackLimitNum redis error:" + e, e);
-            }
+        if(moneyForCoin.getRechargeLimit() == 0) {
+            return;
         }
 
+        try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+
+            String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace(BaseConstant.PLACEHOLDER, userNo);
+
+            String nowNum = redisUtil.get(key);
+
+            if(nowNum == null) {
+                nowNum = "0";
+            }
+
+            // 如果达到上限
+            if(Integer.valueOf(nowNum) >= moneyForCoin.getRechargeLimit()) {
+                logger.info("setLimitRechargeByUserNo today is up the limit userNo:" + userNo + ", limitNum:" + nowNum);
+                return;
+            }
+
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DAY_OF_YEAR, 1);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+
+            Integer second = (int)(cal.getTimeInMillis() - System.currentTimeMillis()) / 1000;
+
+            // 设置超时时间为当前时间到第二天0点的时间并累加数量
+            redisUtil.incr(second, key);
+        } catch (Exception e) {
+            logger.error("setLimitRechargeByUserNo redis error:" + e, e);
+        }
     }
 
     /**
