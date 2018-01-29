@@ -187,7 +187,11 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
                 UserSeeGameRoom userSeeGameRoom = gameRoomDao.getUserSeeGameRoomByGameRoomNo(gameRoomNo);
 
+                // 设置游戏房间当前幸运值为空
                 userSeeGameRoom.setRoomNowLuckyNum(null);
+
+                // 试着游戏房间幸运值为空
+                userSeeGameRoom.setRoomLuckyNum(null);
 
                 String str = JSON.toJSONString(userSeeGameRoom);
 
