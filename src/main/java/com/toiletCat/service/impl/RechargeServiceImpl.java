@@ -594,17 +594,18 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace(BaseConstant.PLACEHOLDER, userNo);
 
-                Long num = redisUtil.decr(key);
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.DAY_OF_YEAR, 1);
+                cal.set(Calendar.HOUR_OF_DAY, 0);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MINUTE, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+
+                Integer second = (int)(cal.getTimeInMillis() - System.currentTimeMillis()) / 1000;
+
+                Long num = redisUtil.decr(second, key);
 
                 if(num <= 0) {
-                    Calendar cal = Calendar.getInstance();
-                    cal.add(Calendar.DAY_OF_YEAR, 1);
-                    cal.set(Calendar.HOUR_OF_DAY, 0);
-                    cal.set(Calendar.SECOND, 0);
-                    cal.set(Calendar.MINUTE, 0);
-                    cal.set(Calendar.MILLISECOND, 0);
-
-                    Integer second = (int)(cal.getTimeInMillis() - System.currentTimeMillis()) / 1000;
 
                     redisUtil.set(second, key, "0");
                 }
