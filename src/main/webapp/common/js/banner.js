@@ -48,7 +48,14 @@ function getBannerByType(type) {
 
             for(var i = 0; i<list.length; i++) {
                 str += "<div class='silder-main-img'>";
-                str += "    <img class='banner-img' src='"+list[i]["imgUrl"]+"' onclick=bannerClick('"+list[i]["clickUrl"]+"','"+list[i]["clickType"]+"') alt=''>";
+
+                var clickStr = "";
+
+                if(list[i]["clickUrl"] != null && list[i]["clickUrl"] != "" && list[i]["clickUrl"].trim() != "") {
+                    clickStr = "onclick=bannerClick('"+list[i]["clickUrl"]+"','"+list[i]["clickType"]+"')";
+                }
+
+                str += "    <img class='banner-img' src='"+list[i]["imgUrl"]+"' " + clickStr + " alt=''>";
                 str += "</div>";
             }
 
