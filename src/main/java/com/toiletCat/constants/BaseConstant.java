@@ -3,8 +3,8 @@ package com.toiletCat.constants;
 import com.toiletCat.entity.MoneyForCoin;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * 基本静态常量
@@ -233,10 +233,10 @@ public class BaseConstant {
 	 */
 	public static final String VIP_USER_GAME_ROOM_ADD_NUM = "vip_user_game_room_add_num";
 
-	/**
-	 * 重置游戏房间幸运值下限(上限为下限+10以内的一个数)
-	 */
-	public static final String RESET_GAME_ROOM_LUCKY_NUM = "reset_game_room_lucky_num";
+//	/**
+//	 * 重置游戏房间幸运值下限(上限为下限+10以内的一个数)
+//	 */
+//	public static final String RESET_GAME_ROOM_LUCKY_NUM = "reset_game_room_lucky_num";
 
 	/**
 	 * 后台登录用户名
@@ -261,6 +261,6 @@ public class BaseConstant {
 	/**
 	 * 钱和游戏币对应关系map
 	 */
-	public static Map<Double, MoneyForCoin> moneyForCoinMap = new TreeMap<>();
+	public static Map<Double, MoneyForCoin> moneyForCoinMap = new LinkedHashMap<>();
 
 }
