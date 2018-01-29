@@ -174,6 +174,15 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                         // 获取邮寄费
                         Integer deliverCoin = Integer.valueOf(toiletCatConfigService.getConfigByKey(
                                 BaseConstant.USER_DELIVER_COIN));
+
+                        Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+
+                        if(userCoin < deliverCoin) {
+                            setOtherMsg();
+                            got(BaseConstant.NOT_ENOUGH_COIN);
+                            return;
+                        }
+
                         userDao.updateUserCoinByUserNo(-deliverCoin, userNo);
 
                         logger.info("updateChoiceTypeByIdAndUserNo 扣除用户邮寄费游戏币成功");

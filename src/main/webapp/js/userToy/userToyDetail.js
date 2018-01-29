@@ -22,6 +22,8 @@ var flag = true;
 
 var onlyOneUserAddressId = 0;
 
+var userNo = "";
+
 $(function() {
 
     $("#zzc").hide();
@@ -35,6 +37,8 @@ $(function() {
     userCoin = sessionStorage["toiletCatUserCoin"];
 
     id = getQueryString("id");
+
+    userNo = getQueryString("userNo");
 
     // 根据用户编号和id获得记录信息
     getUserToyByUserNoAndId();
@@ -145,7 +149,7 @@ function getDeliverByIdAndUserNo(id) {
         async:false,
         data:{
             id:id,
-            userNo:userNo
+            dataNo:userNo
         },
         success:function(data){
 

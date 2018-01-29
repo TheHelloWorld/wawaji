@@ -56,7 +56,7 @@ public class BaseConstant {
 	/**
 	 * 系统错误
 	 */
-	public static final String SYSTEM_ERROR = "系统升级维护中,请稍候";
+	public static final String SYSTEM_ERROR = "系统升级维护中,请稍候重试";
 
 	/**
 	 * 马桶猫
@@ -91,12 +91,12 @@ public class BaseConstant {
 	/**
 	 * 用户游戏币提示
 	 */
-	public static final String DEDUCTION_COIN_FAIL = "扣除游戏币失败,请新操作";
+	public static final String DEDUCTION_COIN_FAIL = "扣除马桶币失败,请新操作";
 
 	/**
 	 * 游戏币不足提示
 	 */
-	public static final String NOT_ENOUGH_COIN = "当前游戏币不足,请充值";
+	public static final String NOT_ENOUGH_COIN = "当前马桶币不足,请充值";
 
 	/**
 	 * 用户最大地址数
