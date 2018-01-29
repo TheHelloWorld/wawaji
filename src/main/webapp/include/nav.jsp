@@ -83,7 +83,7 @@
                             <a href="/toiletCat/back/toiletCatConfig/toiletCatConfig.jsp"><i class="fa fa-gear fa-fw"></i>配置管理</a>
                         </li>
                         <li>
-                            <a href="/toiletCat/back/moneyForCoin/moneyForCoin.jsp"><i class="fa fa-money fa-fw"></i>钱和游戏币对应关系管理</a>
+                            <a href="/toiletCat/back/moneyForCoin/moneyForCoin.jsp"><i class="fa fa-money fa-fw"></i>充值管理</a>
                         </li>
                     </ul>
                 </div>
