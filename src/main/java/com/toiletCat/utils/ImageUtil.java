@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.color.ColorSpace;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
 import java.io.BufferedReader;
@@ -47,7 +48,7 @@ public class ImageUtil {
      * @throws IOException
      */
     private static void alphaWords2Image(String srcImagePath,float alpha,
-                                 String font,int fontStyle,int fontSize,Color color,
+                                 String font,int fontStyle, int fontSize, Color color,
                                  String inputWords,int x,int y,String imageFormat,String toPath) throws IOException{
         FileOutputStream fos=null;
         try {
@@ -61,8 +62,10 @@ public class ImageUtil {
             g2d.setComposite(ac);
             //设置文字字体名称、样式、大小
             g2d.setFont(new Font(font, fontStyle, fontSize));
+
             g2d.setColor(color);//设置字体颜色
             g2d.drawString(inputWords, x, y); //输入水印文字及其起始x、y坐标
+
             g2d.dispose();
             fos=new FileOutputStream(toPath);
             ImageIO.write(image, imageFormat, fos);
