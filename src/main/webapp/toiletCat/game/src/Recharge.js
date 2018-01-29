@@ -2,7 +2,11 @@
     function Recharge(){
         Recharge.super(this);
         this.bgcolor = new Laya.Sprite();
-        this.bgcolor.graphics.drawRect(0, 0, 753, 1092, "#FEFE9E");
+        if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["rechargeLimit"] ){
+            this.bgcolor.graphics.drawRect(0, 0, 753, 1092, "#FEFE9E");
+        }else{
+            this.bgcolor.graphics.drawRect(0, 0, 753, 1092, "#DFDDD9");
+        }
         this.addChild(this.bgcolor);
 
         this.back = new Laya.Sprite();
@@ -37,10 +41,16 @@
         this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = setInitData['result']['rechargeData'][0]["showText"];
+		this.curCoin2.text = setInitData['result']['rechargeData'][0]["showText"]+"("+setInitData['result']['rechargeData'][0]["userLimitFlag"]+"/"+setInitData['result']['rechargeData'][0]["rechargeLimit"]+")";
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(120,250);
         this.addChild(this.curCoin2);
+
+        this.limit = new Laya.Sprite();
+        this.limit.loadImage("comp/limit.png");
+        this.limit.pos(260,150);
+        this.limit.scale(2,2);
+        this.addChild(this.limit);
         //充值按钮背景图
         this.bgcolor1 = new Laya.Sprite();
         this.bgcolor1.zOrder=1;
@@ -70,7 +80,10 @@
 		this.rechargeFont1.leading = 5;
         this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(150,320);
-        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][0]["money"]]);
+        if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["userLimitFlag"]["rechargeLimit"]){
+            //判断限冲次数
+            this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][0]["money"]]);
+        }
         this.addChild(this.rechargeFont1);
 
         this.coinImg2 = new Laya.Sprite();//图
@@ -93,10 +106,24 @@
         this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = setInitData['result']['rechargeData'][1]["showText"];;
+        if(setInitData['result']['rechargeData'][1]["userFirstFlag"] == 'is_first'){
+		    this.curCoin2.text = setInitData['result']['rechargeData'][1]["showText"]+setInitData['result']['rechargeData'][1]["giveCoin"];
+        }else{
+            this.curCoin2.text = setInitData['result']['rechargeData'][1]["showText"];
+        }
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(470,250);
         this.addChild(this.curCoin2);
+
+        //判断是否首充
+        if(setInitData['result']['rechargeData'][1]["userFirstFlag"] == 'is_first'){
+            this.first = new Laya.Sprite();
+            this.first.loadImage("comp/first.png");
+            this.first.pos(610,150);
+            this.first.scale(2,2);
+            this.addChild(this.first);
+        }
+
         this.bgcolor1.graphics.drawPath(450, 310, [
             ["moveTo", 20, 0],
             ["lineTo", 200, 0],
