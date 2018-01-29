@@ -176,7 +176,7 @@ function getDeliverByIdAndUserNo(id) {
             } else {
                 deliverStr += "<span>已发货</span>";
                 deliverStr += "</div>";
-                deliverStr += "<div style='margin-top: 10%;font-size: 1.5rem;color: #666615;'>";
+                deliverStr += "<div style='margin-top: 10%;font-size: 1.5rem;color: white;'>";
                 deliverStr += "    <div class='col-xs-5 user-toy-left user-toy-text-status'>发货单号:</div>";
                 deliverStr += "    <div class='col-xs-5 user-toy-right user-toy-text-status'>快递公司:</div>";
                 deliverStr += "    <div class='col-xs-5 user-toy-left user-toy-text-status'>"+result["deliverNo"]+"</div>";
