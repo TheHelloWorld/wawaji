@@ -249,7 +249,7 @@ public class BaseConstant {
 	public static final String BACK_USER_PASSWORD = "asdkljfhalksjvoiualknxcvlkj123lsjchvlkjasdf";
 
 	/**
-	 * 默认用户邀请码
+	 * 默认用户邀请码用户编号
 	 */
 	public static final String DEFAULT_INVITATION_USER_NO = "0";
 
