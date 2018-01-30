@@ -82,6 +82,8 @@ public class ImageUtil {
 
         String imgSrc = "E:\\gitWorkSpeace\\wawaji\\src\\main\\webapp\\image\\share\\share.png";
 
+
+
         float alpha = 0.9f;
 
         String font = "宋体";
@@ -90,13 +92,13 @@ public class ImageUtil {
 
         int fontSize = 100;
 
-        Color color = Color.BLACK;
+        Color color = Color.decode("#824121");
 
         String inputWords = "ESDC5";
 
         int x = 600;
 
-        int y = 1206;
+        int y = 1306;
 
         String imageFormat = "png";
 
