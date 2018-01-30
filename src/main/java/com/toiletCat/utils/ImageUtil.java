@@ -1,12 +1,6 @@
 package com.toiletCat.utils;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.color.ColorSpace;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -29,6 +23,7 @@ import javax.imageio.stream.ImageInputStream;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import net.coobird.thumbnailator.Thumbnails;
 
 public class ImageUtil {
 
@@ -78,6 +73,8 @@ public class ImageUtil {
         }
     }
 
+
+
     public static void main(String[] args) throws IOException {
 
         String imgSrc = "E:\\gitWorkSpeace\\wawaji\\src\\main\\webapp\\image\\share\\share.png";
@@ -104,6 +101,14 @@ public class ImageUtil {
 
         String toPath = "D://tttt1.png";
 
+        String dd = "D://tttt2.png";
+
         alphaWords2Image(imgSrc, alpha, font, fontStyle, fontSize, color, inputWords, x, y, imageFormat, toPath);
+
+
+        Thumbnails.of(toPath)
+                .scale(1f)
+                .outputQuality(0.5f)
+                .toFile(dd);
     }
 }
