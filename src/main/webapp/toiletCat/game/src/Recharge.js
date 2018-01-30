@@ -2,11 +2,7 @@
     function Recharge(){
         Recharge.super(this);
         this.bgcolor = new Laya.Sprite();
-        if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["rechargeLimit"] ){
-            this.bgcolor.graphics.drawRect(0, 0, 753, 1092, "#FEFE9E");
-        }else{
-            this.bgcolor.graphics.drawRect(0, 0, 753, 1092, "#DFDDD9");
-        }
+        this.bgcolor.graphics.drawRect(0, 0, 753, 1092, "#FEFE9E");
         this.addChild(this.bgcolor);
 
         this.back = new Laya.Sprite();
@@ -28,7 +24,7 @@
         this.curCoin1 = new Laya.Text();//文字
         this.curCoin1.color = "#000000";
 		this.curCoin1.font = "Impact";
-        this.curCoin1.fontSize = 40;
+        this.curCoin1.fontSize = 30;
         this.curCoin1.width = 300;
 		this.curCoin1.wordWrap = true;
 		this.curCoin1.text = setInitData['result']['rechargeData'][0]["coinText"];
@@ -48,12 +44,17 @@
 
         this.limit = new Laya.Sprite();
         this.limit.loadImage("comp/limit.png");
-        this.limit.pos(260,150);
+        this.limit.pos(290,150);
         this.limit.scale(2,2);
         this.addChild(this.limit);
         //充值按钮背景图
         this.bgcolor1 = new Laya.Sprite();
         this.bgcolor1.zOrder=1;
+        if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["rechargeLimit"] ){
+            var color = "#FEFE9E";
+        }else{
+            var color = "#DFDDD9";
+        }
         this.bgcolor1.graphics.drawPath(100, 310, [
             ["moveTo", 20, 0],
             ["lineTo", 200, 0],
@@ -67,7 +68,7 @@
             ["closePath"]
         ],
         {
-            fillStyle: "#FEFE9E"
+            fillStyle: color
         });
         this.addChild(this.bgcolor1);
         this.rechargeFont1 = new Laya.Text();//文字
@@ -80,7 +81,7 @@
 		this.rechargeFont1.leading = 5;
         this.rechargeFont1.zOrder = 2;
         this.rechargeFont1.pos(150,320);
-        if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["rechargeLimit"]){
+        if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["userLimitFlag"]["rechargeLimit"]){
             //判断限冲次数
             this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][0]["money"]]);
         }
@@ -93,10 +94,14 @@
         this.curCoin2 = new Laya.Text();//文字
         this.curCoin2.color = "#000000";
 		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 40;
+        this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = setInitData['result']['rechargeData'][1]["coinText"];
+        if(setInitData['result']['rechargeData'][1]["userFirstFlag"] == 'is_first'){
+		    this.curCoin2.text = "充"+setInitData['result']['rechargeData'][1]["coinText"]+"送"+setInitData['result']['rechargeData'][1]["giveCoin"];
+        }else{
+            this.curCoin2.text = "充"+setInitData['result']['rechargeData'][1]["coinText"];
+        }
 		this.curCoin2.leading = 5;
         this.curCoin2.pos(520,180);
         this.addChild(this.curCoin2);
@@ -107,8 +112,7 @@
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
         if(setInitData['result']['rechargeData'][1]["userFirstFlag"] == 'is_first'){
-			var first_coin = setInitData['result']['rechargeData'][1]["giveCoin"] + setInitData['result']['rechargeData'][1]['coin'];
-		    this.curCoin2.text = setInitData['result']['rechargeData'][1]["showText"].replace("#{coin}",first_coin);
+		    this.curCoin2.text = setInitData['result']['rechargeData'][1]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][1]["giveCoin"]);
         }else{
             this.curCoin2.text = setInitData['result']['rechargeData'][1]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][1]['coin']);
         }
@@ -120,7 +124,7 @@
         if(setInitData['result']['rechargeData'][1]["userFirstFlag"] == 'is_first'){
             this.first = new Laya.Sprite();
             this.first.loadImage("comp/first.png");
-            this.first.pos(610,150);
+            this.first.pos(640,150);
             this.first.scale(2,2);
             this.addChild(this.first);
         }
@@ -161,7 +165,7 @@
         this.curCoin2 = new Laya.Text();//文字
         this.curCoin2.color = "#000000";
 		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 40;
+        this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
 		this.curCoin2.text = setInitData['result']['rechargeData'][2]["coinText"];
@@ -214,7 +218,7 @@
         this.curCoin2 = new Laya.Text();//文字
         this.curCoin2.color = "#000000";
 		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 40;
+        this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
 		this.curCoin2.text = setInitData['result']['rechargeData'][3]["coinText"];
@@ -267,7 +271,7 @@
         this.curCoin2 = new Laya.Text();//文字
         this.curCoin2.color = "#000000";
 		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 40;
+        this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
 		this.curCoin2.text = setInitData['result']['rechargeData'][4]["coinText"];
@@ -320,7 +324,7 @@
         this.curCoin2 = new Laya.Text();//文字
         this.curCoin2.color = "#000000";
 		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 40;
+        this.curCoin2.fontSize = 30;
         this.curCoin2.width = 300;
 		this.curCoin2.wordWrap = true;
 		this.curCoin2.text = setInitData['result']['rechargeData'][5]["coinText"];
@@ -385,7 +389,7 @@
         this.curCoin = new Laya.Text();
         this.curCoin.color = "#000000";
 		this.curCoin.font = "Impact";
-        this.curCoin.fontSize = 40;
+        this.curCoin.fontSize = 30;
         this.curCoin.width = 300;
 		this.curCoin.wordWrap = true;
 		this.curCoin.text = sessionStorage["toiletCatUserCoin"]; 
