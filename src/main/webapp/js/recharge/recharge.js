@@ -48,6 +48,9 @@ function recharge() {
 
                 var coin = list[i]["coin"];
                 var coinText = list[i]["coinText"];
+
+                var money = "¥" + list[i]["money"];
+
                 // 判断是否限充
                 if(list[i]["rechargeLimit"] != 0) {
 
@@ -55,8 +58,10 @@ function recharge() {
                         str += "	<div class='recharge-block' onclick=rechargeThis('" + list[i]["money"] + "') >";
                         str += "	<img class='recharge-limit' src='/image/recharge/limit_recharge.png'>";
                     } else {
-                        str += "	<div class='recharge-disabled' >";
+                        str += "	<div class='recharge-block' >";
+                        str += "	<img class='recharge-limit' src='/image/recharge/limit_recharge.png'>";
                         money_class = "recharge-money-disabled";
+                        money = "今日已达上限";
                     }
                     // 判断是否首充
                 } else if(list[i]["firstFlag"] != 0) {
@@ -83,7 +88,7 @@ function recharge() {
                 }
                 str += "		</div>";
                 str += "		<div class='" + money_class + "' >";
-                str += "			¥" + list[i]["money"];
+                str +=              money;
                 str += "		</div>";
                 str += "		<div class='clear:both'>";
                 str += "		</div>";
