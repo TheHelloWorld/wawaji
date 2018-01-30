@@ -64,7 +64,7 @@ function recharge() {
                     if(list[i]["userFirstFlag"] == "is_first") {
                         str += "	<img class='recharge-first' src='/image/recharge/first_recharge.png'>";
                         coin += list[i]["giveCoin"];
-                        coinText = "充" + coinText + "返" + list[i]["giveCoin"];
+                        coinText = "充" + coinText + "送" + list[i]["giveCoin"];
                     }
                 } else {
                     str += "	<div class='recharge-block' onclick=rechargeThis('" + list[i]["money"] + "') >";
