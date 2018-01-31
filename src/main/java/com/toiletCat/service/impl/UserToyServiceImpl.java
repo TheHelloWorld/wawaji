@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.constants.BaseConstant;
+import com.toiletCat.constants.ConfigConstant;
 import com.toiletCat.dao.DeliverDao;
 import com.toiletCat.dao.UserDao;
 import com.toiletCat.dao.UserSpendRecordDao;
@@ -119,10 +120,10 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
             public void exec() {
                 // 邮寄娃娃所需游戏币数
                 Integer deliverCoin = Integer.valueOf(toiletCatConfigService.getConfigByKey(
-                        BaseConstant.USER_DELIVER_COIN));
+                        ConfigConstant.USER_DELIVER_COIN));
                 // 几个娃娃免费包邮
                 Integer freeDeliverNum = Integer.valueOf(toiletCatConfigService.getConfigByKey(
-                        BaseConstant.FREE_DELIVER_NUM));
+                        ConfigConstant.FREE_DELIVER_NUM));
                 UserToy userToy = userToyDao.getUserToyByUserNoAndId(userNo, id);
                 // 设置邮寄所需游戏币数
                 userToy.setDeliverCoin(deliverCoin);
@@ -167,13 +168,13 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                     // 几个娃娃免费包邮
                     Integer freeDeliverNum = Integer.valueOf(toiletCatConfigService.getConfigByKey(
-                            BaseConstant.FREE_DELIVER_NUM));
+                            ConfigConstant.FREE_DELIVER_NUM));
 
                     // 若寄送娃娃少于包邮个数则扣除相应游戏币作为邮寄费
                     if(userToyIdList.size() < freeDeliverNum) {
                         // 获取邮寄费
                         Integer deliverCoin = Integer.valueOf(toiletCatConfigService.getConfigByKey(
-                                BaseConstant.USER_DELIVER_COIN));
+                                ConfigConstant.USER_DELIVER_COIN));
 
                         Integer userCoin = userDao.getUserCoinByUserNo(userNo);
 

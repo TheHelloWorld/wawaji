@@ -6,6 +6,7 @@ import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.UserMachine;
 import com.toiletCat.bean.UserSeeGameRoom;
 import com.toiletCat.constants.BaseConstant;
+import com.toiletCat.constants.ConfigConstant;
 import com.toiletCat.dao.CatchRecordDao;
 import com.toiletCat.dao.UserDao;
 import com.toiletCat.entity.*;
@@ -21,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
 
 @SuppressWarnings("all")
@@ -88,7 +88,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     user.setMobileNo(mobileNo);
 
                     Integer defaultUserCoin = Integer.valueOf(
-                            toiletCatConfigService.getConfigByKey(BaseConstant.USER_DEFAULT_COIN));
+                            toiletCatConfigService.getConfigByKey(ConfigConstant.USER_DEFAULT_COIN));
 
                     // 用户游戏币数
                     user.setUserCoin(defaultUserCoin);
@@ -620,7 +620,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 Integer roomAddLuckyNum = gameRoom.getAddLuckyNum();
 
                 Integer userLucKyNum = RandomIntUtil.getRandomNumByHighBound(Integer.valueOf(
-                        toiletCatConfigService.getConfigByKey(BaseConstant.USER_LUCKY_NUM_BEFORE_THRESHOLD)));
+                        toiletCatConfigService.getConfigByKey(ConfigConstant.USER_LUCKY_NUM_BEFORE_THRESHOLD)));
 
                 // 判断当前用户是否在此房间有幸运值
                 CommonResult<Integer> userGameRoomCount = userGameRoomService
@@ -676,20 +676,20 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 // 幸运值大于阈值后
                 if(userNowLuckyNum >= Integer.valueOf(
-                        toiletCatConfigService.getConfigByKey(BaseConstant.USER_LUCKY_NUM_THRESHOLD))) {
+                        toiletCatConfigService.getConfigByKey(ConfigConstant.USER_LUCKY_NUM_THRESHOLD))) {
 
                     // 按幸运值大于阈值后幸运值最大随机数上限进行累加
                     userLucKyNum = RandomIntUtil.getRandomNumByHighBound(Integer.valueOf(
-                            toiletCatConfigService.getConfigByKey(BaseConstant.USER_LUCKY_NUM_AFTER_THRESHOLD)));
+                            toiletCatConfigService.getConfigByKey(ConfigConstant.USER_LUCKY_NUM_AFTER_THRESHOLD)));
 
                 }
 
                 // 若当前用户是特殊用户
-                if(toiletCatConfigService.getConfigByKey(BaseConstant.VIP_USER_NO_LIST).contains(userNo)) {
+                if(toiletCatConfigService.getConfigByKey(ConfigConstant.VIP_USER_NO_LIST).contains(userNo)) {
 
                     // 用户游戏房间幸运累加值则为特殊值
                     userLucKyNum = Integer.valueOf(toiletCatConfigService.getConfigByKey(
-                            BaseConstant.VIP_USER_GAME_ROOM_ADD_NUM));
+                            ConfigConstant.VIP_USER_GAME_ROOM_ADD_NUM));
 
                     // 日志记录
                     logger.info("getGameCatchResultByUserNoAndGameRoomNo user is vip userNo:" + userNo +
@@ -938,7 +938,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
-                Integer coin = Integer.valueOf(toiletCatConfigService.getConfigByKey(BaseConstant.USER_INVITE_COIN));
+                Integer coin = Integer.valueOf(toiletCatConfigService.getConfigByKey(ConfigConstant.USER_INVITE_COIN));
 
                 Date tradeTime = new Date();
 

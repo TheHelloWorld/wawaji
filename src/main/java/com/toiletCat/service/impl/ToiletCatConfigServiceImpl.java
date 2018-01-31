@@ -3,7 +3,7 @@ package com.toiletCat.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
-import com.toiletCat.constants.BaseConstant;
+import com.toiletCat.constants.ConfigConstant;
 import com.toiletCat.dao.ToiletCatConfigDao;
 import com.toiletCat.entity.ToiletCatConfig;
 import com.toiletCat.service.ToiletCatConfigService;
@@ -38,7 +38,7 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
                 initCoinfgMap();
 
                 // 添加对应key value
-                BaseConstant.configMap.put(toiletCatConfig.getConfigKey(), toiletCatConfig.getConfigValue());
+                ConfigConstant.configMap.put(toiletCatConfig.getConfigKey(), toiletCatConfig.getConfigValue());
             }
         }, "addToiletCatConfig", toiletCatConfig);
     }
@@ -100,11 +100,8 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
             public void exec() {
                 toiletCatConfigDao.updateToiletCatConfig(toiletCatConfig);
 
-                // 初始化配置Map
-                initCoinfgMap();
+                refreshConfigMap();
 
-                // 更新对应key value
-                BaseConstant.configMap.put(toiletCatConfig.getConfigKey(), toiletCatConfig.getConfigValue());
             }
         }, "updateToiletCatConfig", toiletCatConfig);
     }
@@ -120,11 +117,8 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
             public void exec() {
                 toiletCatConfigDao.deleteToiletCatConfig(toiletCatConfig);
 
-                // 初始化配置Map
-                initCoinfgMap();
+                refreshConfigMap();
 
-                // 删除对应key value
-                BaseConstant.configMap.remove(toiletCatConfig.getConfigKey());
             }
         }, "deleteToiletCatConfig", toiletCatConfig);
     }
@@ -139,26 +133,26 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
         logger.info("getConfigByKey: "+ key);
 
         // 若获得的key目前为空则重新获取一遍配置Map
-        if(BaseConstant.configMap.get(key) == null) {
+        if(ConfigConstant.configMap.get(key) == null) {
             refreshConfigMap();
         }
 
         // 若获取后依旧为空则日志报警并返回0
-        if(BaseConstant.configMap.get(key) == null) {
+        if(ConfigConstant.configMap.get(key) == null) {
             logger.warn("getConfigByKey key is null:" + key);
             return "0";
         }
 
-        logger.info("getConfigByKey: "+ key + ", value:" + BaseConstant.configMap.get(key));
+        logger.info("getConfigByKey: "+ key + ", value:" + ConfigConstant.configMap.get(key));
 
-        return BaseConstant.configMap.get(key);
+        return ConfigConstant.configMap.get(key);
     }
 
     /**
      * 初始化map
      */
     private void initCoinfgMap() {
-        if(BaseConstant.configMap.isEmpty()) {
+        if(ConfigConstant.configMap.isEmpty()) {
 
             refreshConfigMap();
         }
@@ -172,9 +166,11 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
 
         list = toiletCatConfigDao.getAllConfig();
 
+        ConfigConstant.configMap.clear();
+
         // 将配置放入配置Map中
         for(ToiletCatConfig toiletCatConfig : list) {
-            BaseConstant.configMap.put(toiletCatConfig.getConfigKey(), toiletCatConfig.getConfigValue());
+            ConfigConstant.configMap.put(toiletCatConfig.getConfigKey(), toiletCatConfig.getConfigValue());
         }
     }
 
