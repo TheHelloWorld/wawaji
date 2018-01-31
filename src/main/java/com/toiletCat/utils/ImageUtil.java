@@ -99,16 +99,16 @@ public class ImageUtil {
 
         String imageFormat = "png";
 
-        String toPath = "D://tttt1.png";
+        String toPath = "D://test1.jpg";
 
-        String dd = "D://tttt2.png";
+        String dd = "D://test2.jpg";
 
-        alphaWords2Image(imgSrc, alpha, font, fontStyle, fontSize, color, inputWords, x, y, imageFormat, toPath);
+//        alphaWords2Image(imgSrc, alpha, font, fontStyle, fontSize, color, inputWords, x, y, imageFormat, toPath);
 
 
         Thumbnails.of(toPath)
                 .scale(1f)
-                .outputQuality(0.5f)
+                .outputQuality(0.3f)
                 .toFile(dd);
     }
 }
