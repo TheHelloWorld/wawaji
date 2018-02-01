@@ -617,23 +617,21 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             @Override
             public void exec() {
 
-                Integer userLucKyNum = RandomIntUtil.getRandomNumByHighBound(Integer.valueOf(
+                Integer userLucKyNum = RandomIntUtil.getRandomNum(5, Integer.valueOf(
                         toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.USER_LUCKY_NUM_BEFORE_THRESHOLD)));
 
-//                if(status > 0) {
-//
-//                    // 判断用户是否是第一次抓取
-//                    Integer userCatchRecordnum = catchRecordDao.countCatchRecordByUserNo(userNo);
-//
-//                    if(userCatchRecordnum == 0) {
-//                        // 若是第一次抓取则直接成功
-//                        // 重置房间和用户房间幸运值
-//                        got(resetLuckyNum(catchId, userNo, gameRoomNo, userLucKyNum));
-//                        return;
-//                    }
-//
-//                }
+                if(status > 0) {
 
+                    // 判断用户是否是第一次抓取
+                    Integer userCatchRecordnum = catchRecordDao.countCatchRecordByUserNo(userNo);
+
+                    if(userCatchRecordnum == 0) {
+                        // 若是第一次抓取则直接成功
+                        // 重置房间和用户房间幸运值
+                        got(resetLuckyNum(catchId, userNo, gameRoomNo, userLucKyNum));
+                        return;
+                    }
+                }
 
                 // 获得房间当前幸运值,房间幸运值,房间累加幸运值
                 CommonResult<GameRoom> gameRoomLuckyNum = gameRoomService.getLuckyNumByGameRoomNo(gameRoomNo);
@@ -1078,8 +1076,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             String toyNo = gameRoomService.getUserSeeGameRoomByGameRoomNo(gameRoomNo).getValue().getToyNo();
 
             userToy.setToyNo(toyNo);
-
-            userToy.setDeliverId(0L);
 
             userToy.setChoiceType(ChoiceType.INIT.getStatus());
 

@@ -24,11 +24,6 @@ public class UserToy extends BaseEntity implements Serializable {
      */
     private Integer choiceType;
 
-    /**
-     * 发货记录id
-     */
-    private Long deliverId;
-
     /************************* 链表查询用 toy *******************************/
 
     /**
@@ -55,6 +50,11 @@ public class UserToy extends BaseEntity implements Serializable {
      * 免费包邮个数
      */
     private Integer freeDeliverNum;
+
+    /**
+     * 待处理娃娃数量
+     */
+    private Integer unHandleNum;
 
     public String getUserNo() {
         return userNo;
@@ -88,14 +88,6 @@ public class UserToy extends BaseEntity implements Serializable {
         this.choiceType = choiceType;
     }
 
-    public Long getDeliverId() {
-        return deliverId;
-    }
-
-    public void setDeliverId(Long deliverId) {
-        this.deliverId = deliverId;
-    }
-
     public String getToyName() {
         return toyName;
     }
@@ -126,5 +118,13 @@ public class UserToy extends BaseEntity implements Serializable {
 
     public void setFreeDeliverNum(Integer freeDeliverNum) {
         this.freeDeliverNum = freeDeliverNum;
+    }
+
+    public Integer getUnHandleNum() {
+        return unHandleNum;
+    }
+
+    public void setUnHandleNum(Integer unHandleNum) {
+        this.unHandleNum = unHandleNum;
     }
 }

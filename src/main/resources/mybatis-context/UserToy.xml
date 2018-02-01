@@ -12,8 +12,6 @@
         <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
         <!-- 选择方式 -->
         <result property="choiceType" column="choice_type" jdbcType="INTEGER"/>
-        <!-- 发货记录id -->
-        <result property="deliverId" column="deliver_id" jdbcType="BIGINT"/>
         <!-- 创建时间 -->
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <!-- 最后修改时间 -->
@@ -26,6 +24,8 @@
         <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
         <!-- 娃娃兑换游戏币数 -->
         <result property="toyForCoin" column="toy_for_coin" jdbcType="INTEGER"/>
+        <!-- 待处理娃娃数量 -->
+        <result property="unHandleNum" column="un_handle_num" jdbcType="INTEGER"/>
     </resultMap>
 
     <!-- 添加用户娃娃记录 -->
@@ -34,15 +34,13 @@
             (
                 user_no,
                 toy_no,
-                choice_type,
-                deliver_id
+                choice_type
             )
         values
             (
                 #{userNo, jdbcType=VARCHAR},
                 #{toyNo, jdbcType=VARCHAR},
-                #{choiceType, jdbcType=INTEGER},
-                #{deliverId, jdbcType=BIGINT}
+                #{choiceType, jdbcType=INTEGER}
             )
     </insert>
 
@@ -55,14 +53,11 @@
     <select id="getUserToyListByUserNo" resultMap="userToyMap">
         select
             u.id,
-            u.user_no,
-            u.toy_no,
-            u.choice_type,
             t.toy_img,
             t.toy_name,
-            u.create_time
+            count(u.toy_no) un_handle_num
         from user_toy u,toy t
-        where u.toy_no = t.toy_no and u.user_no = #{userNo}
+        where u.toy_no = t.toy_no and u.user_no = #{userNo} and choice_type = 0 group by u.toy_no order by u.create_time asc
         limit #{startPage}, #{pageSize}
     </select>
 
@@ -73,7 +68,6 @@
             u.user_no,
             u.toy_no,
             u.choice_type,
-            u.deliver_id,
             t.toy_img,
             t.toy_name,
             t.toy_for_coin,
@@ -96,8 +90,7 @@
     <!-- 根据id,用户编号修改选择方式 -->
     <update id="updateChoiceTypeByIdAndUserNo" parameterType="com.toiletCat.entity.UserToy">
         update user_toy set
-          choice_type = #{choiceType, jdbcType=INTEGER},
-          deliver_id = #{deliverId, jdbcType=BIGINT}
+          choice_type = #{choiceType, jdbcType=INTEGER}
         where id = #{id} and user_no = #{userNo}
     </update>
 
