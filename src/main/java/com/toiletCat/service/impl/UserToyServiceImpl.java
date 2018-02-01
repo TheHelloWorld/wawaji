@@ -5,14 +5,8 @@ import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.constants.ToiletCatConfigConstant;
-import com.toiletCat.dao.DeliverDao;
-import com.toiletCat.dao.UserDao;
-import com.toiletCat.dao.UserSpendRecordDao;
-import com.toiletCat.dao.UserToyDao;
-import com.toiletCat.entity.Deliver;
-import com.toiletCat.entity.UserAddress;
-import com.toiletCat.entity.UserSpendRecord;
-import com.toiletCat.entity.UserToy;
+import com.toiletCat.dao.*;
+import com.toiletCat.entity.*;
 import com.toiletCat.enums.*;
 import com.toiletCat.service.ToiletCatConfigService;
 import com.toiletCat.service.UserToyService;
@@ -41,6 +35,9 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
     private UserDao userDao;
 
     @Autowired
+    private ToyDao toyDao;
+
+    @Autowired
     private UserSpendRecordDao userSpendRecordDao;
 
     @Autowired
@@ -56,7 +53,6 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
         return exec(new Callback() {
             @Override
             public void exec() {
-                userToy.setDeliverId(0L);
                 userToyDao.addUserToy(userToy);
             }
         }, "addUserToy", userToy);
@@ -139,11 +135,17 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
      * @param userToy 用户玩具
      * @param userAddress 用户地址
      * @param toyNameArray 玩具名集合
-     * @param userToyIdList 用户战利品id集合
+     * @param toyNoList 玩具编号集合
      */
     @Override
     public CommonResult<String> updateChoiceTypeByIdAndUserNo(final UserToy userToy, final UserAddress userAddress,
-                                                      final String toyNameArray, final List<Long> userToyIdList) {
+                                                      final String toyNameArray, final List<String> toyNoList) {
+
+        JSONObject json = new JSONObject();
+        json.put("userToy", userToy);
+        json.put("userAddress", userAddress);
+        json.put("toyNameArray", toyNameArray);
+        json.put("toyNoList", toyNoList);
 
         return exec(new Callback() {
             @Override
@@ -153,7 +155,8 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                 Integer choiceType = userToy.getChoiceType();
                 // 用户编号
                 String userNo = userToy.getUserNo();
-                
+
+                // 若是选择快递
                 if(ChoiceType.FOR_DELIVER.getStatus() == choiceType) {
 
                     Deliver deliver = new Deliver();
@@ -171,7 +174,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                             ToiletCatConfigConstant.FREE_DELIVER_NUM));
 
                     // 若寄送娃娃少于包邮个数则扣除相应游戏币作为邮寄费
-                    if(userToyIdList.size() < freeDeliverNum) {
+                    if(toyNoList.size() < freeDeliverNum) {
                         // 获取邮寄费
                         Integer deliverCoin = Integer.valueOf(toiletCatConfigService.getConfigByKey(
                                 ToiletCatConfigConstant.USER_DELIVER_COIN));
@@ -215,14 +218,30 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                         logger.info("updateChoiceTypeByIdAndUserNo 添加用户消费记录成功");
                     }
 
-                    for(Long id : userToyIdList) {
+                    for(String toyNo : toyNoList) {
 
-                        UserToy nowUserToy = new UserToy();
-                        nowUserToy.setDeliverId(deliver.getId());
-                        nowUserToy.setId(id);
-                        nowUserToy.setUserNo(userNo);
-                        nowUserToy.setChoiceType(choiceType);
-                        userToyDao.updateChoiceTypeByIdAndUserNo(nowUserToy);
+                        Toy toyInfo = toyDao.getToyByToyNo(toyNo);
+
+
+                        UserToyHandle userToyHandle = new UserToyHandle();
+
+                        userToyHandle.setUserNo(userNo);
+
+                        userToyHandle.setChoiceType(choiceType);
+
+                        userToyHandle.setDeliverId(deliver.getId());
+
+                        userToyHandle.setToyNo(toyNo);
+
+                        userToyHandle.setToyName(toyInfo.getToyName());
+
+                        userToyHandle.setToyImg(toyInfo.getToyImg());
+
+
+
+
+
+//                        userToyDao.updateChoiceTypeByIdAndUserNo(nowUserToy);
                     }
 
                 } else if(ChoiceType.FOR_COIN.getStatus() == choiceType) {
@@ -267,7 +286,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                 got(json.toJSONString());
 
             }
-        }, "updateChoiceTypeByIdAndUserNo", userToy);
+        }, "updateChoiceTypeByIdAndUserNo", json);
     }
 
     /**

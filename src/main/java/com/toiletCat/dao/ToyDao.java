@@ -55,4 +55,11 @@ public interface ToyDao {
      * @return
      */
     List<Toy> getAllAvailableToy();
+
+    /**
+     * 根据玩具编号获得玩具信息
+     * @param toyNo 玩具编号
+     * @return
+     */
+    Toy getToyByToyNo(String toyNo);
 }

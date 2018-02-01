@@ -25,6 +25,8 @@
         <result property="toyOriginCoin" column="toy_origin_coin" jdbcType="INTEGER"/>
         <!-- 娃娃成本 -->
         <result property="toyCost" column="toy_cost" jdbcType="DECIMAL"/>
+        <!-- 兑换个数 -->
+        <result property="deliverNum" column="deliver_num" jdbcType="INTEGER"/>
         <!-- 是否可用 -->
         <result property="currentState" column="current_state" jdbcType="INTEGER"/>
         <!-- 创建时间 -->
@@ -46,6 +48,7 @@
                 toy_now_coin,
                 toy_origin_coin,
                 toy_cost,
+                deliver_num,
                 current_state
             )
         values
@@ -59,6 +62,7 @@
                 #{toyNowCoin, jdbcType=INTEGER},
                 #{toyOriginCoin, jdbcType=INTEGER},
                 #{toyCost, jdbcType=DECIMAL},
+                #{deliverNum, jdbcType=INTEGER},
                 #{currentState, jdbcType=INTEGER}
             )
     </insert>
@@ -81,6 +85,7 @@
             toy_now_coin,
             toy_origin_coin,
             toy_cost,
+            deliver_num,
             current_state
         from toy
         limit #{startPage}, #{pageSize}
@@ -99,8 +104,19 @@
           toy_now_coin,
           toy_origin_coin,
           toy_cost,
+          deliver_num,
           current_state
         from toy where id = #{id} and toy_no = #{toyNo}
+    </select>
+
+    <!-- 根据娃娃编号获得娃娃及信息 -->
+    <select id="getToyByToyNo" parameterType="java.lang.String" resultMap="toyMap">
+        select
+            toy_no,
+            toy_name,
+            toy_img,
+            deliver_num
+        from toy where toy_no = #{toyNo, jdbcType=VARCHAR}
     </select>
 
     <!-- 根据id,娃娃机编号修改娃娃机记录 -->
@@ -114,6 +130,7 @@
             toy_now_coin = #{toyNowCoin, jdbcType=INTEGER},
             toy_origin_coin = #{toyOriginCoin, jdbcType=INTEGER},
             toy_cost = #{toyCost, jdbcType=DECIMAL},
+            deliver_num = #{deliverNum, jdbcType=INTEGER},
             current_state = #{currentState, jdbcType=INTEGER}
         where id = #{id} and toy_no = #{toyNo, jdbcType=VARCHAR}
     </update>

@@ -56,6 +56,11 @@ public class Toy extends BaseEntity implements Serializable {
     private BigDecimal toyCost;
 
     /**
+     * 兑换个数
+     */
+    private Integer deliverNum;
+
+    /**
      * 是否可用
      */
     private Integer currentState;
@@ -130,6 +135,14 @@ public class Toy extends BaseEntity implements Serializable {
 
     public void setToyCost(BigDecimal toyCost) {
         this.toyCost = toyCost;
+    }
+
+    public Integer getDeliverNum() {
+        return deliverNum;
+    }
+
+    public void setDeliverNum(Integer deliverNum) {
+        this.deliverNum = deliverNum;
     }
 
     public Integer getCurrentState() {

@@ -52,4 +52,6 @@ public interface UserToyDao {
      * @return
      */
     List<UserToy> getAllUnHandleUserToyByUserNo(String userNo);
+
+    List<UserToy> getLimitUserToyListByUserNoandToyNo(@Param("userNo") String userNo, @Param("toyNo") String toyNo);
 }

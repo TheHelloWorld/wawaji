@@ -42,10 +42,10 @@ public interface UserToyService {
      * @param userToy 用户玩具
      * @param userAddress 用户地址
      * @param toyNameArray 玩具名集合
-     * @param userToyIdList 用户战利品id集合
+     * @param toyNoList 玩具编号集合
      */
     CommonResult<String> updateChoiceTypeByIdAndUserNo(UserToy userToy, UserAddress userAddress, String toyNameArray,
-                                               List<Long> userToyIdList);
+                                                       List<String> toyNoList);
     
     /**
      * 根据用户编号获得用户所有未处理战利品
