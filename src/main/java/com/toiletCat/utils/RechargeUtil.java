@@ -126,7 +126,7 @@ public class RechargeUtil {
         json.put("return_url", propertiesUtil.getProperty("recharge_return_url"));
         json.put("name", propertiesUtil.getProperty("recharge_name"));
         json.put("money", money);
-        json.put("sitename", propertiesUtil.getProperty("recharge_sitename"));
+        json.put("sitename", propertiesUtil.getProperty("recharge_site_name"));
 
         String sign = getSign(json);
 
