@@ -324,12 +324,14 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
             PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
+            String queryUrl = propertiesUtil.getProperty("recharge_query_url");
+
             String pid = propertiesUtil.getProperty("recharge_pid");
 
             String key = propertiesUtil.getProperty("recharge_key");
 
             StringBuilder sb = new StringBuilder("");
-            sb.append("http://tx87.cn/api.php?act=order&pid=");
+            sb.append(queryUrl);
             sb.append(pid);
             sb.append("&key=");
             sb.append(key);
