@@ -24,13 +24,13 @@ public class RandomIntUtil {
 
     /**
      * 获得下边界到最大值之间的随机数
-     * @param bound 下边界
+     * @param lowBound 下边界
      * @return
      */
-    public static Integer getRandomNum(int bound) {
+    public static Integer getRandomNum(int randomNum, int lowBound) {
         Random random = new Random();
 
-        return random.nextInt(10) + 1 + bound;
+        return random.nextInt(randomNum) + 1 + lowBound;
     }
 
     /**
@@ -38,7 +38,7 @@ public class RandomIntUtil {
      * @param highBound 上边界
      * @return
      */
-    public static Integer getRandomNumByHighBound(int highBound) {
+    public static Integer  getRandomNumByHighBound(int highBound) {
         Random random = new Random();
 
         return random.nextInt(highBound) + 1;

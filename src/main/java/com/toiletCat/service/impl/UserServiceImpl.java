@@ -616,15 +616,31 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         return exec(new Callback() {
             @Override
             public void exec() {
+
+                Integer userLucKyNum = RandomIntUtil.getRandomNumByHighBound(Integer.valueOf(
+                        toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.USER_LUCKY_NUM_BEFORE_THRESHOLD)));
+
+//                if(status > 0) {
+//
+//                    // 判断用户是否是第一次抓取
+//                    Integer userCatchRecordnum = catchRecordDao.countCatchRecordByUserNo(userNo);
+//
+//                    if(userCatchRecordnum == 0) {
+//                        // 若是第一次抓取则直接成功
+//                        // 重置房间和用户房间幸运值
+//                        got(resetLuckyNum(catchId, userNo, gameRoomNo, userLucKyNum));
+//                        return;
+//                    }
+//
+//                }
+
+
                 // 获得房间当前幸运值,房间幸运值,房间累加幸运值
                 CommonResult<GameRoom> gameRoomLuckyNum = gameRoomService.getLuckyNumByGameRoomNo(gameRoomNo);
 
                 GameRoom gameRoom = gameRoomLuckyNum.getValue();
 
                 Integer roomAddLuckyNum = gameRoom.getAddLuckyNum();
-
-                Integer userLucKyNum = RandomIntUtil.getRandomNumByHighBound(Integer.valueOf(
-                        toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.USER_LUCKY_NUM_BEFORE_THRESHOLD)));
 
                 // 判断当前用户是否在此房间有幸运值
                 CommonResult<Integer> userGameRoomCount = userGameRoomService

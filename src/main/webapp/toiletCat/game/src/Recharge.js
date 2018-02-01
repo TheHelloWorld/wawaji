@@ -2,7 +2,7 @@
     function Recharge(){
         Recharge.super(this);
         this.bgcolor = new Laya.Sprite();
-        this.bgcolor.graphics.drawRect(0, 0, 753, 1092, "#FEFE9E");
+        this.bgcolor.graphics.drawRect(0, 0, 753, 1112, "#FEFE9E");
         this.addChild(this.bgcolor);
 
         this.back = new Laya.Sprite();
@@ -53,7 +53,7 @@
         if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["rechargeLimit"] ){
             var color = "#FEFE9E";
         }else{
-            var color = "#DFDDD9";
+            var color = "#DCDCDC";
         }
         this.bgcolor1.graphics.drawPath(100, 310, [
             ["moveTo", 20, 0],
@@ -72,16 +72,23 @@
         });
         this.addChild(this.bgcolor1);
         this.rechargeFont1 = new Laya.Text();//文字
-        this.rechargeFont1.color = "#FF0000";
 		this.rechargeFont1.font = "Impact";
         this.rechargeFont1.fontSize = 30;
         this.rechargeFont1.width = 300;
 		this.rechargeFont1.wordWrap = true;
-		this.rechargeFont1.text = "￥"+setInitData['result']['rechargeData'][0]["money"];
+        if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["rechargeLimit"] ){
+			this.rechargeFont1.color = "#FF0000";
+		    this.rechargeFont1.text = "￥"+setInitData['result']['rechargeData'][0]["money"];
+			this.rechargeFont1.pos(150,320);
+        }else{
+			this.rechargeFont1.color = "#808080";
+            this.rechargeFont1.text = "今日已达上限";
+			this.rechargeFont1.pos(110,320);
+        }
 		this.rechargeFont1.leading = 5;
         this.rechargeFont1.zOrder = 2;
-        this.rechargeFont1.pos(150,320);
-        if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["userLimitFlag"]["rechargeLimit"]){
+        
+        if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["rechargeLimit"]){
             //判断限冲次数
             this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][0]["money"]]);
         }

@@ -117,7 +117,6 @@ var leftButton,rightButton,upButton,downButton,catchButton,startButton,luckyNumP
 
         this.luckyNum = new Laya.Sprite();
         this.luckyNum.loadImage("comp/ing.png");
-        this.luckyNum.x = 20;
         this.luckyNum.y = 942;
         this.luckyNum.x = (30-(luckyNum/100)*20);
         this.luckyNum.scale(luckyNum/100,1);
@@ -323,7 +322,7 @@ var leftButton,rightButton,upButton,downButton,catchButton,startButton,luckyNumP
     Laya.class(gameRechargeInit,"gameRechargeInit", _super);
 
     function gameRechargeshow(){
-        if(gameRechargeObj.y < 20 ){
+        if(gameRechargeObj.y < 0 ){
             Laya.timer.clear(this,gameRechargeshow);
         }else{
             gameRechargeObj.y -=20;
