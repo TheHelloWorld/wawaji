@@ -2,6 +2,7 @@ package com.toiletCat.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.toiletCat.constants.BaseConstant;
+import com.toiletCat.constants.RedisConstant;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class WxUtil {
     public static String getAccessToken(String app_id, String app_secret) {
 
 
-        try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+        try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
             if(StringUtils.isNotBlank(redisUtil.get("access_token"))) {
 
@@ -77,7 +78,7 @@ public class WxUtil {
             return null;
         }
 
-        try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+        try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
             if(StringUtils.isNotBlank(redisUtil.get("jsapi_ticket"))) {
 

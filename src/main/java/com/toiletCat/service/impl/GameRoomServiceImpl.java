@@ -6,6 +6,7 @@ import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.UserSeeGameRoom;
 import com.toiletCat.constants.BaseConstant;
+import com.toiletCat.constants.RedisConstant;
 import com.toiletCat.dao.GameRoomDao;
 import com.toiletCat.dao.UserGameRoomDao;
 import com.toiletCat.entity.GameRoom;
@@ -92,10 +93,10 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
                     got(list);
                     return;
                 }
-                try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                try (RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
                     for(GameRoom gameRoom : list) {
 
-                        String key = BaseConstant.REAL_GAME_ROOM_VIEWER.replace(BaseConstant.PLACEHOLDER,
+                        String key = RedisConstant.REAL_GAME_ROOM_VIEWER.replace(RedisConstant.PLACEHOLDER,
                                 gameRoom.getGameRoomNo());
 
                             String realNum = redisUtil.get(key);
@@ -151,12 +152,12 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
                 if(userSeeGameRoomList != null && userSeeGameRoomList.size() >0) {
 
-                    try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                    try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
                         for(UserSeeGameRoom userSeeGameRoom : userSeeGameRoomList) {
 
-                            String gameRoomkey = BaseConstant.GAME_ROOM_VIEWER.
-                                    replace(BaseConstant.PLACEHOLDER, userSeeGameRoom.getGameRoomNo());
+                            String gameRoomkey = RedisConstant.GAME_ROOM_VIEWER.
+                                    replace(RedisConstant.PLACEHOLDER, userSeeGameRoom.getGameRoomNo());
 
                             String viewerNum = redisUtil.get(gameRoomkey);
 
@@ -379,10 +380,10 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
         return exec(new Callback() {
             @Override
             public void exec() {
-                try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
                     // 当前游戏房间围观人数key
-                    String gameRoomkey = BaseConstant.GAME_ROOM_VIEWER.replace(BaseConstant.PLACEHOLDER, gameRoomNo);
+                    String gameRoomkey = RedisConstant.GAME_ROOM_VIEWER.replace(RedisConstant.PLACEHOLDER, gameRoomNo);
 
                     if(HandleType.CONNECT == handleType) {
                         // 围观人数+1

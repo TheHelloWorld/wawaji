@@ -5,6 +5,7 @@ import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.RechargeResult;
 import com.toiletCat.constants.BaseConstant;
+import com.toiletCat.constants.RedisConstant;
 import com.toiletCat.dao.UserDao;
 import com.toiletCat.entity.MoneyForCoin;
 import com.toiletCat.entity.UserRechargeRecord;
@@ -293,13 +294,13 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
         logger.info("setUserNotFirstRechargeFlag start userNo: " + userNo);
 
-        try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
-            String key = BaseConstant.FIRST_RECHARGE_FLAG.replace(BaseConstant.PLACEHOLDER, userNo);
+        try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
+            String key = RedisConstant.FIRST_RECHARGE_FLAG.replace(RedisConstant.PLACEHOLDER, userNo);
 
             String userFirstFlag = redisUtil.get(key);
 
-            if(userFirstFlag == null || BaseConstant.IS_FIRST.equals(userFirstFlag)) {
-                redisUtil.set(key, BaseConstant.IS_NOT_FIRST);
+            if(userFirstFlag == null || RedisConstant.IS_FIRST.equals(userFirstFlag)) {
+                redisUtil.set(key, RedisConstant.IS_NOT_FIRST);
             }
 
         } catch (Exception e) {
@@ -421,13 +422,13 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
             return rechargeCoin;
         }
 
-        try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+        try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
-            String key = BaseConstant.FIRST_RECHARGE_FLAG.replace(BaseConstant.PLACEHOLDER, userNo);
+            String key = RedisConstant.FIRST_RECHARGE_FLAG.replace(RedisConstant.PLACEHOLDER, userNo);
 
             String userFirstRecharge = redisUtil.get(key);
 
-            if(userFirstRecharge == null || BaseConstant.IS_FIRST.equals(userFirstRecharge)) {
+            if(userFirstRecharge == null || RedisConstant.IS_FIRST.equals(userFirstRecharge)) {
 
                 // 获得用户之前所有成功充值记录数量
                 CommonResult<Integer> rechargeCount = userRechargeRecordService.
@@ -437,7 +438,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     // 添加赠送的游戏币数
                     rechargeCoin += moneyForCoin.getGiveCoin();
                 } else {
-                    redisUtil.set(key, BaseConstant.IS_NOT_FIRST);
+                    redisUtil.set(key, RedisConstant.IS_NOT_FIRST);
                 }
             }
 
@@ -458,22 +459,22 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
         logger.info("getFirstFlag start userNo: " + userNo);
 
-        try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+        try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
-            String key = BaseConstant.FIRST_RECHARGE_FLAG.replace(BaseConstant.PLACEHOLDER, userNo);
+            String key = RedisConstant.FIRST_RECHARGE_FLAG.replace(RedisConstant.PLACEHOLDER, userNo);
 
             String userFirstRecharge = redisUtil.get(key);
 
-            if(userFirstRecharge == null || BaseConstant.IS_FIRST.equals(userFirstRecharge)) {
+            if(userFirstRecharge == null || RedisConstant.IS_FIRST.equals(userFirstRecharge)) {
 
                 // 获得用户之前所有成功充值记录数量
                 CommonResult<Integer> rechargeCount = userRechargeRecordService.
                         countUserRechargeRecordByUserNoAndTradeStatus(userNo, TradeStatus.SUCCESS.getStatus());
 
                 if(rechargeCount.getValue() == 0) {
-                    userFirstRecharge = BaseConstant.IS_FIRST;
+                    userFirstRecharge = RedisConstant.IS_FIRST;
                 } else {
-                    userFirstRecharge = BaseConstant.IS_NOT_FIRST;
+                    userFirstRecharge = RedisConstant.IS_NOT_FIRST;
                 }
 
                 redisUtil.set(key, userFirstRecharge);
@@ -506,9 +507,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
         Integer userLimitNum = 0;
 
-        try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+        try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
-            String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace(BaseConstant.PLACEHOLDER, userNo);
+            String key = RedisConstant.RECHARGE_LIMIT_NUM_BY_USER.replace(RedisConstant.PLACEHOLDER, userNo);
 
             String nowNum = redisUtil.get(key);
 
@@ -540,9 +541,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
             return;
         }
 
-        try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+        try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
-            String key = BaseConstant.RECHARGE_LIMIT_NUM_BY_USER.replace(BaseConstant.PLACEHOLDER, userNo);
+            String key = RedisConstant.RECHARGE_LIMIT_NUM_BY_USER.replace(RedisConstant.PLACEHOLDER, userNo);
 
             String nowNum = redisUtil.get(key);
 

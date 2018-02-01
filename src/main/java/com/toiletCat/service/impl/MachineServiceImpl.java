@@ -5,6 +5,7 @@ import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.UserMachine;
 import com.toiletCat.constants.BaseConstant;
+import com.toiletCat.constants.RedisConstant;
 import com.toiletCat.dao.MachineDao;
 import com.toiletCat.entity.Machine;
 import com.toiletCat.enums.HandleType;
@@ -99,13 +100,13 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
 
                 if(userMachineList != null && userMachineList.size() > 0) {
 
-                    try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                    try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
                         for(UserMachine userMachine : userMachineList) {
 
                             // 获得当前机器围观人数
-                            String machineKey = BaseConstant.MACHINE_ROOM_VIEWER.
-                                    replace(BaseConstant.PLACEHOLDER, userMachine.getMachineNo());
+                            String machineKey = RedisConstant.MACHINE_ROOM_VIEWER.
+                                    replace(RedisConstant.PLACEHOLDER, userMachine.getMachineNo());
 
                             String viewerNum = redisUtil.get(machineKey);
 
@@ -116,7 +117,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
                             userMachine.setViewer(Integer.valueOf(viewerNum));
 
                             // 当前机器被占用的锁
-                            String machineLockKey = BaseConstant.MACHINE_IN_USE.replace(BaseConstant.PLACEHOLDER,
+                            String machineLockKey = RedisConstant.MACHINE_IN_USE.replace(RedisConstant.PLACEHOLDER,
                                     userMachine.getMachineNo());
 
                             String isUse = redisUtil.get(machineLockKey);
@@ -231,8 +232,10 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
         return exec(new Callback() {
             @Override
             public void exec() {
-                try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
-                    String key = BaseConstant.MACHINE_IN_USE.replace(BaseConstant.PLACEHOLDER, machineNo);
+                try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
+
+                    String key = RedisConstant.MACHINE_IN_USE.replace(RedisConstant.PLACEHOLDER, machineNo);
+
                     // 获得当前机器锁
                     String value = redisUtil.get(key);
                     if(value == null) {
@@ -284,10 +287,10 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
         return exec(new Callback() {
             @Override
             public void exec() {
-                try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
                     // 当前娃娃机房间围观人数key
-                    String machineRoomKey = BaseConstant.MACHINE_ROOM_VIEWER.replace(BaseConstant.PLACEHOLDER, machineNo);
+                    String machineRoomKey = RedisConstant.MACHINE_ROOM_VIEWER.replace(RedisConstant.PLACEHOLDER, machineNo);
 
                     if(HandleType.CONNECT == handleType) {
                         // 围观人数+1

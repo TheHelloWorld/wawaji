@@ -3,9 +3,9 @@ package com.toiletCat.constants;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConfigConstant {
+public class ToiletCatConfigConstant {
 
-    private ConfigConstant() {
+    private ToiletCatConfigConstant() {
 
     }
 

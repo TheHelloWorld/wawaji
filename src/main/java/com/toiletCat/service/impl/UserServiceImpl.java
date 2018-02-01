@@ -6,7 +6,8 @@ import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.UserMachine;
 import com.toiletCat.bean.UserSeeGameRoom;
 import com.toiletCat.constants.BaseConstant;
-import com.toiletCat.constants.ConfigConstant;
+import com.toiletCat.constants.RedisConstant;
+import com.toiletCat.constants.ToiletCatConfigConstant;
 import com.toiletCat.dao.CatchRecordDao;
 import com.toiletCat.dao.UserDao;
 import com.toiletCat.entity.*;
@@ -88,7 +89,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     user.setMobileNo(mobileNo);
 
                     Integer defaultUserCoin = Integer.valueOf(
-                            toiletCatConfigService.getConfigByKey(ConfigConstant.USER_DEFAULT_COIN));
+                            toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.USER_DEFAULT_COIN));
 
                     // 用户游戏币数
                     user.setUserCoin(defaultUserCoin);
@@ -107,7 +108,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     String invitationCode = "";
 
-                    try(RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                    try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
                         while (true) {
                             // 生成用户邀请码
@@ -164,9 +165,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             @Override
             public void exec() {
 
-                try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                try (RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
-                    String verifyCode = redisUtil.get(BaseConstant.SMS_MOBILE_NO.replace(BaseConstant.PLACEHOLDER, mobileNo));
+                    String verifyCode = redisUtil.get(RedisConstant.SMS_MOBILE_NO.replace(
+                            RedisConstant.PLACEHOLDER, mobileNo));
 
                     // 若验证码不对
                     if (!ticket.equals(verifyCode)) {
@@ -232,8 +234,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     return;
                 }
 
-                try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
-                    String key = BaseConstant.MACHINE_IN_USE.replace(BaseConstant.PLACEHOLDER, machineNo);
+                try (RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
+
+                    String key = RedisConstant.MACHINE_IN_USE.replace(RedisConstant.PLACEHOLDER, machineNo);
+
                     // 判断当前机器是否已有用户使用
                     if (redisUtil.setnx(key, userNo) == 0) {
                         setOtherMsg();
@@ -514,14 +518,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 String textTimeout = systemProperties.getProperty("sms_text_time_out");
 
                 // 获取redis链接
-                try (RedisUtil redisUtil = new RedisUtil(BaseConstant.REDIS)) {
+                try (RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
                     String random = RandomIntUtil.getRandom();
 
                     if (SDKTestSendTemplateSMS.sendMobileVerificationCode(mobileNo, random, textTimeout)) {
 
                         redisUtil.set(Integer.valueOf(redisTimeout),
-                                BaseConstant.SMS_MOBILE_NO.replace(BaseConstant.PLACEHOLDER, mobileNo), random);
+                                RedisConstant.SMS_MOBILE_NO.replace(RedisConstant.PLACEHOLDER, mobileNo), random);
 
                         got(BaseConstant.SUCCESS);
 
@@ -620,7 +624,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 Integer roomAddLuckyNum = gameRoom.getAddLuckyNum();
 
                 Integer userLucKyNum = RandomIntUtil.getRandomNumByHighBound(Integer.valueOf(
-                        toiletCatConfigService.getConfigByKey(ConfigConstant.USER_LUCKY_NUM_BEFORE_THRESHOLD)));
+                        toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.USER_LUCKY_NUM_BEFORE_THRESHOLD)));
 
                 // 判断当前用户是否在此房间有幸运值
                 CommonResult<Integer> userGameRoomCount = userGameRoomService
@@ -676,20 +680,20 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 // 幸运值大于阈值后
                 if(userNowLuckyNum >= Integer.valueOf(
-                        toiletCatConfigService.getConfigByKey(ConfigConstant.USER_LUCKY_NUM_THRESHOLD))) {
+                        toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.USER_LUCKY_NUM_THRESHOLD))) {
 
                     // 按幸运值大于阈值后幸运值最大随机数上限进行累加
                     userLucKyNum = RandomIntUtil.getRandomNumByHighBound(Integer.valueOf(
-                            toiletCatConfigService.getConfigByKey(ConfigConstant.USER_LUCKY_NUM_AFTER_THRESHOLD)));
+                            toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.USER_LUCKY_NUM_AFTER_THRESHOLD)));
 
                 }
 
                 // 若当前用户是特殊用户
-                if(toiletCatConfigService.getConfigByKey(ConfigConstant.VIP_USER_NO_LIST).contains(userNo)) {
+                if(toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.VIP_USER_NO_LIST).contains(userNo)) {
 
                     // 用户游戏房间幸运累加值则为特殊值
                     userLucKyNum = Integer.valueOf(toiletCatConfigService.getConfigByKey(
-                            ConfigConstant.VIP_USER_GAME_ROOM_ADD_NUM));
+                            ToiletCatConfigConstant.VIP_USER_GAME_ROOM_ADD_NUM));
 
                     // 日志记录
                     logger.info("getGameCatchResultByUserNoAndGameRoomNo user is vip userNo:" + userNo +
@@ -938,7 +942,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
-                Integer coin = Integer.valueOf(toiletCatConfigService.getConfigByKey(ConfigConstant.USER_INVITE_COIN));
+                Integer coin = Integer.valueOf(toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.USER_INVITE_COIN));
 
                 Date tradeTime = new Date();
 
