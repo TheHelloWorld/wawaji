@@ -43,7 +43,7 @@ public class WxUtil {
             logger.info("requestUrl:" + requestUrl);
 
             // 发起GET请求获取凭证
-            JsonNode rootNode = HttpClientUtil.httpsRequest(requestUrl, "GET", null);
+            JsonNode rootNode = HttpClientUtil.wxHttpsRequest(requestUrl, "GET", null);
 
             logger.info("rootNode:" + rootNode);
 
@@ -87,7 +87,7 @@ public class WxUtil {
 
             String requestUrl = JSAPI_TICKET_URL.replace("ACCESS_TOKEN", access_token);
             // 发起GET请求获取凭证
-            JsonNode rootNode = HttpClientUtil.httpsRequest(requestUrl, "GET", null);
+            JsonNode rootNode = HttpClientUtil.wxHttpsRequest(requestUrl, "GET", null);
 
             logger.info("getJsApiTicket rootNode:" + rootNode);
 

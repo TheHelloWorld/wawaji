@@ -7,8 +7,6 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,6 +29,8 @@ import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -45,6 +45,8 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 public class HttpClientUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
 
     // utf-8字符编码
     private static final String CHARSET_UTF_8 = "utf-8";
@@ -116,6 +118,12 @@ public class HttpClientUtil {
                 .build();
     }
 
+    public static void main(String[] args) {
+        String s = "https://pay.v8jisu.cn/api.php?act=order&pid=13806&key=j0UgNf3nKBTJFb20urdb4Jb4tgj8mTT7&out_trade_no=ToiletCat151746390813327e4d67967cc45c6ac8378e37cb179e4";
+
+        httpsRequest(s,"GET", null);
+    }
+
     /**
      * 发送https请求
      *
@@ -127,9 +135,10 @@ public class HttpClientUtil {
      *            提交的数据
      * @return rootNode(通过rootNode.get(key)的方式获取json对象的属性值)
      */
-    public static JsonNode httpsRequest(String requestUrl, String requestMethod, String outputStr) {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = null;
+    public static String httpsRequest(String requestUrl, String requestMethod, String outputStr) {
+
+        logger.info("httpsRequest requestUrl:" + requestUrl);
+
         StringBuffer buffer = new StringBuffer();
         try {
             // 创建SSLContext对象，并使用我们指定的信任管理器初始化
@@ -187,12 +196,42 @@ public class HttpClientUtil {
 
             conn.disconnect();
 
-            rootNode = mapper.readTree(buffer.toString());
+            logger.info("httpsRequest response:" + buffer.toString());
+
+            return buffer.toString();
 
         } catch (Exception e) {
 
             e.printStackTrace();
         }
+
+        return null;
+
+    }
+
+    /**
+     * 微信获得https请求返回结果
+     * @param requestUrl 请求url
+     * @param requestMethod 请求方法 get/post
+     * @param outputStr 输出(无用目前)
+     * @return
+     */
+    public static JsonNode wxHttpsRequest(String requestUrl, String requestMethod, String outputStr) {
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        JsonNode rootNode = null;
+
+        try {
+            String response = httpsRequest(requestUrl, requestMethod, outputStr);
+
+            rootNode = mapper.readTree(response);
+
+        } catch (Exception e) {
+
+            logger.error("wxHttpsRequest error:" + e, e);
+        }
+
         return rootNode;
     }
 

@@ -308,6 +308,11 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
         }
     }
 
+    public static void main(String[] args) {
+
+
+    }
+
     /**
      * 查询获得交易结果
      * @param orderNo 订单号
@@ -340,7 +345,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
             logger.info("queryRechargeResult request:" + sb.toString());
 
-            String response = HttpClientUtil.sendHttpGet(sb.toString());
+//            String response = HttpClientUtil.sendHttpGet(sb.toString());
+
+            String response = HttpClientUtil.httpsRequest(sb.toString(), "GET", null);
 
             logger.info("queryRechargeResult response:" + response);
 
