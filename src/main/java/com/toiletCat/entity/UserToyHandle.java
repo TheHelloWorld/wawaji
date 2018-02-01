@@ -35,6 +35,11 @@ public class UserToyHandle extends BaseEntity implements Serializable {
     private Integer choiceType;
 
     /**
+     * 兑换成游戏币玩具数量
+     */
+    private Integer forCoinNum;
+
+    /**
      * 玩具兑换游戏币书
      */
     private Integer toyForCoin;
@@ -43,11 +48,6 @@ public class UserToyHandle extends BaseEntity implements Serializable {
      * 发货Id
      */
     private Long deliverId;
-
-    /**
-     * 抓取时间
-     */
-    private String catchTime;
 
     public String getUserNo() {
         return userNo;
@@ -89,6 +89,14 @@ public class UserToyHandle extends BaseEntity implements Serializable {
         this.choiceType = choiceType;
     }
 
+    public Integer getForCoinNum() {
+        return forCoinNum;
+    }
+
+    public void setForCoinNum(Integer forCoinNum) {
+        this.forCoinNum = forCoinNum;
+    }
+
     public Integer getToyForCoin() {
         return toyForCoin;
     }
@@ -103,13 +111,5 @@ public class UserToyHandle extends BaseEntity implements Serializable {
 
     public void setDeliverId(Long deliverId) {
         this.deliverId = deliverId;
-    }
-
-    public String getCatchTime() {
-        return catchTime;
-    }
-
-    public void setCatchTime(String catchTime) {
-        this.catchTime = catchTime;
     }
 }

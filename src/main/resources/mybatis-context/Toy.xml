@@ -110,7 +110,7 @@
     </select>
 
     <!-- 根据娃娃编号获得娃娃及信息 -->
-    <select id="getToyByToyNo" parameterType="java.lang.String" resultMap="toyMap">
+    <select id="getToyInfoByToyNo" parameterType="java.lang.String" resultMap="toyMap">
         select
             toy_no,
             toy_name,

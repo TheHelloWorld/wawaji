@@ -94,4 +94,11 @@
         where id = #{id} and user_no = #{userNo}
     </update>
 
+    <!-- 根据用户编号玩具编号获得及数量获得用户战利品id集合 -->
+    <select id="getLimitUserToyIdListByUserNoAndToyNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+          u.id,
+        from user_toy u where u.user_no = #{userNo} and u.toy_no = #{toyNo} and choice_type = 0 limit #{limit}
+    </select>
+
 </mapper>

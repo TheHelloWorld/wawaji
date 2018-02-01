@@ -43,9 +43,10 @@ public interface UserToyService {
      * @param userAddress 用户地址
      * @param toyNameArray 玩具名集合
      * @param toyNoList 玩具编号集合
+     * @param forCoinNum 兑换成钱币的数量
      */
     CommonResult<String> updateChoiceTypeByIdAndUserNo(UserToy userToy, UserAddress userAddress, String toyNameArray,
-                                                       List<String> toyNoList);
+                                                       List<String> toyNoList, Integer forCoinNum);
     
     /**
      * 根据用户编号获得用户所有未处理战利品

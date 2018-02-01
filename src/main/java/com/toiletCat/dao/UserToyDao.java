@@ -53,5 +53,13 @@ public interface UserToyDao {
      */
     List<UserToy> getAllUnHandleUserToyByUserNo(String userNo);
 
-    List<UserToy> getLimitUserToyListByUserNoandToyNo(@Param("userNo") String userNo, @Param("toyNo") String toyNo);
+    /**
+     * 根据用户编号玩具编号获得及数量获得用户战利品id集合
+     * @param userNo 用户编号
+     * @param toyNo 玩具编号
+     * @param limit 数量
+     * @return
+     */
+    List<Long> getLimitUserToyIdListByUserNoAndToyNo(@Param("userNo") String userNo, @Param("toyNo") String toyNo,
+                                                      @Param("limit") Integer limit);
 }

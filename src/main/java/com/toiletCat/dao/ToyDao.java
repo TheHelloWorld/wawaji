@@ -61,5 +61,5 @@ public interface ToyDao {
      * @param toyNo 玩具编号
      * @return
      */
-    Toy getToyByToyNo(String toyNo);
+    Toy getToyInfoByToyNo(String toyNo);
 }

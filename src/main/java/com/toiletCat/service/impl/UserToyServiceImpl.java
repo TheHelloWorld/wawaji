@@ -136,16 +136,19 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
      * @param userAddress 用户地址
      * @param toyNameArray 玩具名集合
      * @param toyNoList 玩具编号集合
+     * @param forCoinNum 兑换成钱币的数量
      */
     @Override
     public CommonResult<String> updateChoiceTypeByIdAndUserNo(final UserToy userToy, final UserAddress userAddress,
-                                                      final String toyNameArray, final List<String> toyNoList) {
+                                                              final String toyNameArray, final List<String> toyNoList,
+                                                              final Integer forCoinNum) {
 
         JSONObject json = new JSONObject();
         json.put("userToy", userToy);
         json.put("userAddress", userAddress);
         json.put("toyNameArray", toyNameArray);
         json.put("toyNoList", toyNoList);
+        json.put("forCoinNum", forCoinNum);
 
         return exec(new Callback() {
             @Override
@@ -220,9 +223,10 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                     for(String toyNo : toyNoList) {
 
-                        Toy toyInfo = toyDao.getToyByToyNo(toyNo);
+                        // 获得玩具信息
+                        Toy toyInfo = toyDao.getToyInfoByToyNo(toyNo);
 
-
+                        // 用户战利品处理bean
                         UserToyHandle userToyHandle = new UserToyHandle();
 
                         userToyHandle.setUserNo(userNo);
@@ -237,25 +241,71 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                         userToyHandle.setToyImg(toyInfo.getToyImg());
 
+                        userToyHandle.setForCoinNum(0);
+
+                        userToyHandle.setToyForCoin(0);
 
 
+                        // TODO: 2018/2/2 添加insert操作
 
+                        // 获取兑换数量的战利品更改选择方式
+                        List<Long> userToyIdList = userToyDao.getLimitUserToyIdListByUserNoAndToyNo(userNo,
+                                toyNo, toyInfo.getDeliverNum());
 
-//                        userToyDao.updateChoiceTypeByIdAndUserNo(nowUserToy);
+                        for(Long id : userToyIdList) {
+
+                            UserToy newUserToy = new UserToy();
+
+                            newUserToy.setId(id);
+
+                            newUserToy.setUserNo(userNo);
+
+                            newUserToy.setChoiceType(choiceType);
+
+                            userToyDao.updateChoiceTypeByIdAndUserNo(newUserToy);
+                        }
                     }
 
+                    // 若为兑换游戏币
                 } else if(ChoiceType.FOR_COIN.getStatus() == choiceType) {
 
                     Date tradeTime = new Date();
 
+                    // 获得玩具信息
+                    Toy toyInfo = toyDao.getToyInfoByToyNo(userToy.getToyNo());
+
+                    Integer coin = userToy.getToyForCoin() * forCoinNum;
+
                     // 添加相应的游戏币给用户
-                    userDao.updateUserCoinByUserNo((userToy.getToyForCoin()), userNo);
+                    userDao.updateUserCoinByUserNo(coin, userNo);
+
+                    // 用户战利品处理bean
+                    UserToyHandle userToyHandle = new UserToyHandle();
+
+                    userToyHandle.setUserNo(userNo);
+
+                    userToyHandle.setChoiceType(choiceType);
+
+                    userToyHandle.setDeliverId(0L);
+
+                    userToyHandle.setToyNo(userToy.getToyNo());
+
+                    userToyHandle.setToyName(toyInfo.getToyName());
+
+                    userToyHandle.setToyImg(toyInfo.getToyImg());
+
+                    userToyHandle.setForCoinNum(forCoinNum);
+
+                    userToyHandle.setToyForCoin(coin);
+
+
+                    // TODO: 2018/2/2 添加insert操作
 
                     UserSpendRecord userSpendRecord = new UserSpendRecord();
                     // 用户编号
                     userSpendRecord.setUserNo(userNo);
                     // 玩具兑换游戏币数
-                    userSpendRecord.setCoin(userToy.getToyForCoin());
+                    userSpendRecord.setCoin(coin);
                     // 交易日期
                     userSpendRecord.setTradeDate(DateUtil.getDate());
                     // 交易时间
