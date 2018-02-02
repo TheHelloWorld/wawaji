@@ -10,6 +10,9 @@ import com.toiletCat.entity.UserToy;
 import com.toiletCat.enums.ChoiceType;
 import com.toiletCat.service.UserToyService;
 import com.toiletCat.utils.JSONUtil;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,8 @@ import java.util.List;
 @RequestMapping("/toiletCat/api/userToy")
 @Controller
 public class UserToyController {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserToyController.class);
 
     @Autowired
     private UserToyService userToyService;
@@ -70,7 +75,7 @@ public class UserToyController {
     }
 
     /**
-     * 根据用户编号和id获得用户娃娃记录
+     * 根据用户编号和id获得用户战利品记录
      * @param userNo 用户编号
      * @param id id
      * @return
@@ -115,16 +120,17 @@ public class UserToyController {
         // 玩具名集合
         String toyNameArray = null;
 
-
         // 要更改的用户战利品id
-        List<Long> userToyIdList = new ArrayList<>();
+        List<String> toyNoList = new ArrayList<>();
+
+        Integer forCoinNum = 0;
 
         // 若为选择寄送类型
         if(ChoiceType.FOR_DELIVER.getStatus() == Integer.valueOf(userToyJSON.getString("choiceType"))) {
 
             userAddress = JSON.parseObject(userAddressStr, UserAddress.class);
 
-            JSONArray userToyIdArray = JSONArray.parseArray(userToyJSON.getString("userToyIds"));
+            JSONArray toyNoArray = JSONArray.parseArray(userToyJSON.getString("toyNos"));
 
             JSONArray userToyNameArray = JSONArray.parseArray(userToyJSON.getString("userToyNames"));
 
@@ -135,8 +141,8 @@ public class UserToyController {
                 toyNameArrayBuilder.append(",");
             }
 
-            for(Object obj : userToyIdArray) {
-                userToyIdList.add(Long.valueOf(JSONObject.parseObject(String.valueOf(obj)).getString("userToyId")));
+            for(Object obj : toyNoArray) {
+                toyNoList.add(JSONObject.parseObject(String.valueOf(obj)).getString("toyNo"));
             }
 
             toyNameArray = toyNameArrayBuilder.toString().
@@ -149,11 +155,22 @@ public class UserToyController {
 
             userToyStr = userToyJSON.toJSONString();
 
+        } else {
+            String forCoinNumString = userToyJSON.getString("toyNos");
+            try {
+                if(StringUtils.isNotBlank(forCoinNumString)) {
+                    forCoinNum = Integer.valueOf(forCoinNumString);
+                }
+            } catch (Exception e) {
+                logger.error("updateChoiceTypeByIdAndUserNo exchange error:" + e, e);
+            }
+
         }
 
         UserToy userToy = JSON.parseObject(userToyStr, UserToy.class);
 
-        CommonResult<String> result =  userToyService.updateChoiceTypeByIdAndUserNo(userToy, userAddress, toyNameArray, userToyIdList);
+        CommonResult<String> result =  userToyService.updateChoiceTypeByIdAndUserNo(userToy, userAddress, toyNameArray,
+                toyNoList, forCoinNum);
 
         return JSONUtil.getReturnBeanString(result);
     }

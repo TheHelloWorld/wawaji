@@ -3,7 +3,7 @@ package com.toiletCat.entity;
 import java.io.Serializable;
 
 /**
- * 用户娃娃表
+ * 用户战利品表
  */
 public class UserToy extends BaseEntity implements Serializable {
 

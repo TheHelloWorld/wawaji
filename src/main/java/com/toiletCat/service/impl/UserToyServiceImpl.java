@@ -44,7 +44,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
     private ToiletCatConfigService toiletCatConfigService;
 
     /**
-     * 添加用户娃娃记录
+     * 添加用户战利品记录
      * @param userToy 用户娃娃Bean
      */
     @Override
@@ -100,7 +100,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
     }
 
     /**
-     * 根据用户编号和id获得用户娃娃记录
+     * 根据用户编号和id获得用户战利品记录
      * @param userNo 用户编号
      * @param id id
      * @return
@@ -229,12 +229,16 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                         // 用户战利品处理bean
                         UserToyHandle userToyHandle = new UserToyHandle();
 
+                        // 用户编号
                         userToyHandle.setUserNo(userNo);
 
+                        // 选择类型
                         userToyHandle.setChoiceType(choiceType);
 
+                        // 发货id
                         userToyHandle.setDeliverId(deliver.getId());
 
+                        // 玩具编号
                         userToyHandle.setToyNo(toyNo);
 
                         userToyHandle.setToyName(toyInfo.getToyName());

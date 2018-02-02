@@ -10,20 +10,20 @@ import java.util.List;
 public interface UserToyDao {
 
     /**
-     * 添加用户娃娃记录
-     * @param userToy 用户娃娃Bean
+     * 添加用户战利品记录
+     * @param userToy 用户战利品Bean
      */
     void addUserToy(UserToy userToy);
 
     /**
-     * 根据用户编号获得用户玩具记录数
+     * 根据用户编号获得用户战利品记录数
      * @param userNo 用户编号
      * @return
      */
     Integer countUserToyByUserNo(String userNo);
 
     /**
-     * 根据用户编号分页获得所有用户娃娃记录集合
+     * 根据用户编号分页获得所有用户战利品记录集合
      * @param userNo 用户编号
      * @param startPage 开始页
      * @param pageSize 每页数据数
@@ -33,7 +33,7 @@ public interface UserToyDao {
                                      @Param("pageSize") int pageSize);
 
     /**
-     * 根据用户编号和id获得用户娃娃记录
+     * 根据用户编号和id获得用户战利品记录
      * @param userNo 用户编号
      * @param id id
      * @return
@@ -42,7 +42,7 @@ public interface UserToyDao {
 
     /**
      * 根据id,用户编号修改选择方式及其送货编号
-     * @param userToy 用户娃娃
+     * @param userToy 用户战利品
      */
     void updateChoiceTypeByIdAndUserNo(UserToy userToy);
 

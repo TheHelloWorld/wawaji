@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toiletCat.dao.UserToyHandleDao">
+
+    <!-- 用户战利品处理表 -->
+    <resultMap type="com.toiletCat.entity.UserToyHandle" id="userToyHandleMap">
+        <!-- 主键id -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <!-- 用户编号 -->
+        <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
+        <!-- 娃娃编号 -->
+        <result property="toyNo" column="toy_no" jdbcType="VARCHAR"/>
+        <!-- 娃娃名称 -->
+        <result property="toyName" column="toy_name" jdbcType="VARCHAR"/>
+        <!-- 娃娃图片地址 -->
+        <result property="toyImg" column="toy_img" jdbcType="VARCHAR"/>
+        <!-- 选择方式 -->
+        <result property="choiceType" column="choice_type" jdbcType="INTEGER"/>
+        <!-- 兑换成游戏币玩具数量 -->
+        <result property="forCoinNum" column="for_coin_num" jdbcType="INTEGER"/>
+        <!-- 玩具兑换游戏币数 -->
+        <result property="toyForCoin" column="toy_for_coin" jdbcType="INTEGER"/>
+        <!-- 发货Id -->
+        <result property="deliverId" column="deliver_id" jdbcType="BIGINT"/>
+        <!-- 创建时间 -->
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <!-- 最后修改时间 -->
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 添加用户战利品处理记录 -->
+    <insert id="addUserToyHandle" parameterType="com.toiletCat.entity.UserToyHandle">
+        insert into user_toy_handle
+            (
+                user_no,
+                toy_no,
+                toy_name,
+                toy_img,
+                choice_type,
+                for_coin_num,
+                toy_for_coin,
+                deliver_id
+            )
+        values
+            (
+                #{userNo, jdbcType=VARCHAR},
+                #{toyNo, jdbcType=VARCHAR},
+                #{toyName, jdbcType=VARCHAR},
+                #{toyImg, jdbcType=VARCHAR},
+                #{choiceType, jdbcType=INTEGER},
+                #{forCoinNum, jdbcType=INTEGER},
+                #{toyForCoin, jdbcType=INTEGER},
+                #{deliverId, jdbcType=BIGINT},
+            )
+    </insert>
+
+    <!-- 根据用户编号获得用户玩具战利品处理数 -->
+    <select id="countUserToyHandleByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from user_toy_handle where user_no = #{userNo, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据用户编号分页获得所有用户战利品处理记录集合 -->
+    <select id="getUserToyHandleListByUserNo" resultMap="userToyHandleMap">
+        select
+            id,
+            toy_no,
+            toy_name,
+            toy_img
+        from user_toy_handle
+        where user_no = #{userNo, jdbcType=VARCHAR} order by u.create_time desc
+        limit #{startPage, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据用户编号和id获得用户战利品处理记录 -->
+    <select id="getUserToyHandleByUserNoAndId" resultMap="userToyHandleMap">
+        select
+            u.id,
+            user_no,
+            toy_no,
+            toy_name,
+            toy_img,
+            choice_type,
+            for_coin_num,
+            toy_for_coin,
+            deliver_id,
+            create_time
+        from user_toy_handle
+        where user_no = #{userNo, jdbcType=VARCHAR} and id = #{id}
+    </select>
+
+</mapper>

@@ -40,7 +40,7 @@ public class UserToyHandle extends BaseEntity implements Serializable {
     private Integer forCoinNum;
 
     /**
-     * 玩具兑换游戏币书
+     * 玩具兑换游戏币数
      */
     private Integer toyForCoin;
 
