@@ -149,7 +149,7 @@ public class UserToyController {
                     substring(0, toyNameArrayBuilder.toString().length() - 1);
 
             // 去除多余key
-            userToyJSON.remove("userToyIds");
+            userToyJSON.remove("toyNos");
 
             userToyJSON.remove("userToyNames");
 
