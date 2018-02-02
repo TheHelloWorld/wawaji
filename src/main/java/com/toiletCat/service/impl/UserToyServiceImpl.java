@@ -9,6 +9,7 @@ import com.toiletCat.dao.*;
 import com.toiletCat.entity.*;
 import com.toiletCat.enums.*;
 import com.toiletCat.service.ToiletCatConfigService;
+import com.toiletCat.service.UserToyHandleService;
 import com.toiletCat.service.UserToyService;
 import com.toiletCat.utils.DateUtil;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
     private ToyDao toyDao;
 
     @Autowired
-    private UserToyHandleDao userToyHandleDao;
+    private UserToyHandleService userToyHandleService;
 
     @Autowired
     private UserSpendRecordDao userSpendRecordDao;
@@ -275,7 +276,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                         // 兑换成游戏币数量
                         userToyHandle.setToyForCoin(0);
 
-                        userToyHandleDao.addUserToyHandle(userToyHandle);
+                        userToyHandleService.addUserToyHandle(userToyHandle);
 
                         // 获取兑换数量的战利品更改选择方式
                         List<Long> userToyIdList = userToyDao.getLimitUserToyIdListByUserNoAndToyNo(userNo,
@@ -335,7 +336,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                     // 兑换成游戏币数量
                     userToyHandle.setToyForCoin(coin);
 
-                    userToyHandleDao.addUserToyHandle(userToyHandle);
+                    userToyHandleService.addUserToyHandle(userToyHandle);
 
                     UserSpendRecord userSpendRecord = new UserSpendRecord();
                     // 用户编号

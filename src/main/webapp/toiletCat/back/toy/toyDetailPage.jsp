@@ -85,6 +85,15 @@
                 </div>
                 <br/>
                 <div class="row">
+                    <div class="col-xs-5">
+                        兑换个数:
+                        <span name = "deliverNum">
+                            <input class="form-control" id = "deliverNum">
+                        </span>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
                     <div class="col-xs-4">
                         娃娃当前游戏币数:
                         <span name = "toyNowCoin">
