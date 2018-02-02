@@ -46,7 +46,7 @@
 
     <!-- 根据用户编号分页获得所有用户娃娃记录 -->
     <select id="countUserToyByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select count(*) from user_toy where user_no = #{userNo}
+        select count(*) from user_toy where user_no = #{userNo, jdbcType=VARCHAR}
     </select>
 
     <!-- 根据用户编号分页获得所有用户娃娃记录 -->
@@ -57,8 +57,8 @@
             t.toy_name,
             count(u.toy_no) un_handle_num
         from user_toy u,toy t
-        where u.toy_no = t.toy_no and u.user_no = #{userNo} and choice_type = 0 group by u.toy_no order by u.create_time asc
-        limit #{startPage}, #{pageSize}
+        where u.toy_no = t.toy_no and u.user_no = #{userNo, jdbcType=VARCHAR} and choice_type = 0 group by u.toy_no order by u.create_time asc
+        limit #{startPage, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </select>
 
     <!-- 根据用户编号和id获得用户娃娃记录 -->
@@ -73,7 +73,7 @@
             t.toy_for_coin,
             u.create_time
         from user_toy u,toy t
-        where u.toy_no = t.toy_no and u.user_no = #{userNo} and u.id = #{id}
+        where u.toy_no = t.toy_no and u.user_no = #{userNo, jdbcType=VARCHAR} and u.id = #{id}
     </select>
 
     <!-- 根据用户编号获得用户所有未处理战利品 -->
@@ -84,21 +84,25 @@
             t.toy_img,
             t.toy_name
         from user_toy u,toy t
-        where u.toy_no = t.toy_no and u.user_no = #{userNo} and choice_type = 0
+        where u.toy_no = t.toy_no and u.user_no = #{userNo, jdbcType=VARCHAR} and choice_type = 0
     </select>
 
     <!-- 根据id,用户编号修改选择方式 -->
     <update id="updateChoiceTypeByIdAndUserNo" parameterType="com.toiletCat.entity.UserToy">
         update user_toy set
           choice_type = #{choiceType, jdbcType=INTEGER}
-        where id = #{id} and user_no = #{userNo}
+        where id = #{id} and user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
     <!-- 根据用户编号玩具编号获得及数量获得用户战利品id集合 -->
     <select id="getLimitUserToyIdListByUserNoAndToyNo" parameterType="java.lang.String" resultType="java.lang.Integer">
         select
           u.id,
-        from user_toy u where u.user_no = #{userNo} and u.toy_no = #{toyNo} and choice_type = 0 limit #{limit}
+        from user_toy u
+        where
+        u.user_no = #{userNo, jdbcType=VARCHAR}
+        and u.toy_no = #{toyNo, jdbcType=VARCHAR}
+        and choice_type = 0 limit #{limit, jdbcType=INTEGER}
     </select>
 
 </mapper>
