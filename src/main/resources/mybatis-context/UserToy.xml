@@ -94,15 +94,26 @@
         where id = #{id} and user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
-    <!-- 根据用户编号玩具编号获得及数量获得用户战利品id集合 -->
-    <select id="getLimitUserToyIdListByUserNoAndToyNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+    <!-- 根据用户编号玩具编号及数量获得用户战利品id集合 -->
+    <select id="getLimitUserToyIdListByUserNoAndToyNo" resultType="java.lang.Long">
         select
-          u.id,
-        from user_toy u
+          id,
+        from user_toy
         where
-        u.user_no = #{userNo, jdbcType=VARCHAR}
-        and u.toy_no = #{toyNo, jdbcType=VARCHAR}
-        and choice_type = 0 limit #{limit, jdbcType=INTEGER}
+            user_no = #{userNo, jdbcType=VARCHAR}
+            and toy_no = #{toyNo, jdbcType=VARCHAR}
+            and choice_type = 0 limit #{limit, jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据用户编号玩具编号获得待处理用户战利品数量 -->
+    <select id="countUserToyNumByUserNoAndToyNo" resultType="java.lang.Integer">
+        select
+            count(*)
+        from user_toy
+        where
+            user_no = #{userNo, jdbcType=VARCHAR}
+            and toy_no = #{toyNo, jdbcType=VARCHAR}
+            and choice_type = 0
     </select>
 
 </mapper>

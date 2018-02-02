@@ -9,20 +9,20 @@ import java.util.List;
 public interface UserToyService {
 
     /**
-     * 添加用户娃娃记录
-     * @param userToy 用户娃娃Bean
+     * 添加用户战利品记录
+     * @param userToy 用户战利品Bean
      */
     CommonResult addUserToy(UserToy userToy);
 
     /**
-     * 根据用户编号获得用户玩具记录数
+     * 根据用户编号获得用户战利品记录数
      * @param userNo 用户编号
      * @return
      */
     CommonResult<Integer> countUserToyByUserNo(String userNo);
 
     /**
-     * 根据用户编号分页获得所有用户娃娃记录
+     * 根据用户编号分页获得所有用户战利品记录
      * @param userNo 用户编号
      * @param startPage 开始页
      * @return
@@ -30,7 +30,7 @@ public interface UserToyService {
     CommonResult<List<UserToy>> getUserToyListByUserNo(String userNo, int startPage);
 
     /**
-     * 根据用户编号和id获得用户娃娃记录
+     * 根据用户编号和id获得用户战利品记录
      * @param userNo 用户编号
      * @param id id
      * @return
@@ -39,7 +39,7 @@ public interface UserToyService {
 
     /**
      * 根据id,用户编号修改选择方式
-     * @param userToy 用户玩具
+     * @param userToy 用户战利品
      * @param userAddress 用户地址
      * @param toyNameArray 玩具名集合
      * @param toyNoList 玩具编号集合

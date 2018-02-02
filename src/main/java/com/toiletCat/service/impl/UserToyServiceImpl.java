@@ -38,6 +38,9 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
     private ToyDao toyDao;
 
     @Autowired
+    private UserToyHandleDao userToyHandleDao;
+
+    @Autowired
     private UserSpendRecordDao userSpendRecordDao;
 
     @Autowired
@@ -45,7 +48,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
     /**
      * 添加用户战利品记录
-     * @param userToy 用户娃娃Bean
+     * @param userToy 用户战利品Bean
      */
     @Override
     public CommonResult addUserToy(final UserToy userToy) {
@@ -59,7 +62,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
     }
 
     /**
-     * 根据用户编号获得用户玩具记录数
+     * 根据用户编号获得用户战利品记录数
      * @param userNo 用户编号
      * @return
      */
@@ -78,7 +81,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
     }
 
     /**
-     * 根据用户编号分页获得所有用户娃娃记录
+     * 根据用户编号分页获得所有用户战利品记录
      * @param userNo 用户编号
      * @param startPage 开始页
      * @return
@@ -132,7 +135,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
     /**
      * 根据id,用户编号修改选择方式
-     * @param userToy 用户玩具
+     * @param userToy 用户战利品
      * @param userAddress 用户地址
      * @param toyNameArray 玩具名集合
      * @param toyNoList 玩具编号集合
@@ -162,6 +165,25 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                 // 若是选择快递
                 if(ChoiceType.FOR_DELIVER.getStatus() == choiceType) {
 
+                    // 几个娃娃免费包邮
+                    Integer freeDeliverNum = Integer.valueOf(toiletCatConfigService.getConfigByKey(
+                            ToiletCatConfigConstant.FREE_DELIVER_NUM));
+
+                    // 先判断用户游戏币是否足够
+                    if(toyNoList.size() < freeDeliverNum) {
+                        // 获取邮寄费
+                        Integer deliverCoin = Integer.valueOf(toiletCatConfigService.getConfigByKey(
+                                ToiletCatConfigConstant.USER_DELIVER_COIN));
+
+                        Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+
+                        if (userCoin < deliverCoin) {
+                            setOtherMsg();
+                            got(BaseConstant.NOT_ENOUGH_COIN);
+                            return;
+                        }
+                    }
+
                     Deliver deliver = new Deliver();
                     deliver.setToyNameArray(toyNameArray);
                     deliver.setUserNo(userNo);
@@ -172,27 +194,16 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                     deliverDao.addDeliver(deliver);
 
-                    // 几个娃娃免费包邮
-                    Integer freeDeliverNum = Integer.valueOf(toiletCatConfigService.getConfigByKey(
-                            ToiletCatConfigConstant.FREE_DELIVER_NUM));
-
                     // 若寄送娃娃少于包邮个数则扣除相应游戏币作为邮寄费
                     if(toyNoList.size() < freeDeliverNum) {
                         // 获取邮寄费
                         Integer deliverCoin = Integer.valueOf(toiletCatConfigService.getConfigByKey(
                                 ToiletCatConfigConstant.USER_DELIVER_COIN));
 
-                        Integer userCoin = userDao.getUserCoinByUserNo(userNo);
-
-                        if(userCoin < deliverCoin) {
-                            setOtherMsg();
-                            got(BaseConstant.NOT_ENOUGH_COIN);
-                            return;
-                        }
-
                         userDao.updateUserCoinByUserNo(-deliverCoin, userNo);
 
                         logger.info("updateChoiceTypeByIdAndUserNo 扣除用户邮寄费游戏币成功");
+
                         UserSpendRecord userSpendRecord = new UserSpendRecord();
 
                         Date tradeTime = new Date();
@@ -226,11 +237,22 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                         // 获得玩具信息
                         Toy toyInfo = toyDao.getToyInfoByToyNo(toyNo);
 
+                        // 获得用户当前战利品数量
+                        Integer userToyNum = userToyDao.countUserToyNumByUserNoAndToyNo(userNo, toyNo);
+
+                        // 判断用户当前战利品数量是否小于可兑换数量
+                        if(userToyNum < toyInfo.getDeliverNum())  {
+
+                            logger.warn("updateChoiceTypeByIdAndUserNo userToyNum is less than toyDeliverNum");
+
+                            continue;
+                        }
+
                         // 用户战利品处理bean
                         UserToyHandle userToyHandle = new UserToyHandle();
 
                         // 用户编号
-                        userToyHandle.setUserNo(userNo);
+                        userToyHandle.setUserNo(userToy.getUserNo());
 
                         // 选择类型
                         userToyHandle.setChoiceType(choiceType);
@@ -241,16 +263,19 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                         // 玩具编号
                         userToyHandle.setToyNo(toyNo);
 
+                        // 玩具名称
                         userToyHandle.setToyName(toyInfo.getToyName());
 
+                        // 玩具图片
                         userToyHandle.setToyImg(toyInfo.getToyImg());
 
+                        // 兑换成游戏币战利品数量
                         userToyHandle.setForCoinNum(0);
 
+                        // 兑换成游戏币数量
                         userToyHandle.setToyForCoin(0);
 
-
-                        // TODO: 2018/2/2 添加insert操作
+                        userToyHandleDao.addUserToyHandle(userToyHandle);
 
                         // 获取兑换数量的战利品更改选择方式
                         List<Long> userToyIdList = userToyDao.getLimitUserToyIdListByUserNoAndToyNo(userNo,
@@ -286,24 +311,31 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                     // 用户战利品处理bean
                     UserToyHandle userToyHandle = new UserToyHandle();
 
-                    userToyHandle.setUserNo(userNo);
+                    // 用户编号
+                    userToyHandle.setUserNo(userToy.getUserNo());
 
+                    // 选择处理类型
                     userToyHandle.setChoiceType(choiceType);
 
+                    // 发货id
                     userToyHandle.setDeliverId(0L);
 
+                    // 玩具编号
                     userToyHandle.setToyNo(userToy.getToyNo());
 
+                    // 玩具名称
                     userToyHandle.setToyName(toyInfo.getToyName());
 
+                    // 玩具图片路径
                     userToyHandle.setToyImg(toyInfo.getToyImg());
 
+                    // 兑换成游戏币战利品数量
                     userToyHandle.setForCoinNum(forCoinNum);
 
+                    // 兑换成游戏币数量
                     userToyHandle.setToyForCoin(coin);
 
-
-                    // TODO: 2018/2/2 添加insert操作
+                    userToyHandleDao.addUserToyHandle(userToyHandle);
 
                     UserSpendRecord userSpendRecord = new UserSpendRecord();
                     // 用户编号
@@ -327,6 +359,9 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
 
                     userSpendRecordDao.addUserSpendRecord(userSpendRecord);
+
+                    // 设置用户选择处理方式
+                    userToy.setChoiceType(choiceType);
 
                     userToyDao.updateChoiceTypeByIdAndUserNo(userToy);
                 }
