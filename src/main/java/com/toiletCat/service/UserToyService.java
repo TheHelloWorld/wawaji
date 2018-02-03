@@ -30,12 +30,12 @@ public interface UserToyService {
     CommonResult<List<UserToy>> getUserToyListByUserNo(String userNo, int startPage);
 
     /**
-     * 根据用户编号和id获得用户战利品记录
+     * 根据用户编号和玩具编号获得用户战利品记录
      * @param userNo 用户编号
-     * @param id id
+     * @param toyNo 玩具编号
      * @return
      */
-    CommonResult<UserToy> getUserToyByUserNoAndId(String userNo, Long id);
+    CommonResult<UserToy> getUserToyByUserNoAndToyNo(String userNo, String toyNo);
 
     /**
      * 根据id,用户编号修改选择方式

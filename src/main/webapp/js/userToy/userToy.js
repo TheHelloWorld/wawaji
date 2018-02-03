@@ -106,16 +106,14 @@ function getAllUserToyByUserNo(nowPage) {
                     str += "<div class='row' style='margin-bottom: 2%'>";
                 }
 
-                str += "<div class='toiletCat-col-xs-6' onclick='toUserToyDetail("+list[i]["id"]+")' >";
+                str += "<div class='toiletCat-col-xs-6' onclick='toUserToyDetail("+list[i]["toyNo"]+")' >";
                 str += "    <div class='machine-panel panel-info'>";
                 str += "        <div class='panel-body'>";
                 str += "            <div class='toy-img index-img' style='text-align: center'>";
                 str += "                <img height='100px' maxwidth=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
                 str += "            </div>";
                 str += "            <div style='margin-bottom: 1%'><span>" + list[i]["toyName"] + "</span></div>";
-                var newDate = new Date();
-                newDate.setTime(list[i]["createTime"]);
-                str += "            <div style='margin-bottom: 1%'><span>" +newDate.format('yyyy-MM-dd h:m') + "</span></div>";
+                str += "            <div style='margin-bottom: 1%'><span>" + list[i]["unHandleNum"] + "/"+list[i]["deliverNum"]+"</span></div>";
                 str += "        </div>";
                 str += "    </div>";
                 str += "</div>";
@@ -130,20 +128,20 @@ function getAllUserToyByUserNo(nowPage) {
 }
 
 // 修改元素
-function toUserToyDetail(id) {
+function toUserToyDetail(toyNo) {
 
-    window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo="+userNo+"&id="+id;
+    window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo=" + userNo + "&toyNo=" + toyNo;
 }
 
 function returnMethod() {
     // 根据类型返回不同的首页
     if(type= "gameRoom") {
 
-        window.location.href = "/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo="+userNo;
+        window.location.href = "/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo=" + userNo;
 
     } else if(type= "machineRoom"){
 
-        window.location.href = "/toiletCat/machineRoom/machineRoom.html?nowType=login&&userNo="+userNo;
+        window.location.href = "/toiletCat/machineRoom/machineRoom.html?nowType=login&&userNo=" + userNo;
 
     }
 }

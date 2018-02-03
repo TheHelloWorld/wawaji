@@ -56,26 +56,30 @@
         select
             u.id,
             t.toy_img,
+            t.toy_no,
             t.toy_name,
-            count(u.toy_no) un_handle_num
+            count(u.toy_no) un_handle_num,
+            t.deliver_num
         from user_toy u,toy t
         where u.toy_no = t.toy_no and u.user_no = #{userNo, jdbcType=VARCHAR} and choice_type = 0 group by u.toy_no order by u.create_time asc
         limit #{startPage, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </select>
 
-    <!-- 根据用户编号和id获得用户战利品记录 -->
+    <!-- 根据用户编号和玩具编号获得用户战利品记录 -->
     <select id="getUserToyByUserNoAndId" resultMap="userToyMap">
         select
-            u.id,
             u.user_no,
             u.toy_no,
-            u.choice_type,
             t.toy_img,
             t.toy_name,
             t.toy_for_coin,
-            u.create_time
+            count(u.toy_no) un_handle_num,
         from user_toy u,toy t
-        where u.toy_no = t.toy_no and u.user_no = #{userNo, jdbcType=VARCHAR} and u.id = #{id}
+        where u.toy_no = t.toy_no
+            and u.user_no = #{userNo, jdbcType=VARCHAR}
+            and u.toy_no = #{toyNo, jdbcType=VARCHAR}
+            and u.choice_type = 0
+            group by u.toy_no
     </select>
 
     <!-- 根据用户编号获得用户所有未处理战利品 -->

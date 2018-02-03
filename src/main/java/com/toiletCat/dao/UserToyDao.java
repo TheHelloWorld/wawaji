@@ -33,12 +33,12 @@ public interface UserToyDao {
                                      @Param("pageSize") int pageSize);
 
     /**
-     * 根据用户编号和id获得用户战利品记录
+     * 根据用户编号和玩具编号获得用户战利品记录
      * @param userNo 用户编号
-     * @param id id
+     * @param toyNo 玩具编号
      * @return
      */
-    UserToy getUserToyByUserNoAndId(@Param("userNo") String userNo, @Param("id") Long id);
+    UserToy getUserToyByUserNoAndToyNo(@Param("userNo") String userNo, @Param("toyNo") String toyNo);
 
     /**
      * 根据id,用户编号修改选择方式及其送货编号

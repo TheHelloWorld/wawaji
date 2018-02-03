@@ -75,16 +75,16 @@ public class UserToyController {
     }
 
     /**
-     * 根据用户编号和id获得用户战利品记录
+     * 根据用户编号和玩具编号获得用户战利品记录
      * @param userNo 用户编号
-     * @param id id
+     * @param toyNo 玩具编号
      * @return
      */
-    @RequestMapping(value = "/getUserToyByUserNoAndId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/getUserToyByUserNoAndToyNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String getUserToyByUserNoAndId(String userNo, Long id) {
+    public String getUserToyByUserNoAndToyNo(String userNo, String toyNo) {
 
-        CommonResult<UserToy> result = userToyService.getUserToyByUserNoAndId(userNo, id);
+        CommonResult<UserToy> result = userToyService.getUserToyByUserNoAndToyNo(userNo, toyNo);
 
         return JSONUtil.getReturnStrString(result, String.valueOf(result.getValue()));
     }

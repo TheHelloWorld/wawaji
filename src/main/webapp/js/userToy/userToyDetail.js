@@ -1,4 +1,4 @@
-var id = 0;
+var toyNo = "";
 
 var toyForCoin = 0;
 
@@ -24,6 +24,12 @@ var onlyOneUserAddressId = 0;
 
 var userNo = "";
 
+var unHandleNum = 0;
+
+var deliverNum = 0;
+
+var toyForCoin = 0;
+
 $(function() {
 
     $("#zzc").hide();
@@ -36,7 +42,7 @@ $(function() {
     // 用户游戏币数
     userCoin = sessionStorage["toiletCatUserCoin"];
 
-    id = getQueryString("id");
+    toyNo = getQueryString("toyNo");
 
     userNo = getQueryString("userNo");
 
@@ -52,19 +58,17 @@ $(function() {
         $("#submitButton").show();
     }
 
-
-
 });
 
 // 根据用户编号和id获得记录信息
 function getUserToyByUserNoAndId() {
 
     $.ajax({
-        url:"/toiletCat/api/userToy/getUserToyByUserNoAndId.action",
+        url:"/toiletCat/api/userToy/getUserToyByUserNoAndToyNo.action",
         type:"POST",
         async:false,
         data:{
-            id:id,
+            toyNo:toyNo,
             userNo:userNo
         },
         success:function(data){
@@ -96,16 +100,18 @@ function getUserToyByUserNoAndId() {
 
             freeDeliverNum = result["freeDeliverNum"];
 
+            unHandleNum = result["unHandleNum"];
+
+            deliverNum = result["deliverNum"];
+
+            toyForCoin = result["toyForCoin"];
+
             var str = " <div class='row'>";
             str += "        <div class='user-toy-div'>";
             str += "            <img class='user-toy-img index-img' src='" + result["toyImg"] + "'>";
             str += "        </div>";
             str += "        <div class='user-toy-div' style='color:white;font-size:1.5rem;margin-left:0%;'>";
             str += "            <div>" + result["toyName"] + "</div>";
-            str += "<br/>";
-            var newDate = new Date();
-            newDate.setTime(result["createTime"]);
-            str += "            <div>"+newDate.format('yyyy-MM-dd h:m:s')+"</div>";
             str += "<br/>";
             str += "            <div class='user-toy-success index-center'>抓取成功</div>";
             str += "<br/>";
@@ -115,22 +121,13 @@ function getUserToyByUserNoAndId() {
             str += "        <div class='col-xs-5 user-toy-left user-toy-text-status' style='width:30%'>";
             str += "            <span style='color:white'>状态:</span>";
             str += "        </div>";
-            str += "        <div class='col-xs-5 user-toy-right user-toy-text-left' style='font-size: 1.5rem;color: #666615;width:50%;color:white;font-size:bold;'>";
+            str += "        <div class='col-xs-5 user-toy-right user-toy-text-left' style='font-size: 1.5rem;color: #666615;width:50%;color:white;'>";
 
-            if (result["choiceType"] == 0) {
-                str += "<select id='choiceType' class='user-toy-select' onchange='choiceDeliver()'>";
-                str += "    <option value='0'>未选择</option>";
-                str += "    <option value='1'>兑换成"+result["toyForCoin"]+"个游戏币</option>";
-                str += "    <option value='2'>寄送</option>";
-                str += "</select>";
-
-            } else if (result["choiceType"] == 1) {
-
-                str += "<span>已兑换"+result["toyForCoin"]+"个游戏币</span>";
-
-            } else if (result["choiceType"] == 2) {
-                str += getDeliverByIdAndUserNo(result["deliverId"]);
-            }
+            str += "<select id='choiceType' class='user-toy-select' onchange='choiceDeliver()'>";
+            str += "    <option value='0'>未选择</option>";
+            str += "    <option value='1'>兑换成游戏币</option>";
+            str += "    <option value='2'>寄送</option>";
+            str += "</select>";
 
             str += "    </div>";
 
@@ -190,17 +187,42 @@ function getDeliverByIdAndUserNo(id) {
     return deliverStr;
 }
 
+// 选择方式修改触发方法
 function choiceDeliver() {
     // 如果是寄送
     if($("#choiceType").val() == "2") {
+        $("#choiceExchangeCoin").html("");
         getAllUserAddressByUserNo(userNo);
         $("#submitButton").show();
-    } else if($("#choiceType").val() == "1"){
+    } else if($("#choiceType").val() == "1") {
         $("#userAddress").html("");
+        choiceExchangeCoin();
         $("#submitButton").show();
     } else {
         $("#userAddress").html("");
     }
+}
+
+// 选择兑换游戏币数量
+function choiceExchangeCoin() {
+    var str = " <div>";
+    str +=    "     要将";
+    str +=    "     <select id='unHandleNum' onchange='changeNum()'>";
+    for(var i = unHandleNum; i>= 1; i--) {
+        str += "<option value='" + i + "'>" + i + "</option>";
+    }
+    str += "</select>";
+    str += "个战利品兑换成";
+    str += "<span id='exchangeCoinNum'></span>";
+    str += "个马桶币";
+    str += "</div>";
+    $("#choiceExchangeCoin").append(str);
+    changeNum()
+}
+
+// 修改兑换战力品数量
+function changeNum() {
+    $("#exchangeCoinNum").html($("#unHandleNum").val() * toyForCoin);
 }
 
 // 获得当前用户所有地址
@@ -230,7 +252,7 @@ function getAllUserAddressByUserNo(userNo) {
             var str = "";
 
             if(list.length == 0) {
-                toiletCatMsg("请添加寄送地址喵", "toUserAddress()");
+                toiletCatMsg("请添加寄送地址", "toUserAddress()");
             }
 
             for(var i = 0; i<list.length; i++) {
