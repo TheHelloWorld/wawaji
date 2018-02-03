@@ -398,7 +398,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                 List<UserToy> list = userToyDao.getAllUnHandleUserToyByUserNo(userNo);
 
-                if(list == null || list.size() > 0) {
+                if(list == null || list.size() == 0) {
                     got(returnList);
                     return;
                 }

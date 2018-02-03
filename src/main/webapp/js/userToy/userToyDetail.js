@@ -191,6 +191,7 @@ function getDeliverByIdAndUserNo(id) {
 function choiceDeliver() {
     // 如果是寄送
     if($("#choiceType").val() == "2") {
+        $("#userToyShowMsg").hide();
         $("#userToyShowMsg").html("");
 
         // 判断当前数量是否可以寄送
@@ -198,6 +199,7 @@ function choiceDeliver() {
             var str = "还差" + (deliverNum - unHandleNum) + "个才能寄送哦";
 
             $("#userToyShowMsg").append(str);
+            $("#userToyShowMsg").show();
             return;
         }
 
@@ -205,10 +207,12 @@ function choiceDeliver() {
         $("#submitButton").show();
     } else if($("#choiceType").val() == "1") {
         $("#userToyShowMsg").html("");
+        $("#userToyShowMsg").hide();
         $("#userAddress").html("");
         choiceExchangeCoin();
         $("#submitButton").show();
     } else {
+        $("#userToyShowMsg").hide();
         $("#userToyShowMsg").html("");
         $("#userAddress").html("");
     }
@@ -217,7 +221,7 @@ function choiceDeliver() {
 // 选择兑换游戏币数量
 function choiceExchangeCoin() {
     var str = " <div>";
-    str +=    "     要将";
+    str +=    "     将";
     str +=    "     <select id='unHandleNum' onchange='changeNum()' style='color: #000;'>";
     for(var i = unHandleNum; i>= 1; i--) {
         str += "<option value='" + i + "'>" + i + "</option>";
@@ -228,6 +232,7 @@ function choiceExchangeCoin() {
     str += "个马桶币";
     str += "</div>";
     $("#userToyShowMsg").append(str);
+    $("#userToyShowMsg").show();
     changeNum()
 }
 
@@ -367,6 +372,8 @@ function getAllUnHandleUserToyByUserNo() {
             }
 
             var list = data["result"];
+
+            console.info(list);
             var str = "<div style='text-align: center;color: whitesmoke;font-size: 2.25rem;'>" + freeDeliverNum + "个或以上才包邮哦(邮费<img src='/image/background/coin-img.png'>"+deliverCoin+")</div>";
 
             flag = false;
