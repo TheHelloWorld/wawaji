@@ -28,7 +28,7 @@ var unHandleNum = 0;
 
 var deliverNum = 0;
 
-var toyForCoin = 0;
+var forCoinNum = 0;
 
 $(function() {
 
@@ -121,7 +121,7 @@ function getUserToyByUserNoAndId() {
             str += "        <div class='col-xs-5 user-toy-left user-toy-text-status' style='width:30%'>";
             str += "            <span style='color:white'>状态:</span>";
             str += "        </div>";
-            str += "        <div class='col-xs-5 user-toy-right user-toy-text-left' style='font-size: 1.5rem;color: #666615;width:50%;color:white;'>";
+            str += "        <div class='col-xs-5 user-toy-right user-toy-text-left' style='font-size: 1.5rem;width:50%;color:white;'>";
 
             str += "<select id='choiceType' class='user-toy-select' onchange='choiceDeliver()'>";
             str += "    <option value='0'>未选择</option>";
@@ -191,14 +191,25 @@ function getDeliverByIdAndUserNo(id) {
 function choiceDeliver() {
     // 如果是寄送
     if($("#choiceType").val() == "2") {
-        $("#choiceExchangeCoin").html("");
+        $("#userToyShowMsg").html("");
+
+        // 判断当前数量是否可以寄送
+        if(unHandleNum < deliverNum) {
+            var str = "还差" + (deliverNum - unHandleNum) + "个才能寄送哦";
+
+            $("#userToyShowMsg").append(str);
+            return;
+        }
+
         getAllUserAddressByUserNo(userNo);
         $("#submitButton").show();
     } else if($("#choiceType").val() == "1") {
+        $("#userToyShowMsg").html("");
         $("#userAddress").html("");
         choiceExchangeCoin();
         $("#submitButton").show();
     } else {
+        $("#userToyShowMsg").html("");
         $("#userAddress").html("");
     }
 }
@@ -207,7 +218,7 @@ function choiceDeliver() {
 function choiceExchangeCoin() {
     var str = " <div>";
     str +=    "     要将";
-    str +=    "     <select id='unHandleNum' onchange='changeNum()'>";
+    str +=    "     <select id='unHandleNum' onchange='changeNum()' style='color: #000;'>";
     for(var i = unHandleNum; i>= 1; i--) {
         str += "<option value='" + i + "'>" + i + "</option>";
     }
@@ -216,12 +227,14 @@ function choiceExchangeCoin() {
     str += "<span id='exchangeCoinNum'></span>";
     str += "个马桶币";
     str += "</div>";
-    $("#choiceExchangeCoin").append(str);
+    $("#userToyShowMsg").append(str);
     changeNum()
 }
 
 // 修改兑换战力品数量
 function changeNum() {
+
+    forCoinNum = $("#unHandleNum").val();
     $("#exchangeCoinNum").html($("#unHandleNum").val() * toyForCoin);
 }
 
@@ -252,7 +265,7 @@ function getAllUserAddressByUserNo(userNo) {
             var str = "";
 
             if(list.length == 0) {
-                toiletCatMsg("请添加寄送地址", "toUserAddress()");
+                toiletCatMsg("请添加寄送地址喵", "toUserAddress()");
             }
 
             for(var i = 0; i<list.length; i++) {

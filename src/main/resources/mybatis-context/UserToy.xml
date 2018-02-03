@@ -66,14 +66,15 @@
     </select>
 
     <!-- 根据用户编号和玩具编号获得用户战利品记录 -->
-    <select id="getUserToyByUserNoAndId" resultMap="userToyMap">
+    <select id="getUserToyByUserNoAndToyNo" resultMap="userToyMap">
         select
             u.user_no,
             u.toy_no,
             t.toy_img,
             t.toy_name,
             t.toy_for_coin,
-            count(u.toy_no) un_handle_num,
+            t.deliver_num,
+            count(u.toy_no) un_handle_num
         from user_toy u,toy t
         where u.toy_no = t.toy_no
             and u.user_no = #{userNo, jdbcType=VARCHAR}
