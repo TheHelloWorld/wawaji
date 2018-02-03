@@ -26,6 +26,8 @@
         <result property="toyForCoin" column="toy_for_coin" jdbcType="INTEGER"/>
         <!-- 待处理娃娃数量 -->
         <result property="unHandleNum" column="un_handle_num" jdbcType="INTEGER"/>
+        <!-- 兑换个数 -->
+        <result property="deliverNum" column="deliver_num" jdbcType="INTEGER"/>
     </resultMap>
 
     <!-- 添加用户战利品记录 -->
@@ -79,10 +81,11 @@
     <!-- 根据用户编号获得用户所有未处理战利品 -->
     <select id="getAllUnHandleUserToyByUserNo" parameterType="java.lang.String" resultMap="userToyMap">
         select
-            u.id,
+            count(u.id) un_handle_num,
             u.toy_no,
             t.toy_img,
-            t.toy_name
+            t.toy_name,
+            t.deliver_num
         from user_toy u,toy t
         where u.toy_no = t.toy_no and u.user_no = #{userNo, jdbcType=VARCHAR} and choice_type = 0
     </select>

@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -392,7 +393,25 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
         return exec(new Callback() {
             @Override
             public void exec() {
-                got(userToyDao.getAllUnHandleUserToyByUserNo(userNo));
+
+                List<UserToy> returnList = new ArrayList<>();
+
+                List<UserToy> list = userToyDao.getAllUnHandleUserToyByUserNo(userNo);
+
+                if(list == null || list.size() > 0) {
+                    got(returnList);
+                    return;
+                }
+
+                for(UserToy userToy : list) {
+                    // 若当前数量大于兑换数量
+                    if(userToy.getUnHandleNum() >= userToy.getDeliverNum()) {
+                        // 将当前玩具添加入返回list中
+                        returnList.add(userToy);
+                    }
+                }
+
+                got(returnList);
             }
         }, "getAllUnHandleUserToyByUserNo", json);
     }

@@ -56,6 +56,11 @@ public class UserToy extends BaseEntity implements Serializable {
      */
     private Integer unHandleNum;
 
+    /**
+     * 兑换个数
+     */
+    private Integer deliverNum;
+
     public String getUserNo() {
         return userNo;
     }
@@ -126,5 +131,13 @@ public class UserToy extends BaseEntity implements Serializable {
 
     public void setUnHandleNum(Integer unHandleNum) {
         this.unHandleNum = unHandleNum;
+    }
+
+    public Integer getDeliverNum() {
+        return deliverNum;
+    }
+
+    public void setDeliverNum(Integer deliverNum) {
+        this.deliverNum = deliverNum;
     }
 }
