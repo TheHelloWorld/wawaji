@@ -471,6 +471,9 @@ function updateChoiceType() {
     // 兑换成游戏币的战利品数量
     userToyJson["forCoinNum"] = forCoinNum;
 
+    // 玩具编号
+    userToyJson["toyNo"] = toyNo;
+
     var userToyStr = JSON.stringify(userToyJson);
 
     var userAddressStr = JSON.stringify(userAddressJson);
@@ -479,38 +482,38 @@ function updateChoiceType() {
 
     console.info("userAddressStr:"+userAddressStr);
 
-    // $.ajax({
-    //     url:"/toiletCat/api/userToy/updateChoiceTypeByIdAndUserNo.action",
-    //     type:"POST",
-    //     async:false,
-    //     data:{
-    //         userToyStr:userToyStr,
-    //         userAddressStr:userAddressStr
-    //     },
-    //     success:function (data) {
-    //         // 转换数据
-    //         if(typeof(data) == "string") {
-    //             data = eval("("+data+")");
-    //         }
-    //
-    //         // 判断是否成功
-    //         if(data["is_success"] != "success") {
-    //             toiletCatMsg(data["result"], null);
-    //             return;
-    //         }
-    //
-    //         var result = data["result"];
-    //
-    //         if(typeof(result) == "string") {
-    //             result = eval("("+result+")");
-    //         }
-    //
-    //         // 更新用户游戏币数
-    //         sessionStorage["toiletCatUserCoin"] = result["userCoin"];
-    //
-    //         window.location.href = "/toiletCat/userToy/userToy.html?userNo=" + userNo;
-    //     }
-    // });
+    $.ajax({
+        url:"/toiletCat/api/userToy/updateChoiceTypeByIdAndUserNo.action",
+        type:"POST",
+        async:false,
+        data:{
+            userToyStr:userToyStr,
+            userAddressStr:userAddressStr
+        },
+        success:function (data) {
+            // 转换数据
+            if(typeof(data) == "string") {
+                data = eval("("+data+")");
+            }
+
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+                toiletCatMsg(data["result"], null);
+                return;
+            }
+
+            var result = data["result"];
+
+            if(typeof(result) == "string") {
+                result = eval("("+result+")");
+            }
+
+            // 更新用户游戏币数
+            sessionStorage["toiletCatUserCoin"] = result["userCoin"];
+
+            window.location.href = "/toiletCat/userToy/userToy.html?userNo=" + userNo;
+        }
+    });
 }
 
 // 返回用户战利品也

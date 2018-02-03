@@ -50,7 +50,7 @@
                 #{choiceType, jdbcType=INTEGER},
                 #{forCoinNum, jdbcType=INTEGER},
                 #{toyForCoin, jdbcType=INTEGER},
-                #{deliverId, jdbcType=BIGINT},
+                #{deliverId, jdbcType=BIGINT}
             )
     </insert>
 

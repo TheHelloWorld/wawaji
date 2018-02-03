@@ -279,22 +279,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                         userToyHandleService.addUserToyHandle(userToyHandle);
 
-                        // 获取兑换数量的战利品更改选择方式
-                        List<Long> userToyIdList = userToyDao.getLimitUserToyIdListByUserNoAndToyNo(userNo,
-                                toyNo, toyInfo.getDeliverNum());
-
-                        for(Long id : userToyIdList) {
-
-                            UserToy newUserToy = new UserToy();
-
-                            newUserToy.setId(id);
-
-                            newUserToy.setUserNo(userNo);
-
-                            newUserToy.setChoiceType(choiceType);
-
-                            userToyDao.updateChoiceTypeByIdAndUserNo(newUserToy);
-                        }
+                        userToyUpdateChoiceTypeByIdAndUserNo(userNo, toyNo, toyInfo.getDeliverNum(), choiceType);
                     }
 
                     // 若为兑换游戏币
@@ -361,11 +346,9 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
 
                     userSpendRecordDao.addUserSpendRecord(userSpendRecord);
+                    
+                    userToyUpdateChoiceTypeByIdAndUserNo(userNo, userToy.getToyNo(), toyInfo.getDeliverNum(), choiceType);
 
-                    // 设置用户选择处理方式
-                    userToy.setChoiceType(choiceType);
-
-                    userToyDao.updateChoiceTypeByIdAndUserNo(userToy);
                 }
 
                 Integer userCoin = userDao.getUserCoinByUserNo(userNo);
@@ -378,6 +361,32 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
             }
         }, "updateChoiceTypeByIdAndUserNo", json);
+    }
+
+    /**
+     * 修改用户战利品处理方式
+     * @param userNo 用户编号
+     * @param toyNo 玩具编号
+     * @param limitNum 查询数量
+     * @param choiceType 选择处理方式
+     */
+    private void userToyUpdateChoiceTypeByIdAndUserNo(String userNo, String toyNo, Integer limitNum, Integer choiceType) {
+        // 获取兑换数量的战利品更改选择方式
+        List<Long> userToyIdList = userToyDao.getLimitUserToyIdListByUserNoAndToyNo(userNo,
+                toyNo, limitNum);
+
+        for(Long id : userToyIdList) {
+
+            UserToy newUserToy = new UserToy();
+
+            newUserToy.setId(id);
+
+            newUserToy.setUserNo(userNo);
+
+            newUserToy.setChoiceType(choiceType);
+
+            userToyDao.updateChoiceTypeByIdAndUserNo(newUserToy);
+        }
     }
 
     /**

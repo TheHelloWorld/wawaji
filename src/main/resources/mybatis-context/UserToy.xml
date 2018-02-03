@@ -105,7 +105,7 @@
     <!-- 根据用户编号玩具编号及数量获得用户战利品id集合 -->
     <select id="getLimitUserToyIdListByUserNoAndToyNo" resultType="java.lang.Long">
         select
-          id,
+          id
         from user_toy
         where
             user_no = #{userNo, jdbcType=VARCHAR}
