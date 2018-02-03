@@ -92,7 +92,7 @@
             t.toy_name,
             t.deliver_num
         from user_toy u,toy t
-        where u.toy_no = t.toy_no and u.user_no = #{userNo, jdbcType=VARCHAR} and choice_type = 0
+        where u.toy_no = t.toy_no and u.user_no = #{userNo, jdbcType=VARCHAR} and choice_type = 0 group by u.toy_no
     </select>
 
     <!-- 根据id,用户编号修改选择方式 -->

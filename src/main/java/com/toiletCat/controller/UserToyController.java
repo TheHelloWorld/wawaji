@@ -156,7 +156,7 @@ public class UserToyController {
             userToyStr = userToyJSON.toJSONString();
 
         } else {
-            String forCoinNumString = userToyJSON.getString("toyNos");
+            String forCoinNumString = userToyJSON.getString("forCoinNum");
             try {
                 if(StringUtils.isNotBlank(forCoinNumString)) {
                     forCoinNum = Integer.valueOf(forCoinNumString);

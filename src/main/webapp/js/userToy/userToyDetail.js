@@ -373,7 +373,6 @@ function getAllUnHandleUserToyByUserNo() {
 
             var list = data["result"];
 
-            console.info(list);
             var str = "<div style='text-align: center;color: whitesmoke;font-size: 2.25rem;'>" + freeDeliverNum + "个或以上才包邮哦(邮费<img src='/image/background/coin-img.png'>"+deliverCoin+")</div>";
 
             flag = false;
@@ -385,13 +384,13 @@ function getAllUnHandleUserToyByUserNo() {
 
                 str += "<div class='machine-col-xs-6' >";
                 str += "<label style='width: 100%;'>";
-                if(list[i]["id"] == id) {
-                    str += "    <input type='checkbox' name='unHandleToy' value='"+list[i]["id"]+"' checked>";
+                if(list[i]["toyNo"] == toyNo) {
+                    str += "    <input type='checkbox' name='unHandleToy' value='"+list[i]["toyNo"]+"' checked>";
                 } else {
-                    str += "    <input type='checkbox' name='unHandleToy' value='"+list[i]["id"]+"' >";
+                    str += "    <input type='checkbox' name='unHandleToy' value='"+list[i]["toyNo"]+"' >";
                 }
 
-                str += "    <input type='hidden' id='unHandleToy"+list[i]["id"]+"' value='"+list[i]["toyName"]+"' >";
+                str += "    <input type='hidden' id='unHandleToy"+list[i]["toyNo"]+"' value='"+list[i]["toyName"]+"' >";
                 str += "    <div class='user-deliver-toy-div panel-info'>";
                 str += "        <div class='panel-body'>";
                 str += "            <div class='toy-img index-img' style='text-align: center'>";
@@ -417,7 +416,6 @@ function getAllUnHandleUserToyByUserNo() {
 // 修改选择方式
 function updateChoiceType() {
 
-    userToyJson["id"] = id;
     userToyJson["userNo"] = userNo;
     userToyJson["choiceType"] = $("#choiceType").val();
     userToyJson["toyForCoin"] = toyForCoin;
@@ -427,7 +425,7 @@ function updateChoiceType() {
 
     if($("#choiceType").val() == 2) {
 
-        var userToyIdJson = [];
+        var userToyNoJson = [];
         var userToyNameJson = [];
 
         userAddressJson["userName"] = $("#userName"+userAddressId).val();
@@ -442,71 +440,77 @@ function updateChoiceType() {
 
                 count ++;
 
-                var userToyIdSingle = {};
+                var userToyNoSingle = {};
 
-                userToyIdSingle["userToyId"] = obj[i].value;
+                userToyNoSingle["toyNo"] = obj[i].value;
 
-                userToyIdJson.push(userToyIdSingle);
+                userToyNoJson.push(userToyNoSingle);
 
                 var userToyNameSingle = {};
 
                 userToyNameSingle["toyName"] = $("#unHandleToy"+obj[i].value).val();
 
                 userToyNameJson.push(userToyNameSingle);
-
             }
-
         }
 
-        if(count < 3) {
-
+        // 如果寄送数量小于免费数量
+        if(count < freeDeliverNum) {
             if(userCoin < deliverCoin) {
-                toiletCatMsg("游戏币不足QAQ 请充值喵", "recharge()");
+                toiletCatMsg("游戏币不足QAQ 请充值喵", null);
+                return;
             }
         }
 
-        userToyJson["userToyIds"] = userToyIdJson;
+        userToyJson["toyNos"] = userToyNoJson;
 
         userToyJson["userToyNames"] = userToyNameJson;
 
     }
 
+    // 兑换成游戏币的战利品数量
+    userToyJson["forCoinNum"] = forCoinNum;
+
     var userToyStr = JSON.stringify(userToyJson);
 
     var userAddressStr = JSON.stringify(userAddressJson);
 
-    $.ajax({
-        url:"/toiletCat/api/userToy/updateChoiceTypeByIdAndUserNo.action",
-        type:"POST",
-        async:false,
-        data:{
-            userToyStr:userToyStr,
-            userAddressStr:userAddressStr
-        },
-        success:function (data) {
-            // 转换数据
-            if(typeof(data) == "string") {
-                data = eval("("+data+")");
-            }
+    console.info("userToyStr:"+userToyStr);
 
-            // 判断是否成功
-            if(data["is_success"] != "success") {
-                toiletCatMsg(data["result"], null);
-                return;
-            }
+    console.info("userAddressStr:"+userAddressStr);
 
-            var result = data["result"];
-
-            if(typeof(result) == "string") {
-                result = eval("("+result+")");
-            }
-
-            // 更新用户游戏币数
-            sessionStorage["toiletCatUserCoin"] = result["userCoin"];
-
-            window.location.href = "/toiletCat/userToy/userToyDetailPage.html?type=update&userNo=" + userNo + "&id=" + id;
-        }
-    });
+    // $.ajax({
+    //     url:"/toiletCat/api/userToy/updateChoiceTypeByIdAndUserNo.action",
+    //     type:"POST",
+    //     async:false,
+    //     data:{
+    //         userToyStr:userToyStr,
+    //         userAddressStr:userAddressStr
+    //     },
+    //     success:function (data) {
+    //         // 转换数据
+    //         if(typeof(data) == "string") {
+    //             data = eval("("+data+")");
+    //         }
+    //
+    //         // 判断是否成功
+    //         if(data["is_success"] != "success") {
+    //             toiletCatMsg(data["result"], null);
+    //             return;
+    //         }
+    //
+    //         var result = data["result"];
+    //
+    //         if(typeof(result) == "string") {
+    //             result = eval("("+result+")");
+    //         }
+    //
+    //         // 更新用户游戏币数
+    //         sessionStorage["toiletCatUserCoin"] = result["userCoin"];
+    //
+    //         window.location.href = "/toiletCat/userToy/userToy.html?userNo=" + userNo;
+    //     }
+    // });
 }
 
 // 返回用户战利品也
