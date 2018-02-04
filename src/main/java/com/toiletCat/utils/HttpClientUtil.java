@@ -118,12 +118,6 @@ public class HttpClientUtil {
                 .build();
     }
 
-    public static void main(String[] args) {
-        String s = "https://pay.v8jisu.cn/api.php?act=order&pid=13806&key=j0UgNf3nKBTJFb20urdb4Jb4tgj8mTT7&out_trade_no=ToiletCat151746390813327e4d67967cc45c6ac8378e37cb179e4";
-
-        httpsRequest(s,"GET", null);
-    }
-
     /**
      * 发送https请求
      *
