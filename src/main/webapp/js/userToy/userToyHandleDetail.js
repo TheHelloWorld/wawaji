@@ -25,20 +25,17 @@ $(function() {
     // 用户编号
     checkSession();
 
-    // 用户游戏币数
-    userCoin = sessionStorage["toiletCatUserCoin"];
-
     id = getQueryString("id");
 
     userNo = getQueryString("userNo");
 
     // 根据用户编号和id获得记录信息
-    getUserToyByUserNoAndId();
+    getUserToyHandleByUserNoAndId();
 
 });
 
 // 根据用户编号和id获得记录信息
-function getUserToyByUserNoAndId() {
+function getUserToyHandleByUserNoAndId() {
 
     $.ajax({
         url:"/toiletCat/api/userToyHandle/getUserToyHandleByUserNoAndId.action",
@@ -105,24 +102,6 @@ function getUserToyByUserNoAndId() {
             $("#userToyHandleInfo").append(str);
         }
     });
-}
-
-// 选择兑换游戏币数量
-function choiceExchangeCoin() {
-    var str = " <div>";
-    str +=    "     将";
-    str +=    "     <select id='unHandleNum' onchange='changeNum()' style='color: #000;'>";
-    for(var i = unHandleNum; i>= 1; i--) {
-        str += "<option value='" + i + "'>" + i + "</option>";
-    }
-    str += "</select>";
-    str += "个战利品兑换成";
-    str += "<span id='exchangeCoinNum'></span>";
-    str += "个马桶币";
-    str += "</div>";
-    $("#userToyShowMsg").append(str);
-    $("#userToyShowMsg").show();
-    changeNum()
 }
 
 // 返回用户战利品也
