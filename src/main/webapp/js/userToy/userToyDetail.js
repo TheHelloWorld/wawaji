@@ -136,57 +136,6 @@ function getUserToyByUserNoAndId() {
     });
 }
 
-function getDeliverByIdAndUserNo(id) {
-
-    var deliverStr = "";
-
-    $.ajax({
-        url:"/toiletCat/api/deliver/getDeliverByIdAndUserNo.action",
-        type:"POST",
-        async:false,
-        data:{
-            id:id,
-            dataNo:userNo
-        },
-        success:function(data){
-
-            // 转换数据
-            if(typeof(data) == "string") {
-                data = eval("("+data+")");
-            }
-
-            // 判断是否成功
-            if(data["is_success"] != "success") {
-                toiletCatMsg(data["result"], null);
-                return;
-            }
-
-            var result = data["result"];
-
-            if(typeof(result) == "string") {
-                result = eval("("+result+")");
-            }
-
-            if(result["deliverStatus"] == 0) {
-                deliverStr += "<span>待发货</span>";
-                deliverStr += "</div>";
-            } else {
-                deliverStr += "<span>已发货</span>";
-                deliverStr += "</div>";
-                deliverStr += "<div style='margin-top: 10%;font-size: 1.5rem;color: white;'>";
-                deliverStr += "    <div class='col-xs-5 user-toy-left user-toy-text-status'>发货单号:</div>";
-                deliverStr += "    <div class='col-xs-5 user-toy-right user-toy-text-status'>快递公司:</div>";
-                deliverStr += "    <div class='col-xs-5 user-toy-left user-toy-text-status'>"+result["deliverNo"]+"</div>";
-
-                deliverStr += "    <div class='col-xs-5 user-toy-right user-toy-text-status'>"+result["company"]+"</div>";
-                deliverStr += "</div>";
-            }
-
-        }
-    });
-    return deliverStr;
-}
-
 // 选择方式修改触发方法
 function choiceDeliver() {
     // 如果是寄送
@@ -511,7 +460,7 @@ function updateChoiceType() {
             // 更新用户游戏币数
             sessionStorage["toiletCatUserCoin"] = result["userCoin"];
 
-            window.location.href = "/toiletCat/userToy/userToy.html?userNo=" + userNo;
+            window.location.href = "/toiletCat/userToy/userToyHandle.html?userNo=" + userNo;
         }
     });
 }

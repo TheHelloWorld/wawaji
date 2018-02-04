@@ -36,7 +36,7 @@
     </resultMap>
 
     <!-- 添加用户战利品处理记录 -->
-    <insert id="addUserToyHandle" parameterType="com.toiletCat.entity.UserToyHandle">
+    <insert id="addUserToyHandle" useGeneratedKeys="true" keyProperty="id" parameterType="com.toiletCat.entity.UserToyHandle">
         insert into user_toy_handle
             (
                 user_no,

@@ -19,13 +19,13 @@ $(function() {
 
     var indexBodyDivHeight = $(".index-body-div").height();
 
-    var addHeight = $("#userToyHandle").height() + ($(".default-height").height() * 2);
+    var addHeight = $("#userToyHandle").height() + $("#handleSelect").height() + ($(".default-height").height() * 2);
 
     $(".index-body-div").scroll(function(){
 
         if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
             nextPage();
-            addHeight = $("#userToyHandle").height() + ($(".default-height").height() * 2);
+            addHeight = $("#userToyHandle").height() + $("#handleSelect").height() + ($(".default-height").height() * 2);
         }
     });
 
@@ -136,7 +136,7 @@ function getAllUserToyHandleByUserNo() {
                     str += "</div>";
                 }
             }
-            $("#userToy").append(str);
+            $("#userToyHandle").append(str);
         }
     });
 }

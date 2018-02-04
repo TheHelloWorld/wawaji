@@ -19,13 +19,13 @@ $(function() {
 
     var indexBodyDivHeight = $(".index-body-div").height();
 
-    var addHeight = $("#userToy").height() + ($(".default-height").height() * 2);
+    var addHeight = $("#userToy").height() + $("#handleSelect").height() + ($(".default-height").height() * 2);
 
     $(".index-body-div").scroll(function(){
 
         if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
             nextPage();
-            addHeight = $("#userToy").height() + ($(".default-height").height() * 2);
+            addHeight = $("#userToy").height() + $("#handleSelect").height() + ($(".default-height").height() * 2);
         }
     });
 
