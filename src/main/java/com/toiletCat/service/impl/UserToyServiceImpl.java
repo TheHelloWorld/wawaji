@@ -186,6 +186,26 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                         }
                     }
 
+                    // 检查选择寄送的所有玩具是否达到数量要求
+                    for(String toyNo : toyNoList) {
+
+                        // 获得玩具信息
+                        Toy toyInfo = toyDao.getToyInfoByToyNo(toyNo);
+
+                        // 获得用户当前战利品数量
+                        Integer userToyNum = userToyDao.countUserToyNumByUserNoAndToyNo(userNo, toyNo);
+
+                        // 判断用户当前战利品数量是否小于可兑换数量
+                        if (userToyNum < toyInfo.getDeliverNum()) {
+
+                            logger.warn("updateChoiceTypeByIdAndUserNo userToyNum is less than toyDeliverNum");
+
+                            setOtherMsg();
+                            got("还差"+(toyInfo.getDeliverNum() - userToyNum) + "才能寄送哦");
+                            return;
+                        }
+                    }
+
                     Deliver deliver = new Deliver();
                     deliver.setToyNameArray(toyNameArray);
                     deliver.setUserNo(userNo);
@@ -284,6 +304,27 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                     // 若为兑换游戏币
                 } else if(ChoiceType.FOR_COIN.getStatus() == choiceType) {
+
+                    // 获得用户当前战利品数量
+                    Integer userToyNum = userToyDao.countUserToyNumByUserNoAndToyNo(userNo, userToy.getToyNo());
+
+                    // 若用户战利品数量小于兑换成游戏币数量
+                    if(userToyNum < forCoinNum) {
+
+                        logger.warn("userToyNum is less than forCoinNum userNo:" + userNo +
+                                ", toyNo:" + userToy.getToyNo() + ", userToyNum:" + userToyNum +
+                                ", forCoinNum:" + forCoinNum);
+
+                        Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+
+                        JSONObject json = new JSONObject();
+
+                        json.put("userCoin",userCoin);
+
+                        got(json.toJSONString());
+
+                        return;
+                    }
 
                     Date tradeTime = new Date();
 
