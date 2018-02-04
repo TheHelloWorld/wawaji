@@ -89,9 +89,9 @@
         where c.toy_no = #{toyNo, jdbcType=VARCHAR} and c.catch_status = 1 and c.user_no = u.user_no order by c.create_time desc limit 0,10
     </select>
 
-    <!-- 根据用户编号获得用户抓取记录数量 -->
-    <select id="countCatchRecordByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select count(*) from catch_record  where user_no = #{userNo}
+    <!-- 根据用户编号获得用户抓取成功记录数量 -->
+    <select id="countSuccessCatchRecordByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from catch_record  where user_no = #{userNo} and catch_status = 1
     </select>
 
     <!-- 根据用户编号分页获得用户抓取记录集合 -->

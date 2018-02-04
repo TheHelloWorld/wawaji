@@ -622,11 +622,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 if(status > 0) {
 
-                    // 判断用户是否是第一次抓取
-                    Integer userCatchRecordnum = catchRecordDao.countCatchRecordByUserNo(userNo);
+                    // 判断用户之前是否有成功抓取记录
+                    Integer userCatchRecordnum = catchRecordDao.countSuccessCatchRecordByUserNo(userNo);
 
                     if(userCatchRecordnum == 0) {
-                        // 若是第一次抓取则直接成功
+                        // 若是没有成功记录则直接成功
                         // 重置房间和用户房间幸运值
                         got(resetLuckyNum(catchId, userNo, gameRoomNo, userLucKyNum));
                         return;

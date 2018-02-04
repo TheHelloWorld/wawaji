@@ -154,3 +154,8 @@ function nextPage() {
         nowPage = totalPage;
     }
 }
+
+function toHandlePage() {
+
+    window.location.href = "/toiletCat/userToy/userToyHandle.html?nowType=login&&userNo=" + userNo;
+}

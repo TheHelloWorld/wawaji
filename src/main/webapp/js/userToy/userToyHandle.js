@@ -113,7 +113,21 @@ function getAllUserToyHandleByUserNo() {
                 str += "                <img height='100px' maxwidth=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
                 str += "            </div>";
                 str += "            <div style='margin-bottom: 1%'><span>" + list[i]["toyName"] + "</span></div>";
-                str += "            <div style='margin-bottom: 1%'><span>" + list[i]["unHandleNum"] + "/"+list[i]["deliverNum"]+"</span></div>";
+
+                var msg = "";
+
+                if(list[i]["choiceType"] == 1) {
+                    msg = "已兑换" + list[i]["toyForCoin"] + "个马桶币";
+                } else if(list[i]["choiceType"] == 2) {
+
+                    if(list[i]["deliverStatus"] == 0) {
+                        msg = "待发货";
+                    } else if(list[i]["deliverStatus"] == 1) {
+                        msg = "已发货";
+                    }
+                }
+
+                str += "            <div style='margin-bottom: 1%'><span>" + msg+"</span></div>";
                 str += "        </div>";
                 str += "    </div>";
                 str += "</div>";
@@ -153,4 +167,10 @@ function nextPage() {
     } else {
         nowPage = totalPage;
     }
+}
+
+function toUnHandlePage() {
+    
+    window.location.href = "/toiletCat/userToy/userToy.html?nowType=login&userNo=" + userNo;
+
 }
