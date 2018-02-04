@@ -29,6 +29,10 @@
 
         <!-- 发货状态 -->
         <result property="deliverStatus" column="deliver_status" jdbcType="INTEGER"/>
+        <!-- 快递公司 -->
+        <result property="company" column="company" jdbcType="VARCHAR"/>
+        <!-- 快递单号 -->
+        <result property="deliverNo" column="deliver_no" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!-- 添加用户战利品处理记录 -->
@@ -91,6 +95,8 @@
             u.toy_for_coin,
             u.deliver_id,
             d.deliver_status,
+            d.company,
+            d.deliver_no,
             u.create_time
         from user_toy_handle u left join deliver d
           on u.deliver_id = d.id

@@ -12,7 +12,7 @@
     <meta name="description" content="描述" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="format-detection" content="telephone=no" />
-    <title>我的战利品</title>
+    <title>战利品详情</title>
 
     <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css" >
 
@@ -20,7 +20,9 @@
 
     <link rel="stylesheet" type="text/css" href="/css/common/toiletCatCommon.css?v=1.0.0.6" >
 
-    <link rel="stylesheet" type="text/css" href="/css/recharge/recharge.css?v=1.0.0.6" >
+    <link rel="stylesheet" type="text/css" href="/css/userToy/userToy.css?v=1.0.0.1" >
+
+    <link rel="stylesheet" type="text/css" href="/css/userAddress/userAddress.css?v=1.0.0.1" >
 
     <!-- jQuery -->
     <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
@@ -30,43 +32,31 @@
 
     <script type="text/javascript" src="/common/js/commonUtil.js?v=1.0.0.5"></script>
 
-    <script type="text/javascript" src="/js/userToy/userToy.js?v=1.0.0.3"></script>
-
     <script type="text/javascript" src="/js/recharge/recharge.js?v=1.0.0.14"></script>
+
+    <script type="text/javascript" src="/js/userToy/userToyHandleDetail.js?v=1.0.0.1"></script>
 
 </head>
     <body class="my-body">
         <div class="index-body-div">
             <nav class = "index-header default-height nav-center" >
-                <div class="background-img">
-                    <img class="return-button" id="returnButton" src="/image/background/cat_track.png" onclick="returnMethod()" />
-                    <span class="nav-header-text">我的战利品</span>
-                </div>
+                <img class="return-button" id="returnButton" src="/image/background/cat_track.png" onclick="returnMethod()" />
+                <span style="float: left; margin-left: 30%;font-size: 1.5rem;font-weight: bold;margin-top: 2%;">我的战利品</span>
             </nav>
             <div class="default-height">
             </div>
-            <div id="userToy">
+            <div id="userToyHandle" >
+                <div id="userToyHandleInfo">
+                </div>
+                <div id="userToyHandleShowMsg" style="text-align: center; padding-top: 15%;font-size: 1.8rem;color:white;">
+
+                </div>
 
             </div>
             <div class="default-height">
             </div>
-            <nav class = "index-footer footer-height" >
-                <div class="background-img">
-                    <div class="background-img">
-                        <div class="footer-button" >
-                            <img class="footer-img" src="/image/button/game-default.png" onclick="toIndex()" />
-                        </div>
-                        <div class="footer-button" >
-                            <img class="footer-img" src="/image/button/user-toy-onclick.png" />
-                        </div>
-                        <div class="footer-button" >
-                            <img class="footer-img " src="/image/button/recharge-default.png" onclick="recharge()" />
-                        </div>
-                        <div class="footer-button" >
-                            <img class="footer-img " src="/image/button/user-index-default.png" onclick="toUserIndex()" />
-                        </div>
-                    </div>
-                </div>
+            <nav class = "index-footer default-height"  style="text-align: center;font-size: 2.5rem" >
+
             </nav>
         </div>
     </body>
