@@ -49,6 +49,11 @@ public class UserToyHandle extends BaseEntity implements Serializable {
      */
     private Long deliverId;
 
+    /**
+     * 发货状态
+     */
+    private Integer deliverStatus;
+
     public String getUserNo() {
         return userNo;
     }
@@ -111,5 +116,13 @@ public class UserToyHandle extends BaseEntity implements Serializable {
 
     public void setDeliverId(Long deliverId) {
         this.deliverId = deliverId;
+    }
+
+    public Integer getDeliverStatus() {
+        return deliverStatus;
+    }
+
+    public void setDeliverStatus(Integer deliverStatus) {
+        this.deliverStatus = deliverStatus;
     }
 }
