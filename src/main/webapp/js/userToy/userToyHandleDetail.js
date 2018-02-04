@@ -1,24 +1,6 @@
 var id = 0;
 
-var toyForCoin = 0;
-
-var handleStatus = 0;
-
-var deliverId = 0;
-
-var deliverCoin = 0;
-
-var freeDeliverNum = 0;
-
-var userCoin = 0;
-
-var flag = true;
-
 var userNo = "";
-
-var unHandleNum = 0;
-
-var deliverNum = 0;
 
 $(function() {
 
@@ -64,21 +46,15 @@ function getUserToyHandleByUserNoAndId() {
                 result = eval("("+result+")");
             }
 
-            toyForCoin = result["toyForCoin"];
+            var choiceType = result["choiceType"];
 
-            handleStatus = result["handleStatus"];
+            var deliverStatus = result["deliverStatus"];
 
-            deliverId = result["deliverId"];
+            var forCoinNum = result["forCoinNum"];
 
-            deliverCoin = result["deliverCoin"];
+            var toyForCoin = result["toyForCoin"];
 
-            freeDeliverNum = result["freeDeliverNum"];
-
-            unHandleNum = result["unHandleNum"];
-
-            deliverNum = result["deliverNum"];
-
-            toyForCoin = result["toyForCoin"];
+            var toyName = result["toyName"];
 
             var str = " <div class='row'>";
             str += "        <div class='user-toy-div'>";
@@ -91,13 +67,38 @@ function getUserToyHandleByUserNoAndId() {
             str += "<br/>";
             str += "        </div>";
             str += "    </div>";
-            str += "    <div  class='row'>";
-            str += "        <div class='col-xs-5 user-toy-left user-toy-text-status' style='width:30%'>";
-            str += "            <span style='color:white'>状态:</span>";
-            str += "        </div>";
-            str += "        <div class='col-xs-5 user-toy-right user-toy-text-left' style='font-size: 1.5rem;width:50%;color:white;'>";
 
-            str += "    </div>";
+            var msg = "";
+
+            if(choiceType == 1) {
+                msg = "已将" + forCoinNum + "个" + toyName + "兑换成" + toyForCoin + "马桶币";
+
+                $("#userToyHandleShowMsg").append(msg);
+
+            } else if(choiceType == 2) {
+
+                if(deliverStatus == 0) {
+
+                    msg = "待发货";
+
+                    $("#userToyHandleShowMsg").append(msg);
+
+                } else if(deliverStatus == 1) {
+                    msg = "<div>";
+                    msg += "    <span>已发货</span>";
+                    msg += "</div>";
+                    msg += "<div style='margin-top: 10%;font-size: 1.5rem;color: white;'>";
+                    msg += "    <div class='col-xs-5 user-toy-left user-toy-text-status'>发货单号:</div>";
+                    msg += "    <div class='col-xs-5 user-toy-right user-toy-text-status'>快递公司:</div>";
+                    msg += "    <div class='col-xs-5 user-toy-left user-toy-text-status'>"+result["deliverNo"]+"</div>";
+
+                    msg += "    <div class='col-xs-5 user-toy-right user-toy-text-status'>"+result["company"]+"</div>";
+                    msg += "</div>";
+
+                    $("#userToyHandleShowMsg").append(msg);
+                }
+
+            }
 
             $("#userToyHandleInfo").append(str);
         }
