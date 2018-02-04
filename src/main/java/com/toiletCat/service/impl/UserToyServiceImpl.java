@@ -202,10 +202,18 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                         // 判断用户当前战利品数量是否小于可兑换数量
                         if (userToyNum < toyInfo.getDeliverNum()) {
 
-                            logger.warn("updateChoiceTypeByIdAndUserNo userToyNum is less than toyDeliverNum");
+                            logger.warn("updateChoiceTypeByIdAndUserNo userToyNum is less than toyDeliverNum userNo:"
+                                    + userNo + ", userToyNum:" + userToyNum + ", toyDeliverNum:"
+                                    + toyInfo.getDeliverNum());
 
-                            setOtherMsg();
-                            got("请不要重复提交喵");
+                            Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+
+                            JSONObject json = new JSONObject();
+
+                            json.put("userCoin",userCoin);
+
+                            got(json.toJSONString());
+
                             return;
                         }
                     }
@@ -319,9 +327,13 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                                 ", toyNo:" + userToy.getToyNo() + ", userToyNum:" + userToyNum +
                                 ", forCoinNum:" + forCoinNum);
 
-                        setOtherMsg();
+                        Integer userCoin = userDao.getUserCoinByUserNo(userNo);
 
-                        got("请不要重复提交喵");
+                        JSONObject json = new JSONObject();
+
+                        json.put("userCoin",userCoin);
+
+                        got(json.toJSONString());
                         
                         return;
                     }
