@@ -465,7 +465,7 @@ function updateChoiceType() {
     });
 }
 
-// 返回用户战利品也
+// 返回用户战利品页
 function returnMethod() {
     window.location.href = "/toiletCat/userToy/userToy.html?userNo=" + userNo;
 }
