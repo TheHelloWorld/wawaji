@@ -697,7 +697,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                         toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.USER_LUCKY_NUM_THRESHOLD))) {
 
                     // 按幸运值大于阈值后幸运值最大随机数上限进行累加
-                    userLucKyNum = RandomIntUtil.getRandomNumByHighBound(Integer.valueOf(
+                    userLucKyNum = RandomIntUtil.getRandomNum(3, Integer.valueOf(
                             toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.USER_LUCKY_NUM_AFTER_THRESHOLD)));
 
                 }
