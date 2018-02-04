@@ -180,6 +180,10 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                         Integer userCoin = userDao.getUserCoinByUserNo(userNo);
 
                         if (userCoin < deliverCoin) {
+
+                            logger.info("updateChoiceTypeByIdAndUserNo userCoin is less than deliverCoin,userNo:"
+                                    + userNo + ", userCoin:" + userCoin + ", deliverCoin:" + deliverCoin );
+
                             setOtherMsg();
                             got(BaseConstant.NOT_ENOUGH_COIN);
                             return;
@@ -201,7 +205,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                             logger.warn("updateChoiceTypeByIdAndUserNo userToyNum is less than toyDeliverNum");
 
                             setOtherMsg();
-                            got("还差"+(toyInfo.getDeliverNum() - userToyNum) + "才能寄送哦");
+                            got("请不要重复提交喵");
                             return;
                         }
                     }
@@ -311,18 +315,14 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                     // 若用户战利品数量小于兑换成游戏币数量
                     if(userToyNum < forCoinNum) {
 
-                        logger.warn("userToyNum is less than forCoinNum userNo:" + userNo +
+                        logger.warn("updateChoiceTypeByIdAndUserNo userToyNum is less than forCoinNum userNo:" + userNo +
                                 ", toyNo:" + userToy.getToyNo() + ", userToyNum:" + userToyNum +
                                 ", forCoinNum:" + forCoinNum);
 
-                        Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+                        setOtherMsg();
 
-                        JSONObject json = new JSONObject();
-
-                        json.put("userCoin",userCoin);
-
-                        got(json.toJSONString());
-
+                        got("请不要重复提交喵");
+                        
                         return;
                     }
 
