@@ -27,7 +27,7 @@
         <!-- 最后修改时间 -->
         <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
 
-        <!-- 发货Id -->
+        <!-- 发货状态 -->
         <result property="deliverStatus" column="deliver_status" jdbcType="INTEGER"/>
     </resultMap>
 
@@ -65,12 +65,16 @@
     <!-- 根据用户编号分页获得所有用户战利品处理记录集合 -->
     <select id="getUserToyHandleListByUserNo" resultMap="userToyHandleMap">
         select
-            id,
-            toy_no,
-            toy_name,
-            toy_img
-        from user_toy_handle
-        where user_no = #{userNo, jdbcType=VARCHAR} order by u.create_time desc
+            u.id,
+            u.toy_no,
+            u.toy_name,
+            u.toy_img,
+            u.choice_type,
+            d.deliver_status,
+            u.toy_for_coin
+        from user_toy_handle u left join deliver d
+          on u.deliver_id = d.id
+        where u.user_no = #{userNo, jdbcType=VARCHAR} order by u.create_time desc
         limit #{startPage, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </select>
 
