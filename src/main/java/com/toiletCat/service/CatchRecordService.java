@@ -16,11 +16,11 @@ public interface CatchRecordService {
     CommonResult<List<UserCatchRecord>> getLatelyCatchSuccessRecordByToyNo(String toyNo);
 
     /**
-     * 根据用户编号获得用户抓取记录数量
+     * 根据用户编号获得用户抓取成功记录数量
      * @param userNo 用户编号
      * @return
      */
-    CommonResult<Integer> countCatchRecordByUserNo(String userNo);
+    CommonResult<Integer> countSuccessCatchRecordByUserNo(String userNo);
 
     /**
      * 根据用户编号分页获得用户抓取记录集合

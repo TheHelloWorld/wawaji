@@ -43,21 +43,21 @@ public class CatchRecordServiceImpl extends BaseServiceImpl implements CatchReco
     }
 
     /**
-     * 根据用户编号获得用户抓取记录数量
+     * 根据用户编号获得用户抓取成功记录数量
      * @param userNo 用户编号
      * @return
      */
     @Override
-    public CommonResult<Integer> countCatchRecordByUserNo(final String userNo) {
+    public CommonResult<Integer> countSuccessCatchRecordByUserNo(final String userNo) {
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
 
         return exec(new Callback() {
             @Override
             public void exec() {
-                got(catchRecordDao.countCatchRecordByUserNo(userNo));
+                got(catchRecordDao.countSuccessCatchRecordByUserNo(userNo));
             }
-        },"countCatchRecordByUserNo", json);
+        },"countSuccessCatchRecordByUserNo", json);
     }
 
     /**

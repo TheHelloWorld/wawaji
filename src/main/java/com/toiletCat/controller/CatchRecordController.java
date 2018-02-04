@@ -51,15 +51,15 @@ public class CatchRecordController {
     }
 
     /**
-     * 根据用户编号获得用户抓取记录数量
+     * 根据用户编号获得用户抓取成功记录数量
      * @param userNo 用户编号
      * @return
      */
-    @RequestMapping(value = "/countCatchRecordByUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/countSuccessCatchRecordByUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String countCatchRecordByUserNo(String userNo) {
+    public String countSuccessCatchRecordByUserNo(String userNo) {
 
-        CommonResult<Integer> result = catchRecordService.countCatchRecordByUserNo(userNo);
+        CommonResult<Integer> result = catchRecordService.countSuccessCatchRecordByUserNo(userNo);
 
         return JSONUtil.getTotalCountAndPageSize(result, BaseConstant.DEFAULT_PAGE_SIZE);
     }
