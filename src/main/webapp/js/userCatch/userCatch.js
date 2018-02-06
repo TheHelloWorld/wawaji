@@ -107,7 +107,7 @@ function getAllUserCatchRecordByUserNo(userNo) {
 
             for(var i = 0; i<list.length; i++) {
 
-                str += "<div id='userCatchRecord"+list[i]["id"]+"' class='catch-toy-row' style='height: " + $('.my-body').height()/5 + "px;' >";
+                str += "<div id='userCatchRecord"+list[i]["id"]+"' class='catch-toy-row custom-font' style='height: " + $('.my-body').height()/5 + "px;' >";
 
                 str += "    <div class='catch-toy-div' >";
                 str += "        <div class='catch-toy-img'>";
