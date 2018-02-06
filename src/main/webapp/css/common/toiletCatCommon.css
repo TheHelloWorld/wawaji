@@ -2,6 +2,12 @@
     background: #ff3968;
 }
 
+/* 自定义字体 */
+@font-face {
+    font-family: customFont;
+    src: url('/css/font/font.ttf');
+}
+
 .toiletCat-msg {
     text-align: center;
     background: black;
@@ -170,6 +176,7 @@
 }
 
 .toiletCat-col-xs-6 {
+    font-family: customFont;
     background: url("/image/background/room-background.png");
     background-size: 100% 100%;
     position: relative;
