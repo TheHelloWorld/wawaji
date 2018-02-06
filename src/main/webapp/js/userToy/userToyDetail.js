@@ -110,10 +110,10 @@ function getUserToyByUserNoAndId() {
             str += "        <div class='user-toy-div'>";
             str += "            <img class='user-toy-img index-img' src='" + result["toyImg"] + "'>";
             str += "        </div>";
-            str += "        <div class='user-toy-div' style='color:white;font-size:1.5rem;margin-left:0%;'>";
-            str += "            <div>" + result["toyName"] + "</div>";
+            str += "        <div class='user-toy-div' style='color: white; font-size: 1.5rem; margin-left: 0;'>";
+            str += "            <div class='custom-font'>" + result["toyName"] + "</div>";
             str += "<br/>";
-            str += "            <div class='user-toy-success index-center'>抓取成功</div>";
+            str += "            <div class='user-toy-success index-center custom-font'>抓取成功</div>";
             str += "<br/>";
             str += "        </div>";
             str += "    </div>";
@@ -145,7 +145,9 @@ function choiceDeliver() {
 
         // 判断当前数量是否可以寄送
         if(unHandleNum < deliverNum) {
-            var str = "还差" + (deliverNum - unHandleNum) + "个才能寄送哦";
+            var str = " <div class='custom-font'>";
+            str += "还差" + (deliverNum - unHandleNum) + "个才能寄送哦";
+            str += "</div>";
 
             $("#userToyShowMsg").append(str);
             $("#userToyShowMsg").show();
@@ -169,7 +171,7 @@ function choiceDeliver() {
 
 // 选择兑换游戏币数量
 function choiceExchangeCoin() {
-    var str = " <div>";
+    var str = " <div class='custom-font'>";
     str +=    "     将";
     str +=    "     <select id='unHandleNum' onchange='changeNum()' style='color: #000;'>";
     for(var i = unHandleNum; i>= 1; i--) {

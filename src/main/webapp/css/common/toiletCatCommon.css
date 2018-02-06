@@ -175,6 +175,10 @@
     width: 50%
 }
 
+.custom-font {
+    font-family: customFont;
+}
+
 .toiletCat-col-xs-6 {
     font-family: customFont;
     background: url("/image/background/room-background.png");
