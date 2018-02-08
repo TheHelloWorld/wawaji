@@ -21,6 +21,11 @@ public class WxUtil {
     private final static String JSAPI_TICKET_URL =
             "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi";
 
+
+
+    private final static String REQUEST_USER_INFO_URL =
+            "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx88888888&redirect_uri=http://lovebread.tunnel.qydev.com/auth&response_type=code&scope=snsapi_base&state=xxxx_state#wechat_redirect";
+
     /**
      * 获取接口访问凭证
      *
@@ -135,5 +140,19 @@ public class WxUtil {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static void main(String[] args) {
+
+        PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
+
+        String appId = propertiesUtil.getProperty("wei_xin_app_id");
+
+        String requestUrl = propertiesUtil.getProperty("wei_xin_redirect_uri");
+
+        String  url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appId + "&redirect_uri="
+                + requestUrl + "&response_type=code&scope=snsapi_userinfo&state=toiletCat#wechat_redirect";
+
+        System.out.println(HttpClientUtil.httpsRequest(url, "GET", null));
     }
 }

@@ -39,6 +39,7 @@ public class WxTokenHelper {
 
 
 	private static AccessToken getWxAccessToken(String code) {
+
 		accessToken = null;
 
 		String requestUrl = access_token_url.replace("APPID", "wxa25ba776b86f29c7")
