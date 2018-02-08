@@ -28,22 +28,19 @@ public class WeChatController {
      * @param code code
      * @return
      */
-    public String userWeChatLogin(String code) {
+    @RequestMapping(value = "/userWeChatLogin", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public void userWeChatLogin(String code) {
 
         Map<String, String> data = new HashMap<>();
         Map<String, String> result = WxUtil.getUserInfoAccessToken(code);//通过这个code获取access_token
         String openId = result.get("openid");
         if (StringUtils.isNotEmpty(openId)) {
-            logger.info("try getting user info. [openid={}]", openId);
+            logger.info("userWeChatLogin try getting user info. [openid={}]", openId);
             Map<String, String> userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);//使用access_token获取用户信息
-            logger.info("received user info. [result={}]", userInfo);
-
-            return userInfo.toString();
+            logger.info("userWeChatLogin received user info. [result={}]", userInfo);
 
         }
-
-
-        return "openid为空";
 
     }
 

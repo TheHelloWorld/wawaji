@@ -153,4 +153,8 @@ public class BaseConstant {
 	 */
 	public static Map<Double, MoneyForCoin> moneyForCoinMap = new LinkedHashMap<>();
 
+	public static final String HTTP_GET = "GET";
+
+	public static final String HTTP_POST = "POST";
+
 }

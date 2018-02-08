@@ -61,4 +61,19 @@ public class RedisConstant {
      * 非首充
      */
     public static final String IS_NOT_FIRST = "is_not_first";
+
+    /**
+     * 微信分享js ticket
+     */
+    public static final String WX_SHARE_JS_API_TICKET = "wx_share_js_api_ticket";
+
+    /**
+     * 微信分享js access_token
+     */
+    public static final String WX_SHARE_ACCESS_TOKEN = "wx_share_access_token";
+
+    /**
+     * 微信分享key过期时间
+     */
+    public static final Integer WX_EXPIRE_TIME = 118 *60;
 }
