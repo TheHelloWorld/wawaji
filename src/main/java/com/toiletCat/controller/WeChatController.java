@@ -14,12 +14,38 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.MessageDigest;
 import java.util.Formatter;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequestMapping("/toiletCat/api/weChat")
 @Controller
 public class WeChatController {
 
     private static final Logger logger = LoggerFactory.getLogger(WeChatController.class);
+
+    /**
+     * 用户微信登录
+     * @param code code
+     * @return
+     */
+    public String userWeChatLogin(String code) {
+
+        Map<String, String> data = new HashMap<>();
+        Map<String, String> result = WxUtil.getUserInfoAccessToken(code);//通过这个code获取access_token
+        String openId = result.get("openid");
+        if (StringUtils.isNotEmpty(openId)) {
+            logger.info("try getting user info. [openid={}]", openId);
+            Map<String, String> userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);//使用access_token获取用户信息
+            logger.info("received user info. [result={}]", userInfo);
+
+            return userInfo.toString();
+
+        }
+
+
+        return "openid为空";
+
+    }
 
     /**
      * 获得微信朋友圈分享信息
