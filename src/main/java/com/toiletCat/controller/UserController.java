@@ -6,6 +6,7 @@ import com.toiletCat.entity.User;
 import com.toiletCat.service.UserService;
 import com.toiletCat.utils.CommonHandle;
 import com.toiletCat.utils.JSONUtil;
+import com.toiletCat.utils.WxUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequestMapping("/toiletCat/api/user")
 @Controller
@@ -27,6 +30,48 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    /**
+     * 用户微信登录
+     * @param code code
+     * @return
+     */
+    @RequestMapping(value = "/userWeChatLogin", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public void userWeChatLogin(HttpServletRequest request, HttpServletResponse response, String code) {
+
+        try {
+            Map<String, String> data = new HashMap<>();
+
+            // 从cookie中获取userNo
+            String userNo = CommonHandle.getCookieValue(request, BaseConstant.COOKIE_USER_NO);
+
+            logger.info("userWeChatLogin userNo:{}", userNo);
+
+            // 通过这个code获取access_token
+            Map<String, String> result = WxUtil.getUserInfoAccessToken(code);
+
+            String openId = result.get("openid");
+
+            if (StringUtils.isNotBlank(openId)) {
+
+                logger.info("userWeChatLogin try getting user info openid:{}", openId);
+
+                // 使用access_token获取用户信息
+                Map<String, String> userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);
+
+                logger.info("userWeChatLogin received user info result:{}", userInfo);
+
+            }
+
+            // 重定向跳转页面地址(游戏首页地址)
+            response.sendRedirect("/toiletCat/gameRoom/gameRoom.html");
+
+        } catch(Exception e) {
+
+            logger.error("userWeChatLogin error:" + e, e);
+        }
+    }
 
     /**
      * 用户自动登陆
