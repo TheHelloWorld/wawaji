@@ -59,7 +59,8 @@ public class WeChatController {
                 logger.info("userWeChatLogin received user info result:{}", userInfo);
 
             }
-
+            
+            // 重定向跳转页面地址(游戏首页地址)
             response.sendRedirect("/toiletCat/gameRoom/gameRoom.html");
 
         } catch(Exception e) {
