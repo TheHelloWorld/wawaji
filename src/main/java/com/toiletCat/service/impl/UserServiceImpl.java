@@ -1,10 +1,7 @@
 package com.toiletCat.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.toiletCat.bean.Callback;
-import com.toiletCat.bean.CommonResult;
-import com.toiletCat.bean.UserMachine;
-import com.toiletCat.bean.UserSeeGameRoom;
+import com.toiletCat.bean.*;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.constants.RedisConstant;
 import com.toiletCat.constants.ToiletCatConfigConstant;
@@ -127,7 +124,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     } catch(Exception e) {
 
-                        logger.error("registerOrLoginUser redis error:" + e, e);
+                        logger.error("registerOrLoginUserByMobileNo redis error:" + e, e);
 
                     }
 
@@ -136,6 +133,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     // 用户邀请状态
                     user.setInvitationUserNo(BaseConstant.DEFAULT_INVITATION_USER_NO);
+                    
                     userDao.addUser(user);
 
                 } else {
@@ -150,19 +148,19 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 got(user);
 
             }
-        }, "registerOrLoginUser", json);
+        }, "registerOrLoginUserByMobileNo", json);
     }
 
     /**
-     * 根据微信openId用户注册或登录
+     * 根据微信用户信息注册或登录
      *
-     * @param openId 微信openId
+     * @param openId 微信用户信息
      */
     @Override
-    public CommonResult<User> registerOrLoginUserByOpenId(final String openId) {
+    public CommonResult<User> registerOrLoginUserByOpenId(final WxUserInfo wxUserInfo) {
 
         JSONObject json = new JSONObject();
-        json.put("openId", openId);
+        json.put("wxUserInfo", wxUserInfo);
 
         return exec(new Callback() {
             @Override
@@ -171,14 +169,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 User user;
 
                 // 若当前用户为新用户则添加用户
-                if (userDao.countUserByOpenId(openId) == 0) {
+                if (userDao.countUserByOpenId(wxUserInfo.getOpenId()) == 0) {
 
                     user = new User();
 
                     PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
 
                     // 用户openId
-                    user.setOpenId(openId);
+                    user.setOpenId(wxUserInfo.getOpenId());
 
                     // 用户手机号
                     user.setMobileNo("0");
@@ -189,17 +187,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     // 用户游戏币数
                     user.setUserCoin(defaultUserCoin);
 
-                    String defaultUserImg = systemProperties.getProperty("user_default_img")
-                            + "defaultHead" + RandomIntUtil.getRandomNumByHighBound(5) + ".png";
-
                     // 用户头像
-                    user.setUserImg(defaultUserImg);
+                    user.setUserImg(wxUserInfo.getHeadImgUrl());
 
                     String userNo = UUIDUtil.generateUUID();
+
                     // 用户编号
                     user.setUserNo(userNo);
+
                     // 用户名
-                    user.setUserName(RandomIntUtil.getRandomString(10));
+                    user.setUserName(wxUserInfo.getNickName());
 
                     String invitationCode = "";
 
@@ -220,7 +217,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     } catch(Exception e) {
 
-                        logger.error("registerOrLoginUser redis error:" + e, e);
+                        logger.error("registerOrLoginUserByOpenId redis error:" + e, e);
 
                     }
 
@@ -229,12 +226,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     // 用户邀请状态
                     user.setInvitationUserNo(BaseConstant.DEFAULT_INVITATION_USER_NO);
+
                     userDao.addUser(user);
 
                 } else {
 
-                    user = userDao.getUserByMobileNo(mobileNo);
+                    user = userDao.getUserByOpenId(wxUserInfo.getOpenId());
 
+                    // 查询用户所有初始化订单信息
                     rechargeService.getInitRechargeResultByOrderInfo(user.getUserNo());
 
                     user = userDao.getUserByUserNo(user.getUserNo());
@@ -243,7 +242,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 got(user);
 
             }
-        }, "registerOrLoginUser", json);
+        }, "registerOrLoginUserByOpenId", json);
     }
 
     /**

@@ -3,6 +3,7 @@ package com.toiletCat.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.toiletCat.bean.WxUserInfo;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.constants.RedisConstant;
 import org.apache.commons.lang.StringUtils;
@@ -213,9 +214,15 @@ public class WxUtil {
         return data;
     }
 
-    public static Map<String, String> getUserInfo(String accessToken, String openId) {
+    /**
+     * 获得微信用户信息
+     * @param accessToken token
+     * @param openId 用户openId
+     * @return
+     */
+    public static WxUserInfo getUserInfo(String accessToken, String openId) {
 
-        Map<String, String> data = new HashMap<>();
+        WxUserInfo wxUserInfo = new WxUserInfo();
 
         String url = String.format(REQUEST_USER_INFO_URL, accessToken, openId);
 
@@ -233,24 +240,24 @@ public class WxUtil {
 
             logger.info("getUserInfo get userInfo success result: " + userInfo);
 
-            data.put("openid", userInfo.get("openid").toString().replaceAll("\"", ""));
+            wxUserInfo.setOpenId(userInfo.get("openid").toString().replaceAll("\"", ""));
 
-            data.put("nickname", userInfo.get("nickname").toString().replaceAll("\"", ""));
+            wxUserInfo.setNickName(userInfo.get("nickname").toString().replaceAll("\"", ""));
 
-            data.put("city", userInfo.get("city").toString().replaceAll("\"", ""));
+            wxUserInfo.setCity(userInfo.get("city").toString().replaceAll("\"", ""));
 
-            data.put("province", userInfo.get("province").toString().replaceAll("\"", ""));
+            wxUserInfo.setProvince(userInfo.get("province").toString().replaceAll("\"", ""));
 
-            data.put("country", userInfo.get("country").toString().replaceAll("\"", ""));
+            wxUserInfo.setCountry(userInfo.get("country").toString().replaceAll("\"", ""));
 
-            data.put("headimgurl", userInfo.get("headimgurl").toString().replaceAll("\"", ""));
+            wxUserInfo.setHeadImgUrl(userInfo.get("headimgurl").toString().replaceAll("\"", ""));
 
         } catch (Exception e) {
 
             logger.error("getUserInfo error:" + e, e);
         }
 
-        return data;
+        return wxUserInfo;
     }
 
 

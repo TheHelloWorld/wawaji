@@ -1,6 +1,7 @@
 package com.toiletCat.controller;
 
 import com.toiletCat.bean.CommonResult;
+import com.toiletCat.bean.WxUserInfo;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.entity.User;
 import com.toiletCat.service.UserService;
@@ -51,8 +52,6 @@ public class UserController {
 
             if(StringUtils.isBlank(userNo) || "null".equals(userNo)) {
 
-//                return JSONUtil.getSuccessReturnJSON(BaseConstant.FAIL);
-
                 // 通过这个code获取access_token,openId
                 result = WxUtil.getUserInfoAccessToken(code);
 
@@ -60,13 +59,13 @@ public class UserController {
 
                 CommonResult<User> openIdCommonResult = userService.getUserByOpenId(openId);
 
-                if(openIdCommonResult.success()) {
+                // 若根据openId无法找到用户则注册新用户
+                if(openIdCommonResult.getValue() == null) {
 
-                    // 若根据openId无法找到用户则注册新用户
-                    if(openIdCommonResult.getValue() == null) {
-
-                    }
+                    // 使用access_token获取用户信息
+                    WxUserInfo userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);
                 }
+
 
                 // 重定向跳转页面地址(游戏首页地址)
                 response.sendRedirect("/toiletCat/gameRoom/gameRoom.html");
@@ -75,20 +74,14 @@ public class UserController {
             // 查询用户信息
             CommonResult<User> userCommonResult = userService.getUserByUserNo(userNo);
 
-            if(userCommonResult.success()) {
+            if(userCommonResult.getValue() == null) {
 
-                if(userCommonResult.getValue() == null) {
-
-                    logger.warn("autoLogin toiletCat warn: 没有对应的用户编号 userNo:{}", userNo);
-
-
-                }
-
-                // 将用户编号放入cookie中
-                CommonHandle.setUserNoInCookie(response, userCommonResult.getValue().getUserNo());
-
-
+                logger.warn("autoLogin toiletCat warn: 没有对应的用户编号 userNo:{}", userNo);
             }
+
+            // 将用户编号放入cookie中
+            CommonHandle.setUserNoInCookie(response, userCommonResult.getValue().getUserNo());
+
 
             logger.info("userWeChatLogin userNo:{}", userNo);
 
@@ -102,7 +95,7 @@ public class UserController {
                 logger.info("userWeChatLogin try getting user info openid:{}", openId);
 
                 // 使用access_token获取用户信息
-                Map<String, String> userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);
+                WxUserInfo userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);
 
                 logger.info("userWeChatLogin received user info result:{}", userInfo);
 

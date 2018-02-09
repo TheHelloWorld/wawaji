@@ -1,6 +1,7 @@
 package com.toiletCat.service;
 
 import com.toiletCat.bean.CommonResult;
+import com.toiletCat.bean.WxUserInfo;
 import com.toiletCat.entity.User;
 
 public interface UserService {
@@ -12,10 +13,10 @@ public interface UserService {
     CommonResult<User> registerOrLoginUserByMobileNo(String mobileNo);
 
     /**
-     * 根据微信openId用户注册或登录
-     * @param openId 微信openId
+     * 根据微信用户信息注册或登录
+     * @param wxUserInfo 微信用户信息
      */
-    CommonResult<User> registerOrLoginUserByOpenId(String openId);
+    CommonResult<User> registerOrLoginUserByOpenId(WxUserInfo wxUserInfo);
 
     /**
      * 校验短信验证码
