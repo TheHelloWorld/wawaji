@@ -49,7 +49,9 @@ public class UserController {
         if(result.success()) {
 
             if(result.getValue() == null) {
-                logger.warn("toiletCat warn: 没有对应的用户编号 userNo:{}", userNo);
+
+                logger.warn("toiletCat warn:autoLogin 没有对应的用户编号 userNo:{}", userNo);
+
                 return JSONUtil.getSuccessReturnJSON(BaseConstant.FAIL);
             }
 
