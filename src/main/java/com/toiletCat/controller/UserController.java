@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
 import java.util.Map;
 
 @RequestMapping("/toiletCat/api/user")
@@ -28,6 +26,8 @@ import java.util.Map;
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    private static final String redirectUrl = "/toiletCat/gameRoom/gameRoom.html";
 
     @Autowired
     private UserService userService;
@@ -42,6 +42,8 @@ public class UserController {
     public void userWeChatLogin(HttpServletRequest request, HttpServletResponse response, String code) {
 
         try {
+
+            User user;
 
             Map<String, String> result;
 
@@ -59,55 +61,111 @@ public class UserController {
 
                 CommonResult<User> openIdCommonResult = userService.getUserByOpenId(openId);
 
+                user = openIdCommonResult.getValue();
+
                 // 若根据openId无法找到用户则注册新用户
-                if(openIdCommonResult.getValue() == null) {
+                if(user == null) {
 
                     // 使用access_token获取用户信息
                     WxUserInfo userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);
+
+                    // 注册用户
+                    CommonResult<User> userResult = userService.registerOrLoginUserByWxUserInfo(userInfo);
+
+                    user = userResult.getValue();
                 }
 
+                // 将用户编号放入cookie中
+                CommonHandle.setUserNoInCookie(response, user.getUserNo());
 
                 // 重定向跳转页面地址(游戏首页地址)
-                response.sendRedirect("/toiletCat/gameRoom/gameRoom.html");
+                response.sendRedirect(redirectUrl);
+
+                return;
             }
 
             // 查询用户信息
             CommonResult<User> userCommonResult = userService.getUserByUserNo(userNo);
 
+            user = userCommonResult.getValue();
+
             if(userCommonResult.getValue() == null) {
 
                 logger.warn("autoLogin toiletCat warn: 没有对应的用户编号 userNo:{}", userNo);
-            }
 
-            // 将用户编号放入cookie中
-            CommonHandle.setUserNoInCookie(response, userCommonResult.getValue().getUserNo());
+                // 通过这个code获取access_token,openId
+                result = WxUtil.getUserInfoAccessToken(code);
 
-
-            logger.info("userWeChatLogin userNo:{}", userNo);
-
-            // 通过这个code获取access_token,openId
-            result = WxUtil.getUserInfoAccessToken(code);
-
-            openId = result.get("openid");
-
-            if (StringUtils.isNotBlank(openId)) {
-
-                logger.info("userWeChatLogin try getting user info openid:{}", openId);
+                openId = result.get("openid");
 
                 // 使用access_token获取用户信息
                 WxUserInfo userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);
 
-                logger.info("userWeChatLogin received user info result:{}", userInfo);
+                // 注册用户
+                CommonResult<User> userResult = userService.registerOrLoginUserByWxUserInfo(userInfo);
+
+                user = userResult.getValue();
+
+                // 将用户编号放入cookie中
+                CommonHandle.setUserNoInCookie(response, user.getUserNo());
+
+                // 重定向跳转页面地址(游戏首页地址)
+                response.sendRedirect(redirectUrl);
+
+                return;
+            }
+
+            // 若用户的OpenId为空
+            if(StringUtils.isBlank(user.getOpenId())) {
+
+                user = setUserWxUserInfo(code, user);
+
+                // 将用户编号放入cookie中
+                CommonHandle.setUserNoInCookie(response, user.getUserNo());
+
+                // 重定向跳转页面地址(游戏首页地址)
+                response.sendRedirect(redirectUrl);
+
+                return;
 
             }
 
+            logger.info("userWeChatLogin userNo:{}", userNo);
+
             // 重定向跳转页面地址(游戏首页地址)
-            response.sendRedirect("/toiletCat/gameRoom/gameRoom.html");
+            response.sendRedirect(redirectUrl);
 
         } catch(Exception e) {
 
             logger.error("userWeChatLogin error:" + e, e);
         }
+    }
+
+    /**
+     * 设置用户微信信息
+     * @param code code
+     * @param user 用户信息
+     * @return
+     */
+    private User setUserWxUserInfo(String code, User user) {
+
+        // 通过这个code获取access_token,openId
+        Map<String, String> result = WxUtil.getUserInfoAccessToken(code);
+
+        String openId = result.get("openid");
+
+        // 使用access_token获取用户信息
+        WxUserInfo userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);
+
+        user.setUserImg(userInfo.getHeadImgUrl());
+
+        user.setOpenId(userInfo.getOpenId());
+
+        user.setUserName(userInfo.getNickName());
+
+        userService.updateUserInfo(user);
+
+        return user;
     }
 
     /**

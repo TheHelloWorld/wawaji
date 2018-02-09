@@ -93,6 +93,12 @@ public interface UserDao {
     void updateUserCoinByUserNo(@Param("coin") Integer coin, @Param("userNo") String userNo);
 
     /**
+     * 修改用户信息
+     * @param user 用户信息
+     */
+    void updateUserInfo(User user);
+
+    /**
      * 根据id,用户编号修改用户游戏币数(后台操作)
      * @param coin 游戏币数
      * @param id id

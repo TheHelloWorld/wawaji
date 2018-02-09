@@ -16,7 +16,7 @@ public interface UserService {
      * 根据微信用户信息注册或登录
      * @param wxUserInfo 微信用户信息
      */
-    CommonResult<User> registerOrLoginUserByOpenId(WxUserInfo wxUserInfo);
+    CommonResult<User> registerOrLoginUserByWxUserInfo(WxUserInfo wxUserInfo);
 
     /**
      * 校验短信验证码
@@ -70,6 +70,12 @@ public interface UserService {
      * @param userImg 用户头像
      */
     CommonResult updateUserInfoByIdAndUserNo(String userNo, String userName, String userImg);
+
+    /**
+     * 修改用户信息
+     * @param user 用户信息
+     */
+    CommonResult updateUserInfo(User user);
 
     /**
      * 根据用户编号和游戏房间号获得游戏抓取结果

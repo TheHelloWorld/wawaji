@@ -157,7 +157,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      * @param openId 微信用户信息
      */
     @Override
-    public CommonResult<User> registerOrLoginUserByOpenId(final WxUserInfo wxUserInfo) {
+    public CommonResult<User> registerOrLoginUserByWxUserInfo(final WxUserInfo wxUserInfo) {
 
         JSONObject json = new JSONObject();
         json.put("wxUserInfo", wxUserInfo);
@@ -779,6 +779,26 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
             }
         }, "updateUserInfoByIdAndUserNo", json);
+    }
+
+    /**
+     * 修改用户信息
+     * @param user 用户信息
+     * @return
+     */
+    @Override
+    public CommonResult updateUserInfo(final User user) {
+
+        JSONObject json = new JSONObject();
+        json.put("user", user);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+                userDao.updateUserInfo(user);
+
+            }
+        }, "updateUserInfo", json);
     }
 
     /**

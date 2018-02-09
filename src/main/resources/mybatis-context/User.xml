@@ -148,29 +148,38 @@
     <!-- 根据用户编号修改用户游戏币数(用户操作 充值coin为正数,消费coin为负数) -->
     <update id="updateUserCoinByUserNo">
         update `user` set
-          user_coin = user_coin + #{coin, jdbcType=INTEGER}
+            user_coin = user_coin + #{coin, jdbcType=INTEGER}
         where user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
     <!-- 根据id和用户编号修改用户游戏币数(后台操作) -->
     <update id="updateUserCoinByIdAndUserNo">
         update `user` set
-          user_coin = #{userCoin, jdbcType=INTEGER}
+            user_coin = #{userCoin, jdbcType=INTEGER}
         where id = #{id} and user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
     <!-- 根据用户编号修改用户名和用户头像 -->
     <update id="updateUserInfoByIdAndUserNo" >
         update `user` set
-          user_name = #{userName, jdbcType=VARCHAR},
-          user_img = #{userImg, jdbcType=VARCHAR}
+            user_name = #{userName, jdbcType=VARCHAR},
+            user_img = #{userImg, jdbcType=VARCHAR}
+        where user_no = #{userNo, jdbcType=VARCHAR}
+    </update>
+
+    <!-- 修改用户信息 -->
+    <update id="updateUserInfo" parameterType="com.toiletCat.entity.User">
+        update `user` set
+            user_name = #{userName, jdbcType=VARCHAR},
+            user_img = #{userImg, jdbcType=VARCHAR},
+            open_id = #{openId, jdbcType=VARCHAR}
         where user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
     <!-- 根据用户编号修改用户邀请用户编码 -->
     <update id="updateInvitationUserNoByUserNo" >
         update `user` set
-          invitation_user_no = #{invitationUserNo, jdbcType=VARCHAR}
+            invitation_user_no = #{invitationUserNo, jdbcType=VARCHAR}
         where user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
