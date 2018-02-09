@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.security.MessageDigest;
 import java.util.Formatter;
 import java.util.HashMap;
@@ -30,25 +32,34 @@ public class WeChatController {
      */
     @RequestMapping(value = "/userWeChatLogin", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public void userWeChatLogin(String code) {
+    public void userWeChatLogin(HttpServletRequest req, HttpServletResponse resp, String code) {
 
-        Map<String, String> data = new HashMap<>();
+        try {
+            Map<String, String> data = new HashMap<>();
 
-        // 通过这个code获取access_token
-        Map<String, String> result = WxUtil.getUserInfoAccessToken(code);
+            // 通过这个code获取access_token
+            Map<String, String> result = WxUtil.getUserInfoAccessToken(code);
 
-        String openId = result.get("openid");
+            String openId = result.get("openid");
 
-        if (StringUtils.isNotBlank(openId)) {
+            if (StringUtils.isNotBlank(openId)) {
 
-            logger.info("userWeChatLogin try getting user info openid:{}", openId);
+                logger.info("userWeChatLogin try getting user info openid:{}", openId);
 
-            // 使用access_token获取用户信息
-            Map<String, String> userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);
+                // 使用access_token获取用户信息
+                Map<String, String> userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);
 
-            logger.info("userWeChatLogin received user info result:{}", userInfo);
+                logger.info("userWeChatLogin received user info result:{}", userInfo);
 
+            }
+
+            resp.sendRedirect("/toiletCat/gameRoom/gameRoom.html");
+
+        } catch(Exception e) {
+
+            logger.error("userWeChatLogin error:" + e, e);
         }
+
 
     }
 
