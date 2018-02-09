@@ -33,12 +33,20 @@ public class WeChatController {
     public void userWeChatLogin(String code) {
 
         Map<String, String> data = new HashMap<>();
-        Map<String, String> result = WxUtil.getUserInfoAccessToken(code);//通过这个code获取access_token
+
+        // 通过这个code获取access_token
+        Map<String, String> result = WxUtil.getUserInfoAccessToken(code);
+
         String openId = result.get("openid");
-        if (StringUtils.isNotEmpty(openId)) {
-            logger.info("userWeChatLogin try getting user info. [openid={}]", openId);
-            Map<String, String> userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);//使用access_token获取用户信息
-            logger.info("userWeChatLogin received user info. [result={}]", userInfo);
+
+        if (StringUtils.isNotBlank(openId)) {
+
+            logger.info("userWeChatLogin try getting user info openid:{}", openId);
+
+            // 使用access_token获取用户信息
+            Map<String, String> userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);
+
+            logger.info("userWeChatLogin received user info result:{}", userInfo);
 
         }
 
@@ -53,37 +61,37 @@ public class WeChatController {
     @ResponseBody
     public String getWxShareInfo(String url) {
 
-        String jsapi_ticket;
+        String jsApiTicket;
 
         PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
-        String app_id = propertiesUtil.getProperty("wei_xin_app_id");
+        String appId = propertiesUtil.getProperty("wei_xin_app_id");
 
-        String app_secret = propertiesUtil.getProperty("wei_xin_app_secret");
+        String appSecret = propertiesUtil.getProperty("wei_xin_app_secret");
 
-        String access_token = WxUtil.getAccessToken(app_id, app_secret);
+        String accessToken = WxUtil.getAccessToken(appId, appSecret);
 
-        if(StringUtils.isBlank(access_token)) {
+        if(StringUtils.isBlank(accessToken)) {
 
             logger.warn("getWxShareInfo getAccessToken fail");
 
             return null;
         }
 
-        logger.info("getWxShareInfo get access_token:" + access_token);
+        logger.info("getWxShareInfo get access_token:" + accessToken);
 
-        jsapi_ticket = WxUtil.getJsApiTicket(access_token);
+        jsApiTicket = WxUtil.getJsApiTicket(accessToken);
 
-        return wxSign(jsapi_ticket, url);
+        return wxSign(jsApiTicket, url);
     }
 
     /**
      * 根据参数获得微信分享所需信息
-     * @param jsapi_ticket js ticket
+     * @param jsApiTicket js ticket
      * @param url url
      * @return
      */
-    private String wxSign(String jsapi_ticket, String url) {
+    private String wxSign(String jsApiTicket, String url) {
 
         JSONObject json = new JSONObject();
 
@@ -96,7 +104,7 @@ public class WeChatController {
         String signature = "";
 
         // 注意这里参数名必须全部小写，且必须有序
-        string1 = "jsapi_ticket=" + jsapi_ticket +
+        string1 = "jsapi_ticket=" + jsApiTicket +
                 "&noncestr=" + nonce_str +
                 "&timestamp=" + timestamp +
                 "&url=" + url;
@@ -122,7 +130,7 @@ public class WeChatController {
 
         json.put("appId",propertiesUtil.getProperty("wei_xin_app_id"));
 
-        json.put("jsapi_ticket", jsapi_ticket);
+        json.put("jsapi_ticket", jsApiTicket);
 
         json.put("nonceStr", nonce_str);
 
