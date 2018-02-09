@@ -65,12 +65,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     private MoneyForCoinService moneyForCoinService;
 
     /**
-     * 用户注册或登录
+     * 根据手机号用户注册或登录
      *
      * @param mobileNo 手机号
      */
     @Override
-    public CommonResult<User> registerOrLoginUser(final String mobileNo) {
+    public CommonResult<User> registerOrLoginUserByMobileNo(final String mobileNo) {
 
         JSONObject json = new JSONObject();
         json.put("mobileNo", mobileNo);
@@ -89,6 +89,99 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
                     // 用户手机号
                     user.setMobileNo(mobileNo);
+
+                    Integer defaultUserCoin = Integer.valueOf(
+                            toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.USER_DEFAULT_COIN));
+
+                    // 用户游戏币数
+                    user.setUserCoin(defaultUserCoin);
+
+                    String defaultUserImg = systemProperties.getProperty("user_default_img")
+                            + "defaultHead" + RandomIntUtil.getRandomNumByHighBound(5) + ".png";
+
+                    // 用户头像
+                    user.setUserImg(defaultUserImg);
+
+                    String userNo = UUIDUtil.generateUUID();
+                    // 用户编号
+                    user.setUserNo(userNo);
+                    // 用户名
+                    user.setUserName(RandomIntUtil.getRandomString(10));
+
+                    String invitationCode = "";
+
+                    try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
+
+                        while (true) {
+
+                            // 生成用户邀请码
+                            invitationCode = RandomIntUtil.getRandomString(5);
+
+                            // 判断邀请码是否重复
+                            if(redisUtil.sadd(BaseConstant.USER_INVITATION_CODE, invitationCode) == 1L) {
+
+                                // 若不重复则跳出
+                                break;
+                            }
+                        }
+
+                    } catch(Exception e) {
+
+                        logger.error("registerOrLoginUser redis error:" + e, e);
+
+                    }
+
+                    // 用户邀请码
+                    user.setInvitationCode(invitationCode);
+
+                    // 用户邀请状态
+                    user.setInvitationUserNo(BaseConstant.DEFAULT_INVITATION_USER_NO);
+                    userDao.addUser(user);
+
+                } else {
+
+                    user = userDao.getUserByMobileNo(mobileNo);
+
+                    rechargeService.getInitRechargeResultByOrderInfo(user.getUserNo());
+
+                    user = userDao.getUserByUserNo(user.getUserNo());
+                }
+
+                got(user);
+
+            }
+        }, "registerOrLoginUser", json);
+    }
+
+    /**
+     * 根据微信openId用户注册或登录
+     *
+     * @param openId 微信openId
+     */
+    @Override
+    public CommonResult<User> registerOrLoginUserByOpenId(final String openId) {
+
+        JSONObject json = new JSONObject();
+        json.put("openId", openId);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                User user;
+
+                // 若当前用户为新用户则添加用户
+                if (userDao.countUserByOpenId(openId) == 0) {
+
+                    user = new User();
+
+                    PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
+
+                    // 用户openId
+                    user.setOpenId(openId);
+
+                    // 用户手机号
+                    user.setMobileNo("0");
 
                     Integer defaultUserCoin = Integer.valueOf(
                             toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.USER_DEFAULT_COIN));
@@ -612,6 +705,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
      */
     @Override
     public CommonResult<User> getUserByUserNo(final String userNo) {
+
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
 
@@ -621,7 +715,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 // 判断当前用户编号是否正确
                 if(userDao.countUserByUserNo(userNo) == 0) {
+
                     logger.warn("getUserByUserNo user not exists userNo:" + userNo);
+
                     return;
                 }
 
@@ -632,6 +728,35 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
             }
         }, "getUserByUserNo", json);
+    }
+
+    /**
+     * 根据微信openId获得用户信息
+     * @param openId 微信openId
+     * @return
+     */
+    @Override
+    public CommonResult<User> getUserByOpenId(final String openId) {
+
+        JSONObject json = new JSONObject();
+        json.put("openId", openId);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                // 判断当前openId是否存在
+                if(userDao.countUserByOpenId(openId) == 0) {
+
+                    logger.info("getUserByOpenId user not exists openId:" + openId);
+
+                    return;
+                }
+
+                got(userDao.getUserByOpenId(openId));
+
+            }
+        }, "getUserByOpenId", json);
     }
 
     /**

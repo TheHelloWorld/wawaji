@@ -44,6 +44,13 @@ public interface UserDao {
     Integer countUserByUserNo(String userNo);
 
     /**
+     * 根据微信openId获得用户数量
+     * @param openId 微信openId
+     * @return
+     */
+    Integer countUserByOpenId(String openId);
+
+    /**
      * 根据用户编号获得用户名称
      * @param userNo 用户编号
      * @return
@@ -56,6 +63,13 @@ public interface UserDao {
      * @return
      */
     User getUserByMobileNo(String mobileNo);
+
+    /**
+     * 根据微信openId获得用户记录
+     * @param openId 微信openId
+     * @return
+     */
+    User getUserByOpenId(String openId);
 
     /**
      * 根据用户编号获得用户游戏币数

@@ -20,6 +20,11 @@ public class User extends BaseEntity implements Serializable {
 	private String mobileNo;
 
 	/**
+	 * 微信openId
+	 */
+	private String openId;
+
+	/**
 	 * 用户名(微信获取)
 	 */
 	private String userName;
@@ -58,6 +63,14 @@ public class User extends BaseEntity implements Serializable {
 
 	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
+	}
+
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 
 	public String getUserName() {

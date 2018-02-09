@@ -41,17 +41,61 @@ public class UserController {
     public void userWeChatLogin(HttpServletRequest request, HttpServletResponse response, String code) {
 
         try {
-            Map<String, String> data = new HashMap<>();
+
+            Map<String, String> result;
+
+            String openId;
 
             // 从cookie中获取userNo
             String userNo = CommonHandle.getCookieValue(request, BaseConstant.COOKIE_USER_NO);
 
+            if(StringUtils.isBlank(userNo) || "null".equals(userNo)) {
+
+//                return JSONUtil.getSuccessReturnJSON(BaseConstant.FAIL);
+
+                // 通过这个code获取access_token,openId
+                result = WxUtil.getUserInfoAccessToken(code);
+
+                openId = result.get("openid");
+
+                CommonResult<User> openIdCommonResult = userService.getUserByOpenId(openId);
+
+                if(openIdCommonResult.success()) {
+
+                    // 若根据openId无法找到用户则注册新用户
+                    if(openIdCommonResult.getValue() == null) {
+
+                    }
+                }
+
+                // 重定向跳转页面地址(游戏首页地址)
+                response.sendRedirect("/toiletCat/gameRoom/gameRoom.html");
+            }
+
+            // 查询用户信息
+            CommonResult<User> userCommonResult = userService.getUserByUserNo(userNo);
+
+            if(userCommonResult.success()) {
+
+                if(userCommonResult.getValue() == null) {
+
+                    logger.warn("autoLogin toiletCat warn: 没有对应的用户编号 userNo:{}", userNo);
+
+
+                }
+
+                // 将用户编号放入cookie中
+                CommonHandle.setUserNoInCookie(response, userCommonResult.getValue().getUserNo());
+
+
+            }
+
             logger.info("userWeChatLogin userNo:{}", userNo);
 
-            // 通过这个code获取access_token
-            Map<String, String> result = WxUtil.getUserInfoAccessToken(code);
+            // 通过这个code获取access_token,openId
+            result = WxUtil.getUserInfoAccessToken(code);
 
-            String openId = result.get("openid");
+            openId = result.get("openid");
 
             if (StringUtils.isNotBlank(openId)) {
 
@@ -134,7 +178,7 @@ public class UserController {
         }
 
         // 获取用户编号并返回
-        CommonResult<User> result = userService.registerOrLoginUser(mobile);
+        CommonResult<User> result = userService.registerOrLoginUserByMobileNo(mobile);
 
         if(result.success()) {
 

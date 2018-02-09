@@ -13,9 +13,9 @@ public class WxUserInfo {
 	private String nickName;
 
 	/**
-	 * 用户unionId
+	 * 用户头像
 	 **/
-	private String unionId;
+	private String headImgUrl;
 
 	public String getOpenId() {
 		return openId;

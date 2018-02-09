@@ -10,6 +10,8 @@
         <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
         <!-- 手机号 -->
         <result property="mobileNo" column="mobile_no" jdbcType="VARCHAR"/>
+        <!-- 微信openId -->
+        <result property="openId" column="open_id" jdbcType="VARCHAR"/>
         <!-- 用户名 -->
         <result property="userName" column="user_name" jdbcType="VARCHAR"/>
         <!-- 用户邀请码 -->
@@ -32,6 +34,7 @@
             (
                 user_no,
                 mobile_no,
+                open_id,
                 user_name,
                 invitation_code,
                 invitation_user_no,
@@ -42,6 +45,7 @@
             (
                 #{userNo, jdbcType=VARCHAR},
                 #{mobileNo, jdbcType=VARCHAR},
+                #{openId, jdbcType=VARCHAR},
                 #{userName, jdbcType=VARCHAR},
                 #{invitationCode, jdbcType=VARCHAR},
                 #{invitationUserNo, jdbcType=VARCHAR},
@@ -57,12 +61,17 @@
 
     <!-- 根据手机号获得用户数量 -->
     <select id="countUserByMobileNo" parameterType="java.lang.String" resultType="java.lang.Integer">
-      select count(*) from `user` where mobile_no = #{mobileNo, jdbcType=VARCHAR}
+        select count(*) from `user` where mobile_no = #{mobileNo, jdbcType=VARCHAR}
     </select>
 
     <!-- 根据用户编号获得用户数量 -->
     <select id="countUserByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
         select count(*) from `user` where user_no = #{userNo, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据微信openId获得用户数量 -->
+    <select id="countUserByOpenId" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from `user` where open_id = #{openId, jdbcType=VARCHAR}
     </select>
 
     <!-- 分页获得所有用户记录 -->
@@ -71,23 +80,24 @@
             id,
             user_no,
             mobile_no,
+            open_id,
             user_name,
             invitation_code,
             invitation_user_no,
             user_img,
             user_coin
         from `user`
-          limit #{startPage}, #{pageSize}
+          limit #{startPage, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </select>
 
     <!-- 根据用户编号获得用户游戏币数 -->
     <select id="getUserCoinByUserNo" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select user_coin from `user` where user_no = #{userNo}
+        select user_coin from `user` where user_no = #{userNo, jdbcType=VARCHAR}
     </select>
 
     <!-- 根据用户编号获得用户名称 -->
     <select id="getUserNameByUserNo" parameterType="java.lang.String" resultType="java.lang.String">
-        select user_name from `user` where user_no = #{userNo}
+        select user_name from `user` where user_no = #{userNo, jdbcType=VARCHAR}
     </select>
 
     <!-- 根据用户编号获得用户记录 -->
@@ -96,6 +106,7 @@
           id,
           user_no,
           mobile_no,
+          open_id,
           user_name,
           invitation_code,
           invitation_user_no,
@@ -110,12 +121,28 @@
           id,
           user_no,
           mobile_no,
+          open_id,
           user_name,
           invitation_code,
           invitation_user_no,
           user_img,
           user_coin
         from `user` where mobile_no = #{mobileNo, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据微信openId获得用户记录 -->
+    <select id="getUserByOpenId" parameterType="java.lang.String" resultMap="userMap">
+        select
+            id,
+            user_no,
+            mobile_no,
+            open_id,
+            user_name,
+            invitation_code,
+            invitation_user_no,
+            user_img,
+            user_coin
+        from `user` where open_id = #{openId, jdbcType=VARCHAR}
     </select>
 
     <!-- 根据用户编号修改用户游戏币数(用户操作 充值coin为正数,消费coin为负数) -->

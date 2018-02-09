@@ -170,6 +170,11 @@ public class WxUtil {
         return "";
     }
 
+    /**
+     * 根据code获得用户微信信息
+     * @param code code
+     * @return
+     */
     public static Map<String, String> getUserInfoAccessToken(String code) {
 
         JSONObject object;

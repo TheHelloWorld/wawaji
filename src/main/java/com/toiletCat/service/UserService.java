@@ -6,10 +6,16 @@ import com.toiletCat.entity.User;
 public interface UserService {
 
     /**
-     * 添加用户
+     * 根据手机号添加用户
      * @param mobileNo 手机号
      */
-    CommonResult<User> registerOrLoginUser(String mobileNo);
+    CommonResult<User> registerOrLoginUserByMobileNo(String mobileNo);
+
+    /**
+     * 根据微信openId用户注册或登录
+     * @param openId 微信openId
+     */
+    CommonResult<User> registerOrLoginUserByOpenId(String openId);
 
     /**
      * 校验短信验证码
@@ -48,6 +54,13 @@ public interface UserService {
      * @return
      */
     CommonResult<User> getUserByUserNo(String userNo);
+
+    /**
+     * 根据微信openId获得用户信息
+     * @param openId 微信openId
+     * @return
+     */
+    CommonResult<User> getUserByOpenId(String openId);
 
     /**
      * 根据用户编号修改用户名和用户头像
