@@ -80,8 +80,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             public void exec() {
 
                 User user;
+
                 // 若当前用户为新用户则添加用户
                 if (userDao.countUserByMobileNo(mobileNo) == 0) {
+
                     user = new User();
 
                     PropertiesUtil systemProperties = PropertiesUtil.getInstance("system");
@@ -111,18 +113,22 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
                         while (true) {
+
                             // 生成用户邀请码
                             invitationCode = RandomIntUtil.getRandomString(5);
 
                             // 判断邀请码是否重复
                             if(redisUtil.sadd(BaseConstant.USER_INVITATION_CODE, invitationCode) == 1L) {
+
                                 // 若不重复则跳出
                                 break;
                             }
                         }
 
                     } catch(Exception e) {
-                        logger.error("{} registerOrLoginUser redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+
+                        logger.error("registerOrLoginUser redis error:" + e, e);
+
                     }
 
                     // 用户邀请码
@@ -142,7 +148,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 }
 
                 got(user);
-                return;
+
             }
         }, "registerOrLoginUser", json);
     }
@@ -172,19 +178,25 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     // 若验证码不对
                     if (!ticket.equals(verifyCode)) {
+
                         setOtherMsg();
-                        got(BaseConstant.VCODE_ERR_MSG);
+
+                        got(BaseConstant.V_CODE_ERR_MSG);
+
                         return;
                     }
 
                     got(BaseConstant.SUCCESS);
+
                     return;
 
                 } catch (Exception e) {
+
                     logger.error("{} verifyCode redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+
                     setOtherMsg();
-                    got(BaseConstant.VCODE_ERR_MSG);
-                    return;
+
+                    got(BaseConstant.V_CODE_ERR_MSG);
                 }
             }
         }, "verifyCode", json);
@@ -219,18 +231,27 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 if (needCoinResult.success()) {
 
                     needCoin = needCoinResult.getValue();
+
                 } else {
-                    logger.error("{} getCoinByMachineNo error:", BaseConstant.LOG_ERR_MSG);
+
+                    logger.error("userPlayMachine getCoinByMachineNo error");
+
                     setOtherMsg();
+
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
+
                     return;
                 }
 
                 // 判断用户游戏币是否足够
                 if (userCoin < needCoin) {
-                    logger.info("{} 用户游戏币不足,用户游戏币数:{},所需游戏币数:{}", BaseConstant.LOG_MSG, userCoin, needCoin);
+
+                    logger.info("userPlayMachine 用户游戏币不足,用户游戏币数:{},所需游戏币数:{}", userCoin, needCoin);
+
                     setOtherMsg();
+
                     got(BaseConstant.NOT_ENOUGH_COIN);
+
                     return;
                 }
 
@@ -240,15 +261,23 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     // 判断当前机器是否已有用户使用
                     if (redisUtil.setnx(key, userNo) == 0) {
+
                         setOtherMsg();
+
                         // 若当前机器已被占用
                         got(BaseConstant.MACHINE_ALREADY_IN_UES);
+
                         return;
                     }
+
                 } catch (Exception e) {
-                    logger.error("{} userPlayMachine redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+
+                    logger.error("userPlayMachine redis error:" + e, e);
+
                     setOtherMsg();
+
                     got(BaseConstant.MACHINE_ALREADY_IN_UES);
+
                     return;
                 }
 
@@ -257,8 +286,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                         machineService.getToyNoAndToyImgByMachineNo(machineNo);
 
                 if(!userMachineCommonResult.success()) {
+
                     setOtherMsg();
+
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
+
                     return;
                 }
 
@@ -332,20 +364,27 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     JSONObject returnJson = new JSONObject();
 
                     returnJson.put("catchId", catchId);
+
                     returnJson.put("result", BaseConstant.SUCCESS);
 
-                    logger.info("{} 成功扣除用户:{} 游戏币数:{} 结果{}", BaseConstant.LOG_MSG, userNo, needCoin,
+                    logger.info("userPlayMachine 成功扣除用户:{} 游戏币数:{} 结果{}", userNo, needCoin,
                             returnJson.toJSONString());
 
                     got(returnJson.toJSONString());
+
                     return;
+
                 } catch (Exception e) {
-                    logger.error("{} 扣除用户游戏币失败" + e, BaseConstant.LOG_ERR_MSG, e);
+
+                    logger.error("userPlayMachine 扣除用户游戏币失败" + e, e);
+
                     userSpendRecord.setTradeStatus(TradeStatus.FAIL.getStatus());
+
                     userSpendRecordService.addUserSpendRecord(userSpendRecord);
+
                     setOtherMsg();
+
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
-                    return;
                 }
             }
         }, "userPlayMachine", json);
@@ -371,6 +410,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 // 获得用户当前游戏币数
                 Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+
                 // 获得机器信息
                 CommonResult<Integer> needCoinResult = gameRoomService.getCoinByGameRoomNo(gameRoomNo);
 
@@ -379,18 +419,27 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 if (needCoinResult.success()) {
 
                     needCoin = needCoinResult.getValue();
+
                 } else {
-                    logger.error("{} getCoinByGameRoomNo error:", BaseConstant.LOG_ERR_MSG);
+
+                    logger.error("userPlayGame getCoinByGameRoomNo error");
+
                     setOtherMsg();
+
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
+
                     return;
                 }
 
                 // 判断用户游戏币是否足够
                 if (userCoin < needCoin) {
-                    logger.info("{} 用户游戏币不足,用户游戏币数:{},所需游戏币数:{}", BaseConstant.LOG_MSG, userCoin, needCoin);
+
+                    logger.info("userPlayGame 用户游戏币不足,用户游戏币数:{},所需游戏币数:{}", userCoin, needCoin);
+
                     setOtherMsg();
+
                     got(BaseConstant.NOT_ENOUGH_COIN);
+
                     return;
                 }
 
@@ -399,8 +448,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                         gameRoomService.getUserSeeGameRoomByGameRoomNo(gameRoomNo);
 
                 if(!userSeeGameRoomCommonResult.success()) {
+
                     setOtherMsg();
+
                     got(BaseConstant.SYSTEM_ERROR);
+
                     return;
                 }
 
@@ -432,10 +484,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 userSpendRecord.setOrderNo(spendOrderNo);
 
                 try {
+
                     // 扣除用户游戏币
                     userDao.updateUserCoinByUserNo(-needCoin, userNo);
 
                     userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
+
                     userSpendRecordService.addUserSpendRecord(userSpendRecord);
 
                     // 添加娃娃抓取记录
@@ -473,20 +527,27 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     JSONObject returnJson = new JSONObject();
 
                     returnJson.put("catchId", catchId);
+
                     returnJson.put("result", BaseConstant.SUCCESS);
 
-                    logger.info("{} 成功扣除用户:{} 游戏币数:{} 结果{}", BaseConstant.LOG_MSG, userNo, needCoin,
+                    logger.info("userPlayGame 成功扣除用户:{} 游戏币数:{} 结果{}", BaseConstant.LOG_MSG, userNo, needCoin,
                             returnJson.toJSONString());
 
                     got(returnJson.toJSONString());
+
                     return;
+
                 } catch (Exception e) {
-                    logger.error("{} 扣除用户游戏币失败" + e, BaseConstant.LOG_ERR_MSG, e);
+
+                    logger.error("userPlayGame 扣除用户游戏币失败" + e, e);
+
                     userSpendRecord.setTradeStatus(TradeStatus.FAIL.getStatus());
+
                     userSpendRecordService.addUserSpendRecord(userSpendRecord);
+
                     setOtherMsg();
+
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
-                    return;
                 }
             }
         }, "userPlayGame", json);
@@ -533,12 +594,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     }
 
                 } catch (Exception e) {
-                    logger.error("{} sendMobileVerificationCode redis error:" + e, BaseConstant.LOG_ERR_MSG, e);
+
+                    logger.error("sendMobileVerificationCode redis error:" + e, e);
                 }
 
                 got(BaseConstant.FAIL);
 
-                return;
             }
         }, "userRegisterOrLogin", json);
     }
@@ -802,8 +863,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 MoneyForCoin coin = moneyForCoinService.getMoneyForCoinByMoney(amount);
 
                 if(coin == null) {
+
                     setOtherMsg();
+
                     got("请重新选择金额");
+
                     return;
                 }
 
@@ -817,8 +881,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     // 如果达到上限
                     if(userLimitNum == coin.getRechargeLimit()) {
+
                         setOtherMsg();
-                        got("当前选项每天只能充" + coin.getRechargeLimit() + "次哦");
+
+                        got("每天只能充" + coin.getRechargeLimit() + "次哦");
+
                         return;
                     }
                 }
@@ -857,7 +924,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 CommonResult addRechargeResult = userRechargeRecordService.addUserRechargeRecord(userRechargeRecord);
 
                 if(!addRechargeResult.success()) {
+
                     respondSysError();
+
                     return;
                 }
 
@@ -891,7 +960,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 CommonResult addSpendResult = userSpendRecordService.addUserSpendRecord(userSpendRecord);
 
                 if(!addSpendResult.success()) {
+
                     respondSysError();
+
                     return;
                 }
 
@@ -922,9 +993,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 Integer count = userDao.countUserByUserNo(userNo);
 
                 if(count == 0) {
+
                     logger.warn("userInvite " + userNo + " is wrong");
+
                     setOtherMsg();
+
                     got("userNo is wrong");
+
                     return;
                 }
 
@@ -932,8 +1007,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 // 判断当前用户是否已被邀请过
                 if(!BaseConstant.DEFAULT_INVITATION_USER_NO.equals(invitationUserNo)) {
+
                     setOtherMsg();
+
                     got("只能填写一次邀请码");
+
                     return;
                 }
 
@@ -942,15 +1020,21 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 // 判断该邀请码是否正确
                 if(StringUtils.isBlank(inviteUserNo)) {
+
                     setOtherMsg();
+
                     got("请填写正确的邀请码");
+
                     return;
                 }
 
                 // 判断邀请用户和被邀请用户是否是同一个用户
                 if(inviteUserNo.equals(userNo)) {
+
                     setOtherMsg();
+
                     got("不能填写自己的邀请码");
+
                     return;
                 }
 
@@ -1103,6 +1187,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
             // 发送抓取成功的通知
             SocketUtil.sendMsg(msg.toJSONString());
+
             return json.toJSONString();
 
         }

@@ -71,7 +71,7 @@ public class BaseConstant {
 	/**
 	 * 验证码异常信息
 	 **/
-	public static final String VCODE_ERR_MSG = "验证码错误,请重试";
+	public static final String V_CODE_ERR_MSG = "验证码错误,请重试";
 
 	/**
 	 * 获取session异常
@@ -153,8 +153,14 @@ public class BaseConstant {
 	 */
 	public static Map<Double, MoneyForCoin> moneyForCoinMap = new LinkedHashMap<>();
 
+	/**
+	 * http get 请求
+	 */
 	public static final String HTTP_GET = "GET";
 
+	/**
+	 * http post 请求
+	 */
 	public static final String HTTP_POST = "POST";
 
 }
