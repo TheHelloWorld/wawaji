@@ -51,13 +51,13 @@ public class UserController {
 
             if(result.getValue() == null) {
 
-                logger.warn("toiletCat warn:autoLogin 没有对应的用户编号 userNo:{}", userNo);
+                logger.warn("autoLogin toiletCat warn: 没有对应的用户编号 userNo:{}", userNo);
 
                 return JSONUtil.getSuccessReturnJSON(BaseConstant.FAIL);
             }
 
             // 将用户编号放入cookie中
-            setUserNoInCookie(response, result.getValue().getUserNo());
+            CommonHandle.setUserNoInCookie(response, result.getValue().getUserNo());
 
             return JSONUtil.getSuccessReturnJSON(result.getValue());
         }
@@ -94,33 +94,12 @@ public class UserController {
         if(result.success()) {
 
             // 将用户编号放入cookie中
-            setUserNoInCookie(response, result.getValue().getUserNo());
+            CommonHandle.setUserNoInCookie(response, result.getValue().getUserNo());
 
             return JSONUtil.getSuccessReturnJSON(result.getValue());
         }
 
         return JSONUtil.getErrorJson();
-    }
-
-    /**
-     * 将用户userNo放入cookie
-     *
-     * @param userNo 用户编号
-     */
-    private void setUserNoInCookie(HttpServletResponse response, String userNo) {
-
-        //将用户No放入COOKIE中
-        Cookie passport = new Cookie(BaseConstant.COOKIE_USER_NO, userNo);
-
-        logger.info("用户userNo放入cookie中,userNo:{}", userNo);
-
-        //设定有效时间  以秒(s)为单位
-        passport.setMaxAge(25920000);
-
-        //设置Cookie路径和域名
-        passport.setPath("/");
-
-        response.addCookie(passport);
     }
 
     /**

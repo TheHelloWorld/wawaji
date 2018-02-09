@@ -1,6 +1,8 @@
 package com.toiletCat.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.toiletCat.constants.BaseConstant;
+import com.toiletCat.utils.CommonHandle;
 import com.toiletCat.utils.PropertiesUtil;
 import com.toiletCat.utils.UUIDUtil;
 import com.toiletCat.utils.WxUtil;
@@ -32,10 +34,15 @@ public class WeChatController {
      */
     @RequestMapping(value = "/userWeChatLogin", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public void userWeChatLogin(HttpServletRequest req, HttpServletResponse resp, String code) {
+    public void userWeChatLogin(HttpServletRequest request, HttpServletResponse response, String code) {
 
         try {
             Map<String, String> data = new HashMap<>();
+
+            // 从cookie中获取userNo
+            String userNo = CommonHandle.getCookieValue(request, BaseConstant.COOKIE_USER_NO);
+
+            logger.info("userWeChatLogin userNo:{}", userNo);
 
             // 通过这个code获取access_token
             Map<String, String> result = WxUtil.getUserInfoAccessToken(code);
@@ -53,7 +60,7 @@ public class WeChatController {
 
             }
 
-            resp.sendRedirect("/toiletCat/gameRoom/gameRoom.html");
+            response.sendRedirect("/toiletCat/gameRoom/gameRoom.html");
 
         } catch(Exception e) {
 
