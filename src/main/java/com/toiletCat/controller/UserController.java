@@ -41,6 +41,7 @@ public class UserController {
         String userNo = CommonHandle.getCookieValue(request, BaseConstant.COOKIE_USER_NO);
 
         if(StringUtils.isBlank(userNo) || "null".equals(userNo)) {
+
             return JSONUtil.getSuccessReturnJSON(BaseConstant.FAIL);
         }
 
