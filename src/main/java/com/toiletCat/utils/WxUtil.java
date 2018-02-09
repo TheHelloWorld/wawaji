@@ -240,17 +240,43 @@ public class WxUtil {
 
             logger.info("getUserInfo get userInfo success result: " + userInfo);
 
-            wxUserInfo.setOpenId(userInfo.get("openid").toString().replaceAll("\"", ""));
+            wxUserInfo.setOpenId(userInfo.getString("openid").replaceAll("\"", ""));
 
-            wxUserInfo.setNickName(userInfo.get("nickname").toString().replaceAll("\"", ""));
+            String nickName = userInfo.getString("nickname");
 
-            wxUserInfo.setCity(userInfo.get("city").toString().replaceAll("\"", ""));
+            // 判断昵称是否为空
+            if(StringUtils.isBlank(nickName)) {
 
-            wxUserInfo.setProvince(userInfo.get("province").toString().replaceAll("\"", ""));
+                nickName = BaseConstant.DEFAULT_NAME_FLAG;
 
-            wxUserInfo.setCountry(userInfo.get("country").toString().replaceAll("\"", ""));
+            } else {
 
-            wxUserInfo.setHeadImgUrl(userInfo.get("headimgurl").toString().replaceAll("\"", ""));
+                nickName = nickName.replaceAll("\"", "");
+
+            }
+
+            wxUserInfo.setNickName(nickName);
+
+            wxUserInfo.setCity(userInfo.getString("city").replaceAll("\"", ""));
+
+            wxUserInfo.setProvince(userInfo.getString("province").replaceAll("\"", ""));
+
+            wxUserInfo.setCountry(userInfo.getString("country").replaceAll("\"", ""));
+
+            String headImageUrl = userInfo.getString("headimgurl");
+
+            // 判断用户头像是否为空
+            if(StringUtils.isBlank(headImageUrl)) {
+
+                headImageUrl = BaseConstant.DEFAULT_HEAD_FLAG;
+
+            } else {
+
+                headImageUrl = headImageUrl.replaceAll("\"", "");
+
+            }
+
+            wxUserInfo.setHeadImgUrl(headImageUrl);
 
         } catch (Exception e) {
 

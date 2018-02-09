@@ -187,16 +187,33 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     // 用户游戏币数
                     user.setUserCoin(defaultUserCoin);
 
+                    String headImgUrl = wxUserInfo.getHeadImgUrl();
+
+                    // 若微信获取头像为空
+                    if(BaseConstant.DEFAULT_HEAD_FLAG.equals(headImgUrl)) {
+
+                        headImgUrl = systemProperties.getProperty("user_default_img")
+                                + "defaultHead" + RandomIntUtil.getRandomNumByHighBound(5) + ".png";
+                    }
+
                     // 用户头像
-                    user.setUserImg(wxUserInfo.getHeadImgUrl());
+                    user.setUserImg(headImgUrl);
 
                     String userNo = UUIDUtil.generateUUID();
 
                     // 用户编号
                     user.setUserNo(userNo);
 
+                    String nickName = wxUserInfo.getNickName();
+
+                    // 若微信获取昵称为空
+                    if(BaseConstant.DEFAULT_NAME_FLAG.equals(nickName)) {
+
+                        nickName = RandomIntUtil.getRandomString(10);
+                    }
+
                     // 用户名
-                    user.setUserName(wxUserInfo.getNickName());
+                    user.setUserName(nickName);
 
                     String invitationCode = "";
 

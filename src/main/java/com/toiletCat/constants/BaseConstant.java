@@ -163,4 +163,14 @@ public class BaseConstant {
 	 */
 	public static final String HTTP_POST = "POST";
 
+	/**
+	 * 默认头像标识
+	 */
+	public static final String DEFAULT_HEAD_FLAG = "default_head_flag";
+
+	/**
+	 * 默认用户名标识
+	 */
+	public static final String DEFAULT_NAME_FLAG = "default_name_flag";
+
 }
