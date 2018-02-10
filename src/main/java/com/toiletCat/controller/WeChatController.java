@@ -51,7 +51,7 @@ public class WeChatController {
 
         jsApiTicket = WeChatUtil.getJsApiTicket(accessToken);
 
-        return wxSign(jsApiTicket, url);
+        return weChatSign(jsApiTicket, url);
     }
 
     /**
@@ -60,7 +60,7 @@ public class WeChatController {
      * @param url url
      * @return
      */
-    private String wxSign(String jsApiTicket, String url) {
+    private String weChatSign(String jsApiTicket, String url) {
 
         JSONObject json = new JSONObject();
 
@@ -78,7 +78,7 @@ public class WeChatController {
                 "&timestamp=" + timestamp +
                 "&url=" + url;
 
-        logger.info("wxSign sign "+string1);
+        logger.info("weChatSign sign "+string1);
 
         try {
             MessageDigest crypt = MessageDigest.getInstance("SHA-1");
@@ -107,9 +107,9 @@ public class WeChatController {
 
         json.put("signature", signature);
 
-        logger.info("wxSign currurl = "+ url);
+        logger.info("weChatSign url: "+ url);
 
-        logger.info("wxSign signature =" + signature);
+        logger.info("weChatSign signature: " + signature);
 
         return json.toJSONString();
     }
