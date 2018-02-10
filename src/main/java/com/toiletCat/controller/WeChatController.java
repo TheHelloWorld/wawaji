@@ -26,9 +26,9 @@ public class WeChatController {
      * @param url 链接
      * @return
      */
-    @RequestMapping(value = "/getWxShareInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/getWeChatShareInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String getWxShareInfo(String url) {
+    public String getWeChatShareInfo(String url) {
 
         String jsApiTicket;
 
@@ -68,29 +68,27 @@ public class WeChatController {
 
         String timestamp = create_timestamp();
 
-        String string1;
+        String signStr = "jsapi_ticket=%s&noncestr=%s&timestamp=%s&url=%s";
 
         String signature = "";
 
         // 注意这里参数名必须全部小写，且必须有序
-        string1 = "jsapi_ticket=" + jsApiTicket +
-                "&noncestr=" + nonce_str +
-                "&timestamp=" + timestamp +
-                "&url=" + url;
+        signStr =String.format(signStr, jsApiTicket, nonce_str, timestamp, url);
 
-        logger.info("weChatSign sign "+string1);
+        logger.info("weChatSign sign: " + signStr);
 
         try {
             MessageDigest crypt = MessageDigest.getInstance("SHA-1");
 
             crypt.reset();
 
-            crypt.update(string1.getBytes("UTF-8"));
+            crypt.update(signStr.getBytes("UTF-8"));
 
             signature = byteToHex(crypt.digest());
 
         } catch (Exception e) {
-            e.printStackTrace();
+
+            logger.error("weChatSign error:" + e, e);
         }
 
         PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
@@ -114,6 +112,11 @@ public class WeChatController {
         return json.toJSONString();
     }
 
+    /**
+     * 转换
+     * @param hash hash数组
+     * @return
+     */
     private static String byteToHex(final byte[] hash) {
 
         Formatter formatter = new Formatter();
@@ -130,6 +133,10 @@ public class WeChatController {
         return result;
     }
 
+    /**
+     * 创建随机时间戳
+     * @return
+     */
     private static String create_timestamp() {
 
         return Long.toString(System.currentTimeMillis() / 1000);

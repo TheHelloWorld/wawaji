@@ -1,13 +1,16 @@
-//document.write("<script src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js'></script>")
-var configData = [];
-var shareUrl = "http://www.9w83c6.cn/share.html?shareId="+sessionStorage["toiletCatInvitationCode"];
-var currurl = window.location.href;
+var shareUrl = "http://www.9w83c6.cn/share.html?shareId=" + sessionStorage["toiletCatInvitationCode"];
+
+var curr_url = window.location.href;
+
 $.ajax({
-    url:"/toiletCat/api/weChat/getWxShareInfo.action",
+    url:"/toiletCat/api/weChat/getWeChatShareInfo.action",
     type:"post",
-    data:{"url":currurl},
+    data:{
+        "url":curr_url
+    },
     success:function(data) {
         data = eval('('+data+')');
+
         wx.config({
             debug:false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: data.appId, // 必填，公众号的唯一标识
@@ -35,7 +38,6 @@ $.ajax({
                 }
             }); // end onMenuShareAppMessage
 
-
             wx.onMenuShareTimeline({
                 title : '快和我一起来马桶猫抓娃娃吧', // 分享标题
                 link : shareUrl, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
@@ -54,4 +56,4 @@ $.ajax({
             alert('error');
         });
     }
-})
+});
