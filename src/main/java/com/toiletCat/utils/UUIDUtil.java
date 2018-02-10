@@ -13,6 +13,7 @@ public class UUIDUtil {
      * @return
      */
     public static String generateUUID() {
+        
         return UUID.randomUUID().toString().trim().replaceAll("-","");
     }
 }
