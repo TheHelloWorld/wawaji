@@ -231,7 +231,6 @@ public class WeChatUtil {
             } else {
 
                 nickName = nickName.replaceAll("\"", "");
-
             }
 
             wxUserInfo.setNickName(nickName);
@@ -252,7 +251,6 @@ public class WeChatUtil {
             } else {
 
                 headImageUrl = headImageUrl.replaceAll("\"", "");
-
             }
 
             wxUserInfo.setHeadImgUrl(headImageUrl);
@@ -265,7 +263,6 @@ public class WeChatUtil {
         return wxUserInfo;
     }
 
-
     public static void main(String[] args) {
 
         PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
@@ -274,8 +271,7 @@ public class WeChatUtil {
 
         String requestUrl = propertiesUtil.getProperty("we_chat_redirect_uri");
 
-        String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appId + "&redirect_uri="
-                + requestUrl + "&response_type=code&scope=snsapi_userinfo&state=toiletCat#wechat_redirect";
+        String url = String.format(REQUEST_USER_CODE_URL, appId, requestUrl);
 
         System.out.println(url);
     }
