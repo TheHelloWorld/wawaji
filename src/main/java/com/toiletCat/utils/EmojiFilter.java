@@ -91,6 +91,5 @@ public class EmojiFilter {
                 return buf.toString();
             }
         }
-
     }
 }

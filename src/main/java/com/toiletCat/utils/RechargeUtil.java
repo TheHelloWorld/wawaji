@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -16,6 +17,8 @@ import java.util.TreeMap;
 public class RechargeUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(RechargeUtil.class);
+
+    private static final String WxPayRequestUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
     private RechargeUtil() {
         
@@ -164,12 +167,126 @@ public class RechargeUtil {
     }
 
     /**
+     * 获得微信支付前端所需参数
+     * @param orderNo 我方订单号(ToiletCat + 时间戳)
+     * @param money 交易金额
+     * @param openId 用户openId
+     * @param ip 用户ip
+     * @return
+     */
+    public static String getWxPayRequestInfo(String orderNo, String money, String openId, String ip) {
+
+        try {
+            PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
+
+            JSONObject json = new JSONObject();
+
+            String appId = propertiesUtil.getProperty("we_chat_app_id");
+
+            // appId
+            json.put("appid", appId);
+
+            // 商户编号(微信分配)
+            json.put("mch_id", propertiesUtil.getProperty("we_chat_merchant_no"));
+
+            // 随机字符串
+            json.put("nonce_str", WeChatUtil.generateUUID());
+
+            // 商品描述
+            json.put("body", "马桶猫抓娃娃-游戏充值");
+
+            // 我方订单号
+            json.put("out_trade_no", orderNo);
+
+            // 交易金额(单位为分)
+            json.put("total_fee", (int)(Double.valueOf(money) * 100));
+
+            // 终端ip
+            json.put("spbill_create_ip", ip);
+
+            // 结果异步通知地址
+            json.put("notify_url", propertiesUtil.getProperty("recharge_notify_url"));
+
+            // 交易类型
+            json.put("trade_type", "JSAPI");
+
+            // 用户openId
+            json.put("openid", openId);
+
+            Map<String, String> map = new TreeMap<>();
+
+            map.put("sign", WeChatUtil.weChatSign(json));
+
+            for(String key : json.keySet()) {
+
+                map.put(key, json.getString(key));
+            }
+
+            logger.info(WeChatUtil.mapToXml(map));
+
+            String response = HttpClientUtil.httpsRequest(WxPayRequestUrl, BaseConstant.HTTP_POST,
+                    WeChatUtil.mapToXml(map));
+
+            logger.info("response is :" + response);
+
+            Map<String, String> responseMap = WeChatUtil.xmlToMap(response);
+
+            if(responseMap == null) {
+
+                logger.error("createWxPayRequest responseMap is null");
+
+                return null;
+            }
+
+            String prepay_id = "";
+
+            if("SUCCESS".equals(responseMap.get("result_code")) && "SUCCESS".equals(responseMap.get("return_code"))) {
+
+                prepay_id = responseMap.get("prepay_id");
+
+            }
+
+            if(StringUtils.isBlank(prepay_id)) {
+
+                logger.error("createWxPayRequest prepay_id is null");
+
+                return null;
+            }
+
+            JSONObject returnJson = new JSONObject();
+
+            returnJson.put("appId", appId);
+
+            returnJson.put("timeStamp", WeChatUtil.getCurrentTimestamp());
+
+            returnJson.put("nonceStr", WeChatUtil.generateUUID());
+
+            returnJson.put("package", "prepay_id=" + prepay_id);
+
+            returnJson.put("signType", "MD5");
+
+            String paySign = WeChatUtil.weChatSign(returnJson);
+
+            returnJson.put("paySign", paySign);
+
+            return returnJson.toJSONString();
+
+        } catch(Exception e) {
+
+            logger.error("createWxPayRequest error:" + e.getMessage(), e);
+
+            return null;
+        }
+    }
+
+    /**
      * 验签
      * @param resultSign 返回签名
      * @param json 参数
      * @return
      */
     public static Boolean checkSign(String resultSign, JSONObject json) {
+
         return resultSign.equals(getSign(json));
     }
 }

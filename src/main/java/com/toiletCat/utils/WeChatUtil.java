@@ -25,6 +25,7 @@ import java.io.StringWriter;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 
 public class WeChatUtil {
@@ -142,12 +143,61 @@ public class WeChatUtil {
     }
 
     /**
+     * 微信签名方法
+     * @param json json
+     * @return
+     */
+    public static String weChatSign(JSONObject json) {
+
+        try {
+
+            TreeMap<String, String> map = new TreeMap<>();
+
+            // 按ASCII字典序排序
+            for(String key : json.keySet()) {
+                map.put(key, json.getString(key));
+            }
+
+            StringBuilder stringBuilder = new StringBuilder("");
+
+            for(String key : map.keySet()) {
+
+                stringBuilder.append(key);
+
+                stringBuilder.append("=");
+
+                stringBuilder.append(map.get(key));
+
+                stringBuilder.append("&");
+            }
+
+            String str = stringBuilder.toString();
+
+            str = str.substring(0, str.length()-1);
+
+            PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
+
+            str += "&key=" + propertiesUtil.getProperty("we_chat_key");
+
+            logger.info("weChatSign str before sign:" + str);
+
+            return weChatMD5(str);
+
+        } catch (Exception e) {
+
+            logger.error("weChatSign error: " + e, e);
+
+            return null;
+        }
+    }
+
+    /**
      * 生成 MD5
      *
      * @param data 待处理数据
      * @return MD5结果
      */
-    private static String WeChatMD5(String data) throws Exception {
+    private static String weChatMD5(String data) throws Exception {
 
         java.security.MessageDigest md = MessageDigest.getInstance("MD5");
 
@@ -280,7 +330,7 @@ public class WeChatUtil {
      * 获取当前时间戳，单位秒
      * @return
      */
-    private static Long getCurrentTimestamp() {
+    public static Long getCurrentTimestamp() {
 
         return getCurrentTimestampMs() / 1000;
     }
@@ -289,7 +339,7 @@ public class WeChatUtil {
      * 获取当前时间戳，单位毫秒
      * @return
      */
-    private static Long getCurrentTimestampMs() {
+    public static Long getCurrentTimestampMs() {
 
         return System.currentTimeMillis();
     }
@@ -411,14 +461,9 @@ public class WeChatUtil {
      * 生成 uuid， 即用来标识一笔单，也用做 nonce_str
      * @return
      */
-    private static String generateUUID() {
+    public static String generateUUID() {
 
         return UUIDUtil.generateUUID().substring(0, 32);
-    }
-
-    public static void main(String[] args) {
-
-
     }
 
     private static void createRequestUrl() {
@@ -432,52 +477,6 @@ public class WeChatUtil {
         String url = String.format(REQUEST_USER_CODE_URL, appId, requestUrl);
 
         System.out.println(url);
-
-    }
-
-    private static void createPayRequest() {
-
-        PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
-
-        // appId
-        String appId = propertiesUtil.getProperty("we_chat_app_id");
-
-        // 商户编号(微信分配)
-        String merchant_no = propertiesUtil.getProperty("we_merchant_no");
-
-        // 随机字符串
-        String nonce_str = generateUUID();
-
-        // 签名
-        String sign = "";
-
-        // 签名类型
-        String sign_type = "MD5";
-
-        // 商品描述
-        String body = "马桶猫抓娃娃-马桶币充值";
-
-        // 我方订单号
-        String out_trade_no = "ToiletCat" + getCurrentTimestampMs() + "Test000001";
-
-        // 交易金额(单位为分)
-        String total_fee = "1";
-
-        // 终端ip
-        String spbill_create_ip = "123.119.85.79";
-
-        // 结果异步通知地址
-        String notify_url = "http://www.9w83c6.cn/toiletCat/api/recharge/rechargeResult.action";
-
-        // 交易类型
-        String trade_type = "JSAPI";
-
-        // 用户openId
-        String openid = "oy40W0j71RYd80QMqRDo2_6oBQo0";
-
-
-
-
 
     }
 }
