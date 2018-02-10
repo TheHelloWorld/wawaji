@@ -243,7 +243,7 @@ public class WeChatUtil {
 
             } else {
 
-                nickName = nickName.replaceAll("\"", "");
+                nickName = EmojiFilter.filterEmoji(nickName.replaceAll("\"", ""));
             }
 
             wxUserInfo.setNickName(nickName);
@@ -418,6 +418,11 @@ public class WeChatUtil {
 
     public static void main(String[] args) {
 
+
+    }
+
+    private static void createRequestUrl() {
+
         PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
         String appId = propertiesUtil.getProperty("we_chat_app_id");
@@ -427,5 +432,10 @@ public class WeChatUtil {
         String url = String.format(REQUEST_USER_CODE_URL, appId, requestUrl);
 
         System.out.println(url);
+
+    }
+
+    private static void createPayRequest() {
+
     }
 }
