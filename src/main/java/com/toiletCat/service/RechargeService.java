@@ -9,6 +9,16 @@ import java.math.BigDecimal;
 public interface RechargeService {
 
     /**
+     * 用户充值
+     * @param userNo 用户编号
+     * @param amount 金额
+     * @param rechargeType 充值类型
+     * @return
+     */
+    CommonResult<String> userRecharge(String userNo, String amount, String rechargeType);
+
+
+    /**
      * 充值返回结果
      *
      * @param userNo         用户编号

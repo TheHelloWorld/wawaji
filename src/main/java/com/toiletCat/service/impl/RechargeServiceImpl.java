@@ -9,15 +9,14 @@ import com.toiletCat.constants.RedisConstant;
 import com.toiletCat.dao.UserDao;
 import com.toiletCat.entity.MoneyForCoin;
 import com.toiletCat.entity.UserRechargeRecord;
+import com.toiletCat.entity.UserSpendRecord;
 import com.toiletCat.enums.TradeStatus;
+import com.toiletCat.enums.TradeType;
 import com.toiletCat.service.MoneyForCoinService;
 import com.toiletCat.service.RechargeService;
 import com.toiletCat.service.UserRechargeRecordService;
 import com.toiletCat.service.UserSpendRecordService;
-import com.toiletCat.utils.HttpClientUtil;
-import com.toiletCat.utils.PropertiesUtil;
-import com.toiletCat.utils.RechargeUtil;
-import com.toiletCat.utils.RedisUtil;
+import com.toiletCat.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("all")
@@ -44,6 +44,140 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
     @Autowired
     private MoneyForCoinService moneyForCoinService;
+
+    /**
+     * 用户充值
+     * @param userNo 用户编号
+     * @param amount 金额
+     * @param rechargeType 充值类型
+     * @return
+     */
+    @Override
+    public CommonResult<String> userRecharge(final String userNo, final String amount, final String rechargeType) {
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+        json.put("amount", amount);
+        json.put("rechargeType", rechargeType);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                logger.info("userRecharge userNo:" + userNo + ", amount:" + amount);
+
+                MoneyForCoin coin = moneyForCoinService.getMoneyForCoinByMoney(amount);
+
+                if(coin == null) {
+
+                    setOtherMsg();
+
+                    got("请重新选择金额");
+
+                    return;
+                }
+
+                logger.info("userRecharge userNo:" + userNo + ", amount:" + amount + ", coin:" + coin);
+
+                // 如果有充值限制次数(不为0)
+                if(coin.getRechargeLimit() != 0) {
+
+                    // 获得当前用户限充次数
+                    Integer userLimitNum = getLimitRechargeByUserNo(userNo, coin);
+
+                    // 如果达到上限
+                    if(userLimitNum == coin.getRechargeLimit()) {
+
+                        setOtherMsg();
+
+                        got("每天只能充" + coin.getRechargeLimit() + "次哦");
+
+                        return;
+                    }
+                }
+
+                Integer tradeDate = DateUtil.getDate();
+
+                Date tradeTime = new Date();
+
+                // 添加用户充值记录
+                // 用户充值记录
+                UserRechargeRecord userRechargeRecord = new UserRechargeRecord();
+
+                // 金额
+                userRechargeRecord.setAmount(BigDecimal.valueOf(Double.valueOf(amount)));
+
+                // 充值类型(支付宝/微信)
+                userRechargeRecord.setRechargeType(rechargeType);
+
+                // 用户编号
+                userRechargeRecord.setUserNo(userNo);
+
+                // 交易日期
+                userRechargeRecord.setTradeDate(tradeDate);
+
+                // 交易时间
+                userRechargeRecord.setTradeTime(tradeTime);
+
+                // 交易状态
+                userRechargeRecord.setTradeStatus(TradeStatus.INIT.getStatus());
+
+                // 订单号(ToiletCat + 时间戳)
+                String orderNo = BaseConstant.TOILER_CAT + tradeTime.getTime();
+
+                // 订单号
+                userRechargeRecord.setOrderNo(orderNo);
+
+                CommonResult addRechargeResult = userRechargeRecordService.addUserRechargeRecord(userRechargeRecord);
+
+                if(!addRechargeResult.success()) {
+
+                    respondSysError();
+
+                    return;
+                }
+
+                // 添加用户消费记录
+                // 用户消费记录
+                UserSpendRecord userSpendRecord = new UserSpendRecord();
+
+                //  消费日期
+                userSpendRecord.setTradeDate(tradeDate);
+
+                // 订单号
+                userSpendRecord.setOrderNo(orderNo);
+
+                // 消费时间
+                userSpendRecord.setTradeTime(tradeTime);
+
+                // 消费类型(充值)
+                userSpendRecord.setTradeType(TradeType.RECHARGE.getType());
+
+                Integer rechargeCoin = getCoinByMoneyForCoin(userNo, coin);
+
+                // 消费游戏币
+                userSpendRecord.setCoin(rechargeCoin);
+
+                // 用户编号
+                userSpendRecord.setUserNo(userNo);
+
+                // 消费状态
+                userSpendRecord.setTradeStatus(TradeStatus.INIT.getStatus());
+
+                CommonResult addSpendResult = userSpendRecordService.addUserSpendRecord(userSpendRecord);
+
+                if(!addSpendResult.success()) {
+
+                    respondSysError();
+
+                    return;
+                }
+
+                // 获得请求url并返回
+                got(RechargeUtil.getRequestUrl(orderNo, String.valueOf(amount)));
+
+            }
+        }, "userRecharge", json);
+    }
 
     /**
      * 充值返回结果

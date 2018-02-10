@@ -335,6 +335,10 @@ public class WeChatUtil {
         return getCurrentTimestampMs() / 1000;
     }
 
+    public static void main(String[] args) {
+
+    }
+
     /**
      * 获取当前时间戳，单位毫秒
      * @return

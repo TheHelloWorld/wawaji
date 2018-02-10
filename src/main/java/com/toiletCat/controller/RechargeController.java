@@ -23,6 +23,22 @@ public class RechargeController {
     private RechargeService rechargeService;
 
     /**
+     * 用户充值
+     * @param userNo 用户编号
+     * @param amount 金额
+     * @param rechargeType 充值类型
+     * @return
+     */
+    @RequestMapping(value = "/userRecharge", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String userRecharge(String userNo, String amount, String rechargeType) {
+
+        CommonResult<String> result = rechargeService.userRecharge(userNo, amount, rechargeType);
+
+        return JSONUtil.getReturnBeanString(result);
+    }
+
+    /**
      * 充值回调接口
      * @param money 商品金额
      * @param name 商品名称
