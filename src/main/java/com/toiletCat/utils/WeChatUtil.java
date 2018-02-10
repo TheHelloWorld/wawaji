@@ -437,5 +437,47 @@ public class WeChatUtil {
 
     private static void createPayRequest() {
 
+        PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
+
+        // appId
+        String appId = propertiesUtil.getProperty("we_chat_app_id");
+
+        // 商户编号(微信分配)
+        String merchant_no = propertiesUtil.getProperty("we_merchant_no");
+
+        // 随机字符串
+        String nonce_str = generateUUID();
+
+        // 签名
+        String sign = "";
+
+        // 签名类型
+        String sign_type = "MD5";
+
+        // 商品描述
+        String body = "马桶猫抓娃娃-马桶币充值";
+
+        // 我方订单号
+        String out_trade_no = "ToiletCat" + getCurrentTimestampMs() + "Test000001";
+
+        // 交易金额(单位为分)
+        String total_fee = "1";
+
+        // 终端ip
+        String spbill_create_ip = "123.119.85.79";
+
+        // 结果异步通知地址
+        String notify_url = "http://www.9w83c6.cn/toiletCat/api/recharge/rechargeResult.action";
+
+        // 交易类型
+        String trade_type = "JSAPI";
+
+        // 用户openId
+        String openid = "oy40W0j71RYd80QMqRDo2_6oBQo0";
+
+
+
+
+
     }
 }
