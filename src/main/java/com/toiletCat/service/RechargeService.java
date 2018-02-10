@@ -13,9 +13,10 @@ public interface RechargeService {
      * @param userNo 用户编号
      * @param amount 金额
      * @param rechargeType 充值类型
+     * @param ip 用户ip
      * @return
      */
-    CommonResult<String> userRecharge(String userNo, String amount, String rechargeType);
+    CommonResult<String> userRecharge(String userNo, String amount, String rechargeType, String ip);
 
 
     /**

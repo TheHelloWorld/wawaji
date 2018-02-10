@@ -31,7 +31,7 @@ public class UserGameRoomServiceImpl extends BaseServiceImpl implements UserGame
             public void exec() {
                 userGameRoomDao.addUserGameRoom(userGameRoom);
             }
-        }, "addUserGameRoom", userGameRoom);
+        }, false, "addUserGameRoom", userGameRoom);
     }
 
     /**
@@ -52,7 +52,7 @@ public class UserGameRoomServiceImpl extends BaseServiceImpl implements UserGame
             public void exec() {
                 got(userGameRoomDao.countUserGameRoomByUserNo(userNo, gameRoomNo));
             }
-        }, "countUserGameRoomByUserNo", json);
+        }, true, "countUserGameRoomByUserNo", json);
     }
 
     /**
@@ -73,7 +73,7 @@ public class UserGameRoomServiceImpl extends BaseServiceImpl implements UserGame
             public void exec() {
                 got(userGameRoomDao.getUserGameRoomByUserNoAndGameRoomNo(userNo, gameRoomNo));
             }
-        }, "countUserGameRoomByUserNo", json);
+        }, true, "countUserGameRoomByUserNo", json);
     }
 
     /**
@@ -95,7 +95,7 @@ public class UserGameRoomServiceImpl extends BaseServiceImpl implements UserGame
             public void exec() {
                 userGameRoomDao.addUserRoomLuckyNumByUserNoAndGameRoomNo(userNo, gameRoomNo, userRoomLuckyNum);
             }
-        }, "addUserRoomLuckyNumByUserNoAndGameRoomNo", json);
+        }, true, "addUserRoomLuckyNumByUserNoAndGameRoomNo", json);
     }
 
     /**
@@ -115,7 +115,7 @@ public class UserGameRoomServiceImpl extends BaseServiceImpl implements UserGame
             public void exec() {
                 got(userGameRoomDao.getUserGameRoomLuckyNumByUserNo(userNo, gameRoomNo));
             }
-        }, "getUserGameRoomLuckyNumByUserNo", json);
+        }, true, "getUserGameRoomLuckyNumByUserNo", json);
     }
 
     /**
@@ -135,7 +135,7 @@ public class UserGameRoomServiceImpl extends BaseServiceImpl implements UserGame
             public void exec() {
                 userGameRoomDao.resetUserRoomLuckyNum(userNo, gameRoomNo);
             }
-        }, "resetUserRoomLuckyNum", json);
+        }, true, "resetUserRoomLuckyNum", json);
     }
 
     @Override

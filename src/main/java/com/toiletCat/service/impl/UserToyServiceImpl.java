@@ -60,7 +60,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
             public void exec() {
                 userToyDao.addUserToy(userToy);
             }
-        }, "addUserToy", userToy);
+        }, false, "addUserToy", userToy);
     }
 
     /**
@@ -79,7 +79,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
             public void exec() {
                 got(userToyDao.countUserToyByUserNo(userNo));
             }
-        },"countUserToyByUserNo", json);
+        },true, "countUserToyByUserNo", json);
     }
 
     /**
@@ -101,7 +101,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
             public void exec() {
                 got(userToyDao.getUserToyListByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        },"getUserToyByUserNo", json);
+        },true, "getUserToyByUserNo", json);
     }
 
     /**
@@ -119,20 +119,27 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
         return exec(new Callback() {
             @Override
             public void exec() {
+
                 // 邮寄娃娃所需游戏币数
                 Integer deliverCoin = Integer.valueOf(toiletCatConfigService.getConfigByKey(
                         ToiletCatConfigConstant.USER_DELIVER_COIN));
+
                 // 几个娃娃免费包邮
                 Integer freeDeliverNum = Integer.valueOf(toiletCatConfigService.getConfigByKey(
                         ToiletCatConfigConstant.FREE_DELIVER_NUM));
+
                 UserToy userToy = userToyDao.getUserToyByUserNoAndToyNo(userNo, toyNo);
+
                 // 设置邮寄所需游戏币数
                 userToy.setDeliverCoin(deliverCoin);
+
                 // 设置几个娃娃免费包邮
                 userToy.setFreeDeliverNum(freeDeliverNum);
+
                 got(userToy);
+
             }
-        },"getUserToyByUserNoAndId", json);
+        },true, "getUserToyByUserNoAndId", json);
     }
 
     /**
@@ -413,7 +420,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                 got(json.toJSONString());
 
             }
-        }, "updateChoiceTypeByIdAndUserNo", json);
+        }, true, "updateChoiceTypeByIdAndUserNo", json);
     }
 
     /**
@@ -461,13 +468,17 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                 List<UserToy> list = userToyDao.getAllUnHandleUserToyByUserNo(userNo);
 
                 if(list == null || list.size() == 0) {
+
                     got(returnList);
+
                     return;
                 }
 
                 for(UserToy userToy : list) {
+
                     // 若当前数量大于兑换数量
                     if(userToy.getUnHandleNum() >= userToy.getDeliverNum()) {
+
                         // 将当前玩具添加入返回list中
                         returnList.add(userToy);
                     }
@@ -475,7 +486,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                 got(returnList);
             }
-        }, "getAllUnHandleUserToyByUserNo", json);
+        }, true, "getAllUnHandleUserToyByUserNo", json);
     }
 
     @Override

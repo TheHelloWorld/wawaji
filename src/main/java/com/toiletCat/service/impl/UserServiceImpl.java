@@ -8,7 +8,6 @@ import com.toiletCat.constants.ToiletCatConfigConstant;
 import com.toiletCat.dao.CatchRecordDao;
 import com.toiletCat.dao.UserDao;
 import com.toiletCat.entity.*;
-import com.toiletCat.entity.MoneyForCoin;
 import com.toiletCat.enums.*;
 import com.toiletCat.service.*;
 import com.toiletCat.utils.*;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @SuppressWarnings("all")
@@ -148,7 +146,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 got(user);
 
             }
-        }, "registerOrLoginUserByMobileNo", json);
+        }, true, "registerOrLoginUserByMobileNo", json);
     }
 
     /**
@@ -259,7 +257,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 got(user);
 
             }
-        }, "registerOrLoginUserByOpenId", json);
+        }, true, "registerOrLoginUserByOpenId", json);
     }
 
     /**
@@ -308,7 +306,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     got(BaseConstant.V_CODE_ERR_MSG);
                 }
             }
-        }, "verifyCode", json);
+        }, true, "verifyCode", json);
     }
 
     /**
@@ -496,7 +494,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
                 }
             }
-        }, "userPlayMachine", json);
+        }, true, "userPlayMachine", json);
     }
 
     /**
@@ -659,7 +657,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     got(BaseConstant.DEDUCTION_COIN_FAIL);
                 }
             }
-        }, "userPlayGame", json);
+        }, true, "userPlayGame", json);
     }
 
     /**
@@ -710,7 +708,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 got(BaseConstant.FAIL);
 
             }
-        }, "userRegisterOrLogin", json);
+        }, true, "userRegisterOrLogin", json);
     }
 
     /**
@@ -743,7 +741,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 got(userDao.getUserByUserNo(userNo));
 
             }
-        }, "getUserByUserNo", json);
+        }, true, "getUserByUserNo", json);
     }
 
     /**
@@ -772,7 +770,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 got(userDao.getUserByOpenId(openId));
 
             }
-        }, "getUserByOpenId", json);
+        }, true, "getUserByOpenId", json);
     }
 
     /**
@@ -795,7 +793,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 userDao.updateUserInfoByIdAndUserNo(userNo, userName, userImg);
 
             }
-        }, "updateUserInfoByIdAndUserNo", json);
+        }, true, "updateUserInfoByIdAndUserNo", json);
     }
 
     /**
@@ -815,7 +813,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 userDao.updateUserInfo(user);
 
             }
-        }, "updateUserInfo", json);
+        }, false, "updateUserInfo", json);
     }
 
     /**
@@ -969,7 +967,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 return;
 
             }
-        }, "getGameCatchResultByUserNoAndGameRoomNo", json);
+        }, true, "getGameCatchResultByUserNoAndGameRoomNo", json);
     }
 
     /**
@@ -1140,7 +1138,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 got(json.toJSONString());
 
             }
-        }, "userInvite", json);
+        }, true, "userInvite", json);
     }
 
     /**

@@ -11,6 +11,7 @@ import java.util.Map;
 public enum CommonCodeMessage implements ICodeMessage {
 
     SYSTEM_ERROR("SYSTEM_ERROR", "系统异常"),
+    PARAM_ERROR("PARAM_ERROR", "参数为空"),
     OTHER_MESSAGE("OTHER_MESSAGE", "其他信息"),
     SUCCESS("SUCCESS", "成功"),
 

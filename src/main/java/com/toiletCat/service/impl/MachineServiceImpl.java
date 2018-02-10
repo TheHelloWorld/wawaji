@@ -40,7 +40,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             public void exec() {
                 machineDao.addMachine(machine);
             }
-        }, "addMachine", machine);
+        }, false, "addMachine", machine);
 
     }
 
@@ -56,7 +56,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             public void exec() {
                 got(machineDao.countAllMachine());
             }
-        }, "countAllMachine", new JSONObject());
+        }, false, "countAllMachine", new JSONObject());
     }
 
     /**
@@ -76,7 +76,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             public void exec() {
                 got(machineDao.getAllMachineByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        }, "getAllMachineByPage", json);
+        }, true, "getAllMachineByPage", json);
     }
 
     /**
@@ -139,7 +139,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
 
                 got(userMachineList);
             }
-        }, "getUserAllMachineByPage", json);
+        }, true, "getUserAllMachineByPage", json);
     }
     /**
      * 根据id,机器编号获得机器信息
@@ -159,7 +159,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             public void exec() {
                 got(machineDao.getMachineByIdAndMachineNo(id, machineNo));
             }
-        }, "getMachineByIdAndMachineNo", json);
+        }, true, "getMachineByIdAndMachineNo", json);
     }
 
     /**
@@ -174,7 +174,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             public void exec() {
                 machineDao.updateMachineByIdAndMachineNo(machine);;
             }
-        }, "updateMachineByIdAndMachineNo", machine);
+        }, false, "updateMachineByIdAndMachineNo", machine);
 
     }
 
@@ -195,7 +195,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             public void exec() {
                 machineDao.deleteMachineByIdAndToyNo(id, machineNo);
             }
-        }, "deleteMachineByIdAndMachineNo", json);
+        }, true, "deleteMachineByIdAndMachineNo", json);
 
     }
 
@@ -215,7 +215,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
             public void exec() {
                 got(machineDao.getCoinByMachineNo(machineNo));
             }
-        }, "getCoinByMachineNo", json);
+        }, true, "getCoinByMachineNo", json);
     }
 
     /**
@@ -250,7 +250,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
                     return;
                 }
             }
-        }, "getMachineInUse", json);
+        }, true, "getMachineInUse", json);
     }
 
     /**
@@ -269,7 +269,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
                 UserMachine userMachine = machineDao.getToyNoAndToyImgByMachineNo(machineNo);
                 got(userMachine);
             }
-        }, "getToyNoAndToyImgByMachineNo", json);
+        }, true, "getToyNoAndToyImgByMachineNo", json);
     }
 
     /**
@@ -309,7 +309,7 @@ public class MachineServiceImpl extends BaseServiceImpl implements MachineServic
                     return;
                 }
             }
-        }, "handleMachineViewer", json);
+        }, true, "handleMachineViewer", json);
     }
 
     @Override

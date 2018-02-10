@@ -37,18 +37,21 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
 
                 // 判断当前用户的地址数量是否超过最大用户地址数量
                 if(userAddressDao.countUserAddressByUserNo(userAddress.getUserNo()) < BaseConstant.MAX_USER_ADDRESS) {
+
                     userAddressDao.addUserAddress(userAddress);
 
                     got(BaseConstant.SUCCESS);
+
                     return;
                 }
+
                 logger.info("{} userNO:{} 当前已有 {} 个地址",BaseConstant.LOG_MSG,  userAddress.getUserNo(),
                         BaseConstant.MAX_USER_ADDRESS);
 
                 got(BaseConstant.OVER_MAX_USER_ADDRESS);
-                return;
+
             }
-        }, "addUserAddressService", userAddress);
+        }, false, "addUserAddressService", userAddress);
 
     }
 
@@ -68,7 +71,7 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
             public void exec() {
                 got(userAddressDao.getUserAddressByUserNo(userNo));
             }
-        }, "getUserAddressByUserNo", json);
+        }, true, "getUserAddressByUserNo", json);
     }
 
     /**
@@ -87,7 +90,7 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
             public void exec() {
                 got(userAddressDao.countUserAddressByUserNo(userNo));
             }
-        }, "countUserAddressByUserNo", json);
+        }, true, "countUserAddressByUserNo", json);
     }
 
     /**
@@ -108,7 +111,7 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
             public void exec() {
                 got(userAddressDao.getUserAddressByIdAndUserNo(id, userNo));
             }
-        }, "getUserAddressByIdAndUserNo", json);
+        }, true, "getUserAddressByIdAndUserNo", json);
 
     }
 
@@ -124,7 +127,7 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
             public void exec() {
                 userAddressDao.updateUserAddressByIdAndUserNo(userAddress);
             }
-        }, "updateUserAddressByIdAndUserNo", userAddress);
+        }, false, "updateUserAddressByIdAndUserNo", userAddress);
 
     }
 
@@ -145,7 +148,7 @@ public class UserAddressServiceImpl extends BaseServiceImpl implements UserAddre
             public void exec() {
                 userAddressDao.deleteUserAddressByIdAndUserNo(id, userNo);
             }
-        }, "deleteUserAddressByIdAndUserNo", json);
+        }, true, "deleteUserAddressByIdAndUserNo", json);
     }
 
     @Override

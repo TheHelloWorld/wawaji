@@ -1,7 +1,9 @@
 package com.toiletCat.bean;
 
+import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.enums.CommonCodeMessage;
 import com.toiletCat.interfaces.ICodeMessage;
+import org.slf4j.Logger;
 
 public abstract class Callback<T> {
 
@@ -35,7 +37,33 @@ public abstract class Callback<T> {
         result.setValue(obj);
     }
 
+    /**
+     * 检查参数是否为空
+     * @param checkFlag 是否做检查标志位
+     * @param json 参数
+     * @param logger 日志
+     * @param method 方法
+     * @return
+     */
+    public Boolean checkParam(Boolean checkFlag, JSONObject json, Logger logger, String method) {
 
+        if(!checkFlag) {
+
+            return true;
+        }
+
+        for(String key : json.keySet()) {
+
+            if(json.get(key) == null) {
+
+                logger.error(method + "param " + key + "is null");
+
+                return false;
+            }
+        }
+
+        return true;
+    }
     // BEAN METHODS
 
 

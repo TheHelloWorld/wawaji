@@ -35,7 +35,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
             public void exec() {
                 deliverDao.addDeliver(deliver);
             }
-        }, "addDeliver", deliver);
+        }, false, "addDeliver", deliver);
     }
 
     /**
@@ -54,7 +54,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
             public void exec() {
                 got(deliverDao.countDeliverByUserNo(userNo));
             }
-        },"countDeliverByUserNo", json);
+        },true, "countDeliverByUserNo", json);
     }
 
     /**
@@ -69,7 +69,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
             public void exec() {
                 got(deliverDao.countAllDeliver());
             }
-        },"countAllDeliver", new JSONObject());
+        },false, "countAllDeliver", new JSONObject());
 
     }
 
@@ -92,7 +92,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
             public void exec() {
                 got(deliverDao.getDeliverByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        },"getDeliverByUserNo", json);
+        },true, "getDeliverByUserNo", json);
 
     }
 
@@ -113,7 +113,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
             public void exec() {
                 got(deliverDao.getAllDeliverByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        },"getAllDeliverByPage", json);
+        },true, "getAllDeliverByPage", json);
     }
 
     /**
@@ -134,7 +134,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
             public void exec() {
                 got(deliverDao.getDeliverByIdAndUserNo(id, userNo));
             }
-        },"getDeliverByIdAndUserNo", json);
+        },true, "getDeliverByIdAndUserNo", json);
     }
 
     /**
@@ -149,7 +149,7 @@ public class DeliverServiceImpl extends BaseServiceImpl implements DeliverServic
             public void exec() {
                 deliverDao.updateDeliverMsgByIdAndUserNo(deliver);
             }
-        }, "updateDeliverMsgByIdAndUserNo", deliver);
+        }, false, "updateDeliverMsgByIdAndUserNo", deliver);
     }
 
     @Override

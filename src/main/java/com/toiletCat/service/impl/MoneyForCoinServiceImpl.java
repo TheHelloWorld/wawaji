@@ -40,10 +40,13 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
         return exec(new Callback() {
             @Override
             public void exec() {
+
                 moneyForCoinDao.addMoneyForCoin(moneyForCoin);
+
                 BaseConstant.moneyForCoinMap.put(Double.valueOf(moneyForCoin.getMoney()), moneyForCoin);
+
             }
-        }, "addMoneyForCoin", moneyForCoin);
+        }, false, "addMoneyForCoin", moneyForCoin);
     }
 
     /**
@@ -55,9 +58,10 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
         return exec(new Callback() {
             @Override
             public void exec() {
+
                 got(moneyForCoinDao.getAllMoneyForCoin());
             }
-        }, "getAllMoneyForCoin", new JSONObject());
+        }, false, "getAllMoneyForCoin", new JSONObject());
     }
 
     /**
@@ -75,7 +79,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
             public void exec() {
                 got(moneyForCoinDao.getMoneyForCoinById(id));
             }
-        }, "getMoneyForCoinById", json);
+        }, true, "getMoneyForCoinById", json);
     }
 
     /**
@@ -94,7 +98,7 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
                 refreshMap();
 
             }
-        }, "updateMoneyForCoin", moneyForCoin);
+        }, false, "updateMoneyForCoin", moneyForCoin);
     }
 
     /**
@@ -133,13 +137,11 @@ public class MoneyForCoinServiceImpl extends BaseServiceImpl implements MoneyFor
 
                     list.add(entry.getValue());
                 }
-
-
-
+                
                 got(list);
 
             }
-        }, "getAllCanSeeMoneyForCoin", json);
+        }, true, "getAllCanSeeMoneyForCoin", json);
     }
 
     /**

@@ -36,7 +36,7 @@ public class UserSpendRecordServiceImpl extends BaseServiceImpl implements UserS
             public void exec() {
                 userSpendRecordDao.addUserSpendRecord(userSpendRecord);
             }
-        }, "addUserSpendRecord", userSpendRecord);
+        }, false, "addUserSpendRecord", userSpendRecord);
     }
 
     /**
@@ -55,7 +55,7 @@ public class UserSpendRecordServiceImpl extends BaseServiceImpl implements UserS
             public void exec() {
                 got(userSpendRecordDao.countUserSpendRecordByUserNo(userNo));
             }
-        }, "countUserSpendRecordByUserNo", json);
+        }, true, "countUserSpendRecordByUserNo", json);
 
     }
 
@@ -86,7 +86,7 @@ public class UserSpendRecordServiceImpl extends BaseServiceImpl implements UserS
 
                 got(list);
             }
-        }, "getUserSpendRecordByUserNo", json);
+        }, true, "getUserSpendRecordByUserNo", json);
     }
 
     /**
@@ -105,7 +105,7 @@ public class UserSpendRecordServiceImpl extends BaseServiceImpl implements UserS
             public void exec() {
                 userSpendRecordDao.updateTradeStatusByOrderNo(orderNo, tradeStatus);
             }
-        }, "updateTradeStatusByOrderNo", json);
+        }, true, "updateTradeStatusByOrderNo", json);
     }
 
     @Override

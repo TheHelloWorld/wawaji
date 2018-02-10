@@ -39,7 +39,7 @@ public class CatchRecordServiceImpl extends BaseServiceImpl implements CatchReco
             public void exec() {
                 got(catchRecordDao.getLatelyCatchSuccessRecordByToyNo(toyNo));
             }
-        },"getLatelyCatchSuccessRecordByToyNo", json);
+        },true, "getLatelyCatchSuccessRecordByToyNo", json);
     }
 
     /**
@@ -57,7 +57,7 @@ public class CatchRecordServiceImpl extends BaseServiceImpl implements CatchReco
             public void exec() {
                 got(catchRecordDao.countSuccessCatchRecordByUserNo(userNo));
             }
-        },"countSuccessCatchRecordByUserNo", json);
+        },true, "countSuccessCatchRecordByUserNo", json);
     }
 
     /**
@@ -78,7 +78,7 @@ public class CatchRecordServiceImpl extends BaseServiceImpl implements CatchReco
             public void exec() {
                 got(catchRecordDao.getCatchRecordListByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        },"getCatchRecordListByUserNo", json);
+        },true, "getCatchRecordListByUserNo", json);
     }
 
     /**
@@ -98,7 +98,7 @@ public class CatchRecordServiceImpl extends BaseServiceImpl implements CatchReco
             public void exec() {
                 got(catchRecordDao.getCatchRecordByUserNo(id, userNo));
             }
-        },"getCatchRecordByUserNo", json);
+        },true, "getCatchRecordByUserNo", json);
     }
 
     /**
@@ -119,7 +119,7 @@ public class CatchRecordServiceImpl extends BaseServiceImpl implements CatchReco
             public void exec() {
                 catchRecordDao.updateCatchStatusByIdAndUserNo(catchStatus, id, userNo);
             }
-        },"updateCatchStatusByIdAndUserNo", json);
+        },true, "updateCatchStatusByIdAndUserNo", json);
     }
 
     /**
@@ -138,7 +138,7 @@ public class CatchRecordServiceImpl extends BaseServiceImpl implements CatchReco
             public void exec() {
                 catchRecordDao.updateCatchResultByCatchId(catchResult, catchId);
             }
-        },"updateCatchResultByCatchId", json);
+        },true, "updateCatchResultByCatchId", json);
     }
 
     @Override

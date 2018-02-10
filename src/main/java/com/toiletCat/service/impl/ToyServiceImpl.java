@@ -35,7 +35,7 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
             public void exec() {
                 toyDao.addToy(toy);
             }
-        }, "addToy", toy);
+        }, false, "addToy", toy);
     }
 
     /**
@@ -50,7 +50,7 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
             public void exec() {
                 got(toyDao.countAllToy());
             }
-        },"countAllToy", new JSONObject());
+        },false, "countAllToy", new JSONObject());
 
     }
 
@@ -71,7 +71,7 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
             public void exec() {
                 got(toyDao.getAllToyByPage(startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        }, "getAllToyByPage", json);
+        }, true, "getAllToyByPage", json);
     }
 
     /**
@@ -92,7 +92,7 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
             public void exec() {
                 got(toyDao.getToyByIdAndToyNo(id, toyNo));
             }
-        }, "getToyByIdAndToyNo", json);
+        }, true, "getToyByIdAndToyNo", json);
     }
 
     /**
@@ -106,7 +106,7 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
             public void exec() {
                 toyDao.updateToyByIdAndToyNo(toy);
             }
-        }, "updateToyByIdAndToyNo", toy);
+        }, false, "updateToyByIdAndToyNo", toy);
     }
 
     /**
@@ -126,7 +126,7 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
             public void exec() {
                 toyDao.deleteToyByIdAndToyNo(id, toyNo);
             }
-        }, "deleteToyByIdAndToyNo", json);
+        }, true, "deleteToyByIdAndToyNo", json);
     }
 
     /**
@@ -140,7 +140,7 @@ public class ToyServiceImpl extends BaseServiceImpl implements ToyService {
             public void exec() {
                 got(toyDao.getAllAvailableToy());
             }
-        }, "getAllAvailableToy", new JSONObject());
+        }, false, "getAllAvailableToy", new JSONObject());
     }
 
     @Override

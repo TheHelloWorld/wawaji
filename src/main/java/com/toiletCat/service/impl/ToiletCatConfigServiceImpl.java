@@ -39,8 +39,9 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
 
                 // 添加对应key value
                 ToiletCatConfigConstant.configMap.put(toiletCatConfig.getConfigKey(), toiletCatConfig.getConfigValue());
+
             }
-        }, "addToiletCatConfig", toiletCatConfig);
+        }, false, "addToiletCatConfig", toiletCatConfig);
     }
 
     /**
@@ -54,7 +55,7 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
             public void exec() {
                 got(toiletCatConfigDao.countAllConfig());
             }
-        }, "countAllConfig", new JSONObject());
+        }, false, "countAllConfig", new JSONObject());
     }
 
     /**
@@ -68,7 +69,7 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
             public void exec() {
                 got(toiletCatConfigDao.getAllConfig());
             }
-        }, "getAllConfig", new JSONObject());
+        }, false, "getAllConfig", new JSONObject());
     }
 
     /**
@@ -86,7 +87,7 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
             public void exec() {
                 got(toiletCatConfigDao.getToiletCatConfigById(id));
             }
-        }, "getAllConfig", json);
+        }, true, "getAllConfig", json);
     }
 
     /**
@@ -98,12 +99,13 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
         return exec(new Callback() {
             @Override
             public void exec() {
+
                 toiletCatConfigDao.updateToiletCatConfig(toiletCatConfig);
 
                 refreshConfigMap();
 
             }
-        }, "updateToiletCatConfig", toiletCatConfig);
+        }, false, "updateToiletCatConfig", toiletCatConfig);
     }
 
     /**
@@ -120,7 +122,7 @@ public class ToiletCatConfigServiceImpl extends BaseServiceImpl implements Toile
                 refreshConfigMap();
 
             }
-        }, "deleteToiletCatConfig", toiletCatConfig);
+        }, false, "deleteToiletCatConfig", toiletCatConfig);
     }
 
     /**

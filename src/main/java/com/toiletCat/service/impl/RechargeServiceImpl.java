@@ -8,6 +8,7 @@ import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.constants.RedisConstant;
 import com.toiletCat.dao.UserDao;
 import com.toiletCat.entity.MoneyForCoin;
+import com.toiletCat.entity.User;
 import com.toiletCat.entity.UserRechargeRecord;
 import com.toiletCat.entity.UserSpendRecord;
 import com.toiletCat.enums.TradeStatus;
@@ -17,6 +18,7 @@ import com.toiletCat.service.RechargeService;
 import com.toiletCat.service.UserRechargeRecordService;
 import com.toiletCat.service.UserSpendRecordService;
 import com.toiletCat.utils.*;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,18 +52,28 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
      * @param userNo 用户编号
      * @param amount 金额
      * @param rechargeType 充值类型
+     * @param ip 用户ip
      * @return
      */
     @Override
-    public CommonResult<String> userRecharge(final String userNo, final String amount, final String rechargeType) {
+    public CommonResult<String> userRecharge(final String userNo, final String amount, final String rechargeType,
+                                             final String ip) {
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
         json.put("amount", amount);
         json.put("rechargeType", rechargeType);
+        json.put("ip", ip);
 
         return exec(new Callback() {
             @Override
             public void exec() {
+
+                if(StringUtils.isBlank(userNo) || StringUtils.isBlank(amount) ||
+                        StringUtils.isBlank(rechargeType) || StringUtils.isBlank(ip)) {
+
+                    logger.info("userRecharge u");
+
+                }
 
                 logger.info("userRecharge userNo:" + userNo + ", amount:" + amount);
 
@@ -93,6 +105,31 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                         return;
                     }
+                }
+
+                User user = userDao.getUserByUserNo(userNo);
+
+                if(user == null) {
+
+                    logger.warn("userRecharge user not exists userNo:" + userNo);
+
+                    setOtherMsg();
+
+                    got("请登录");
+
+                    return;
+                }
+
+                // 判断openId是否为空
+                if(StringUtils.isBlank(user.getOpenId())) {
+
+                    logger.warn("userRecharge user openId is null:" + userNo);
+
+                    setOtherMsg();
+
+                    got("请登录");
+
+                    return;
                 }
 
                 Integer tradeDate = DateUtil.getDate();
@@ -173,10 +210,10 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 }
 
                 // 获得请求url并返回
-                got(RechargeUtil.getRequestUrl(orderNo, String.valueOf(amount)));
+                got(RechargeUtil.getWxPayRequestInfo(orderNo, String.valueOf(amount), user.getOpenId(), ""));
 
             }
-        }, "userRecharge", json);
+        }, true, "userRecharge", json);
     }
 
     /**
@@ -297,7 +334,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 }
 
             }
-        }, "getRechargeResultByParam", json);
+        }, true, "getRechargeResultByParam", json);
 
     }
 
@@ -375,7 +412,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 got(returnJSON.toJSONString());
 
             }
-        }, "getRechargeResultByOrderNo", json);
+        }, true, "getRechargeResultByOrderNo", json);
     }
 
     /**
@@ -417,7 +454,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 }
 
             }
-        }, "getInitRechargeResultByOrderInfo", json);
+        }, true, "getInitRechargeResultByOrderInfo", json);
     }
 
     /**

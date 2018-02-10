@@ -23,10 +23,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.security.MessageDigest;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.UUID;
+import java.util.*;
 
 public class WeChatUtil {
 
@@ -336,7 +333,20 @@ public class WeChatUtil {
     }
 
     public static void main(String[] args) {
+        JSONObject jsonObject = new JSONObject();
 
+        String str = null;
+
+        jsonObject.put("123","123");
+        jsonObject.put("321", str);
+
+        for(String key : jsonObject.keySet()) {
+
+            if(jsonObject.get(key) == null) {
+                System.out.println(key + ":" + jsonObject.get(key));
+            }
+
+        }
     }
 
     /**

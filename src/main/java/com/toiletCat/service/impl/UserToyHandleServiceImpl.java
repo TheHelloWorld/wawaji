@@ -34,7 +34,7 @@ public class UserToyHandleServiceImpl extends BaseServiceImpl implements UserToy
             public void exec() {
                 userToyHandleDao.addUserToyHandle(userToyHandle);
             }
-        }, "addUserToyHandle", userToyHandle);
+        }, false, "addUserToyHandle", userToyHandle);
     }
 
     /**
@@ -52,7 +52,7 @@ public class UserToyHandleServiceImpl extends BaseServiceImpl implements UserToy
             public void exec() {
                 got(userToyHandleDao.countUserToyHandleByUserNo(userNo));
             }
-        },"countUserToyHandleByUserNo", json);
+        },true, "countUserToyHandleByUserNo", json);
     }
 
     /**
@@ -73,7 +73,7 @@ public class UserToyHandleServiceImpl extends BaseServiceImpl implements UserToy
             public void exec() {
                 got(userToyHandleDao.getUserToyHandleListByUserNo(userNo, startPage, BaseConstant.DEFAULT_PAGE_SIZE));
             }
-        },"getUserToyHandleListByUserNo", json);
+        },true, "getUserToyHandleListByUserNo", json);
     }
 
     /**
@@ -93,7 +93,7 @@ public class UserToyHandleServiceImpl extends BaseServiceImpl implements UserToy
             public void exec() {
                 got(userToyHandleDao.getUserToyHandleByUserNoAndId(userNo, id));
             }
-        },"getUserToyByUserNoAndId", json);
+        },true, "getUserToyByUserNoAndId", json);
     }
 
     @Override

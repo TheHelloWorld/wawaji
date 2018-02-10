@@ -4,6 +4,7 @@ import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.RechargeResult;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.service.RechargeService;
+import com.toiletCat.utils.CommonHandle;
 import com.toiletCat.utils.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RequestMapping("/toiletCat/api/recharge")
 @Controller
@@ -31,9 +34,11 @@ public class RechargeController {
      */
     @RequestMapping(value = "/userRecharge", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String userRecharge(String userNo, String amount, String rechargeType) {
+    public String userRecharge(HttpServletRequest request,String userNo, String amount, String rechargeType) {
 
-        CommonResult<String> result = rechargeService.userRecharge(userNo, amount, rechargeType);
+        String ip = CommonHandle.getIpAddr(request);
+
+        CommonResult<String> result = rechargeService.userRecharge(userNo, amount, rechargeType, ip);
 
         return JSONUtil.getReturnBeanString(result);
     }

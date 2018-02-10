@@ -50,7 +50,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 gameRoomDao.addGameRoom(gameRoom);
             }
-        }, "addGameRoom", gameRoom);
+        }, false, "addGameRoom", gameRoom);
     }
 
     /**
@@ -65,7 +65,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 got(gameRoomDao.countAllGameRoom());
             }
-        }, "countAllGameRoom", new JSONObject());
+        }, false, "countAllGameRoom", new JSONObject());
     }
 
     /**
@@ -114,7 +114,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
                 got(list);
             }
-        }, "getGameRoomListByPage", json);
+        }, true, "getGameRoomListByPage", json);
     }
 
     /**
@@ -129,7 +129,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 got(gameRoomDao.countAllUserSeeGamRoom());
             }
-        }, "countAllUserSeeGamRoom", new JSONObject());
+        }, false, "countAllUserSeeGamRoom", new JSONObject());
     }
 
     /**
@@ -176,7 +176,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
                 got(userSeeGameRoomList);
             }
-        }, "getUserSeeGameRoomListByPage", json);
+        }, true, "getUserSeeGameRoomListByPage", json);
     }
 
 
@@ -197,7 +197,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
                 got(gameRoomDao.getUserSeeGameRoomByGameRoomNo(gameRoomNo));
             }
-        }, "getUserSeeGameRoomByGameRoomNo", json);
+        }, true, "getUserSeeGameRoomByGameRoomNo", json);
     }
 
     /**
@@ -237,7 +237,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
                 got(returnJSON.toJSONString());
             }
-        }, "getUserSeeGameRoomByGameRoomNo", json);
+        }, true, "getUserSeeGameRoomByGameRoomNo", json);
     }
 
     /**
@@ -255,7 +255,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 got(gameRoomDao.getCoinByGameRoomNo(gameRoomNo));
             }
-        }, "getCoinByGameRoomNo", json);
+        }, true, "getCoinByGameRoomNo", json);
     }
 
     /**
@@ -276,7 +276,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
                 got(gameRoomDao.getGameRoomByGameRoomNoAndId(gameRoomNo, id));
             }
-        }, "getGameRoomByGameRoomNoAndId", json);
+        }, true, "getGameRoomByGameRoomNoAndId", json);
     }
 
     /**
@@ -291,7 +291,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 gameRoomDao.updateGameRoomByGameRoomNoAndId(gameRoom);
             }
-        }, "updateGameRoomByGameRoomNoAndId", gameRoom);
+        }, true, "updateGameRoomByGameRoomNoAndId", gameRoom);
     }
 
     /**
@@ -308,7 +308,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 gameRoomDao.addRoomLuckyNumByGameRoomNo(gameRoomNo);
             }
-        }, "addRoomLuckyNumByGameRoomNo", json);
+        }, true, "addRoomLuckyNumByGameRoomNo", json);
     }
 
     /**
@@ -326,7 +326,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
 
                 gameRoomDao.resetRoomLuckyNumByGameRoomNo(gameRoomNo);
             }
-        }, "resetRoomLuckyNumByGameRoomNo", json);
+        }, true, "resetRoomLuckyNumByGameRoomNo", json);
     }
 
     /**
@@ -344,7 +344,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 got(gameRoomDao.getLuckyNumByGameRoomNo(gameRoomNo));
             }
-        }, "getLuckyNumByGameRoomNo", json);
+        }, true, "getLuckyNumByGameRoomNo", json);
     }
 
     /**
@@ -362,7 +362,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
             public void exec() {
                 got(gameRoomDao.getToyNameByGameRoomNo(gameRoomNo));
             }
-        }, "getToyNameByGameRoomNo", json);
+        }, true, "getToyNameByGameRoomNo", json);
     }
 
     /**
@@ -402,7 +402,7 @@ public class GameRoomServiceImpl extends BaseServiceImpl implements GameRoomServ
                     return;
                 }
             }
-        }, "handleGameRoomViewer", json);
+        }, true, "handleGameRoomViewer", json);
     }
 
     @Override
