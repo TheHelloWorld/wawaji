@@ -7,7 +7,7 @@ import com.toiletCat.entity.User;
 import com.toiletCat.service.UserService;
 import com.toiletCat.utils.CommonHandle;
 import com.toiletCat.utils.JSONUtil;
-import com.toiletCat.utils.WxUtil;
+import com.toiletCat.utils.WeChatUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +55,7 @@ public class UserController {
             if(StringUtils.isBlank(userNo) || "null".equals(userNo)) {
 
                 // 通过这个code获取access_token,openId
-                result = WxUtil.getUserInfoAccessToken(code);
+                result = WeChatUtil.getUserInfoAccessToken(code);
 
                 openId = result.get("openid");
 
@@ -67,7 +67,7 @@ public class UserController {
                 if(user == null) {
 
                     // 使用access_token获取用户信息
-                    WxUserInfo userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);
+                    WxUserInfo userInfo = WeChatUtil.getUserInfo(result.get("access_token"), openId);
 
                     // 注册用户
                     CommonResult<User> userResult = userService.registerOrLoginUserByWxUserInfo(userInfo);
@@ -94,12 +94,12 @@ public class UserController {
                 logger.warn("autoLogin toiletCat warn: 没有对应的用户编号 userNo:{}", userNo);
 
                 // 通过这个code获取access_token,openId
-                result = WxUtil.getUserInfoAccessToken(code);
+                result = WeChatUtil.getUserInfoAccessToken(code);
 
                 openId = result.get("openid");
 
                 // 使用access_token获取用户信息
-                WxUserInfo userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);
+                WxUserInfo userInfo = WeChatUtil.getUserInfo(result.get("access_token"), openId);
 
                 // 注册用户
                 CommonResult<User> userResult = userService.registerOrLoginUserByWxUserInfo(userInfo);
@@ -150,12 +150,12 @@ public class UserController {
     private User setUserWxUserInfo(String code, User user) {
 
         // 通过这个code获取access_token,openId
-        Map<String, String> result = WxUtil.getUserInfoAccessToken(code);
+        Map<String, String> result = WeChatUtil.getUserInfoAccessToken(code);
 
         String openId = result.get("openid");
 
         // 使用access_token获取用户信息
-        WxUserInfo userInfo = WxUtil.getUserInfo(result.get("access_token"), openId);
+        WxUserInfo userInfo = WeChatUtil.getUserInfo(result.get("access_token"), openId);
 
         user.setUserImg(userInfo.getHeadImgUrl());
 

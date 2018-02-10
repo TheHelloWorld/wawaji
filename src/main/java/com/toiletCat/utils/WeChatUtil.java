@@ -14,25 +14,26 @@ import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WxUtil {
+public class WeChatUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(WxUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(WeChatUtil.class);
 
     // 凭证获取（GET）——access_token
     private final static String ACCESS_TOKEN_URL =
-            "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
+            "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
 
     // 微信JSSDK的ticket请求URL地址——jsapi_ticket
     private final static String JSAPI_TICKET_URL =
-            "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi";
-
+            "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=%s&type=jsapi";
+    // 微信获取code url
     private final static String REQUEST_USER_CODE_URL =
             "https://open.weixin.qq.com/connect/oauth2/authorize?" +
                     "appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=toiletCat#wechat_redirect";
-
+    // 微信获取用户open_id url
     private final static String REQUEST_USER_OPEN_ID_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?" +
             "appid=%s&secret=%s&code=%s&grant_type=authorization_code";
 
+    // 微信获取用户信息url
     private final static String REQUEST_USER_INFO_URL = "https://api.weixin.qq.com/sns/userinfo?" +
             "access_token=%s&openid=%s&lang=zh_CN";
     /**
@@ -44,7 +45,6 @@ public class WxUtil {
      */
     public static String getAccessToken(String app_id, String app_secret) {
 
-
         try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
             String accessToken = redisUtil.get(RedisConstant.WX_SHARE_ACCESS_TOKEN);
@@ -54,25 +54,26 @@ public class WxUtil {
                 return accessToken;
             }
 
-            String requestUrl = ACCESS_TOKEN_URL.replace("APPID", app_id).replace("APPSECRET", app_secret);
+            String requestUrl = String.format(ACCESS_TOKEN_URL, app_id, app_secret);
 
-            logger.info("requestUrl:" + requestUrl);
+            logger.info("getAccessToken requestUrl:" + requestUrl);
 
             // 发起GET请求获取凭证
             JsonNode rootNode = HttpClientUtil.wxHttpsRequest(requestUrl, BaseConstant.HTTP_GET, null);
 
-            logger.info("rootNode:" + rootNode);
+            logger.info("getAccessToken rootNode:" + rootNode);
 
-            if (null != rootNode.get("access_token")) {
+            if (rootNode.get("access_token") != null) {
 
                 // 缓存118分钟
-                redisUtil.set(RedisConstant.WX_EXPIRE_TIME, RedisConstant.WX_SHARE_ACCESS_TOKEN, rootNode.get("access_token").textValue());
+                redisUtil.set(RedisConstant.WX_EXPIRE_TIME, RedisConstant.WX_SHARE_ACCESS_TOKEN,
+                        rootNode.get("access_token").textValue());
 
                 return rootNode.get("access_token").textValue();
-
             }
 
         } catch(Exception e) {
+
             logger.error("getAccessToken redis error:" + e, e);
         }
         return null;
@@ -103,7 +104,7 @@ public class WxUtil {
                 return jsApiTicket;
             }
 
-            String requestUrl = JSAPI_TICKET_URL.replace("ACCESS_TOKEN", access_token);
+            String requestUrl = String.format(JSAPI_TICKET_URL, access_token);
 
             // 发起GET请求获取凭证
             JsonNode rootNode = HttpClientUtil.wxHttpsRequest(requestUrl, BaseConstant.HTTP_GET, null);
@@ -127,48 +128,26 @@ public class WxUtil {
         return null;
     }
 
-    private static Integer toInt(String str) {
+    /**
+     * 生成 MD5
+     *
+     * @param data 待处理数据
+     * @return MD5结果
+     */
+    private static String WeChatMD5(String data) throws Exception {
 
-        if (str == null || str.equals("")) {
+        java.security.MessageDigest md = MessageDigest.getInstance("MD5");
 
-            return null;
-        }
-        return Integer.valueOf(str);
-    }
+        byte[] array = md.digest(data.getBytes("UTF-8"));
 
-    public static String SHA1(String decript) {
+        StringBuilder sb = new StringBuilder();
 
-        try {
+        for (byte item : array) {
 
-            MessageDigest digest = MessageDigest.getInstance("SHA-1");
-
-            digest.update(decript.getBytes());
-
-            byte messageDigest[] = digest.digest();
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-
-            // 字节数组转换为 十六进制 数
-            for(byte msg : messageDigest) {
-
-                String shaHex = Integer.toHexString(msg & 0xFF);
-
-                if (shaHex.length() < 2) {
-
-                    hexString.append(0);
-                }
-
-                hexString.append(shaHex);
-            }
-
-            return hexString.toString();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
+            sb.append(Integer.toHexString((item & 0xFF) | 0x100).substring(1, 3));
         }
 
-        return "";
+        return sb.toString().toUpperCase();
     }
 
     /**
@@ -186,9 +165,9 @@ public class WxUtil {
 
             PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
-            String appId = propertiesUtil.getProperty("wei_xin_app_id");
+            String appId = propertiesUtil.getProperty("we_chat_app_id");
 
-            String secret = propertiesUtil.getProperty("wei_xin_app_secret");
+            String secret = propertiesUtil.getProperty("we_chat_app_secret");
 
             String url = String.format(REQUEST_USER_OPEN_ID_URL, appId, secret, code);
 
@@ -291,9 +270,9 @@ public class WxUtil {
 
         PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
-        String appId = propertiesUtil.getProperty("wei_xin_app_id");
+        String appId = propertiesUtil.getProperty("we_chat_app_id");
 
-        String requestUrl = propertiesUtil.getProperty("wei_xin_redirect_uri");
+        String requestUrl = propertiesUtil.getProperty("we_chat_redirect_uri");
 
         String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appId + "&redirect_uri="
                 + requestUrl + "&response_type=code&scope=snsapi_userinfo&state=toiletCat#wechat_redirect";

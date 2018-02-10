@@ -1,11 +1,9 @@
 package com.toiletCat.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.toiletCat.constants.BaseConstant;
-import com.toiletCat.utils.CommonHandle;
 import com.toiletCat.utils.PropertiesUtil;
 import com.toiletCat.utils.UUIDUtil;
-import com.toiletCat.utils.WxUtil;
+import com.toiletCat.utils.WeChatUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.security.MessageDigest;
 import java.util.Formatter;
-import java.util.HashMap;
-import java.util.Map;
 
 @RequestMapping("/toiletCat/api/weChat")
 @Controller
@@ -40,11 +34,11 @@ public class WeChatController {
 
         PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
-        String appId = propertiesUtil.getProperty("wei_xin_app_id");
+        String appId = propertiesUtil.getProperty("we_chat_app_id");
 
-        String appSecret = propertiesUtil.getProperty("wei_xin_app_secret");
+        String appSecret = propertiesUtil.getProperty("we_chat_app_secret");
 
-        String accessToken = WxUtil.getAccessToken(appId, appSecret);
+        String accessToken = WeChatUtil.getAccessToken(appId, appSecret);
 
         if(StringUtils.isBlank(accessToken)) {
 
@@ -55,7 +49,7 @@ public class WeChatController {
 
         logger.info("getWxShareInfo get access_token:" + accessToken);
 
-        jsApiTicket = WxUtil.getJsApiTicket(accessToken);
+        jsApiTicket = WeChatUtil.getJsApiTicket(accessToken);
 
         return wxSign(jsApiTicket, url);
     }
@@ -103,7 +97,7 @@ public class WeChatController {
 
         json.put("url", url);
 
-        json.put("appId",propertiesUtil.getProperty("wei_xin_app_id"));
+        json.put("appId",propertiesUtil.getProperty("we_chat_app_id"));
 
         json.put("jsapi_ticket", jsApiTicket);
 
