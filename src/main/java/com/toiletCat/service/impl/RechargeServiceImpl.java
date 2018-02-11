@@ -300,6 +300,81 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
             @Override
             public void exec() {
 
+                // 如果金额为空
+                if(StringUtils.isBlank(amount)) {
+
+                    logger.info("updateRechargeResult resultCode: " + resultCode);
+
+                    // 根据用户编号和订单号获得我方记录交易金额
+                    CommonResult<BigDecimal> orderAmount = userRechargeRecordService.getAmountByUserNoAndOrderNo(userNo,
+                            orderNo);
+
+                    DecimalFormat df = new DecimalFormat("######0.00");
+
+                    MoneyForCoin coin = moneyForCoinService.getMoneyForCoinByMoney(df.format(orderAmount.getValue().doubleValue()));
+
+                    // 修改充值记录交易状态
+                    CommonResult updateRechargeResult = userRechargeRecordService.
+                            updateTradeStatusByOrderNo(orderNo, TradeStatus.FAIL.getStatus());
+
+                    if(!updateRechargeResult.success()) {
+
+                        logger.warn("updateRechargeResult recharge updateRechargeResult error orderNo:"
+                                + orderNo);
+
+                        setOtherMsg();
+
+                        got(RechargeConstant.FAIL_RETURN_MSG);
+
+                        return;
+                    }
+
+                    Date tradeTime = new Date();
+
+                    // 添加用户消费记录
+                    // 用户消费记录
+                    UserSpendRecord userSpendRecord = new UserSpendRecord();
+
+                    //  消费日期
+                    userSpendRecord.setTradeDate(DateUtil.getDate());
+
+                    // 订单号
+                    userSpendRecord.setOrderNo(orderNo);
+
+                    // 消费时间
+                    userSpendRecord.setTradeTime(tradeTime);
+
+                    // 消费类型(充值)
+                    userSpendRecord.setTradeType(TradeType.RECHARGE.getType());
+
+                    Integer rechargeCoin = getCoinByMoneyForCoin(userNo, coin);
+
+                    // 消费游戏币
+                    userSpendRecord.setCoin(rechargeCoin);
+
+                    // 用户编号
+                    userSpendRecord.setUserNo(userNo);
+
+                    // 消费状态
+                    userSpendRecord.setTradeStatus(TradeStatus.FAIL.getStatus());
+
+                    CommonResult addSpendResult = userSpendRecordService.addUserSpendRecord(userSpendRecord);
+
+                    if(!addSpendResult.success()) {
+
+                        logger.warn("updateRechargeResult spend addUserSpendRecord error:" + userSpendRecord);
+
+                        setOtherMsg();
+
+                        got(RechargeConstant.FAIL_RETURN_MSG);
+
+                    }
+
+                    got(TradeStatus.FAIL.getStatus());
+
+                    return;
+                }
+
                 Double money;
                 // 转换钱
                 try {
@@ -360,19 +435,6 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
-                // 判断返回金额是否正确
-                if(orderAmount.getValue().doubleValue() != money) {
-
-                    logger.warn("updateRechargeResult return money not match our amount:" + orderAmount.getValue()
-                            + " param money:"+ money);
-
-                    setOtherMsg();
-
-                    got("交易金额错误");
-
-                    return;
-                }
-
                 TradeStatus tradeStatus = TradeStatus.SUCCESS;
 
                 // 判断结果是否成功
@@ -382,6 +444,20 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 }
 
                 if(tradeStatus == TradeStatus.SUCCESS) {
+
+                    // 判断返回金额是否正确
+                    if(orderAmount.getValue().doubleValue() != money) {
+
+                        logger.warn("updateRechargeResult return money not match our amount:" + orderAmount.getValue()
+                                + " param money:"+ money);
+
+                        setOtherMsg();
+
+                        got("交易金额错误");
+
+                        return;
+                    }
+
                     // 添加用户游戏币
                     userDao.updateUserCoinByUserNo(coin.getCoin(), userNo);
 
@@ -452,7 +528,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 got(tradeStatus.getStatus());
 
             }
-        }, true, "updateRechargeResult", json);
+        }, false, "updateRechargeResult", json);
     }
 
     /**
