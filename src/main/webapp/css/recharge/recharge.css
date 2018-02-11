@@ -10,6 +10,16 @@
     border-bottom: 0.0625rem solid saddlebrown;
 }
 
+.recharge-button {
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 5%;
+    font-size: 3.25rem;
+    background: yellowgreen;
+    border-radius: 0.9375rem;
+    opacity: 1;
+}
+
 .rechargeReturn {
     height: 60%;
     width: 60%;

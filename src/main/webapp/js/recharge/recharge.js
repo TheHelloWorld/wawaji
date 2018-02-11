@@ -102,8 +102,8 @@ function recharge() {
                 str += "	</div>";
             }
 
-            str += "<div onclick='rechargeThis()'>";
-            str += "充值";
+            str += "<div class='recharge-button' onclick='rechargeThis()'>";
+            str += "    充值";
             str += "</div>";
 
             str += "</div>";
@@ -148,6 +148,13 @@ function rechargeThis() {
         return;
     }
 
+    if(clickMoney == "") {
+
+        toiletCatMsg("请选择金额", null);
+
+        return;
+    }
+
     clickFlag = false;
 
     $.ajax({
@@ -168,7 +175,9 @@ function rechargeThis() {
 
             // 判断是否成功
             if (data["is_success"] != "success") {
-                alert(data["result"]);
+
+                toiletCatMsg(data["result"], null);
+
                 return;
             }
 
