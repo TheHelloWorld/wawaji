@@ -56,7 +56,7 @@ public abstract class Callback<T> {
 
             if(json.get(key) == null) {
 
-                logger.error(method + "param " + key + "is null");
+                logger.error(method + "param " + key + " is null");
 
                 return false;
             }
