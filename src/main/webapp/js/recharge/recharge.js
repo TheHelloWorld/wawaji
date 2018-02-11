@@ -82,13 +82,13 @@ function recharge() {
 
                     if(list[i]["userLimitFlag"] < list[i]["rechargeLimit"]) {
 
-                        str += "	<div class='recharge-block' onclick=clickThis('" + list[i]["money"] + "') >";
+                        str += "	<div id='recharge-block-" + i + "' class='recharge-block' onclick=clickThis('" + list[i]["money"] + "') >";
 
                         str += "	<img class='recharge-limit' src='/image/recharge/limit_recharge.png'>";
 
                     } else {
 
-                        str += "	<div class='recharge-block' >";
+                        str += "	<div id='recharge-block-" + i + "' class='recharge-block' >";
 
                         str += "	<img class='recharge-limit' src='/image/recharge/limit_recharge.png'>";
 
@@ -100,7 +100,7 @@ function recharge() {
                     // 判断是否首充
                 } else if(list[i]["firstFlag"] != 0) {
 
-                    str += "	<div class='recharge-block' onclick=clickThis('" + list[i]["money"] + "') >";
+                    str += "	<div id='recharge-block-" + i + "' class='recharge-block' onclick=clickThis('" + list[i]["money"] + "') >";
 
                     if(list[i]["userFirstFlag"] == "is_first") {
 
@@ -115,7 +115,7 @@ function recharge() {
 
                 } else {
 
-                    str += "	<div class='recharge-block' onclick=clickThis('" + list[i]["money"] + "') >";
+                    str += "	<div id='recharge-block-" + i + "' class='recharge-block' onclick=clickThis('" + list[i]["money"] + "') >";
                 }
 
                 str += "		<div class='" + recharge_class + "' >";
