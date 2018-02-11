@@ -1,6 +1,7 @@
 package com.toiletCat.controller;
 
 import com.toiletCat.bean.CommonResult;
+import com.toiletCat.constants.RechargeConstant;
 import com.toiletCat.service.RechargeService;
 import com.toiletCat.utils.CommonHandle;
 import com.toiletCat.utils.JSONUtil;
@@ -50,7 +51,7 @@ public class RechargeController {
      * @return
      */
     @RequestMapping(value = "/rechargeResult", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public void rechargeResult(HttpServletRequest request, HttpServletResponse response) {
+    public String rechargeResult(HttpServletRequest request, HttpServletResponse response) {
 
         try {
 
@@ -76,14 +77,36 @@ public class RechargeController {
 
             Map<String, String> requestMap = WeChatUtil.xmlToMap(xmlString);
 
+            CommonResult<String> result = rechargeService.getRechargeResultByParam(requestMap);
+
+            if(result.success()) {
+
+                return returnXML(RechargeConstant.SUCCESS_RETURN_CODE, RechargeConstant.SUCCESS_RETURN_MSG);
+            }
+
+            return returnXML(RechargeConstant.FAIL_RETURN_CODE, result.getValue());
+
         } catch(Exception e) {
 
             logger.error("rechargeResult error: " + e.getMessage(), e);
 
+            return returnXML(RechargeConstant.FAIL_RETURN_CODE, RechargeConstant.FAIL_RETURN_MSG);
+
         }
 
+    }
 
+    /**
+     * 返回微信xml
+     * @param returnCode
+     * @param returnMsg
+     * @return
+     */
+    private String returnXML(String returnCode, String returnMsg) {
 
+        String returnXML = "<xml><return_code><![CDATA[%s]]></return_code><return_msg><![CDATA[%s]]></return_msg></xml>";
+
+        return String.format(returnXML, returnCode, returnMsg);
     }
 
     /**

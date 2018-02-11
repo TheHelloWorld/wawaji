@@ -199,7 +199,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
             public void exec() {
 
                 // 判断返回是否成功
-                if(!RechargeConstant.RETURN_CODE.equals(rechargeResultMap.get("return_code"))) {
+                if(!RechargeConstant.SUCCESS_RETURN_CODE.equals(rechargeResultMap.get("return_code"))) {
 
                     setOtherMsg();
 

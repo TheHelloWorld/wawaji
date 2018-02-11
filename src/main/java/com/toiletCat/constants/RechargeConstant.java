@@ -7,9 +7,24 @@ public class RechargeConstant {
     }
 
     /**
-     * 回调通信成功结果
+     * 回调通信成功返回code
      */
-    public static final String RETURN_CODE = "SUCCESS";
+    public static final String SUCCESS_RETURN_CODE = "SUCCESS";
+
+    /**
+     * 回调通信失败返回code
+     */
+    public static final String FAIL_RETURN_CODE = "FAIL";
+
+    /**
+     * 回调处理成功返回消息
+     */
+    public static final String SUCCESS_RETURN_MSG = "OK";
+
+    /**
+     * 回调处理失败返回消息
+     */
+    public static final String FAIL_RETURN_MSG = "失败";
 
     /**
      * 回调签名字段key
