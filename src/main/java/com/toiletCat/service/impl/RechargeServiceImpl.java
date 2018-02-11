@@ -525,7 +525,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 }
 
-                got(tradeStatus.getStatus());
+                got(String.valueOf(tradeStatus.getStatus()));
 
             }
         }, false, "updateRechargeResult", json);
@@ -694,7 +694,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 for(UserRechargeRecord userRechargeRecord : list) {
                     // 查询交易结果
-                    queryRechargeResult(userRechargeRecord.getOrderNo());
+                    queryRechargeResult(userRechargeRecord.getOrderNo(), userNo);
                 }
 
             }
@@ -726,18 +726,19 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
     /**
      * 查询获得交易结果
      * @param orderNo 订单号
-     * @param amount 交易金额
+     * @param userNo 用户编号
      * @return
      */
-    private void queryRechargeResult(String orderNo) {
+    private void queryRechargeResult(String orderNo, String userNo) {
 
-        logger.info("queryRechargeResult start orderNo: " + orderNo);
+        logger.info("queryRechargeResult start orderNo: " + orderNo + ", userNo:" + userNo);
 
         try {
 
             Map<String, String> responseMap = RechargeUtil.getWxPayQueryRequestInfo(orderNo);
 
-
+            CommonResult<String> result = updateRechargeResult(orderNo, userNo, responseMap.get("total_fee"),
+                    responseMap.get("trade_state"));
 
         } catch (Exception e) {
             logger.error("queryRechargeResult error:" + e, e);
