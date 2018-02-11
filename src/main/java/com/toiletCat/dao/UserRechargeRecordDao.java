@@ -104,4 +104,5 @@ public interface UserRechargeRecordDao {
      * @return
      */
     List<UserRechargeRecord> getAllInitRecordByUserNo(String userNo);
+
 }

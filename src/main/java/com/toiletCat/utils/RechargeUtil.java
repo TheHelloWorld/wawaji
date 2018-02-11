@@ -232,7 +232,7 @@ public class RechargeUtil {
 
             if(responseMap == null) {
 
-                logger.error("createWxPayRequest responseMap is null");
+                logger.error("getWxPayRequestInfo responseMap is null");
 
                 return null;
             }
@@ -247,7 +247,7 @@ public class RechargeUtil {
 
             if(StringUtils.isBlank(prepay_id)) {
 
-                logger.error("createWxPayRequest prepay_id is null");
+                logger.error("getWxPayRequestInfo prepay_id is null");
 
                 return null;
             }
@@ -271,6 +271,69 @@ public class RechargeUtil {
             returnJson.put("orderNo", orderNo);
 
             return returnJson.toJSONString();
+
+        } catch(Exception e) {
+
+            logger.error("getWxPayRequestInfo error:" + e.getMessage(), e);
+
+            return null;
+        }
+    }
+
+    /**
+     * 获得微信支付订单查询参数
+     * @param orderNo 我方订单号(ToiletCat + 时间戳)
+     * @return
+     */
+    public static Map<String, String> getWxPayQueryRequestInfo(String orderNo) {
+
+        try {
+            PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
+
+            JSONObject json = new JSONObject();
+
+            String appId = propertiesUtil.getProperty("we_chat_app_id");
+
+            // appId
+            json.put("appid", appId);
+
+            // 商户编号(微信分配)
+            json.put("mch_id", propertiesUtil.getProperty("we_chat_merchant_no"));
+
+            // 随机字符串
+            json.put("nonce_str", WeChatUtil.generateUUID());
+
+            // 我方订单号
+            json.put("out_trade_no", orderNo);
+
+            Map<String, String> map = new TreeMap<>();
+
+            map.put("sign", WeChatUtil.weChatSign(json));
+
+            for(String key : json.keySet()) {
+
+                map.put(key, json.getString(key));
+            }
+
+            String xmlStr = WeChatUtil.mapToXml(map);
+
+            logger.info(xmlStr);
+
+            String response = HttpClientUtil.httpsRequest(RechargeConstant.QUERY_ORDER_URL, BaseConstant.HTTP_POST,
+                    xmlStr);
+
+            logger.info("response is :" + response);
+
+            Map<String, String> responseMap = WeChatUtil.xmlToMap(response);
+
+            if(responseMap == null) {
+
+                logger.error("getWxPayQueryRequestInfo responseMap is null");
+
+                return null;
+            }
+
+            return responseMap;
 
         } catch(Exception e) {
 

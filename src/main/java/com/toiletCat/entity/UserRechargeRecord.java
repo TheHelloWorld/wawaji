@@ -101,4 +101,5 @@ public class UserRechargeRecord extends BaseEntity implements Serializable {
     public void setTradeTime(Date tradeTime) {
         this.tradeTime = tradeTime;
     }
+
 }

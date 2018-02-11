@@ -173,4 +173,9 @@ public class BaseConstant {
 	 */
 	public static final String DEFAULT_NAME_FLAG = "default_name_flag";
 
+	/**
+	 * 默认为空的值
+	 */
+	public static final String DEFAULT_NULL = "0";
+
 }

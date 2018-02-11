@@ -95,4 +95,5 @@ public interface UserRechargeRecordService {
      * @return
      */
     CommonResult<List<UserRechargeRecord>> getAllInitRecordByUserNo(String userNo);
+
 }

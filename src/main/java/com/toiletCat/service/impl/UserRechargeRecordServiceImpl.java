@@ -208,6 +208,7 @@ public class UserRechargeRecordServiceImpl extends BaseServiceImpl implements Us
      */
     @Override
     public CommonResult updateTradeStatusByOrderNo(final String orderNo, final Integer tradeStatus) {
+
         JSONObject json = new JSONObject();
         json.put("orderNo", orderNo);
         json.put("tradeStatus", tradeStatus);

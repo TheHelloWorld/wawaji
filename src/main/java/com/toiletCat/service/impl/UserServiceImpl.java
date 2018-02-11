@@ -103,7 +103,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     // 用户名
                     user.setUserName(RandomIntUtil.getRandomString(10));
 
-                    user.setOpenId("0");
+                    user.setOpenId(BaseConstant.DEFAULT_NULL);
 
                     String invitationCode = "";
 
@@ -179,7 +179,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     user.setOpenId(wxUserInfo.getOpenId());
 
                     // 用户手机号
-                    user.setMobileNo("0");
+                    user.setMobileNo(BaseConstant.DEFAULT_NULL);
 
                     Integer defaultUserCoin = Integer.valueOf(
                             toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.USER_DEFAULT_COIN));

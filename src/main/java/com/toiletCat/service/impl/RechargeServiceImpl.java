@@ -3,7 +3,6 @@ package com.toiletCat.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
-import com.toiletCat.bean.RechargeResult;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.constants.RechargeConstant;
 import com.toiletCat.constants.RedisConstant;
@@ -220,6 +219,18 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
+                if(!WeChatUtil.checkAppIdAndMerchantId(rechargeResultMap.get("appid"),
+                        rechargeResultMap.get("mch_id"))) {
+
+                    logger.warn("getRechargeResultByParam appId or merchantId is wrong param:" + rechargeResultMap);
+
+                    setOtherMsg();
+
+                    got("appid或mch_id错误");
+
+                    return;
+                }
+
                 String openId = rechargeResultMap.get("openid");
 
                 if(userDao.countUserByOpenId(openId) == 0) {
@@ -254,6 +265,41 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 // 获得订单金额(单位:分)
                 String amount = rechargeResultMap.get("total_fee");
 
+                CommonResult<String> result = updateRechargeResult(orderNo, userNo, amount,
+                        rechargeResultMap.get("result_code"));
+
+                if(!result.success()) {
+
+                    got(result.getValue());
+
+                    return;
+                }
+
+            }
+        }, true, "getRechargeResultByParam", json);
+    }
+
+    /**
+     * 修改充值结果
+     * @param orderNo 我方订单号
+     * @param userNo 用户编号
+     * @param amount 金额
+     * @param resultCode 充值结果
+     * @return
+     */
+    private CommonResult<String> updateRechargeResult(final String orderNo, final String userNo, final String amount,
+                                                      final String resultCode) {
+
+        JSONObject json = new JSONObject();
+        json.put("orderNo", orderNo);
+        json.put("userNo", userNo);
+        json.put("amount", amount);
+        json.put("resultCode", resultCode);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
                 Double money;
                 // 转换钱
                 try {
@@ -261,7 +307,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 } catch (Exception e) {
 
-                    logger.error("getRechargeResultByParam transMoney err param:" + rechargeResultMap, e);
+                    logger.error("updateRechargeResult transMoney err param:" + amount, e);
 
                     setOtherMsg();
 
@@ -276,7 +322,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 if(coin == null) {
 
-                    logger.warn("getRechargeResultByParam money is wrong param:" + rechargeResultMap);
+                    logger.warn("updateRechargeResult money is wrong param:" + money);
 
                     setOtherMsg();
 
@@ -285,7 +331,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
-                logger.info("getRechargeResultByParam openId:" + openId + ", coin:" + coin);
+                logger.info("updateRechargeResult userNo:" + userNo + ", coin:" + coin);
 
                 // 根据用户编号和订单号获得我方记录交易金额
                 CommonResult<BigDecimal> orderAmount = userRechargeRecordService.getAmountByUserNoAndOrderNo(userNo,
@@ -293,7 +339,8 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 if(!orderAmount.success()) {
 
-                    logger.error("getRechargeResultByParam countNumByUserNoAndOrderNo error param:"+ rechargeResultMap);
+                    logger.error("updateRechargeResult countNumByUserNoAndOrderNo error userNo:"+ userNo +
+                            ", orderNo:" + orderNo);
 
                     setOtherMsg();
 
@@ -304,7 +351,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 if(orderAmount.getValue() == null) {
 
-                    logger.warn("getRechargeResultByParam order not exists param:"+ rechargeResultMap);
+                    logger.warn("updateRechargeResult order not exists param orderNo:"+ orderNo);
 
                     setOtherMsg();
 
@@ -316,8 +363,8 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 // 判断返回金额是否正确
                 if(orderAmount.getValue().doubleValue() != money) {
 
-                    logger.warn("getRechargeResultByParam return money not match our amount:" + orderAmount.getValue()
-                            + " param:"+ rechargeResultMap);
+                    logger.warn("updateRechargeResult return money not match our amount:" + orderAmount.getValue()
+                            + " param money:"+ money);
 
                     setOtherMsg();
 
@@ -326,13 +373,10 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
-                // 交易结果
-                String resultTradeStatus = rechargeResultMap.get("result_code");
-
                 TradeStatus tradeStatus = TradeStatus.SUCCESS;
 
                 // 判断结果是否成功
-                if(RechargeConstant.FAIL_RESULT_CODE.equals(resultTradeStatus)) {
+                if(!RechargeConstant.SUCCESS_RESULT_CODE.equals(resultCode)) {
 
                     tradeStatus = TradeStatus.FAIL;
                 }
@@ -354,7 +398,8 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 if(!updateRechargeResult.success()) {
 
-                    logger.warn("getRechargeResultByParam recharge updateTradeStatusByOrderNo error:" + rechargeResultMap);
+                    logger.warn("updateRechargeResult recharge updateRechargeResult error orderNo:"
+                            + orderNo);
 
                     setOtherMsg();
 
@@ -396,7 +441,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 if(!addSpendResult.success()) {
 
-                    logger.warn("getRechargeResultByParam spend updateTradeStatusByOrderNo error:" + rechargeResultMap);
+                    logger.warn("updateRechargeResult spend addUserSpendRecord error:" + userSpendRecord);
 
                     setOtherMsg();
 
@@ -404,9 +449,10 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 }
 
-            }
-        }, true, "getRechargeResultByParam", json);
+                got(tradeStatus.getStatus());
 
+            }
+        }, true, "updateRechargeResult", json);
     }
 
     /**
@@ -427,55 +473,68 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 JSONObject returnJSON = new JSONObject();
 
-
-                String userNo = orderNo.substring(22);
-
                 // 判断用户编号是否存在
                 if(userDao.countUserByUserNo(userNo) == 0) {
+
                     logger.warn("getRechargeResultByOrderNo userNo not exists userNo:"+ userNo);
+
                     returnJSON.put("result", "fail");
+
                     got(returnJSON.toJSONString());
+
                     return;
                 }
-
-                // 根据用户编号和订单号获得我方记录交易金额
-                CommonResult<BigDecimal> orderAmount = userRechargeRecordService.getAmountByUserNoAndOrderNo(userNo,
-                        orderNo);
-
-
-                if(orderAmount.getValue() == null) {
-                    logger.warn("getRechargeResultByOrderNo order not exists userNo:"+ userNo + ",  orderNo:"
-                            + orderNo);
-                    returnJSON.put("result", "fail");
-                    got(returnJSON.toJSONString());
-                    return;
-                }
-
-                // 查询交易结果
-                queryRechargeResult(orderNo, orderAmount.getValue());
 
                 // 获得充值结果
                 CommonResult<Integer> rechargeResult = userRechargeRecordService.
                         getTradeStatusByOrderNo(userNo, orderNo);
 
-                // 若还为初始化状态表示还为收到结果
-                if(rechargeResult.getValue() == TradeStatus.INIT.getStatus()) {
-                    returnJSON.put("result", "wait");
-                    got(returnJSON.toJSONString());
-                    return;
-                }
-
                 if(rechargeResult.getValue() == TradeStatus.FAIL.getStatus()) {
+
                     returnJSON.put("result", "fail");
+
                     got(returnJSON.toJSONString());
+
                     return;
                 }
 
-                Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+                if(rechargeResult.getValue() == TradeStatus.SUCCESS.getStatus()) {
 
-                returnJSON.put("result", "success");
-                returnJSON.put("userCoin", userCoin);
-                got(returnJSON.toJSONString());
+                    Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+
+                    returnJSON.put("result", "success");
+
+                    returnJSON.put("userCoin", userCoin);
+
+                    got(returnJSON.toJSONString());
+                }
+
+                // 查询交易结果
+                Map<String, String> responseMap = RechargeUtil.getWxPayQueryRequestInfo(orderNo);
+
+                CommonResult<String> result = updateRechargeResult(orderNo, userNo, responseMap.get("total_fee"),
+                        responseMap.get("trade_state"));
+
+                if(Integer.valueOf(result.getValue()) == TradeStatus.SUCCESS.getStatus()) {
+
+                    Integer userCoin = userDao.getUserCoinByUserNo(userNo);
+
+                    returnJSON.put("result", "success");
+
+                    returnJSON.put("userCoin", userCoin);
+
+                    got(returnJSON.toJSONString());
+
+                }
+
+                if(Integer.valueOf(result.getValue()) == TradeStatus.FAIL.getStatus()) {
+
+                    returnJSON.put("result", "fail");
+
+                    got(returnJSON.toJSONString());
+
+                    return;
+                }
 
             }
         }, true, "getRechargeResultByOrderNo", json);
@@ -530,6 +589,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
      */
     @Override
     public CommonResult getInitRechargeResultByOrderInfo(final String userNo) {
+
         JSONObject json = new JSONObject();
         json.put("userNo", userNo);
 
@@ -558,7 +618,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 for(UserRechargeRecord userRechargeRecord : list) {
                     // 查询交易结果
-                    queryRechargeResult(userRechargeRecord.getOrderNo(), userRechargeRecord.getAmount());
+                    queryRechargeResult(userRechargeRecord.getOrderNo());
                 }
 
             }
@@ -566,7 +626,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
     }
 
     /**
-     * 将用户首充标志位置为 非首充
+     * 将用户首充标志位置为"非首充"
      * @param userNo 用户编号
      */
     private void setUserNotFirstRechargeFlag(String userNo) {
@@ -593,94 +653,15 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
      * @param amount 交易金额
      * @return
      */
-    private void queryRechargeResult(String orderNo, BigDecimal amount) {
+    private void queryRechargeResult(String orderNo) {
 
-        logger.info("queryRechargeResult start orderNo: " + orderNo + ", amount: " + amount.doubleValue());
+        logger.info("queryRechargeResult start orderNo: " + orderNo);
 
         try {
 
-            String userNo = orderNo.substring(22);
+            Map<String, String> responseMap = RechargeUtil.getWxPayQueryRequestInfo(orderNo);
 
-            PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
-            String queryUrl = propertiesUtil.getProperty("recharge_query_url");
-
-            String pid = propertiesUtil.getProperty("recharge_pid");
-
-            String key = propertiesUtil.getProperty("recharge_key");
-
-            StringBuilder sb = new StringBuilder("");
-            sb.append(queryUrl);
-            sb.append(pid);
-            sb.append("&key=");
-            sb.append(key);
-            sb.append("&out_trade_no=");
-            sb.append(orderNo);
-
-            logger.info("queryRechargeResult request:" + sb.toString());
-
-            String response = HttpClientUtil.sendHttpGet(sb.toString());
-
-//            String response = HttpClientUtil.httpsRequest(sb.toString(), "GET", null);
-
-            logger.info("queryRechargeResult response:" + response);
-
-            JSONObject json = JSONObject.parseObject(response);
-
-            MoneyForCoin myCoin = moneyForCoinService.getMoneyForCoinByMoney(String.valueOf(amount.doubleValue()));
-
-            // 若返回code不为1
-            if(!"1".equals(json.getString("code"))) {
-                // 将充值结果置为失败
-                updateRechargeAndSpendResult(orderNo, TradeStatus.FAIL);
-
-                return;
-            }
-
-            if(!orderNo.equals(json.getString("out_trade_no"))) {
-                logger.warn("queryRechargeResult wrong orderNo:" + orderNo + ", response:" + json);
-                return;
-            }
-
-            if(Double.valueOf(json.getString("money")) != amount.doubleValue()) {
-                logger.warn("queryRechargeResult wrong amount:" + amount + ", response:" + json);
-                return;
-            }
-
-            TradeStatus tradeStatus = TradeStatus.SUCCESS;
-
-            if(!"1".equals(json.getString("status"))) {
-                tradeStatus = TradeStatus.FAIL;
-
-            }
-
-            // 防止重复请求 获得充值结果
-            CommonResult<Integer> commonRechargeResult = userRechargeRecordService.
-                    getTradeStatusByOrderNo(userNo, orderNo);
-
-            // 若已有终态则不执行后续操作
-            if(commonRechargeResult.getValue() != TradeStatus.INIT.getStatus()) {
-                logger.info("queryRechargeResult request duplicate param: "+ json);
-                return;
-            }
-
-            MoneyForCoin coin = moneyForCoinService.getMoneyForCoinByMoney(json.getString("money"));
-
-            if(tradeStatus == TradeStatus.SUCCESS) {
-
-                Integer rechargeCoin = getCoinByMoneyForCoin(userNo, coin);
-
-                // 添加用户游戏币
-                userDao.updateUserCoinByUserNo(rechargeCoin, userNo);
-
-                // 如果有充值限制次数
-                setLimitRechargeByUserNo(userNo, myCoin);
-
-                // 将用户首充标志位置为 非首充
-                setUserNotFirstRechargeFlag(userNo);
-            }
-
-            updateRechargeAndSpendResult(orderNo, tradeStatus);
 
         } catch (Exception e) {
             logger.error("queryRechargeResult error:" + e, e);

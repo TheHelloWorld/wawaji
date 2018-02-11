@@ -8,7 +8,7 @@
         <id property="id" column="id" jdbcType="BIGINT"/>
         <!-- 用户编号 -->
         <result property="userNo" column="user_no" jdbcType="VARCHAR"/>
-        <!-- 用户编号 -->
+        <!-- 订单号 -->
         <result property="orderNo" column="order_no" jdbcType="VARCHAR"/>
         <!-- 充值类型 -->
         <result property="rechargeType" column="recharge_type" jdbcType="VARCHAR"/>
@@ -105,8 +105,8 @@
     <!-- 根据交易日期和交易状态获得汇总信息 -->
     <select id="getSumRechargeAmountAndCountByTradeDateAndTradeStatus" resultType="java.util.Map">
         select
-          sum(amount) as totalAmount,
-          count(*) as totalCount
+            sum(amount) as totalAmount,
+            count(*) as totalCount
         from user_recharge_record
         where trade_date = #{tradeDate} and trade_status = #{tradeStatus}
         limit #{startPage}, #{pageSize}
@@ -115,7 +115,7 @@
     <!-- 根据订单编号修改交易状态 -->
     <update id="updateTradeStatusByOrderNo">
         update user_recharge_record set
-          trade_status = #{tradeStatus, jdbcType=INTEGER}
+            trade_status = #{tradeStatus, jdbcType=INTEGER}
         where order_no = #{orderNo, jdbcType=VARCHAR}
     </update>
 

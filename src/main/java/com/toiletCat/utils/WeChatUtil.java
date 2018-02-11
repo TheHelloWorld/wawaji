@@ -330,6 +330,21 @@ public class WeChatUtil {
     }
 
     /**
+     * 判断appId 和 商户Id是否正确
+     * @param appId
+     * @param merchantId
+     * @return
+     */
+    public static Boolean checkAppIdAndMerchantId(String appId, String merchantId) {
+
+        PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
+
+        return (!propertiesUtil.getProperty("we_chat_app_id").equals(appId) ||
+                !propertiesUtil.getProperty("we_chat_merchant_no").equals(merchantId));
+
+    }
+
+    /**
      * 获取当前时间戳，单位秒
      * @return
      */
