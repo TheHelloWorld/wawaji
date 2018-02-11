@@ -6,6 +6,12 @@ var clickFlag = true;
 
 var clickMoney = "";
 
+var len = 0;
+
+$(function () {
+    recharge();
+});
+
 function recharge() {
 
     $.ajax({
@@ -29,6 +35,7 @@ function recharge() {
             var list = data["result"];
 
             var recharge_hc = recharge_height + recharge_scroll;
+
             var str = "	<div style='top:"+recharge_hc+"px;' class='recharge'>";
 
             str += "		<div class='recharge-first-line' >";
@@ -63,6 +70,8 @@ function recharge() {
 
             str += "	<div style='float: left;' >";
 
+            len = list.length;
+
             for(var i = 0; i<list.length; i++) {
 
                 var money_class = "recharge-money";
@@ -82,7 +91,7 @@ function recharge() {
 
                     if(list[i]["userLimitFlag"] < list[i]["rechargeLimit"]) {
 
-                        str += "	<div id='recharge-block-" + i + "' class='recharge-block' onclick=clickThis('" + list[i]["money"] + "') >";
+                        str += "	<div id='recharge-block-" + i + "' class='recharge-block' onclick=clickThis('" + i + "','" + list[i]["money"] + "') >";
 
                         str += "	<img class='recharge-limit' src='/image/recharge/limit_recharge.png'>";
 
@@ -100,7 +109,7 @@ function recharge() {
                     // 判断是否首充
                 } else if(list[i]["firstFlag"] != 0) {
 
-                    str += "	<div id='recharge-block-" + i + "' class='recharge-block' onclick=clickThis('" + list[i]["money"] + "') >";
+                    str += "	<div id='recharge-block-" + i + "' class='recharge-block' onclick=clickThis('" + i + "','" + list[i]["money"] + "') >";
 
                     if(list[i]["userFirstFlag"] == "is_first") {
 
@@ -115,7 +124,7 @@ function recharge() {
 
                 } else {
 
-                    str += "	<div id='recharge-block-" + i + "' class='recharge-block' onclick=clickThis('" + list[i]["money"] + "') >";
+                    str += "	<div id='recharge-block-" + i + "' class='recharge-block' onclick=clickThis('" + i + "','" + list[i]["money"] + "') >";
                 }
 
                 str += "		<div class='" + recharge_class + "' >";
@@ -163,22 +172,22 @@ function recharge() {
             str += "</div>";
 
             $("body").append(str);
-
-            $(".recharge").animate({
-                top:recharge_scroll + "px"
-            },500);
         }
     });
 }
 
-function clickThis(amount) {
+function clickThis(id, amount) {
 
-    $(".recharge-block").each(function() {
+    for(var i = 0; i<len; i++) {
 
-        $(this).removeClass('recharge-selected');
-    });
+        $("#recharge-block-" + i).removeClass('recharge-selected');
 
-    $(this).addClass('recharge-selected');
+        $("#recharge-block-" + i).addClass('recharge-block');
+    }
+
+    $("#recharge-block-" + id).removeClass('recharge-block');
+
+    $("#recharge-block-" + id).addClass('recharge-selected');
 
     clickMoney = amount;
 
@@ -187,12 +196,7 @@ function clickThis(amount) {
 // 关闭充值页
 function closeRecharge() {
 
-    $(".recharge").animate({
-        top: recharge_height+"px"
-    },500);
-    setTimeout(function rechargeRemove() {
-        $(".recharge").remove()
-    },500);
+    window.location.href="";
 }
 
 // 充值操作
@@ -264,7 +268,7 @@ function rechargeThis() {
                         // 我方订单号
                         sessionStorage["toiletCatUserOrderNo"] = result["orderNo"];
 
-                        window.location.href="/toiletCat/recharge/rechargeResult.html";
+                        // window.location.href="/toiletCat/recharge/rechargeResult.html";
 
                         // 微信前端返回支付取消
                     } else if(res.err_msg == "get_brand_wcpay_request:cancel") {

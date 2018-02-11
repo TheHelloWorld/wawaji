@@ -497,4 +497,8 @@ public class WeChatUtil {
         System.out.println(url);
 
     }
+
+    public static void main(String[] args) {
+        createRequestUrl();
+    }
 }
