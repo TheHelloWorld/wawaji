@@ -198,4 +198,9 @@
         select count(*) from `user` where invitation_user_no = #{invitationUserNo, jdbcType=VARCHAR}
     </select>
 
+    <!-- 根据openId获得用户编号 -->
+    <select id="getUserNoByOpenId" parameterType="java.lang.String" resultType="java.lang.String" >
+        select user_no from `user` where open_id = #{openId, jdbcType=VARCHAR}
+    </select>
+
 </mapper>

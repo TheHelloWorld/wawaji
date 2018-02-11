@@ -5,6 +5,7 @@ import com.toiletCat.bean.Callback;
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.RechargeResult;
 import com.toiletCat.constants.BaseConstant;
+import com.toiletCat.constants.RechargeConstant;
 import com.toiletCat.constants.RedisConstant;
 import com.toiletCat.dao.UserDao;
 import com.toiletCat.entity.MoneyForCoin;
@@ -25,9 +26,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("all")
 @Service("rechargeService")
@@ -173,12 +176,189 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
+                // 获得请求url并返回
+                got(RechargeUtil.getWxPayRequestInfo(orderNo, String.valueOf(amount), user.getOpenId(), ""));
+
+            }
+        }, true, "userRecharge", json);
+    }
+
+    /**
+     * 充值返回结果
+     *
+     * @param rechargeResultMap 充值结果Map
+     */
+    @Override
+    public CommonResult<String> getRechargeResultByParam(final Map<String, String> rechargeResultMap) {
+
+        JSONObject json = new JSONObject();
+        json.put("rechargeResultMap", rechargeResultMap);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                // 判断返回是否成功
+                if(!RechargeConstant.RETURN_CODE.equals(rechargeResultMap.get("return_code"))) {
+
+                    // TODO: 2018/2/11  
+                    
+                    return;
+                }
+
+                // 验签
+                if(!checkSign(rechargeResultMap)) {
+                    
+                    logger.warn("getRechargeResultByParam sign is wrong param:" + rechargeResultMap);
+                    
+                    setOtherMsg();
+                    
+                    got("签名失败");
+                    
+                    return;
+                }
+
+                String openId = rechargeResultMap.get("openid");
+
+                if(userDao.countUserByOpenId(openId) == 0) {
+
+                    logger.warn("getRechargeResultByParam openId not exists param:" + rechargeResultMap);
+
+                    setOtherMsg();
+
+                    got("openId错误,用户不存在");
+
+                    return;
+                }
+
+                // 根据openId获得用户编号
+                String userNo = userDao.getUserNoByOpenId(openId);
+
+                // 获得订单金额(单位:分)
+                String amount = rechargeResultMap.get("total_fee");
+
+                Double money;
+                // 转换钱
+                try {
+                    money = Double.valueOf(amount) / 100;
+
+                } catch (Exception e) {
+
+                    logger.error("getRechargeResultByParam transMoney err param:" + rechargeResultMap, e);
+
+                    return;
+                }
+
+                DecimalFormat df = new DecimalFormat(".##");
+
+                MoneyForCoin coin = moneyForCoinService.getMoneyForCoinByMoney(df.format(money));
+
+                if(coin == null) {
+
+                    logger.warn("getRechargeResultByParam money is wrong param:" + rechargeResultMap);
+
+                    setOtherMsg();
+
+                    got("交易金额错误");
+
+                    return;
+                }
+
+                logger.info("getRechargeResultByParam openId:" + openId + ", coin:" + coin);
+
+                // 我方订单号
+                String orderNo = rechargeResultMap.get("out_trade_no");
+
+                // 根据用户编号和订单号获得我方记录交易金额
+                CommonResult<BigDecimal> orderAmount = userRechargeRecordService.getAmountByUserNoAndOrderNo(userNo,
+                        orderNo);
+
+                if(!orderAmount.success()) {
+
+                    logger.error("getRechargeResultByParam countNumByUserNoAndOrderNo error param:"+ rechargeResultMap);
+
+                    setOtherMsg();
+
+                    got("交易金额错误");
+
+                    return;
+                }
+
+                if(orderAmount.getValue() == null) {
+
+                    logger.warn("getRechargeResultByParam order not exists param:"+ rechargeResultMap);
+
+                    setOtherMsg();
+
+                    got("交易金额错误");
+
+                    return;
+                }
+
+                // 判断返回金额是否正确
+                if(orderAmount.getValue().doubleValue() != money) {
+
+                    logger.warn("getRechargeResultByParam return money not match our amount:" + orderAmount.getValue()
+                            + " param:"+ rechargeResultMap);
+
+                    setOtherMsg();
+
+                    got("交易金额错误");
+
+                    return;
+                }
+
+                // 防止重复请求 获得充值结果
+                CommonResult<Integer> commonRechargeResult = userRechargeRecordService.
+                        getTradeStatusByOrderNo(userNo, orderNo);
+
+                // 若已有终态则不执行后续操作
+                if(commonRechargeResult.getValue() != TradeStatus.INIT.getStatus()) {
+
+                    logger.info("getRechargeResultByParam request duplicate param:" +  rechargeResultMap);
+
+                    return;
+                }
+
+                // 交易结果
+                String resultTradeStatus = rechargeResultMap.get("result_code");
+
+                TradeStatus tradeStatus = TradeStatus.SUCCESS;
+
+                // 判断结果是否成功
+                if(!RechargeConstant.FAIL_RESULT_CODE.equals(resultTradeStatus)) {
+
+                    tradeStatus = TradeStatus.FAIL;
+                }
+
+                if(tradeStatus == TradeStatus.SUCCESS) {
+                    // 添加用户游戏币
+                    userDao.updateUserCoinByUserNo(coin.getCoin(), userNo);
+
+                    // 设置限充
+                    setLimitRechargeByUserNo(userNo, coin);
+
+                    // 将用户首充标志位置为非首充
+                    setUserNotFirstRechargeFlag(userNo);
+                }
+
+                // 修改充值记录交易状态
+                CommonResult updateRechargeResult = userRechargeRecordService.
+                        updateTradeStatusByOrderNo(orderNo, tradeStatus.getStatus());
+
+                if(!updateRechargeResult.success()) {
+
+                    logger.warn("getRechargeResultByParam recharge updateTradeStatusByOrderNo error:" + rechargeResultMap);
+                }
+
+                Date tradeTime = new Date();
+
                 // 添加用户消费记录
                 // 用户消费记录
                 UserSpendRecord userSpendRecord = new UserSpendRecord();
 
                 //  消费日期
-                userSpendRecord.setTradeDate(tradeDate);
+                userSpendRecord.setTradeDate(DateUtil.getDate());
 
                 // 订单号
                 userSpendRecord.setOrderNo(orderNo);
@@ -198,139 +378,14 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 userSpendRecord.setUserNo(userNo);
 
                 // 消费状态
-                userSpendRecord.setTradeStatus(TradeStatus.INIT.getStatus());
+                userSpendRecord.setTradeStatus(tradeStatus.getStatus());
 
                 CommonResult addSpendResult = userSpendRecordService.addUserSpendRecord(userSpendRecord);
 
                 if(!addSpendResult.success()) {
 
-                    respondSysError();
+                    logger.warn("getRechargeResultByParam spend updateTradeStatusByOrderNo error:" + rechargeResultMap);
 
-                    return;
-                }
-
-                // 获得请求url并返回
-                got(RechargeUtil.getWxPayRequestInfo(orderNo, String.valueOf(amount), user.getOpenId(), ""));
-
-            }
-        }, true, "userRecharge", json);
-    }
-
-    /**
-     * 充值返回结果
-     * @param userNo 用户编号
-     * @param rechargeResult 充值返回结果
-     */
-    @Override
-    public CommonResult getRechargeResultByParam(final String userNo, final RechargeResult rechargeResult) {
-        JSONObject json = new JSONObject();
-        json.put("userNo", userNo);
-        json.put("rechargeResult", rechargeResult);
-
-        return exec(new Callback() {
-            @Override
-            public void exec() {
-
-                // 验签
-                if(!checkSign(rechargeResult)) {
-                    logger.warn("getRechargeResultByParam sign is wrong param:"+ rechargeResult);
-                    return;
-                }
-
-                // 判断用户编号是否存在
-                if(userDao.countUserByUserNo(userNo) == 0) {
-                    logger.warn("getRechargeResultByParam userNo not exists param:"+ rechargeResult);
-                    return;
-                }
-
-                Double money;
-                // 转换钱
-                try {
-                    money = Double.valueOf(rechargeResult.getMoney());
-                } catch (Exception e) {
-                    logger.error("getRechargeResultByParam transMoney err param:" + rechargeResult, e);
-                    return;
-                }
-
-                MoneyForCoin coin = moneyForCoinService.getMoneyForCoinByMoney(rechargeResult.getMoney());
-
-                if(coin == null) {
-                    logger.warn("getRechargeResultByParam money is wrong param:"+ rechargeResult);
-                    return;
-                }
-
-                logger.info("getRechargeResultByParam userNo:" + userNo + ", coin:" + coin);
-
-                // 我方订单号
-                String orderNo = rechargeResult.getOrderNo();
-
-                // 根据用户编号和订单号获得我方记录交易金额
-                CommonResult<BigDecimal> orderAmount = userRechargeRecordService.getAmountByUserNoAndOrderNo(userNo,
-                        orderNo);
-
-                if(!orderAmount.success()) {
-                    logger.error("getRechargeResultByParam countNumByUserNoAndOrderNo error param:"+ rechargeResult);
-                    return;
-                }
-
-                if(orderAmount.getValue() == null) {
-                    logger.warn("getRechargeResultByParam order not exists param:"+ rechargeResult);
-                    return;
-                }
-
-                // 判断返回金额是否正确
-                if(orderAmount.getValue().doubleValue() != money) {
-                    logger.warn("getRechargeResultByParam return money not match our amount:" + orderAmount.getValue()
-                            + " param:"+ rechargeResult);
-                    return;
-                }
-
-                // 防止重复请求 获得充值结果
-                CommonResult<Integer> commonRechargeResult = userRechargeRecordService.
-                        getTradeStatusByOrderNo(userNo, orderNo);
-
-                // 若已有终态则不执行后续操作
-                if(commonRechargeResult.getValue() != TradeStatus.INIT.getStatus()) {
-                    logger.info("getRechargeResultByParam request duplicate param:"+ rechargeResult);
-                    return;
-                }
-
-                // 交易结果
-                String resultTradeStatus = rechargeResult.getTradeStatus();
-
-                TradeStatus tradeStatus = TradeStatus.SUCCESS;
-
-                // 判断结果是否成功
-                if(!BaseConstant.RECHARGE_RESULT_TRADE_STATUS.equals(resultTradeStatus)) {
-                    tradeStatus = TradeStatus.FAIL;
-
-                }
-
-                if(tradeStatus == TradeStatus.SUCCESS) {
-                    // 添加用户游戏币
-                    userDao.updateUserCoinByUserNo(coin.getCoin(), userNo);
-
-                    // 设置限充
-                    setLimitRechargeByUserNo(userNo, coin);
-
-                    // 将用户首充标志位置为非首充
-                    setUserNotFirstRechargeFlag(userNo);
-                }
-
-                // 修改充值记录交易状态
-                CommonResult updateRechargeResult = userRechargeRecordService.
-                        updateTradeStatusByOrderNo(orderNo, tradeStatus.getStatus());
-
-                if(!updateRechargeResult.success()) {
-                    logger.warn("getRechargeResultByParam recharge updateTradeStatusByOrderNo error:" + rechargeResult);
-                }
-
-                // 修改用户游戏币记录交易状态
-                CommonResult updateSpendResult = userSpendRecordService.
-                        updateTradeStatusByOrderNo(orderNo, tradeStatus.getStatus());
-
-                if(!updateSpendResult.success()) {
-                    logger.warn("getRechargeResultByParam spend updateTradeStatusByOrderNo error:" + rechargeResult);
                 }
 
             }
@@ -776,23 +831,32 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
     /**
      * 验签
-     * @param rechargeResult 充值返回结果
+     * @param rechargeResultMap 充值返回结果
      * @return
      */
-    private Boolean checkSign(RechargeResult rechargeResult) {
+    private Boolean checkSign(Map<String, String> rechargeResultMap) {
+        
         JSONObject json = new JSONObject();
 
         PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
-        json.put("pid", propertiesUtil.getProperty("recharge_pid"));
-        json.put("money", rechargeResult.getMoney());
-        json.put("out_trade_no", rechargeResult.getOrderNo());
-        json.put("name", rechargeResult.getName());
-        json.put("trade_no", rechargeResult.getTradeNo());
-        json.put("trade_status", rechargeResult.getTradeStatus());
-        json.put("type", rechargeResult.getType());
+        for(String key : rechargeResultMap.keySet()) {
 
-        return RechargeUtil.checkSign(rechargeResult.getSign(), json);
+            if(RechargeConstant.SIGN.equals(key)) {
+                
+                continue;
+            }
+
+            if(rechargeResultMap.get(key)  == null) {
+
+                continue;
+            }
+
+            json.put(key, rechargeResultMap.get(key));
+
+        }
+
+        return RechargeUtil.checkSign(rechargeResultMap.get(RechargeConstant.SIGN), json);
 
     }
 

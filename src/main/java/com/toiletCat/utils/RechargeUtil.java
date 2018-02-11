@@ -287,6 +287,6 @@ public class RechargeUtil {
      */
     public static Boolean checkSign(String resultSign, JSONObject json) {
 
-        return resultSign.equals(getSign(json));
+        return resultSign.equals(WeChatUtil.weChatSign(json));
     }
 }

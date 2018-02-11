@@ -5,6 +5,7 @@ import com.toiletCat.bean.RechargeResult;
 import com.toiletCat.entity.MoneyForCoin;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 public interface RechargeService {
 
@@ -22,10 +23,9 @@ public interface RechargeService {
     /**
      * 充值返回结果
      *
-     * @param userNo         用户编号
-     * @param rechargeResult 充值返回结果
+     * @param rechargeResultMap 充值结果Map
      */
-    CommonResult getRechargeResultByParam(String userNo, RechargeResult rechargeResult);
+    CommonResult<String> getRechargeResultByParam(Map<String, String> rechargeResultMap);
 
     /**
      * 根据订单号获得充值结果

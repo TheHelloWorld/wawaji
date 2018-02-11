@@ -11,7 +11,8 @@ public enum TradeStatus {
     INIT(0, "初始化"),
     SUCCESS(10, "成功"),
     FAIL(20, "失败"),
-    PROCESSING(30,"处理中");
+    PROCESSING(30,"处理中"),
+    CANCEL(40, "订单取消");
 
     /**
      * 状态

@@ -142,4 +142,11 @@ public interface UserDao {
      * @return
      */
     Integer countByInvitationUserNo(String invitationUserNo);
+
+    /**
+     * 根据openId获得用户编号
+     * @param openId 微信openId
+     * @return
+     */
+    String getUserNoByOpenId(String openId);
 }

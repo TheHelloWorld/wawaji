@@ -152,6 +152,12 @@ public class WeChatUtil {
 
             // 按ASCII字典序排序
             for(String key : json.keySet()) {
+
+                if(json.get(key) == null) {
+
+                    continue;
+                }
+
                 map.put(key, json.getString(key));
             }
 
