@@ -201,7 +201,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 // 判断返回是否成功
                 if(!RechargeConstant.RETURN_CODE.equals(rechargeResultMap.get("return_code"))) {
 
-                    // TODO: 2018/2/11  
+                    setOtherMsg();
+                    
+                    got("失败");
                     
                     return;
                 }
