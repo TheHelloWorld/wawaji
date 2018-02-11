@@ -7,7 +7,14 @@
 }
 
 .recharge-selected {
-    border-bottom: 0.0625rem solid saddlebrown;
+    border-radius: 1.25rem;
+    margin-top: 3%;
+    float: left;
+    border-bottom: 0.1875rem solid #D7D7D7;
+    width: 40%;
+    margin-left: 7%;
+    background: goldenrod;
+    padding-bottom: 4%;
 }
 
 .recharge-button {
