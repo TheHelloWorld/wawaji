@@ -236,6 +236,21 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 // 根据openId获得用户编号
                 String userNo = userDao.getUserNoByOpenId(openId);
 
+                // 我方订单号
+                String orderNo = rechargeResultMap.get("out_trade_no");
+
+                // 防止重复请求 获得充值结果
+                CommonResult<Integer> commonRechargeResult = userRechargeRecordService.
+                        getTradeStatusByOrderNo(userNo, orderNo);
+
+                // 若已有终态则不执行后续操作
+                if(commonRechargeResult.getValue() != TradeStatus.INIT.getStatus()) {
+
+                    logger.info("getRechargeResultByParam request duplicate param:" +  rechargeResultMap);
+
+                    return;
+                }
+
                 // 获得订单金额(单位:分)
                 String amount = rechargeResultMap.get("total_fee");
 
@@ -271,9 +286,6 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 }
 
                 logger.info("getRechargeResultByParam openId:" + openId + ", coin:" + coin);
-
-                // 我方订单号
-                String orderNo = rechargeResultMap.get("out_trade_no");
 
                 // 根据用户编号和订单号获得我方记录交易金额
                 CommonResult<BigDecimal> orderAmount = userRechargeRecordService.getAmountByUserNoAndOrderNo(userNo,
@@ -314,25 +326,13 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
-                // 防止重复请求 获得充值结果
-                CommonResult<Integer> commonRechargeResult = userRechargeRecordService.
-                        getTradeStatusByOrderNo(userNo, orderNo);
-
-                // 若已有终态则不执行后续操作
-                if(commonRechargeResult.getValue() != TradeStatus.INIT.getStatus()) {
-
-                    logger.info("getRechargeResultByParam request duplicate param:" +  rechargeResultMap);
-
-                    return;
-                }
-
                 // 交易结果
                 String resultTradeStatus = rechargeResultMap.get("result_code");
 
                 TradeStatus tradeStatus = TradeStatus.SUCCESS;
 
                 // 判断结果是否成功
-                if(!RechargeConstant.FAIL_RESULT_CODE.equals(resultTradeStatus)) {
+                if(RechargeConstant.FAIL_RESULT_CODE.equals(resultTradeStatus)) {
 
                     tradeStatus = TradeStatus.FAIL;
                 }
@@ -411,13 +411,15 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
     /**
      * 根据订单号获得充值结果
+     * @param userNo 用户编号
      * @param orderNo 订单号
      * @return
      */
     @Override
-    public CommonResult<String> getRechargeResultByOrderNo(final String orderNo) {
+    public CommonResult<String> getRechargeResultByOrderNo(final String userNo, final String orderNo) {
         JSONObject json = new JSONObject();
         json.put("orderNo", orderNo);
+        json.put("userNo", userNo);
 
         return exec(new Callback() {
             @Override
@@ -425,13 +427,6 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 JSONObject returnJSON = new JSONObject();
 
-                // 判断支付机构返回我方订单号是否正确
-                if(orderNo.length() != 54) {
-                    logger.warn("getRechargeResultByOrderNo orderNo is wrong orderNo:" + orderNo);
-                    returnJSON.put("result", "fail");
-                    got(returnJSON.toJSONString());
-                    return;
-                }
 
                 String userNo = orderNo.substring(22);
 
@@ -484,6 +479,48 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
             }
         }, true, "getRechargeResultByOrderNo", json);
+    }
+
+    /**
+     * 根据订单号取消充值操作
+     * @param userNo 用户编号
+     * @param orderNo 订单号
+     * @return
+     */
+    @Override
+    public CommonResult cancelRechargeByOrderNo(final String userNo, final String orderNo) {
+
+        JSONObject json = new JSONObject();
+        json.put("userNo", userNo);
+        json.put("orderNo", orderNo);
+
+        return exec(new Callback() {
+            @Override
+            public void exec() {
+
+                JSONObject returnJSON = new JSONObject();
+
+                // 判断用户编号是否存在
+                if(userDao.countUserByUserNo(userNo) == 0) {
+
+                    logger.warn("cancelRechargeByOrderNo userNo not exists userNo:"+ userNo);
+
+                    return;
+                }
+
+                // 将订单状态置为取消
+                CommonResult result = userRechargeRecordService.updateTradeStatusByOrderNo(orderNo,
+                        TradeStatus.CANCEL.getStatus());
+
+                if(!result.success()) {
+
+                    respondSysError();
+
+                    return;
+                }
+
+            }
+        }, true, "cancelRechargeByOrderNo", json);
     }
 
     /**

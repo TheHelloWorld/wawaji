@@ -338,23 +338,6 @@ public class WeChatUtil {
         return getCurrentTimestampMs() / 1000;
     }
 
-    public static void main(String[] args) {
-        JSONObject jsonObject = new JSONObject();
-
-        String str = null;
-
-        jsonObject.put("123","123");
-        jsonObject.put("321", str);
-
-        for(String key : jsonObject.keySet()) {
-
-            if(jsonObject.get(key) == null) {
-                System.out.println(key + ":" + jsonObject.get(key));
-            }
-
-        }
-    }
-
     /**
      * 获取当前时间戳，单位毫秒
      * @return

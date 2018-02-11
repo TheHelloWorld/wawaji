@@ -1,6 +1,7 @@
 package com.toiletCat.controller;
 
 import com.toiletCat.bean.CommonResult;
+import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.constants.RechargeConstant;
 import com.toiletCat.service.RechargeService;
 import com.toiletCat.utils.CommonHandle;
@@ -39,7 +40,7 @@ public class RechargeController {
     @ResponseBody
     public String userRecharge(HttpServletRequest request,String userNo, String amount, String rechargeType) {
 
-        String ip = CommonHandle.getIpAddr(request);
+        String ip = CommonHandle.getUserIp(request);
 
         CommonResult<String> result = rechargeService.userRecharge(userNo, amount, rechargeType, ip);
 
@@ -50,8 +51,8 @@ public class RechargeController {
      * 充值回调接口
      * @return
      */
-    @RequestMapping(value = "/rechargeResult", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String rechargeResult(HttpServletRequest request) {
+    @RequestMapping(value = "/rechargeResult", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public void rechargeResult(HttpServletRequest request, HttpServletResponse response) {
 
         try {
 
@@ -79,31 +80,29 @@ public class RechargeController {
 
             logger.info("rechargeResult requestMap:" + requestMap);
 
-            return returnXML(RechargeConstant.SUCCESS_RETURN_CODE, RechargeConstant.SUCCESS_RETURN_MSG);
+            CommonResult<String> result = rechargeService.getRechargeResultByParam(requestMap);
 
-//            CommonResult<String> result = rechargeService.getRechargeResultByParam(requestMap);
-//
-//            if(result.success()) {
-//
-//                return returnXML(RechargeConstant.SUCCESS_RETURN_CODE, RechargeConstant.SUCCESS_RETURN_MSG);
-//            }
-//
-//            return returnXML(RechargeConstant.FAIL_RETURN_CODE, result.getValue());
+            if(result.success()) {
+
+                response.getWriter().write(returnXML(RechargeConstant.SUCCESS_RETURN_CODE,
+                        RechargeConstant.SUCCESS_RETURN_MSG));
+
+                return;
+            }
+
+            response.getWriter().write(returnXML(RechargeConstant.FAIL_RETURN_CODE, result.getValue()));
 
         } catch(Exception e) {
 
             logger.error("rechargeResult error: " + e.getMessage(), e);
 
-            return returnXML(RechargeConstant.FAIL_RETURN_CODE, RechargeConstant.FAIL_RETURN_MSG);
-
         }
-
     }
 
     /**
      * 返回微信xml
-     * @param returnCode
-     * @param returnMsg
+     * @param returnCode 返回Code
+     * @param returnMsg 返回信息
      * @return
      */
     private String returnXML(String returnCode, String returnMsg) {
@@ -115,16 +114,32 @@ public class RechargeController {
 
     /**
      * 根据订单号获得充值结果
+     * @param userNo 用户编号
      * @param orderNo 订单号
      * @return
      */
     @RequestMapping(value = "/getRechargeResultByOrderNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String getRechargeResultByOrderNo(String orderNo) {
+    public String getRechargeResultByOrderNo(String userNo, String orderNo) {
 
-        CommonResult<String> result = rechargeService.getRechargeResultByOrderNo(orderNo);
+        CommonResult<String> result = rechargeService.getRechargeResultByOrderNo(userNo, orderNo);
 
         return JSONUtil.getReturnBeanString(result);
+    }
+
+    /**
+     * 根据订单号取消充值操作
+     * @param userNo 用户编号
+     * @param orderNo 订单号
+     * @return
+     */
+    @RequestMapping(value = "/cancelRechargeByOrderNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String cancelRechargeByOrderNo(String userNo, String orderNo) {
+
+        CommonResult result = rechargeService.cancelRechargeByOrderNo(userNo, orderNo);
+
+        return JSONUtil.getReturnStrString(result, BaseConstant.SUCCESS);
     }
 
 }

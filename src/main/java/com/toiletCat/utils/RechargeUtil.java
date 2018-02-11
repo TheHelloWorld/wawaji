@@ -2,6 +2,7 @@ package com.toiletCat.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.constants.BaseConstant;
+import com.toiletCat.constants.RechargeConstant;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +18,6 @@ import java.util.TreeMap;
 public class RechargeUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(RechargeUtil.class);
-
-    private static final String WxPayRequestUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
     private RechargeUtil() {
         
@@ -224,7 +223,7 @@ public class RechargeUtil {
 
             logger.info(WeChatUtil.mapToXml(map));
 
-            String response = HttpClientUtil.httpsRequest(WxPayRequestUrl, BaseConstant.HTTP_POST,
+            String response = HttpClientUtil.httpsRequest(RechargeConstant.WE_CHAT_REQUEST_URL, BaseConstant.HTTP_POST,
                     WeChatUtil.mapToXml(map));
 
             logger.info("response is :" + response);
@@ -268,6 +267,8 @@ public class RechargeUtil {
             String paySign = WeChatUtil.weChatSign(returnJson);
 
             returnJson.put("paySign", paySign);
+
+            returnJson.put("orderNo", orderNo);
 
             return returnJson.toJSONString();
 

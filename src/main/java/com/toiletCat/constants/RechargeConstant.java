@@ -7,6 +7,16 @@ public class RechargeConstant {
     }
 
     /**
+     * 微信统一下单url
+     */
+    public static final String WE_CHAT_REQUEST_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+
+    /**
+     * 查询订单url
+     */
+    public static final String QUERY_ORDER_URL = "https://api.mch.weixin.qq.com/pay/orderquery";
+
+    /**
      * 回调通信成功返回code
      */
     public static final String SUCCESS_RETURN_CODE = "SUCCESS";

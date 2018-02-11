@@ -232,7 +232,7 @@ public class CommonHandle {
 
 	/*********************************cookie操作 结束*********************************************/
 
-	public static String getIpAddr(HttpServletRequest request) {
+	public static String getUserIp(HttpServletRequest request) {
 
 		String ip = request.getHeader("X-real-ip");
 

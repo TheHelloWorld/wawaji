@@ -30,10 +30,20 @@ public interface RechargeService {
     /**
      * 根据订单号获得充值结果
      *
+     * @param userNo 用户编号
      * @param orderNo 订单号
      * @return
      */
-    CommonResult<String> getRechargeResultByOrderNo(String orderNo);
+    CommonResult<String> getRechargeResultByOrderNo(String userNo, String orderNo);
+
+    /**
+     * 根据订单号取消充值操作
+     *
+     * @param userNo 用户编号
+     * @param orderNo 订单号
+     * @return
+     */
+    CommonResult cancelRechargeByOrderNo(String userNo, String orderNo);
 
     /**
      * 获得所有状态不为终态的交易的结果
