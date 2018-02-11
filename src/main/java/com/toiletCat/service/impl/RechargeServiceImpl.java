@@ -203,7 +203,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                     setOtherMsg();
 
-                    got("失败");
+                    got(RechargeConstant.FAIL_RETURN_MSG);
                     
                     return;
                 }
@@ -248,6 +248,10 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                     logger.error("getRechargeResultByParam transMoney err param:" + rechargeResultMap, e);
 
+                    setOtherMsg();
+
+                    got(RechargeConstant.FAIL_RETURN_MSG);
+
                     return;
                 }
 
@@ -281,7 +285,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                     setOtherMsg();
 
-                    got("交易金额错误");
+                    got(RechargeConstant.FAIL_RETURN_MSG);
 
                     return;
                 }
@@ -292,7 +296,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                     setOtherMsg();
 
-                    got("交易金额错误");
+                    got(RechargeConstant.FAIL_RETURN_MSG);
 
                     return;
                 }
@@ -351,6 +355,12 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 if(!updateRechargeResult.success()) {
 
                     logger.warn("getRechargeResultByParam recharge updateTradeStatusByOrderNo error:" + rechargeResultMap);
+
+                    setOtherMsg();
+
+                    got(RechargeConstant.FAIL_RETURN_MSG);
+
+                    return;
                 }
 
                 Date tradeTime = new Date();
@@ -387,6 +397,10 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 if(!addSpendResult.success()) {
 
                     logger.warn("getRechargeResultByParam spend updateTradeStatusByOrderNo error:" + rechargeResultMap);
+
+                    setOtherMsg();
+
+                    got(RechargeConstant.FAIL_RETURN_MSG);
 
                 }
 
