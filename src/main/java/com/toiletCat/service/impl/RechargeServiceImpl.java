@@ -177,7 +177,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 }
 
                 // 获得请求url并返回
-                got(RechargeUtil.getWxPayRequestInfo(orderNo, String.valueOf(amount), user.getOpenId(), ""));
+                got(RechargeUtil.getWxPayRequestInfo(orderNo, String.valueOf(amount), user.getOpenId(), ip));
 
             }
         }, true, "userRecharge", json);

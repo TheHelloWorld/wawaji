@@ -234,7 +234,7 @@ public class CommonHandle {
 
 	public static String getIpAddr(HttpServletRequest request) {
 
-		String ip = request.getHeader("X-Real-IP");
+		String ip = request.getHeader("X-real-ip");
 
 		if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
 

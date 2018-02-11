@@ -51,7 +51,7 @@ public class RechargeController {
      * @return
      */
     @RequestMapping(value = "/rechargeResult", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String rechargeResult(HttpServletRequest request, HttpServletResponse response) {
+    public String rechargeResult(HttpServletRequest request) {
 
         try {
 
@@ -77,14 +77,18 @@ public class RechargeController {
 
             Map<String, String> requestMap = WeChatUtil.xmlToMap(xmlString);
 
-            CommonResult<String> result = rechargeService.getRechargeResultByParam(requestMap);
+            logger.info("rechargeResult requestMap:" + requestMap);
 
-            if(result.success()) {
+            return returnXML(RechargeConstant.SUCCESS_RETURN_CODE, RechargeConstant.SUCCESS_RETURN_MSG);
 
-                return returnXML(RechargeConstant.SUCCESS_RETURN_CODE, RechargeConstant.SUCCESS_RETURN_MSG);
-            }
-
-            return returnXML(RechargeConstant.FAIL_RETURN_CODE, result.getValue());
+//            CommonResult<String> result = rechargeService.getRechargeResultByParam(requestMap);
+//
+//            if(result.success()) {
+//
+//                return returnXML(RechargeConstant.SUCCESS_RETURN_CODE, RechargeConstant.SUCCESS_RETURN_MSG);
+//            }
+//
+//            return returnXML(RechargeConstant.FAIL_RETURN_CODE, result.getValue());
 
         } catch(Exception e) {
 
