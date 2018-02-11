@@ -202,7 +202,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 if(!RechargeConstant.RETURN_CODE.equals(rechargeResultMap.get("return_code"))) {
 
                     setOtherMsg();
-                    
+
                     got("失败");
                     
                     return;
