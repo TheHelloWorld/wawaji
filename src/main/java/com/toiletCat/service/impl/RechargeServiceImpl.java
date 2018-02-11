@@ -251,7 +251,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
-                DecimalFormat df = new DecimalFormat(".##");
+                DecimalFormat df = new DecimalFormat("######0.00");
 
                 MoneyForCoin coin = moneyForCoinService.getMoneyForCoinByMoney(df.format(money));
 
