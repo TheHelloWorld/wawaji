@@ -8,10 +8,6 @@ var clickMoney = "";
 
 var len = 0;
 
-$(function () {
-    recharge();
-});
-
 function recharge() {
 
     $.ajax({
@@ -172,6 +168,10 @@ function recharge() {
             str += "</div>";
 
             $("body").append(str);
+
+            $(".recharge").animate({
+                top:recharge_scroll + "px"
+            },500);
         }
     });
 }
@@ -196,7 +196,12 @@ function clickThis(id, amount) {
 // 关闭充值页
 function closeRecharge() {
 
-    window.location.href="";
+    $(".recharge").animate({
+        top: recharge_height+"px"
+    },500);
+    setTimeout(function rechargeRemove() {
+        $(".recharge").remove()
+    },500);
 }
 
 // 充值操作
@@ -268,7 +273,7 @@ function rechargeThis() {
                         // 我方订单号
                         sessionStorage["toiletCatUserOrderNo"] = result["orderNo"];
 
-                        // window.location.href="/toiletCat/recharge/rechargeResult.html";
+                         window.location.href="/toiletCat/recharge/rechargeResult.html";
 
                         // 微信前端返回支付取消
                     } else if(res.err_msg == "get_brand_wcpay_request:cancel") {
