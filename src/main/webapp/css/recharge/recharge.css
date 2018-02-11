@@ -6,6 +6,10 @@
     height: 10%;
 }
 
+.recharge-selected {
+    border-bottom: 0.0625rem solid saddlebrown;
+}
+
 .rechargeReturn {
     height: 60%;
     width: 60%;

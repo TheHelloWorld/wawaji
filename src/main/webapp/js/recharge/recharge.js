@@ -2,6 +2,10 @@ var recharge_scroll = $(window).scrollTop();
 
 var recharge_height = $(window).height();
 
+var clickFlag = true;
+
+var clickMoney = "";
+
 function recharge() {
 
     $.ajax({
@@ -57,7 +61,7 @@ function recharge() {
                 if(list[i]["rechargeLimit"] != 0) {
                     recharge_class = "recharge-coin-limit";
                     if(list[i]["userLimitFlag"] < list[i]["rechargeLimit"]) {
-                        str += "	<div class='recharge-block' onclick=rechargeThis('" + list[i]["money"] + "') >";
+                        str += "	<div class='recharge-block' onclick=clickThis('" + list[i]["money"] + "') >";
                         str += "	<img class='recharge-limit' src='/image/recharge/limit_recharge.png'>";
                     } else {
                         str += "	<div class='recharge-block' >";
@@ -67,7 +71,7 @@ function recharge() {
                     }
                     // 判断是否首充
                 } else if(list[i]["firstFlag"] != 0) {
-                    str += "	<div class='recharge-block' onclick=rechargeThis('" + list[i]["money"] + "') >";
+                    str += "	<div class='recharge-block' onclick=clickThis('" + list[i]["money"] + "') >";
                     if(list[i]["userFirstFlag"] == "is_first") {
                         recharge_class = "recharge-coin-first";
                         str += "	<img class='recharge-first' src='/image/recharge/first_recharge.png'>";
@@ -75,7 +79,7 @@ function recharge() {
                         coinText = "充" + coinText + "送" + list[i]["giveCoin"];
                     }
                 } else {
-                    str += "	<div class='recharge-block' onclick=rechargeThis('" + list[i]["money"] + "') >";
+                    str += "	<div class='recharge-block' onclick=clickThis('" + list[i]["money"] + "') >";
                 }
 
                 str += "		<div class='" + recharge_class + "' >";
@@ -98,14 +102,32 @@ function recharge() {
                 str += "	</div>";
             }
 
+            str += "<div onclick='rechargeThis()'>";
+            str += "充值";
+            str += "</div>";
+
             str += "</div>";
 
             $("body").append(str);
+
             $(".recharge").animate({
                 top:recharge_scroll + "px"
             },500);
         }
     });
+}
+
+function clickThis(amount) {
+
+    $(".recharge-block").each(function() {
+
+        $(this).removeClass('recharge-selected');
+    });
+
+    $(this).addClass('recharge-selected');
+
+    clickMoney = amount;
+
 }
 
 // 关闭充值页
@@ -120,13 +142,20 @@ function closeRecharge() {
 }
 
 // 充值操作
-function rechargeThis(amount) {
+function rechargeThis() {
+
+    if(!clickFlag) {
+        return;
+    }
+
+    clickFlag = false;
+
     $.ajax({
         url:"/toiletCat/api/recharge/userRecharge.action",
         type:"POST",
         async:false,
         data:{
-            amount: amount,
+            amount: clickMoney,
             rechargeType: "wxpay",
             userNo: sessionStorage["toiletCatUserNo"]
         },
@@ -159,6 +188,7 @@ function rechargeThis(amount) {
                     "paySign": result["paySign"] //微信签名
                 },
                 function (res) {
+
                     // 微信前端返回支付成功/失败(终态)
                     if (res.err_msg == "get_brand_wcpay_request:ok" || res.err_msg == "get_brand_wcpay_request:fail") {
 
@@ -169,6 +199,8 @@ function rechargeThis(amount) {
 
                         cancelRecharge(result["orderNo"]);
                     }
+
+                    clickFlag = true;
                 }
             );
         }
@@ -214,6 +246,8 @@ function queryResultByOrderNo(orderNo) {
                 // 用户游戏币数
                 sessionStorage["toiletCatUserCoin"] = result["userCoin"];
 
+                updateUserCoin(sessionStorage["toiletCatUserCoin"]);
+
                 toiletCatMsg("充值成功", "closeRecharge()");
 
             }
@@ -254,12 +288,16 @@ function cancelRecharge(orderNo) {
 
 // 变更充值后金额
 function updateUserCoin(nowCoin) {
+
     // 游戏房间主页
     $("#gameRoomIndexUserCoin").html(nowCoin);
+
     // 用户充值页
     $("#user-recharge-coin").html(nowCoin);
+
     // 用户主页
     $("#userIndexUserCoin").html(nowCoin);
+
     // 游戏页
     $(".showCurCoin").html(nowCoin);
 }
