@@ -103,6 +103,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     // 用户名
                     user.setUserName(RandomIntUtil.getRandomString(10));
 
+                    user.setOpenId("0");
+
                     String invitationCode = "";
 
                     try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
