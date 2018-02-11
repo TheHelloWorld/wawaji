@@ -154,7 +154,7 @@ function recharge() {
                 str += "	</div>";
             }
 
-            str += "<div class='recharge-button' onclick='rechargeThis()'>";
+            str += "<div id='recharge_button' class='recharge-button' onclick='rechargeThis()'>";
 
             str += "    充值";
 
@@ -211,6 +211,8 @@ function rechargeThis() {
 
     clickFlag = false;
 
+    $("#recharge_button").html("支付中...");
+
     $.ajax({
         url:"/toiletCat/api/recharge/userRecharge.action",
         type:"POST",
@@ -255,65 +257,26 @@ function rechargeThis() {
                     // 微信前端返回支付成功/失败(终态)
                     if (res.err_msg == "get_brand_wcpay_request:ok" || res.err_msg == "get_brand_wcpay_request:fail") {
 
-                        queryResultByOrderNo(result["orderNo"]);
+                        clickFlag = true;
+
+                        $("#recharge_button").html("充值");
+
+                        // 我方订单号
+                        sessionStorage["toiletCatUserOrderNo"] = result["orderNo"];
+
+                        window.location.href="/toiletCat/recharge/rechargeResult.html";
 
                         // 微信前端返回支付取消
                     } else if(res.err_msg == "get_brand_wcpay_request:cancel") {
 
+                        clickFlag = true;
+
+                        $("#recharge_button").html("充值");
+
                         cancelRecharge(result["orderNo"]);
                     }
-
-                    clickFlag = true;
                 }
             );
-        }
-    });
-}
-
-// 根据订单号查询支付结果
-function queryResultByOrderNo(orderNo) {
-
-    $.ajax({
-        url:"/toiletCat/api/recharge/getRechargeResultByOrderNo.action",
-        type:"POST",
-        async:false,
-        data:{
-            orderNo: orderNo,
-            userNo: sessionStorage["toiletCatUserNo"]
-        },
-        success:function(data) {
-
-            // 转换数据
-            if (typeof(data) == "string") {
-                data = eval("(" + data + ")");
-            }
-
-            // 判断是否成功
-            if (data["is_success"] != "success") {
-                alert(data["result"]);
-                return;
-            }
-
-            var result = data["result"];
-
-            if (typeof(result) == "string") {
-                result = eval("(" + result + ")");
-            }
-
-            if(result["result"] == "fail") {
-
-                toiletCatMsg("充值失败 QAQ", "closeRecharge()");
-
-            } else if(result["result"] == "success") {
-
-                // 用户游戏币数
-                sessionStorage["toiletCatUserCoin"] = result["userCoin"];
-
-                updateUserCoin(sessionStorage["toiletCatUserCoin"]);
-
-                toiletCatMsg("充值成功", "closeRecharge()");
-
-            }
         }
     });
 }
