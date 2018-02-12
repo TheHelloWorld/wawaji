@@ -316,7 +316,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                     // 修改充值记录交易状态
                     CommonResult updateRechargeResult = userRechargeRecordService.
-                            updateTradeStatusByOrderNo(orderNo, TradeStatus.FAIL.getStatus());
+                            updateTradeStatusByOrderNo(orderNo, TradeStatus.CANCEL.getStatus());
 
                     if(!updateRechargeResult.success()) {
 
@@ -330,48 +330,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                         return;
                     }
 
-                    Date tradeTime = new Date();
-
-                    // 添加用户消费记录
-                    // 用户消费记录
-                    UserSpendRecord userSpendRecord = new UserSpendRecord();
-
-                    //  消费日期
-                    userSpendRecord.setTradeDate(DateUtil.getDate());
-
-                    // 订单号
-                    userSpendRecord.setOrderNo(orderNo);
-
-                    // 消费时间
-                    userSpendRecord.setTradeTime(tradeTime);
-
-                    // 消费类型(充值)
-                    userSpendRecord.setTradeType(TradeType.RECHARGE.getType());
-
-                    Integer rechargeCoin = getCoinByMoneyForCoin(userNo, coin);
-
-                    // 消费游戏币
-                    userSpendRecord.setCoin(rechargeCoin);
-
-                    // 用户编号
-                    userSpendRecord.setUserNo(userNo);
-
-                    // 消费状态
-                    userSpendRecord.setTradeStatus(TradeStatus.FAIL.getStatus());
-
-                    CommonResult addSpendResult = userSpendRecordService.addUserSpendRecord(userSpendRecord);
-
-                    if(!addSpendResult.success()) {
-
-                        logger.warn("updateRechargeResult spend addUserSpendRecord error:" + userSpendRecord);
-
-                        setOtherMsg();
-
-                        got(RechargeConstant.FAIL_RETURN_MSG);
-
-                    }
-
-                    got(TradeStatus.FAIL.getStatus());
+                    got(TradeStatus.CANCEL.getStatus());
 
                     return;
                 }

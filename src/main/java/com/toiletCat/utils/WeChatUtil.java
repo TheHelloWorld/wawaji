@@ -39,7 +39,7 @@ public class WeChatUtil {
     // 微信获取code url
     private final static String REQUEST_USER_CODE_URL =
             "https://open.weixin.qq.com/connect/oauth2/authorize?" +
-                    "appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=toiletCat#wechat_redirect";
+                    "appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=toiletCat#wechat_redirect";
     // 微信获取用户open_id url
     private final static String REQUEST_USER_OPEN_ID_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?" +
             "appid=%s&secret=%s&code=%s&grant_type=authorization_code";
