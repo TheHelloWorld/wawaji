@@ -311,7 +311,8 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                     DecimalFormat df = new DecimalFormat("######0.00");
 
-                    MoneyForCoin coin = moneyForCoinService.getMoneyForCoinByMoney(df.format(orderAmount.getValue().doubleValue()));
+                    MoneyForCoin coin = moneyForCoinService.getMoneyForCoinByMoney(
+                            df.format(orderAmount.getValue().doubleValue()));
 
                     // 修改充值记录交易状态
                     CommonResult updateRechargeResult = userRechargeRecordService.
