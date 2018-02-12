@@ -3,10 +3,10 @@
 }
 
 /* 自定义字体 */
-@font-face {
-    font-family: customFont;
-    src: url('/css/font/font.ttf');
-}
+/*@font-face {*/
+    /*font-family: customFont;*/
+    /*src: url('/css/font/font.ttf');*/
+/*}*/
 
 .toiletCat-msg {
     text-align: center;
