@@ -25,7 +25,7 @@ public final class ExecTemplate {
         String inputParam = JSON.toJSONString(params, SerializerFeature.WriteMapNullValue,
                 SerializerFeature.WriteNullListAsEmpty);
 
-        logger.info(method + " start params:" + inputParam);
+        logger.info(method + " start params: " + inputParam);
 
         CommonResult commonResult = new CommonResult();
 
@@ -33,7 +33,7 @@ public final class ExecTemplate {
             callback.setResult(commonResult);
 
             // 参数校验
-            if(!callback.checkParam(checkFlag, JSONObject.parseObject(inputParam), logger, method)) {
+            if(!checkParam(checkFlag, JSONObject.parseObject(inputParam), logger, method)) {
 
                 callback.setCodeMessage(CommonCodeMessage.PARAM_ERROR);
 
@@ -42,9 +42,10 @@ public final class ExecTemplate {
 
             callback.exec();
 
-        } catch (Throwable e) {
+        } catch (Throwable t) {
 
-            logger.error(BaseConstant.LOG_ERR_MSG +" "+ method + " params:" + inputParam + "error: " + e, e);
+            logger.error(BaseConstant.LOG_ERR_MSG +" "+ method + " params: " + inputParam + " error: " + t.getMessage(),
+                    t);
 
             callback.setCodeMessage(CommonCodeMessage.SYSTEM_ERROR);
         }
@@ -52,6 +53,34 @@ public final class ExecTemplate {
         logger.info(method + " end");
 
         return callback.getResult();
+    }
+
+    /**
+     * 检查参数是否为空
+     * @param checkFlag 是否做检查标志位
+     * @param json 参数
+     * @param logger 日志
+     * @param method 方法
+     * @return
+     */
+    private static Boolean checkParam(Boolean checkFlag, JSONObject json, Logger logger, String method) {
+
+        if(!checkFlag) {
+
+            return true;
+        }
+
+        for(String key : json.keySet()) {
+
+            if(json.get(key) == null) {
+
+                logger.error(method + " param " + key + " is null");
+
+                return false;
+            }
+        }
+
+        return true;
     }
 
 
