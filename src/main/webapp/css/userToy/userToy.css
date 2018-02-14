@@ -18,19 +18,11 @@
 
 .user-toy-handle-select {
     width: 35%;
-    border-radius: 0.93rem;
-    border: 0.125rem solid sandybrown;
-    text-align: center;
-    font-size: 2rem;
+    height: 15%;
     float: left;
     margin-left: 10%;
-    color: #ffffff;
     margin-bottom: 5%;
     margin-top: 5%;
-}
-
-.user-toy-handle-selected {
-    background: #fe8820;
 }
 
 .user-toy-left {

@@ -28,13 +28,13 @@ $(function() {
 
     var indexBodyDivHeight = $(".index-body-div").height();
 
-    var addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+    var addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2) + $(".default-header").height();
 
     $(".index-body-div").scroll(function(){
 
         if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
             nextPage();
-            addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2);
+            addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2) + $(".default-header").height();
         }
     });
 
@@ -139,11 +139,11 @@ function getUserSeeGameRoomListByPage(nowPage) {
                 str += "<div class='toiletCat-col-xs-6' onclick='toGamePage("+list[i]["gameRoomNo"]+")'>";
                 str += "    <div class='machine-panel panel-info'>";
                 str += "        <div class='panel-body'>";
-                str += "            <div class='toy-img index-img' style='text-align:center;'>";
+                str += "            <div class='index-img' style='text-align:center;'>";
                 str += "                <img height='100px' maxwidth=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
                 str += "            </div>";
                 str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
-                str += "            <div><span class='my-inline-right' ><img src='/image/background/coin_img.png' />:" + list[i]["toyNowCoin"] + "</span></div>";
+                str += "            <div class='my-inline-right'><span><img height='100%' src='/image/background/coin_img.png' />:" + list[i]["toyNowCoin"] + "</span></div>";
                 str += "            <div><span>在线人数:<span id='viewer"+list[i]["gameRoomNo"]+"'>" + list[i]["viewer"] + "</span></span></div>";
                 str += "        </div>";
                 str += "    </div>";

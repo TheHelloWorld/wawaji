@@ -137,6 +137,7 @@
     font-size: 1.5rem;
     font-weight: bold;
     margin-top: 2%;
+    color: #ffffff;
 }
 
 .in-use {
@@ -304,7 +305,6 @@
 }
 
 .return-button {
-    transform: rotate(-90deg);
     float: left;
     margin-left: 2%;
     margin-top:1%;
