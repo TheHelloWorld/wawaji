@@ -112,8 +112,8 @@ function getAllUserToyByUserNo(nowPage) {
                 str += "            <div class='toy-img index-img' style='text-align: center'>";
                 str += "                <img height='100px' maxwidth=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
                 str += "            </div>";
-                str += "            <div style='margin-bottom: 1%'><span>" + list[i]["toyName"] + "</span></div>";
-                str += "            <div style='margin-bottom: 1%'><span>" + list[i]["unHandleNum"] + "/"+list[i]["deliverNum"]+"</span></div>";
+                str += "            <div style='margin-bottom: 1%; margin-left: 5%;'><span>" + list[i]["toyName"] + "</span></div>";
+                str += "            <div style='margin-bottom: 1%; margin-left: 5%;'><span>" + list[i]["unHandleNum"] + "/"+list[i]["deliverNum"]+"</span></div>";
                 str += "        </div>";
                 str += "    </div>";
                 str += "</div>";

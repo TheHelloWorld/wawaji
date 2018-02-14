@@ -142,9 +142,9 @@ function getUserSeeGameRoomListByPage(nowPage) {
                 str += "            <div class='index-img' style='text-align:center;'>";
                 str += "                <img height='100px' maxwidth=100% src='" + list[i]["toyImg"] + "' class='index-img' />";
                 str += "            </div>";
-                str += "            <div style='margin-bottom: 2px'><span>" + list[i]["toyName"] + "</span></div>";
-                str += "            <div class='my-inline-right'><span><img height='100%' src='/image/background/coin_img.png' />:" + list[i]["toyNowCoin"] + "</span></div>";
-                str += "            <div><span>在线人数:<span id='viewer"+list[i]["gameRoomNo"]+"'>" + list[i]["viewer"] + "</span></span></div>";
+                str += "            <div style='margin-bottom: 1%; margin-left: 5%'><span>" + list[i]["toyName"] + "</span></div>";
+                str += "            <div class='my-inline-right'><span><img width='20%' src='/image/background/coin_img.png' align='absmiddle' />:" + list[i]["toyNowCoin"] + "</span></div>";
+                str += "            <div style='margin-left: 5%'><span>在线人数:<span id='viewer"+list[i]["gameRoomNo"]+"'>" + list[i]["viewer"] + "</span></span></div>";
                 str += "        </div>";
                 str += "    </div>";
                 str += "</div>";
@@ -178,7 +178,7 @@ function setUserInfo() {
     str += "        <img src='"+userImg+"' class='user-img'>";
     str += "    </div>";
     str += "    <div class='user-info-div-user-coin'>";
-    str += "        <img src='/image/background/coin_img.png' /><div id='gameRoomIndexUserCoin' >" + userCoin + "</div>";
+    str += "        <img src='/image/background/coin_img.png' align='absmiddle' /><span id='gameRoomIndexUserCoin' >" + userCoin + "</span>";
     str += "    </div>";
 
     $("#userInfo").append(str);

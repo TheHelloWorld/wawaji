@@ -190,6 +190,7 @@
     margin: 1% 1%;
     width: 48%;
     color: #a7652f;
+    font-weight: bold;
 }
 
 .footer-button {
@@ -243,7 +244,8 @@
 
 .my-inline-right {
     height: 15%;
-    margin-right: 10%
+    margin-right: 10%;
+    margin-left: 5%;
 }
 
 .my-inline-left {

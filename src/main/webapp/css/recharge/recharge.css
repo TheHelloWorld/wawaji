@@ -28,7 +28,8 @@
 .recharge-button {
     width: 80%;
     margin-left: 10%;
-    margin-top: 115%;
+    top: 86%;
+    position: absolute;
     font-size: 1.5rem;
     background: yellowgreen;
     border-radius: 0.9375rem;
@@ -63,18 +64,24 @@
 
 .recharge-coin-first {
     float: left;
-    margin-top: 10%;
+    width: 100%;
+    margin-top: 5%;
     margin-left: 3%;
-    font-size: 1.2rem;
-    margin-bottom: 6%;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 1%;
+    text-align: center;
 }
 
 .recharge-coin-limit {
     float: left;
-    margin-top: 10%;
+    width: 100%;
+    margin-top: 5%;
     margin-left: 3%;
-    font-size: 1.5rem;
-    margin-bottom: 6%;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 1%;
+    text-align: center;
 }
 
 .recharge-block {
@@ -114,12 +121,17 @@
 }
 
 .recharge-limit {
-    float: right;
+    float: left;
+    margin-left: 25%;
+    top: 9%;
+    position: absolute;
 }
 
 .recharge-first {
-    float: right;
-    width: 30%;
+    float: left;
+    margin-left: 20%;
+    top: 9%;
+    position: absolute;
 }
 
 .recharge-money {
@@ -139,11 +151,9 @@
     float: left;
     margin-top: 5%;
     text-align: center;
-    background: gainsboro;
     font-size: 1rem;
-    width: 70%;
-    margin-left: 15%;
-    border-radius: 1.25rem;
+    font-weight: bold;
+    width: 100%;
 }
 
 .recharge-coin-text {

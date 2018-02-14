@@ -79,15 +79,15 @@ function recharge() {
 
                     if(list[i]["userLimitFlag"] < list[i]["rechargeLimit"]) {
 
-                        str += "	<div id='recharge-block-" + i + "' class='recharge-block' style='height: " + blackHeight + "px' onclick=clickThis('" + i + "','" + list[i]["money"] + "') >";
-
                         str += "	<img class='recharge-limit' src='/image/recharge/limit_recharge.png'>";
+
+                        str += "	<div id='recharge-block-" + i + "' class='recharge-block' style='height: " + blackHeight + "px' onclick=clickThis('" + i + "','" + list[i]["money"] + "') >";
 
                     } else {
 
-                        str += "	<div id='recharge-block-" + i + "' class='recharge-block' style='height: " + blackHeight + "px' >";
-
                         str += "	<img class='recharge-limit' src='/image/recharge/limit_recharge.png'>";
+
+                        str += "	<div id='recharge-block-" + i + "' class='recharge-block' style='height: " + blackHeight + "px' >";
 
                         money_class = "recharge-money-disabled";
 
