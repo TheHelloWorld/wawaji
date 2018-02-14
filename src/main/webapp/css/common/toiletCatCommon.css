@@ -167,17 +167,13 @@
     box-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, .05)
 }
 
-.toy-img {
-    border-top: 0.1875rem solid #faa44d;
-    border-left: 0.3125rem solid #faa44d;
-}
-
 .machine-col-xs-6 {
     position: relative;
     min-height: 0.0625rem;
     padding-left: 0.9375rem;
     float: left;
-    width: 50%
+    width: 50%;
+
 }
 
 .custom-font {
@@ -190,8 +186,8 @@
     position: relative;
     min-height: 0.0625rem;
     float: left;
-    margin: 0 1%;
-    width: 48%
+    margin: 1% 1%;
+    width: 48%;
 }
 
 .footer-button {
@@ -236,6 +232,7 @@
 }
 
 .my-inline-right {
+    height: 15%;
     margin-right: 10%
 }
 
