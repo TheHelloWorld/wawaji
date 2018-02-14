@@ -17,21 +17,23 @@
 }
 
 .user-spend-title {
-    font-size: 2rem;
+    font-size: 1.25rem;
     border-bottom: 0.0625rem solid saddlebrown;
 }
 
 .user-spend-coin {
+    line-height: 100%;
     margin-top: 5%;
-    font-size: 2.25rem;
+    font-size: 1.7rem;
     opacity: 1;
+    margin-bottom: -5%;
 }
 
 .user-spend-result {
     width: 40%;
     margin-left: 30%;
     margin-top: 5%;
-    font-size: 2.25rem;
+    font-size: 1.5rem;
     border-radius: 0.9375rem;
     opacity: 1;
 }

@@ -59,7 +59,7 @@
     width: 37.5%;
     margin-left: 10%;
     margin-top: 10%;
-    font-size: 3.25rem;
+    font-size: 2rem;
     background: yellowgreen;
     border-radius: 0.9375rem;
     opacity: 1;
@@ -70,7 +70,7 @@
     width: 37.5%;
     margin-left: 5%;
     margin-top: 10%;
-    font-size: 3.25rem;
+    font-size: 2rem;
     background: indianred;
     border-radius: 0.9375rem;
     opacity: 1;
@@ -189,6 +189,7 @@
     float: left;
     margin: 1% 1%;
     width: 48%;
+    color: #a7652f;
 }
 
 .footer-button {

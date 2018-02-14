@@ -26,15 +26,15 @@ $(function() {
 
     $("#loading").hide();
 
-    var indexBodyDivHeight = $(".index-body-div").height();
+    var indexBodyDivHeight = $(".index-body-div").height() + $("#banner-box").height() + $(".default-header").height();
 
-    var addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2) + $(".default-header").height();
+    var addHeight = $("#main").height();
 
     $(".index-body-div").scroll(function(){
 
         if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
             nextPage();
-            addHeight = $("#main").height() + $("#banner-box").height() + ($(".default-height").height() * 2) + $(".default-header").height();
+            addHeight = $("#main").height();
         }
     });
 
