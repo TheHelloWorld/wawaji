@@ -113,16 +113,18 @@ function getAllUserCatchRecordByUserNo(userNo) {
                 str += "        <div class='catch-toy-img'>";
                 str += "            <img maxwidth=100% src='" + list[i]["toyImg"] + "' />";
                 str += "        </div>";
-                var newDate = new Date();
-                newDate.setTime(list[i]["catchTime"]);
-                str += "        <div class='catch-toy-time' ><span>" + newDate.format('yyyy-MM-dd hh:mm:ss') + "</span>";
+                str += "        <div class='catch-toy-time' >";
                 str += "            <div class='catch-toy-result' >";
                 if(list[i]["catchResult"] == "1") {
-                    str += "            <span>抓取成功</span>";
+                    str += "            <img src='/image/userCatch/catch_success.png'>";
                 } else {
-                    str += "            <span>抓取失败</span>";
+                    str += "            <img src='/image/userCatch/catch_fail.png'>";
                 }
                 str += "            </div>";
+                str += "            <div>" + list[i]["toyName"] + "</div>";
+                var newDate = new Date();
+                newDate.setTime(list[i]["catchTime"]);
+                str += "            <div>" + newDate.format('yyyy-MM-dd hh:mm:ss') + "</div>";
                 str += "        </div>";
                 str += "    </div>";
                 str += "</div>";

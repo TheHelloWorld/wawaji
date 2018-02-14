@@ -5,6 +5,7 @@
     background: url("/image/userCatch/catch_record_background.png");
     background-size: 100% 100%;
     margin-top: 2%;
+    color: #a7652f;
 }
 
 .catch-toy-div {
@@ -15,8 +16,7 @@
 }
 
 .catch-toy-img {
-    padding-top: 1%;
-    padding-bottom: 1%;
+    padding: 2% 2%;
     float: left;
     width: 30%;
     height: 100%;
@@ -32,11 +32,11 @@
 
 .catch-toy-time {
     float: left;
-    margin-left: 25%;
-    margin-top: 8%;
+    margin-left: 5%;
+    margin-top: 2.5%;
 }
 
 .catch-toy-result {
-    margin-top: 13%;
+    margin-top: 5%;
 
 }

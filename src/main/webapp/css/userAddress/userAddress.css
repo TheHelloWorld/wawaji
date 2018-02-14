@@ -4,6 +4,7 @@
     background: url("/image/userAddress/address_background.png");
     background-size: 100% 100%;
     margin-top: 2%;
+    color: #a7652f;
 }
 
 .user-address-line-default {
@@ -38,6 +39,7 @@
 }
 
 .add-user-address {
+    text-align: center;
     margin-top: 2%;
     height: 100%;
 }
