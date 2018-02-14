@@ -1,5 +1,6 @@
 .user-address-line {
-    background: gainsboro;
+    width: 100%;
+    background: url("/image/userAddress/address_background.png");
     border-radius: 1.875rem;
     border: 0.125rem solid #666615;
     margin-top: 2%;

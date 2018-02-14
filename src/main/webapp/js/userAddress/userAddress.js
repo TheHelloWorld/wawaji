@@ -77,7 +77,7 @@ function getAllUserAddressByUserNo(userNo) {
             for(var i = 0; i<list.length; i++) {
 
                 str += "<div class='user-address-line' id='userAddress"+list[i]["id"]+"' class='row'>";
-                str += "    <div class='panel-body' >";
+                // str += "    <div class='panel-body' >";
                 str += "        <div class='my-margin-bottom'>";
                 str += "            <span class='my-inline-right' >收货人:" + list[i]["userName"] + "</span>";
                 str += "            <span class='my-inline-left' >手机号:" + list[i]["mobileNo"] + "</span>";
@@ -89,7 +89,7 @@ function getAllUserAddressByUserNo(userNo) {
                 str += "            <a href='javascript:void(0);' onclick='confirmDeleteUserAddress(" + list[i]["id"] + ")'><img src='/image/userAddress/remove.png' />删除</a>";
                 str += "        </div>";
                 str += "    </div>";
-                str += "</div>"
+                // str += "</div>";
                 str += "<div id='userAddressImg"+list[i]["id"]+"' style='text-align: center'>";
 
                 str += "</div>";
