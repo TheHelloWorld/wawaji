@@ -113,8 +113,8 @@ function getAllUserSpendRecordByUserNo(nowPage) {
                 str += "                <p>" + newDate.format('yyyy-MM-dd hh:mm:ss') + "</p>";
                 str += "			</div>";
                 str += "			<div class='user-spend-coin'>";
-                str += "                <img width='10%' align='absmiddle' src='/image/background/coin_img.png'>";
-                str += "                <span style='height: 100%;margin-bottom: 5%'>&nbsp;" + list[i]["coin"] + "</span>";
+                str += "                <img width='11%' align='absbottom' src='/image/background/coin_img.png'>";
+                str += "                <span style='height: 100%;margin-bottom: 5%'>" + list[i]["coin"] + "</span>";
                 str += "			</div>";
                 str += "			<div class='user-spend-result'>";
                 if(list[i]["tradeStatus"] == "10") {
