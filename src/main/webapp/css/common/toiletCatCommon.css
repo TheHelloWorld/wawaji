@@ -210,6 +210,14 @@
     position: fixed;
     bottom: 0;
     height: 8%;
+    width: 10%;
+}
+
+.footer-img-user-toy {
+    z-index: 999;
+    position: fixed;
+    bottom: 0;
+    height: 8%;
     width: 12%;
 }
 

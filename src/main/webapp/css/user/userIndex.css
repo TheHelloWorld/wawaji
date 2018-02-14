@@ -22,7 +22,7 @@ body {
 
 .center-content {
     width: 90%;
-    font-size: 2.25rem;
+    font-size: 1rem;
     font-weight: bold;
     margin-top: 3%;
     margin-left: 5%;
@@ -54,15 +54,11 @@ body {
     font-size: 1.25rem;
     margin-top: 0.625rem;
     margin-left: 5%;
-    background: #fe8823;
-    border-radius: 1.875rem;
+    background: url("/image/userIndex/button_background.png");
+    background-size: 100% 100%;
 }
 
 .text {
-    color: whitesmoke;
-    margin-top: 1%;
-    font-size: 2.25rem;
-    font-weight: bold;
     float: left;
     margin-left: 22%;
 }
