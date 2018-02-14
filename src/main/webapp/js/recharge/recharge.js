@@ -38,23 +38,13 @@ function recharge() {
 
             str += "			<div style='float:left;height: 100%'>";
 
-            str += "				<img style='-webkit-transform:rotate(-90deg);' src='/image/returnButton.png' class='rechargeReturn' onclick='closeRecharge()'/>";
+            str += "				<img src='/image/button/back_button.png' class='rechargeReturn' onclick='closeRecharge()'/>";
 
             str += "			</div>";
 
             str += "		<div class='recharge-user-coin' >";
 
-            str += "			<div class='recharge-coin' >";
-
-            str += "				<img src='/image/background/coin_img.png' width=100% height=100% />";
-
-            str += "			</div>";
-
-            str += "			<div class='recharge-coin' id='user-recharge-coin' >";
-
-            str += "				" + sessionStorage["toiletCatUserCoin"];
-
-            str += "			</div>";
+            str += "			<img src='/image/background/coin_img.png' align='absmiddle' width=30% />"+  sessionStorage["toiletCatUserCoin"];
 
             str += "		</div>";
 
@@ -68,6 +58,8 @@ function recharge() {
 
             len = list.length;
 
+            var blackHeight = recharge_height / 5;
+
             for(var i = 0; i<list.length; i++) {
 
                 var money_class = "recharge-money";
@@ -76,7 +68,7 @@ function recharge() {
 
                 var coinText = list[i]["coinText"];
 
-                var money = "¥" + list[i]["money"];
+                var money = "<img src='/image/recharge/rmb.png' align='absbottom' width=15%>" + list[i]["money"];
 
                 var recharge_class = "recharge-coin";
 
@@ -87,13 +79,13 @@ function recharge() {
 
                     if(list[i]["userLimitFlag"] < list[i]["rechargeLimit"]) {
 
-                        str += "	<div id='recharge-block-" + i + "' class='recharge-block' onclick=clickThis('" + i + "','" + list[i]["money"] + "') >";
+                        str += "	<div id='recharge-block-" + i + "' class='recharge-block' style='height: " + blackHeight + "px' onclick=clickThis('" + i + "','" + list[i]["money"] + "') >";
 
                         str += "	<img class='recharge-limit' src='/image/recharge/limit_recharge.png'>";
 
                     } else {
 
-                        str += "	<div id='recharge-block-" + i + "' class='recharge-block' >";
+                        str += "	<div id='recharge-block-" + i + "' class='recharge-block' style='height: " + blackHeight + "px' >";
 
                         str += "	<img class='recharge-limit' src='/image/recharge/limit_recharge.png'>";
 
@@ -105,7 +97,7 @@ function recharge() {
                     // 判断是否首充
                 } else if(list[i]["firstFlag"] != 0) {
 
-                    str += "	<div id='recharge-block-" + i + "' class='recharge-block' onclick=clickThis('" + i + "','" + list[i]["money"] + "') >";
+                    str += "	<div id='recharge-block-" + i + "' class='recharge-block' style='height: " + blackHeight + "px' onclick=clickThis('" + i + "','" + list[i]["money"] + "') >";
 
                     if(list[i]["userFirstFlag"] == "is_first") {
 
@@ -120,18 +112,18 @@ function recharge() {
 
                 } else {
 
-                    str += "	<div id='recharge-block-" + i + "' class='recharge-block' onclick=clickThis('" + i + "','" + list[i]["money"] + "') >";
+                    str += "	<div id='recharge-block-" + i + "' class='recharge-block' style='height: " + blackHeight + "px' onclick=clickThis('" + i + "','" + list[i]["money"] + "') >";
                 }
 
                 str += "		<div class='" + recharge_class + "' >";
 
-                str += "			<img src='/image/background/coin_img.png' width=100% height=100% />";
+                str +=              coinText;
 
                 str += "		</div>";
 
-                str += "		<div class='" + recharge_class + "' >";
+                str += "		<div class='recharge-coin-img' >";
 
-                str +=              coinText;
+                str += "			<img src='/image/recharge/coin_" + i + ".png' height=100% />";
 
                 str += "		</div>";
 

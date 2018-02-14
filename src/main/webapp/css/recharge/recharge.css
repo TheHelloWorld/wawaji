@@ -1,15 +1,35 @@
+.recharge {
+    z-index: 99;
+    position: fixed;
+    background: url("/image/background/background.png");
+    background-size: 100% 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
 .recharge-first-line {
     float: left;
     margin-top: 3%;
     margin-left: 5%;
     width: 100%;
-    height: 10%;
+    height: 8%;
 }
+
+.recharge-user-coin {
+    float: left;
+    background: white;
+    width: 25%;
+    border-radius: 1.25rem;
+    margin-left: 25%;
+}
+
 .recharge-button {
     width: 80%;
     margin-left: 10%;
-    margin-top: 105%;
-    font-size: 3.25rem;
+    margin-top: 115%;
+    font-size: 1.5rem;
     background: yellowgreen;
     border-radius: 0.9375rem;
     text-align: center;
@@ -20,29 +40,25 @@
     width: 60%;
 }
 
-.recharge-user-coin {
-    float: left;
-    background: white;
-    width: 25%;
-    border-radius: 1.25rem;
-    margin-left: 18%;
-}
-
-.recharge {
-    z-index: 99;
-    position: fixed;
-    background: #FEFE9E;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
 .recharge-coin {
+    height: 15%;
     float: left;
-    margin-top: 10%;
+    width: 80%;
+    margin-top: 5%;
     margin-left: 10%;
-    font-size: 1.3rem;
-    margin-bottom: 8%;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5%;
+    text-align: center;
+}
+
+.recharge-coin-img {
+    height: 25%;
+    width: 80%;
+    float: left;
+    margin-top: 3%;
+    margin-left: 10%;
+    text-align: center;
 }
 
 .recharge-coin-first {
@@ -111,8 +127,8 @@
     float: left;
     margin-top: 5%;
     text-align: center;
-    background: #FEFE9E;
     font-size: 1rem;
+    font-weight: bold;
     width: 70%;
     margin-left: 15%;
     border-radius: 1.25rem;
@@ -131,9 +147,11 @@
 }
 
 .recharge-coin-text {
+    margin-top: 5%;
     float: left;
-    margin-left: 25%;
     font-size: 1rem;
-    color: #ccc;
+    font-weight: bold;
+    color: #a7652f;
     width: 100%;
+    text-align: center;
 }
