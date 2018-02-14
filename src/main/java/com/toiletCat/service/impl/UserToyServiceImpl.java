@@ -420,7 +420,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                 got(json.toJSONString());
 
             }
-        }, true, "updateChoiceTypeByIdAndUserNo", json);
+        }, false, "updateChoiceTypeByIdAndUserNo", json);
     }
 
     /**
