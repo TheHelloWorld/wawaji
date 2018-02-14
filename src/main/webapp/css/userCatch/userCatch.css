@@ -1,9 +1,10 @@
 .catch-toy-row {
     float: left;
-    width: 100%;
-    background: gainsboro;
+    width: 80%;
+    margin-left: 10%;
+    background: url("/image/userCatch/catch_record_background.png");
+    background-size: 100% 100%;
     margin-top: 2%;
-    border-radius: 1.875rem;
 }
 
 .catch-toy-div {
@@ -14,11 +15,11 @@
 }
 
 .catch-toy-img {
+    padding-top: 1%;
+    padding-bottom: 1%;
     float: left;
     width: 30%;
     height: 100%;
-    border-radius: 1.875rem;
-    border: 0.3125rem solid #666615;
 }
 
 .catch-toy-img img {

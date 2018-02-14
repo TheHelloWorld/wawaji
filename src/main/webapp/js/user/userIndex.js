@@ -29,7 +29,7 @@ $(function(){
     );
 
     $(".center-content").css(
-        'height', hc * 0.29
+        'height', hc * 0.2
     );
 
     $(".center-other").css(

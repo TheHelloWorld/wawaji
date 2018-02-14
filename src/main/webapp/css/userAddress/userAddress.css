@@ -1,13 +1,43 @@
 .user-address-line {
-    width: 100%;
+    width: 90%;
+    margin-left: 5%;
     background: url("/image/userAddress/address_background.png");
-    border-radius: 1.875rem;
-    border: 0.125rem solid #666615;
+    background-size: 100% 100%;
     margin-top: 2%;
 }
 
 .user-address-line-default {
     background: gainsboro;
-    border-radius: 1.875rem;
-    border: 0.0625rem solid silver;
+}
+
+.user-address-inline-left {
+    margin-top: 2%;
+    height: 15%;
+    margin-right: 5%
+}
+
+.user-address-inline-right {
+    margin-top: 2%;
+    margin-right: 2%;
+    margin-left: 5%
+}
+
+.user-address-text-line {
+    padding-left: 3%;
+    padding-top: 3%;
+    margin-bottom: 0.3125rem;
+}
+
+.user-address-button {
+    padding-bottom: 2%;
+}
+
+.user-address-edit {
+    margin-left: 50%;
+    margin-right: 3%;
+}
+
+.add-user-address {
+    margin-top: 2%;
+    height: 100%;
 }

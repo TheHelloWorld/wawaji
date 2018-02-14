@@ -76,20 +76,18 @@ function getAllUserAddressByUserNo(userNo) {
 
             for(var i = 0; i<list.length; i++) {
 
-                str += "<div class='user-address-line' id='userAddress"+list[i]["id"]+"' class='row'>";
-                // str += "    <div class='panel-body' >";
-                str += "        <div class='my-margin-bottom'>";
-                str += "            <span class='my-inline-right' >收货人:" + list[i]["userName"] + "</span>";
-                str += "            <span class='my-inline-left' >手机号:" + list[i]["mobileNo"] + "</span>";
+                str += "<div class='user-address-line' id='userAddress"+list[i]["id"]+"'>";
+                str += "        <div class='user-address-text-line'>";
+                str += "            <span class='user-address-inline-left' >收货人:" + list[i]["userName"] + "</span>";
+                str += "            <span class='user-address-inline-right' >手机号:" + list[i]["mobileNo"] + "</span>";
                 str += "        </div>";
-                str += "        <div class='my-margin-bottom' >" + list[i]["province"] + "&nbsp;"+ list[i]["city"] +"&nbsp;"+ list[i]["district"] +"</div>";
-                str += "        <div class='my-margin-bottom' >地址:" + list[i]["address"] + "</div>";
-                str += "        <div>";
-                str += "            <a class='my-edit-right' href='javascript:void(0);' onclick='toEditUserAddressPage(" + list[i]["id"] + ")'><img src='/image/userAddress/edit.png' />修改</a>";
-                str += "            <a href='javascript:void(0);' onclick='confirmDeleteUserAddress(" + list[i]["id"] + ")'><img src='/image/userAddress/remove.png' />删除</a>";
+                str += "        <div class='user-address-text-line' >" + list[i]["province"] + "&nbsp;"+ list[i]["city"] +"&nbsp;"+ list[i]["district"] +"</div>";
+                str += "        <div class='user-address-text-line' >地址:" + list[i]["address"] + "</div>";
+                str += "        <div class='user-address-button'>";
+                str += "            <a class='user-address-edit' href='javascript:void(0);' onclick='toEditUserAddressPage(" + list[i]["id"] + ")'><img src='/image/userAddress/edit.png' /></a>";
+                str += "            <a href='javascript:void(0);' onclick='confirmDeleteUserAddress(" + list[i]["id"] + ")'><img src='/image/userAddress/remove.png' /></a>";
                 str += "        </div>";
                 str += "    </div>";
-                // str += "</div>";
                 str += "<div id='userAddressImg"+list[i]["id"]+"' style='text-align: center'>";
 
                 str += "</div>";

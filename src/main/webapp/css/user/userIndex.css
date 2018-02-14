@@ -1,36 +1,17 @@
-body {
-    background: #ff3968;
-    width: 100%;
-    font-size: 2rem;
-    margin-top: 0;
-    margin-left: 0;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    overflow: hidden;
-}
-
-.background-div {
-    background: url("/image/background/background-big.png");
-    background-size: 35% 35%;
-    -moz-background-size: 30% 30%;
-    padding-top: 2%;
-}
-
 .center-content {
-    width: 90%;
+    width: 70%;
     font-size: 1rem;
     font-weight: bold;
     margin-top: 3%;
-    margin-left: 5%;
-    background: #fe8820;
-    border-radius: 1.875rem;
+    margin-left: 15%;
+    background: url("/image/userIndex/user_info_background.png");
+    background-size: 100% 100%;
 }
 
 .center-img {
+    float: left;
+    margin-left: 10%;
+    margin-top: 5%;
     height: 100%;
 }
 
@@ -41,18 +22,21 @@ body {
 }
 
 .center-title {
+    float: left;
+    margin-left: 10%;
+    margin-top: 10%;
     height: 100%;
 }
 
 .center-name {
     margin-top: 1%;
-    color: whitesmoke;
+    color: black;
 }
 
 .center-other {
     width: 90%;
     font-size: 1.25rem;
-    margin-top: 0.625rem;
+    margin-top: 1.25rem;
     margin-left: 5%;
     background: url("/image/userIndex/button_background.png");
     background-size: 100% 100%;
