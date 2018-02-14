@@ -104,3 +104,15 @@
     box-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, .05);
     border: 0.0625rem solid gray;
 }
+
+.user-toy-info {
+    background: url("/image/userCatch/catch_record_background.png");
+    background-size: 100% 100%;
+    color: #a7652f;
+    font-weight: bold;
+}
+
+.user-toy-success {
+    border-radius: 0.93rem;
+    border: 0.125rem solid sandybrown;
+}

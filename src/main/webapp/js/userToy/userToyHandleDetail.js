@@ -56,22 +56,21 @@ function getUserToyHandleByUserNoAndId() {
 
             var toyName = result["toyName"];
 
-            var str = " <div class='row'>";
-            str += "        <div class='user-toy-div'>";
+
+            var str = " <div class='user-toy-div'>";
             str += "            <img class='user-toy-img index-img' src='" + result["toyImg"] + "'>";
             str += "        </div>";
-            str += "        <div class='user-toy-div' style='color: white; font-size: 1.5rem; margin-left: 0;'>";
-            str += "            <div class='custom-font'>" + result["toyName"] + "</div>";
+            str += "        <div class='user-toy-div' style='font-size: 1rem; margin-left: 0;'>";
+            str += "            <div>" + result["toyName"] + "</div>";
             str += "<br/>";
-            str += "            <div class='user-toy-success index-center custom-font'>抓取成功</div>";
+            str += "            <div class='user-toy-success index-center'>抓取成功</div>";
             str += "<br/>";
-            str += "        </div>";
-            str += "    </div>";
+            str += "</div>";
 
             var msg = "";
 
             if(choiceType == 1) {
-                msg = "<div class='custom-font'>";
+                msg = "<div>";
                 msg += "已将" + forCoinNum + "个" + toyName + "兑换成" + toyForCoin + "马桶币";
                 msg += "</div>";
 
@@ -81,14 +80,14 @@ function getUserToyHandleByUserNoAndId() {
 
                 if(deliverStatus == 0) {
 
-                    msg = "<div class='custom-font'>";
+                    msg = "<div>";
                     msg += "    <span>待发货</span>";
                     msg += "</div>";
 
                     $("#userToyHandleShowMsg").append(msg);
 
                 } else if(deliverStatus == 1) {
-                    msg = "<div class='custom-font'>";
+                    msg = "<div>";
                     msg += "    <span>已发货</span>";
                     msg += "</div>";
                     msg += "<div style='margin-top: 10%;font-size: 1.5rem;color: white;'>";
