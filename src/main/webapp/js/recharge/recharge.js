@@ -46,7 +46,7 @@ function recharge() {
 
             str += "			<div class='recharge-coin' >";
 
-            str += "				<img src='/image/background/coin-img.png' width=100% height=100% />";
+            str += "				<img src='/image/background/coin_img.png' width=100% height=100% />";
 
             str += "			</div>";
 
@@ -125,7 +125,7 @@ function recharge() {
 
                 str += "		<div class='" + recharge_class + "' >";
 
-                str += "			<img src='/image/background/coin-img.png' width=100% height=100% />";
+                str += "			<img src='/image/background/coin_img.png' width=100% height=100% />";
 
                 str += "		</div>";
 

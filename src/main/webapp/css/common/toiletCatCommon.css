@@ -1,5 +1,6 @@
 .my-body {
-    background: #ff3968;
+    background: url("/image/background/background.png");
+    background-size: 100% 100%;
 }
 
 /* 自定义字体 */
@@ -82,12 +83,20 @@
 }
 
 .index-header {
-    background: url("/image/background/header.png");
-    background-size: 100% 100%;
+    background:#487770;
+    height: 8%;
+    width:100%;
     position:fixed;
     left:0;
     top:0;
     z-index:99;
+}
+
+.default-header {
+    height: 8%;
+    width:100%;
+    background: url("/image/background/header.png");
+    background-size: 100% 100%;
 }
 
 .index-default-header {
@@ -95,7 +104,7 @@
     left:0;
     top:0;
     z-index:99;
-    background:#fe8820;
+    background:#487770;
 }
 
 .index-footer {
@@ -103,8 +112,7 @@
     left:0;
     bottom:0;
     z-index:99;
-    /*background:#ff3968;*/
-    background:#fe8820;
+    background:#487770;
     border: 0.0625rem solid saddlebrown;
 }
 
@@ -115,7 +123,6 @@
 
 .background-img {
     height: 100%;
-    background: url("/image/background/background-img.png");
 }
 
 .index-center {
@@ -180,8 +187,7 @@
 }
 
 .toiletCat-col-xs-6 {
-    font-family: customFont;
-    background: url("/image/background/room-background.png");
+    background: url("/image/background/element_background.png");
     background-size: 100% 100%;
     position: relative;
     min-height: 0.0625rem;
@@ -342,10 +348,10 @@
 .user-info-div-user-coin {
     width: 25%;
     border-radius: 1.875rem;
-    background: #B1ED0A;
-    float: left;
+    background: whitesmoke;
+    float: right;
     margin-top:1%;
-    margin-left: 2%;
+    margin-right: 1%;
 }
 
 .user-info-div-user-coin img{

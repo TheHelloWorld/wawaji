@@ -324,7 +324,7 @@ function getAllUnHandleUserToyByUserNo() {
 
             var list = data["result"];
 
-            var str = "<div class='custom-font' style='text-align: center;color: whitesmoke;font-size: 2.25rem;'>" + freeDeliverNum + "个或以上才包邮哦(邮费<img src='/image/background/coin-img.png'>"+deliverCoin+")</div>";
+            var str = "<div class='custom-font' style='text-align: center;color: whitesmoke;font-size: 2.25rem;'>" + freeDeliverNum + "个或以上才包邮哦(邮费<img src='/image/background/coin_img.png'>"+deliverCoin+")</div>";
 
             flag = false;
             for(var i = 0; i<list.length; i++) {
