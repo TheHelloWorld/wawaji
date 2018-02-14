@@ -106,14 +106,14 @@ function getUserToyByUserNoAndId() {
 
             toyForCoin = result["toyForCoin"];
 
-            var str = " <div class='row'>";
+            var str = " <div>";
             str += "        <div class='user-toy-div'>";
             str += "            <img class='user-toy-img index-img' src='" + result["toyImg"] + "'>";
             str += "        </div>";
-            str += "        <div class='user-toy-div' style='color: white; font-size: 1.5rem; margin-left: 0;'>";
-            str += "            <div class='custom-font'>" + result["toyName"] + "</div>";
+            str += "        <div class='user-toy-div' style='font-size: 1.5rem; margin-left: 0;'>";
+            str += "            <div>" + result["toyName"] + "</div>";
             str += "<br/>";
-            str += "            <div class='user-toy-success index-center custom-font'>抓取成功</div>";
+            str += "            <div class='user-toy-success index-center'>抓取成功</div>";
             str += "<br/>";
             str += "        </div>";
             str += "    </div>";
@@ -235,19 +235,17 @@ function getAllUserAddressByUserNo(userNo) {
                 onlyOneUserAddressId = list[i]["id"];
 
                 str += "<div class='" + userAddressClass + "' id='userAddress" + list[i]["id"] + "' onclick='clickAddress(" + list[i]["id"] + ")' class='row'>";
-                str += "    <div class='panel-body custom-font' >";
-                str += "        <div class='my-margin-bottom'>";
+                str += "        <div class='user-address-text-line user-address-text-line-first'>";
                 str += "            <input id = 'userName"+list[i]["id"]+"' type='hidden' value='" + list[i]["userName"] + "' >";
-                str += "            <span  class='my-inline-right' >收货人:" + list[i]["userName"] + "</span>";
+                str += "            <span  class='user-address-inline-left' >收货人:" + list[i]["userName"] + "</span>";
                 str += "            <input id = 'mobileNo"+list[i]["id"]+"' type='hidden' value='" + list[i]["mobileNo"] + "' >";
-                str += "            <span class='my-inline-left' >手机号:" + list[i]["mobileNo"] + "</span>";
+                str += "            <span class='user-address-inline-right' >手机号:" + list[i]["mobileNo"] + "</span>";
                 str += "        </div>";
                 str += "        <input id = 'province"+list[i]["id"]+"' type='hidden' value='" + list[i]["province"] + "&nbsp;"+ list[i]["city"] +"&nbsp;"+ list[i]["district"] +"' >";
-                str += "        <div class='my-margin-bottom' >" + list[i]["province"] + "&nbsp;"+ list[i]["city"] +"&nbsp;"+ list[i]["district"] +"</div>";
+                str += "        <div class='user-address-text-line' >" + list[i]["province"] + "&nbsp;"+ list[i]["city"] +"&nbsp;"+ list[i]["district"] +"</div>";
                 str += "        <input id = 'address"+list[i]["id"]+"' type='hidden' value='" + list[i]["address"] + "' >";
-                str += "        <div class='my-margin-bottom' >地址:" + list[i]["address"] + "</div>";
+                str += "        <div class='user-address-text-line user-address-text-line-end' >地址:" + list[i]["address"] + "</div>";
                 str += "    </div>";
-                str += "</div>";
                 str += "<div style='text-align: center'>";
 
                 if(i%2 == 0) {
@@ -286,6 +284,7 @@ function clickAddress(id) {
     $("#zzc").hide();
     $("#choiceAddress").html("");
     $("#choiceAddress").append($("#userAddress"+id).clone());
+    $("#userAddress"+id).attr("class", "user-address-line user-address-line-onclick");
     $("#choiceAddress").append("<a style='padding-top: 2%;padding-left: 2%' href='javascript:void(0);' onclick='reChoiceAddress()'>重新选择>></a>");
 
     if(flag) {
