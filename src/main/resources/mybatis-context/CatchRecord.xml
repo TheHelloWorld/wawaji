@@ -101,7 +101,8 @@
             c.catch_result,
             c.catch_time,
             c.catch_status,
-            c.toy_img
+            c.toy_img,
+            c.toy_name
         from catch_record c
         where c.user_no = #{userNo} order by c.create_time desc
         limit #{startPage}, #{pageSize}
