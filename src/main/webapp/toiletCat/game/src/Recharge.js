@@ -505,7 +505,7 @@
     function rechargeThis(amount) {
         sessionStorage["toiletCatLastPage"] = window.location.href;
         $.ajax({
-            url:"/toiletCat/api/user/userRecharge.action",
+            url:"/toiletCat/api/recharge/userRecharge.action",
             type:"POST",
             async:false,
             data:{
@@ -525,11 +525,46 @@
                     return;
                 }
 
-                // 将当前url放入前端缓存
-                sessionStorage["toiletCatLastPage"] = window.location.href;
+                var result = data["result"];
 
-                // 跳转到充值页面
-                window.location.href = data["result"];
+            if (typeof(result) == "string") {
+                result = eval("(" + result + ")");
+            }
+
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest', {
+                    "appId": result["appId"],     //公众号名称，由商户传入
+                    "timeStamp": result["timeStamp"],         //时间戳，自1970年以来的秒数
+                    "nonceStr": result["nonceStr"], //随机串
+                    "package": result["package"],
+                    "signType": result["signType"],         //微信签名方式：
+                    "paySign": result["paySign"] //微信签名
+                },
+                function (res) {
+
+                    // 微信前端返回支付成功/失败(终态)
+                    if (res.err_msg == "get_brand_wcpay_request:ok" || res.err_msg == "get_brand_wcpay_request:fail") {
+
+                        clickFlag = true;
+
+                        $("#recharge_button").html("充值");
+
+                        // 我方订单号
+                        sessionStorage["toiletCatUserOrderNo"] = result["orderNo"];
+
+                         window.location.href="/toiletCat/recharge/rechargeResult.html";
+
+                        // 微信前端返回支付取消
+                    } else if(res.err_msg == "get_brand_wcpay_request:cancel") {
+
+                        clickFlag = true;
+
+                        $("#recharge_button").html("充值");
+
+                        cancelRecharge(result["orderNo"]);
+                    }
+                }
+            );
 
             }
         });

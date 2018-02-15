@@ -16,9 +16,26 @@
 	<meta http-equiv="Cache-Control" content="no-siteapp"/>
 </head>
 <body style="background:black;">
-	<div style="width:100%;text-align:center;margin-top:45%;">
-		<img src="comp/loading.gif" style="width:100%">
+	<div style="width:100%;text-align:center;margin-top:65%;">
+		<div style="width:80%;background:white;height:10px;border-radius:20px;position:fixed;top:35%;left:10%;"></div>
+		<div id="loading" style="width:0%;background:green;height:10px;border-radius:20px;position:fixed;top:35%;left:10%;"></div>
+		<div style="color:white;margin-top:5%;">加载中，请稍后</div>
 	</div>
+<script>
+function loading(){
+	var obj = document.getElementById('loading');
+	var i = 0;
+	var timerId = window.setInterval(function(){
+		if(i > 80){
+			clearInterval(timerId);
+		}else{
+			i++;
+			obj.style.width = i+"%";
+		}
+	},100)
+}
+loading();
+</script>
 	<!--核心包，封装了显示对象渲染，事件，时间管理，时间轴动画，缓动，消息交互,socket，本地存储，鼠标触摸，声音，加载，颜色滤镜，位图字体等-->
 	<script type="text/javascript" src="libs/laya.core.js"></script>
 	<!--封装了webgl渲染管线，如果使用webgl渲染，可以在初始化时调用Laya.init(1000,800,laya.webgl.WebGL);-->
