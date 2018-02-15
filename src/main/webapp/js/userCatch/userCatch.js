@@ -33,8 +33,6 @@ $(function() {
 // 获得当前数据总数量和分页数据
 function getTotalCountAndPageSizeByUserNo() {
 
-    console.info("totalCount:" + 123123);
-
     $.ajax({
         url:"/toiletCat/api/catchRecord/countCatchRecordByUserNo.action",
         type:"POST",
@@ -57,8 +55,6 @@ function getTotalCountAndPageSizeByUserNo() {
 
             pageSize = data["pageSize"];
 
-            console.info("totalCount:" + totalCount);
-
             if(totalCount <= pageSize) {
 
                 totalPage = 1;
@@ -76,13 +72,15 @@ function getTotalCountAndPageSizeByUserNo() {
 }
 
 function nextPage(userNo) {
-    console.info(nowPage);
-    console.info(totalPage);
 
     nowPage ++;
+
     if(nowPage <= totalPage) {
+
         getAllUserCatchRecordByUserNo(userNo);
+
     } else {
+
         nowPage = totalPage;
     }
 }
