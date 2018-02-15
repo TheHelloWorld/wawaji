@@ -5,6 +5,10 @@ var nowPage = 1;
 
 var type = "";
 
+var totalCount = 0;
+
+var pageSize = 0;
+
 $(function() {
     // 获得用户编号
     userNo = getQueryString("userNo");
@@ -24,6 +28,7 @@ $(function() {
     $(".index-body-div").scroll(function(){
 
         if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
+
             nextPage();
             addHeight = $("#userSpend").height() + ($(".default-height").height() * 2);
         }
@@ -65,7 +70,7 @@ function getTotalCountAndPageSizeByUserNo() {
 
             } else {
 
-                totalPage = parseInt(totalCount / pageSize);
+                totalPage = parseInt(totalCount / pageSize) + 1;
             }
         }
     });
@@ -133,6 +138,7 @@ function getAllUserSpendRecordByUserNo(nowPage) {
 
 function nextPage() {
     nowPage ++;
+
     if(nowPage <= totalPage) {
         getAllUserSpendRecordByUserNo(nowPage);
     } else {

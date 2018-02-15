@@ -28,13 +28,13 @@ $(function() {
 
     var indexBodyDivHeight = $(".index-body-div").height() + $("#banner-box").height() + $(".default-header").height();
 
-    var addHeight = $("#main").height();
+    var addHeight = $("#main").height() +  ($(".default-height").height() * 2);
 
     $(".index-body-div").scroll(function(){
 
         if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
             nextPage();
-            addHeight = $("#main").height();
+            addHeight = $("#main").height() + ($(".default-height").height() * 2);
         }
     });
 
