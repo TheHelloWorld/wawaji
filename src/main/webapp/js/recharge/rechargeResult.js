@@ -4,11 +4,16 @@ var s;
 
 $(function () {
 
-    s = setInterval(
-        function() {
-            getRechargeResultByTime()
-        }, 1000);
+    toiletCatMsg("ok", null);
+    // s = setInterval(
+    //     function() {
+    //         getRechargeResultByTime()
+    //     }, 1000);
 });
+
+function returnMethod() {
+    window.location.href = "/toiletCat/gameRoom/gameRoom.html?nowType=login&userNo=" + sessionStorage["toiletCatUserNo"];
+}
 
 function getRechargeResultByTime() {
 
