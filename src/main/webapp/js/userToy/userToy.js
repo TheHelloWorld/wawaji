@@ -4,6 +4,10 @@ var nowPage = 1;
 // 类型
 var type= "";
 
+var totalCount = 0;
+
+var pageSize = 0;
+
 $(function() {
 
     type = getQueryString("type");
@@ -24,6 +28,9 @@ $(function() {
     $(".index-body-div").scroll(function(){
 
         if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
+
+
+
             nextPage();
             addHeight = $("#userToy").height() + $("#handleSelect").height() + ($(".default-height").height() * 2);
         }
@@ -147,10 +154,15 @@ function returnMethod() {
 }
 
 function nextPage() {
+
     nowPage ++;
+
     if(nowPage <= totalPage) {
+
         getAllUserToyByUserNo(nowPage);
+
     } else {
+
         nowPage = totalPage;
     }
 }
