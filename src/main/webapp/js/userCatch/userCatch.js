@@ -3,6 +3,8 @@ var pageSize = 0;
 
 var nowPage = 1;
 
+var totalPage = 0;
+
 $(function() {
     // 用户编号
     checkSession();
@@ -15,13 +17,14 @@ $(function() {
 
     var indexBodyDivHeight = $(".index-body-div").height();
 
-    var addHeight = $("#catchRecord").height() + ($(".default-height").height() * 2);
+    var addHeight = $("#catchRecord").height();
 
     $(".index-body-div").scroll(function(){
 
         if ($(this).scrollTop() + indexBodyDivHeight >= addHeight) {
+
             nextPage(userNo);
-            addHeight = $("#catchRecord").height() + ($(".default-height").height() * 2);
+            addHeight = $("#catchRecord").height();
         }
     });
 
@@ -29,6 +32,9 @@ $(function() {
 
 // 获得当前数据总数量和分页数据
 function getTotalCountAndPageSizeByUserNo() {
+
+    console.info("totalCount:" + 123123);
+
     $.ajax({
         url:"/toiletCat/api/catchRecord/countCatchRecordByUserNo.action",
         type:"POST",
@@ -47,9 +53,11 @@ function getTotalCountAndPageSizeByUserNo() {
                 return;
             }
 
-            totalCount = data["totalCount"];
+            var totalCount = data["totalCount"];
 
             pageSize = data["pageSize"];
+
+            console.info("totalCount:" + totalCount);
 
             if(totalCount <= pageSize) {
 
@@ -68,6 +76,9 @@ function getTotalCountAndPageSizeByUserNo() {
 }
 
 function nextPage(userNo) {
+    console.info(nowPage);
+    console.info(totalPage);
+
     nowPage ++;
     if(nowPage <= totalPage) {
         getAllUserCatchRecordByUserNo(userNo);
@@ -111,7 +122,7 @@ function getAllUserCatchRecordByUserNo(userNo) {
 
                 str += "    <div class='catch-toy-div' >";
                 str += "        <div class='catch-toy-img'>";
-                str += "            <img maxwidth=100% src='" + list[i]["toyImg"] + "' />";
+                str += "            <img src='" + list[i]["toyImg"] + "' />";
                 str += "        </div>";
                 str += "        <div class='catch-toy-time' >";
                 str += "            <div class='catch-toy-result' >";

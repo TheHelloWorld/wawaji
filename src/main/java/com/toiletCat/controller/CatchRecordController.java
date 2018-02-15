@@ -36,6 +36,20 @@ public class CatchRecordController {
     }
 
     /**
+     * 获得总记录数和每页数据数
+     * @param userNo 用户编号
+     * @return
+     */
+    @RequestMapping(value = "/countCatchRecordByUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String countCatchRecordByUserNo(String userNo) {
+
+        CommonResult<Integer> result = catchRecordService.countCatchRecordByUserNo(userNo);
+
+        return JSONUtil.getTotalCountAndPageSize(result, BaseConstant.DEFAULT_PAGE_SIZE);
+    }
+
+    /**
      * 根据用户编号分页获得用户抓取记录集合
      * @param userNo 用户编号
      * @param startPage 开始页

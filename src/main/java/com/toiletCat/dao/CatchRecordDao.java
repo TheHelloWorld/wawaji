@@ -24,6 +24,13 @@ public interface CatchRecordDao {
     List<UserCatchRecord> getLatelyCatchSuccessRecordByToyNo(String toyNo);
 
     /**
+     * 根据用户编号获得用户抓取记录数量
+     * @param userNo 用户编号
+     * @return
+     */
+    Integer countCatchRecordByUserNo(String userNo);
+
+    /**
      * 根据用户编号获得用户抓取成功记录数量
      * @param userNo 用户编号
      * @return

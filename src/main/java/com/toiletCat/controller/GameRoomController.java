@@ -49,8 +49,7 @@ public class GameRoomController {
 
         return JSONUtil.getReturnBeanString(result);
     }
-
-
+    
     /**
      * 获得总记录数和每页数据数
      * @return
