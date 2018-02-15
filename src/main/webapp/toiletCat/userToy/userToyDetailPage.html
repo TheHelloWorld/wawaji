@@ -14,39 +14,34 @@
     <meta name="format-detection" content="telephone=no" />
     <title>战利品详情</title>
 
-    <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css" >
+    <link rel="stylesheet" type="text/css" href="/css/common/toiletCatCommon.css?v=1.0.0.9" >
 
-    <link rel="stylesheet" type="text/css" href="/dist/css/sb-admin-2.css" >
-
-    <link rel="stylesheet" type="text/css" href="/css/common/toiletCatCommon.css?v=1.0.0.8" >
-
-    <link rel="stylesheet" type="text/css" href="/css/userToy/userToy.css?v=1.0.0.2" >
+    <link rel="stylesheet" type="text/css" href="/css/userToy/userToy.css?v=1.0.0.4" >
     
-    <link rel="stylesheet" type="text/css" href="/css/userAddress/userAddress.css?v=1.0.0.1" >
+    <link rel="stylesheet" type="text/css" href="/css/userAddress/userAddress.css?v=1.0.0.2" >
 
     <!-- jQuery -->
     <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script type="text/javascript" src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/common/js/commonUtil.js?v=1.0.0.6"></script>
 
-    <script type="text/javascript" src="/common/js/commonUtil.js?v=1.0.0.5"></script>
-
-    <script type="text/javascript" src="/js/userToy/userToyDetail.js?v=1.0.0.7"></script>
+    <script type="text/javascript" src="/js/userToy/userToyDetail.js?v=1.0.0.8"></script>
 
 </head>
     <body class="my-body">
         <div class="index-body-div">
             <nav class = "index-header default-height nav-center" >
                 <img class="return-button" id="returnButton" src="/image/button/back_button.png" onclick="returnMethod()" />
-                <span style="color: #ffffff; float: left; margin-left: 30%;font-size: 1.5rem;font-weight: bold;margin-top: 2%;">我的战利品</span>
+                <span style="color: #ffffff; float: left; margin-left: 27%;font-size: 1rem;font-weight: bold;margin-top: 2%;">我的战利品</span>
             </nav>
             <div class="default-height">
             </div>
             <div id="userToy" >
                 <div id="userToyInfo" class="user-toy-info">
                 </div>
-                <div id="userToyShowMsg" style="text-align: center; padding-top: 15%;font-size: 1.8rem;color:white;">
+                <div id="userToySelect" style="float: left;width: 100%;" >
+                </div>
+                <div id="userToyShowMsg" style="float: left;width: 100%; text-align: center; margin-top: 5%;font-size: 1.2rem;color:white;">
 
                 </div>
                 <div class="zzc" id="zzc" >
@@ -64,7 +59,7 @@
             <div class="default-height">
             </div>
             <nav class = "index-footer default-height"  style="text-align: center;font-size: 2.5rem" >
-                <div id="submitButton" onclick="updateChoiceType()" >确定</div>
+                <div id="submitButton" onclick="updateChoiceType()" style="font-size: 1.5rem; color: #ffffff;padding-top: 2%" >确定</div>
             </nav>
         </div>
     </body>

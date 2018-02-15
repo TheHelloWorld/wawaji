@@ -90,12 +90,11 @@ function getUserToyHandleByUserNoAndId() {
                     msg = "<div>";
                     msg += "    <span>已发货</span>";
                     msg += "</div>";
-                    msg += "<div style='margin-top: 10%;font-size: 1.5rem;color: white;'>";
-                    msg += "    <div class='col-xs-5 user-toy-left user-toy-text-status custom-font'>发货单号:</div>";
-                    msg += "    <div class='col-xs-5 user-toy-right user-toy-text-status custom-font'>快递公司:</div>";
-                    msg += "    <div class='col-xs-5 user-toy-left user-toy-text-status custom-font'>"+result["deliverNo"]+"</div>";
-
-                    msg += "    <div class='col-xs-5 user-toy-right user-toy-text-status custom-font'>"+result["company"]+"</div>";
+                    msg += "<div style='margin-top: 5%;font-size: 1.2rem;color: white;'>";
+                    msg += "    <div class='user-toy-left user-toy-text-status' style='width: 40%;'>快递公司:</div>";
+                    msg += "    <div class='user-toy-right user-toy-text-status' style='width: 40%;'>发货单号:</div>";
+                    msg += "    <div class='user-toy-left user-toy-text-status' style='width: 40%;'>"+result["company"]+"</div>";
+                    msg += "    <div class='user-toy-right user-toy-text-status' style='width: 40%;'>"+result["deliverNo"]+"</div>";
                     msg += "</div>";
 
                     $("#userToyHandleShowMsg").append(msg);

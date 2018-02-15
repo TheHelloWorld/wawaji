@@ -106,32 +106,34 @@ function getUserToyByUserNoAndId() {
 
             toyForCoin = result["toyForCoin"];
 
-            var str = " <div>";
-            str += "        <div class='user-toy-div'>";
-            str += "            <img class='user-toy-img index-img' src='" + result["toyImg"] + "'>";
-            str += "        </div>";
-            str += "        <div class='user-toy-div' style='font-size: 1.5rem; margin-left: 0;'>";
-            str += "            <div>" + result["toyName"] + "</div>";
-            str += "<br/>";
-            str += "            <div class='user-toy-success index-center'>抓取成功</div>";
-            str += "<br/>";
-            str += "        </div>";
-            str += "    </div>";
-            str += "    <div  class='row'>";
-            str += "        <div class='col-xs-5 user-toy-left user-toy-text-status' style='width:30%'>";
-            str += "            <span style='color:white'>状态:</span>";
-            str += "        </div>";
-            str += "        <div class='col-xs-5 user-toy-right user-toy-text-left' style='font-size: 1.5rem;width:50%;color:white;'>";
-
-            str += "<select id='choiceType' class='user-toy-select' onchange='choiceDeliver()'>";
-            str += "    <option value='0'>未选择</option>";
-            str += "    <option value='1'>兑换成游戏币</option>";
-            str += "    <option value='2'>寄送</option>";
-            str += "</select>";
-
-            str += "    </div>";
+            var str =   "<div>";
+            str +=      "   <div class='user-toy-div'>";
+            str +=      "       <img class='user-toy-img index-img' src='" + result["toyImg"] + "'>";
+            str +=      "   </div>";
+            str +=      "   <div class='user-toy-div' style='margin-left: 0;'>";
+            str +=      "       <div>" + result["toyName"] + "</div>";
+            str +=      "       <br/>";
+            str +=      "       <div class='user-toy-success index-center'>抓取成功</div>";
+            str += "            <br/>";
+            str += "       </div>";
+            str += "     </div>";
 
             $("#userToyInfo").append(str);
+
+            var selectStr = "<div style='margin-top: 5%'>";
+            selectStr += "      <div class='user-toy-left user-toy-text-status' style='width:30%;'>";
+            selectStr += "            <span style='color:white'>状态:</span>";
+            selectStr += "      </div>";
+            selectStr += "      <div class='user-toy-right user-toy-text-left' style='font-size: 1.5rem;width:50%;color:white;'>";
+            selectStr += "          <select id='choiceType' class='user-toy-select' onchange='choiceDeliver()'>";
+            selectStr += "              <option value='0'>未选择</option>";
+            selectStr += "              <option value='1'>兑换成游戏币</option>";
+            selectStr += "              <option value='2'>寄送</option>";
+            selectStr += "          </select>";
+            selectStr += "    </div>";
+            $("#userToySelect").append(selectStr);
+
+
         }
     });
 }
@@ -279,6 +281,7 @@ function clickAddress(id) {
     userAddressId = id;
 
     $("#userToyInfo").hide();
+    $("#userToySelect").hide();
     $(".user-address-line").attr("class", "user-address-line-default");
     $("#userAddress"+id).attr("class", "user-address-line");
     $("#zzc").hide();
@@ -323,7 +326,7 @@ function getAllUnHandleUserToyByUserNo() {
 
             var list = data["result"];
 
-            var str = "<div class='custom-font' style='text-align: center;color: whitesmoke;font-size: 2.25rem;'>" + freeDeliverNum + "个或以上才包邮哦(邮费<img src='/image/background/coin_img.png'>"+deliverCoin+")</div>";
+            var str = "<div style='text-align: center;color: whitesmoke;font-size: 1.25rem;'>" + freeDeliverNum + "个或以上才包邮哦(邮费<img src='/image/background/coin_img.png'>"+deliverCoin+")</div>";
 
             flag = false;
             for(var i = 0; i<list.length; i++) {
@@ -332,7 +335,7 @@ function getAllUnHandleUserToyByUserNo() {
                     str += "<div class='row' style='margin-bottom: 5px'>";
                 }
 
-                str += "<div class='machine-col-xs-6' >";
+                str += "<div class='un-handle-select-col-xs-6' >";
                 str += "<label style='width: 100%;'>";
                 if(list[i]["toyNo"] == toyNo) {
                     str += "    <input type='checkbox' name='unHandleToy' value='"+list[i]["toyNo"]+"' checked>";

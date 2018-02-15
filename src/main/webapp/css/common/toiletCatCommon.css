@@ -174,7 +174,6 @@
     padding-left: 0.9375rem;
     float: left;
     width: 50%;
-
 }
 
 .custom-font {
@@ -190,6 +189,7 @@
     margin: 1% 1%;
     width: 48%;
     color: #a7652f;
+    font-size: 0.8rem;
     font-weight: bold;
 }
 
