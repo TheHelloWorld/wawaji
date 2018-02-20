@@ -19,7 +19,7 @@
         <!-- 交易日期 -->
         <result property="tradeDate" column="trade_date" jdbcType="INTEGER"/>
         <!-- 交易时间 -->
-        <result property="tradeTime" column="trade_time"/>
+        <result property="tradeTime" column="trade_time" jdbcType="VARCHAR"/>
         <!-- 创建时间 -->
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <!-- 最后修改时间 -->
@@ -46,7 +46,7 @@
                 #{tradeType, jdbcType=INTEGER},
                 #{tradeStatus, jdbcType=INTEGER},
                 #{tradeDate, jdbcType=INTEGER},
-                #{tradeTime}
+                #{tradeTime, jdbcType=VARCHAR}
             )
     </insert>
 

@@ -29,6 +29,12 @@ public class DateUtil {
         return Integer.valueOf(sdf.format(new Date()));
     }
 
+    public static void main(String[] args) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        System.out.println(sdf.format(new Date(1519101116388L)));
+    }
+
     /**
      * 根据传入时间获得日期
      * @param date 时间
@@ -38,6 +44,16 @@ public class DateUtil {
 
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
         return Integer.valueOf(sdf.format(date));
+    }
+
+    /**
+     * 根据传入时间获得时间字符串
+     * @param date 时间
+     * @return
+     */
+    public static String getFullDateByTime(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat(fullFormat);
+        return sdf.format(date);
     }
 
     /**

@@ -152,6 +152,13 @@
         where user_no = #{userNo, jdbcType=VARCHAR}
     </update>
 
+    <!-- 扣除用户游戏币 -->
+    <update id="reduceUserCoinByUserNoAndCoin">
+        update `user` set
+            user_coin = user_coin - #{coin, jdbcType=INTEGER}
+        where user_no = #{userNo, jdbcType=VARCHAR}
+    </update>
+
     <!-- 根据id和用户编号修改用户游戏币数(后台操作) -->
     <update id="updateUserCoinByIdAndUserNo">
         update `user` set

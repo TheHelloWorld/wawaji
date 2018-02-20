@@ -155,7 +155,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 userRechargeRecord.setTradeDate(tradeDate);
 
                 // 交易时间
-                userRechargeRecord.setTradeTime(tradeTime);
+                userRechargeRecord.setTradeTime(DateUtil.getFullDateByTime(tradeTime));
 
                 // 交易状态
                 userRechargeRecord.setTradeStatus(TradeStatus.INIT.getStatus());

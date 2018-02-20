@@ -520,7 +520,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 获得用户当前游戏币数
                 Integer userCoin = userDao.getUserCoinByUserNo(userNo);
 
-                logger.info("userPlayGame userNo:" + userNo + ", userCoin:" + userCoin);
+                logger.info("userPlayGame before userNo:" + userNo + ", userCoin:" + userCoin);
 
                 // 获得机器信息
                 CommonResult<Integer> needCoinResult = gameRoomService.getCoinByGameRoomNo(gameRoomNo);
@@ -597,7 +597,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 try {
 
                     // 扣除用户游戏币
-                    userDao.updateUserCoinByUserNo(-needCoin, userNo);
+                    userDao.reduceUserCoinByUserNoAndCoin(needCoin, userNo);
+
+                    // 获取用户扣币之后的游戏币数
+                    Integer afterUserCoin = userDao.getUserCoinByUserNo(userNo);
+
+                    logger.info("userPlayGame after userNo:" + userNo + ", userCoin:" + afterUserCoin);
 
                     userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
 

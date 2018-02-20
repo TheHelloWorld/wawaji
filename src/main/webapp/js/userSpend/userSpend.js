@@ -107,15 +107,12 @@ function getAllUserSpendRecordByUserNo(nowPage) {
 
             for(var i = 0; i<list.length; i++) {
 
-                var newDate = new Date();
-                newDate.setTime(list[i]["tradeTime"]);
-
                 str += "<div id='userSpendRecord"+list[i]["id"]+"' class='user-spend-row' >";
 
                 str += "		<div class='user-spend-div'>";
                 str += "			<div class='user-spend-title'>";
                 str += "                <p>" + list[i]["tradeTypeDesc"] + "</p>";
-                str += "                <p>" + newDate.format('yyyy-MM-dd hh:mm:ss') + "</p>";
+                str += "                <p>" + list[i]["tradeTime"] + "</p>";
                 str += "			</div>";
                 str += "			<div class='user-spend-coin'>";
                 str += "                <img width='11%' align='absbottom' src='/image/background/coin_img.png'>";
