@@ -520,6 +520,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 // 获得用户当前游戏币数
                 Integer userCoin = userDao.getUserCoinByUserNo(userNo);
 
+                logger.info("userPlayGame userNo:" + userNo + ", userCoin:" + userCoin);
+
                 // 获得机器信息
                 CommonResult<Integer> needCoinResult = gameRoomService.getCoinByGameRoomNo(gameRoomNo);
 
@@ -639,7 +641,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     returnJson.put("result", BaseConstant.SUCCESS);
 
-                    logger.info("userPlayGame 成功扣除用户:{} 游戏币数:{} 结果{}", BaseConstant.LOG_MSG, userNo, needCoin,
+                    logger.info("userPlayGame 成功扣除用户:{} 游戏币数:{} 结果{}", userNo, needCoin,
                             returnJson.toJSONString());
 
                     got(returnJson.toJSONString());

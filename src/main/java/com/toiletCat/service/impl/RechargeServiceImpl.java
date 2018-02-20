@@ -136,7 +136,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 Integer tradeDate = DateUtil.getDate();
 
-                Date tradeTime = new Date();
+                Date tradeTime = new Date(System.currentTimeMillis());
 
                 // 添加用户充值记录
                 // 用户充值记录
