@@ -263,7 +263,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                         userSpendRecord.setCoin(deliverCoin);
 
                         // 订单号
-                        String deliverOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime() + userNo;
+                        String deliverOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime();
 
                         // 设置订单号
                         userSpendRecord.setOrderNo(deliverOrderNo);
@@ -399,11 +399,10 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                     userSpendRecord.setTradeType(TradeType.TOY_FOR_COIN.getType());
 
                     // 订单号
-                    String toyForCoinOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime() + userNo;
+                    String toyForCoinOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime();
 
                     // 设置订单号
                     userSpendRecord.setOrderNo(toyForCoinOrderNo);
-
 
                     userSpendRecordDao.addUserSpendRecord(userSpendRecord);
                     
