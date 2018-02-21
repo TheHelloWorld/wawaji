@@ -253,20 +253,10 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 String lockKey = RedisConstant.RECHARGE_RESULT_LOCK.replace(RedisConstant.PLACEHOLDER, orderNo);
 
-                // 锁机制
-                try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
+                // 获取锁
+                if(!getLockByKey(lockKey)) {
 
-                    // 尝试获取锁
-                    if(redisUtil.setnx(lockKey, orderNo) == 0L) {
-
-                        logger.info("getRechargeResultByParam orderNo:" + orderNo + " is running");
-
-                        return;
-                    }
-
-                } catch (Exception e) {
-
-                    logger.error("getRechargeResultByParam redis get lock error: " + e.getMessage(), e);
+                    logger.info("getRechargeResultByParam orderNo:" + orderNo + " is running");
 
                     return;
                 }
@@ -289,19 +279,8 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 CommonResult<String> result = updateRechargeResult(orderNo, userNo, amount,
                         rechargeResultMap.get("result_code"));
 
-
-                // 锁机制
-                try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
-
-                    // 释放锁
-                    redisUtil.del(lockKey);
-
-                } catch (Exception e) {
-
-                    logger.error("getRechargeResultByParam redis relase lock error: " + e.getMessage(), e);
-
-                    return;
-                }
+                // 释放锁
+                relaseLockByKey(lockKey);
 
                 if(!result.success()) {
 
@@ -558,6 +537,19 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
+                String lockKey = RedisConstant.RECHARGE_QUERY_LOCK.replace(RedisConstant.PLACEHOLDER, orderNo);
+
+                if(!getLockByKey(lockKey)) {
+
+                    logger.info("getRechargeResultByOrderNo orderNo:" + orderNo + " is running");
+
+                    returnJSON.put("result", "wait");
+
+                    got(returnJSON.toJSONString());
+
+                    return;
+                }
+
                 // 获得充值结果
                 CommonResult<Integer> rechargeResult = userRechargeRecordService.
                         getTradeStatusByOrderNo(userNo, orderNo);
@@ -567,6 +559,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     returnJSON.put("result", "fail");
 
                     got(returnJSON.toJSONString());
+
+                    // 释放锁
+                    relaseLockByKey(lockKey);
 
                     return;
                 }
@@ -580,6 +575,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     returnJSON.put("userCoin", userCoin);
 
                     got(returnJSON.toJSONString());
+
+                    // 释放锁
+                    relaseLockByKey(lockKey);
 
                     return;
                 }
@@ -600,6 +598,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                     got(returnJSON.toJSONString());
 
+                    // 释放锁
+                    relaseLockByKey(lockKey);
+
                     return;
                 }
 
@@ -608,6 +609,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     returnJSON.put("result", "fail");
 
                     got(returnJSON.toJSONString());
+
+                    // 释放锁
+                    relaseLockByKey(lockKey);
 
                     return;
                 }
@@ -618,11 +622,62 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                     got(returnJSON.toJSONString());
 
+                    // 释放锁
+                    relaseLockByKey(lockKey);
+
                     return;
                 }
 
+                // 释放锁
+                relaseLockByKey(lockKey);
+
             }
         }, true, "getRechargeResultByOrderNo", json);
+    }
+
+    /**
+     * 根据key获取锁
+     * @param key
+     * @return
+     */
+    private Boolean getLockByKey(String key) {
+        // 锁机制
+        try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
+
+            // 尝试获取锁
+            if(redisUtil.setnx(key, "1") == 0L) {
+
+                return false;
+            }
+
+            return true;
+
+        } catch (Exception e) {
+
+            logger.error("getLockByKey redis get lock error: " + e.getMessage(), e);
+
+            return false;
+        }
+    }
+
+    /**
+     * 释放锁
+     * @param key key
+     */
+    private void relaseLockByKey(String key) {
+
+        // 锁机制
+        try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
+
+            // 释放锁
+            redisUtil.del(key);
+
+        } catch (Exception e) {
+
+            logger.error("relaseLockByKey redis relase lock error: " + e.getMessage(), e);
+
+            return;
+        }
     }
 
     /**
