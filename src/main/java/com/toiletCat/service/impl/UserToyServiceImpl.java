@@ -253,7 +253,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                         userSpendRecord.setTradeType(TradeType.DELIVER_COIN.getType());
 
-                        userSpendRecord.setTradeTime(tradeTime);
+                        userSpendRecord.setTradeTime(DateUtil.getFullDateByTime(tradeTime));
 
                         userSpendRecord.setTradeDate(DateUtil.getDate());
 
@@ -392,7 +392,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
                     // 交易日期
                     userSpendRecord.setTradeDate(DateUtil.getDate());
                     // 交易时间
-                    userSpendRecord.setTradeTime(tradeTime);
+                    userSpendRecord.setTradeTime(DateUtil.getFullDateByTime(tradeTime));
                     // 交易状态 成功
                     userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
                     // 交易类型 玩具兑换成游戏币

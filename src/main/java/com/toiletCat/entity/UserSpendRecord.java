@@ -48,7 +48,7 @@ public class UserSpendRecord extends BaseEntity implements Serializable {
     /**
      * 交易时间
      */
-    private Date tradeTime;
+    private String tradeTime;
 
     public String getUserNo() {
         return userNo;
@@ -106,11 +106,11 @@ public class UserSpendRecord extends BaseEntity implements Serializable {
         this.tradeDate = tradeDate;
     }
 
-    public Date getTradeTime() {
+    public String getTradeTime() {
         return tradeTime;
     }
 
-    public void setTradeTime(Date tradeTime) {
+    public void setTradeTime(String tradeTime) {
         this.tradeTime = tradeTime;
     }
 }

@@ -423,16 +423,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 userSpendRecord.setTradeDate(DateUtil.getDateByTime(date));
 
                 // 消费时间
-                userSpendRecord.setTradeTime(date);
+                userSpendRecord.setTradeTime(DateUtil.getFullDateByTime(date));
 
                 // 订单号
-                String spendOrderNo = BaseConstant.TOILER_CAT + date.getTime() + userNo;
+                String spendOrderNo = BaseConstant.TOILER_CAT + date.getTime();
 
                 userSpendRecord.setOrderNo(spendOrderNo);
 
                 try {
                     // 扣除用户游戏币
-                    userDao.updateUserCoinByUserNo(-needCoin, userNo);
+                    userDao.reduceUserCoinByUserNoAndCoin(needCoin, userNo);
 
                     userSpendRecord.setTradeStatus(TradeStatus.SUCCESS.getStatus());
 
@@ -587,10 +587,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 userSpendRecord.setTradeDate(DateUtil.getDateByTime(date));
 
                 // 消费时间
-                userSpendRecord.setTradeTime(date);
+                userSpendRecord.setTradeTime(DateUtil.getFullDateByTime(date));
 
                 // 订单号
-                String spendOrderNo = BaseConstant.TOILER_CAT + date.getTime() + userNo;
+                String spendOrderNo = BaseConstant.TOILER_CAT + date.getTime();
 
                 userSpendRecord.setOrderNo(spendOrderNo);
 
@@ -1076,7 +1076,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
-                Integer coin = Integer.valueOf(toiletCatConfigService.getConfigByKey(ToiletCatConfigConstant.USER_INVITE_COIN));
+                Integer coin = Integer.valueOf(toiletCatConfigService.getConfigByKey(
+                        ToiletCatConfigConstant.USER_INVITE_COIN));
 
                 Date tradeTime = new Date();
 
@@ -1096,13 +1097,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 userSpendRecord.setCoin(coin);
 
                 // 交易时间
-                userSpendRecord.setTradeTime(tradeTime);
+                userSpendRecord.setTradeTime(DateUtil.getFullDateByTime(tradeTime));
 
                 // 交易日期
                 userSpendRecord.setTradeDate(tradeDate);
 
                 // 被邀请用户订单号
-                String beInviteOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime() + userNo;
+                String beInviteOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime();
 
                 // 设置被邀请用户订单号
                 userSpendRecord.setOrderNo(beInviteOrderNo);
@@ -1128,7 +1129,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     // 设置邀请用户用户编号
                     userSpendRecord.setUserNo(inviteUserNo);
 
-                    String inviteOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime() + inviteUserNo;
+                    String inviteOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime();
 
                     // 设置邀请用户订单编号
                     userSpendRecord.setOrderNo(inviteOrderNo);

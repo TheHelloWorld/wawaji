@@ -457,7 +457,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 userSpendRecord.setOrderNo(orderNo);
 
                 // 消费时间
-                userSpendRecord.setTradeTime(tradeTime);
+                userSpendRecord.setTradeTime(DateUtil.getFullDateByTime(tradeTime));
 
                 // 消费类型(充值)
                 userSpendRecord.setTradeType(TradeType.RECHARGE.getType());
