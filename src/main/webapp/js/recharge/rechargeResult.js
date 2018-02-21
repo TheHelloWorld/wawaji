@@ -67,6 +67,16 @@ function queryResultByOrderNo() {
 
                 $("#loading-img").remove();
 
+            } else if(result["result"] == "cancel") {
+
+                flag = false;
+
+                // 停止定时
+                clearInterval(s);
+
+                toiletCatMsg("充值取消", "returnLastPage()");
+
+                $("#loading-img").remove();
             } else if(result["result"] == "success") {
 
                 flag = false;

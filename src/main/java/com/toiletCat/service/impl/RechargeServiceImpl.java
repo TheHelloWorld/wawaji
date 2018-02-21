@@ -367,7 +367,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                         return;
                     }
 
-                    got(TradeStatus.CANCEL.getStatus());
+                    got(String.valueOf(TradeStatus.CANCEL.getStatus()));
 
                     return;
                 }
@@ -580,6 +580,8 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     returnJSON.put("userCoin", userCoin);
 
                     got(returnJSON.toJSONString());
+
+                    return;
                 }
 
                 // 查询交易结果
@@ -598,11 +600,21 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                     got(returnJSON.toJSONString());
 
+                    return;
                 }
 
                 if(Integer.valueOf(result.getValue()) == TradeStatus.FAIL.getStatus()) {
 
                     returnJSON.put("result", "fail");
+
+                    got(returnJSON.toJSONString());
+
+                    return;
+                }
+
+                if(Integer.valueOf(result.getValue()) == TradeStatus.CANCEL.getStatus()) {
+
+                    returnJSON.put("result", "cancel");
 
                     got(returnJSON.toJSONString());
 
