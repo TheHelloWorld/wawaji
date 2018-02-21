@@ -188,9 +188,12 @@ function clickThis(id, amount) {
 // 关闭充值页
 function closeRecharge() {
 
+    clickMoney = "";
+
     $(".recharge").animate({
         top: recharge_height+"px"
     },500);
+
     setTimeout(function rechargeRemove() {
         $(".recharge").remove()
     },500);

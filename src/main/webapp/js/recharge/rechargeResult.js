@@ -4,11 +4,10 @@ var s;
 
 $(function () {
 
-    toiletCatMsg("ok", null);
-    // s = setInterval(
-    //     function() {
-    //         getRechargeResultByTime()
-    //     }, 1000);
+    s = setInterval(
+        function() {
+            getRechargeResultByTime()
+        }, 1000);
 });
 
 function returnMethod() {
