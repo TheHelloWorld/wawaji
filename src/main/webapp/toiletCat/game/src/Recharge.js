@@ -2,397 +2,47 @@
     function Recharge(){
         Recharge.super(this);
         this.bgcolor = new Laya.Sprite();
-        this.bgcolor.graphics.drawRect(0, 0, 753, 1112, "#FEFE9E");
+        this.bgcolor.graphics.drawRect(0, 0, 540, 1060, "#83BCC7");
         this.addChild(this.bgcolor);
 
+        this.topbg = new Laya.Sprite();
+        this.topbg.graphics.drawRect(0, 0, 540, 80, "#48776D");
+        this.addChild(this.topbg);
+
         this.back = new Laya.Sprite();
-        this.back.loadImage("comp/returnButton.ico");
-        this.back.pos(50,90);
-        this.back.rotation = -90;
+        this.back.loadImage("comp/back.png");
+        this.back.pos(20,20);
+        
         this.back.on(Laya.Event.CLICK,this,gameRechargeBack);
         this.addChild(this.back);
 
         this.coinImg = new Laya.Sprite();
         this.coinImg.loadImage("comp/rechargeCoin.png");
-        this.coinImg.pos(280,20);
+        this.coinImg.pos(180,20);
+        this.coinImg.zOrder=11;
         this.addChild(this.coinImg);
-
-        this.coinImg1 = new Laya.Sprite();//图
-        this.coinImg1.loadImage("comp/rechargeCoin.png");
-        this.coinImg1.pos(70,170);
-        this.addChild(this.coinImg1);
-        this.curCoin1 = new Laya.Text();//文字
-        this.curCoin1.color = "#000000";
-		this.curCoin1.font = "Impact";
-        this.curCoin1.fontSize = 30;
-        this.curCoin1.width = 300;
-		this.curCoin1.wordWrap = true;
-		this.curCoin1.text = setInitData['result']['rechargeData'][0]["coinText"];
-		this.curCoin1.leading = 5;
-        this.curCoin1.pos(170,180);
-        this.addChild(this.curCoin1);
-        this.curCoin2 = new Laya.Text();//文字
-        this.curCoin2.color = "#D0D0D0";
-		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 30;
-        this.curCoin2.width = 300;
-		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = setInitData['result']['rechargeData'][0]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][0]['coin'])+"("+setInitData['result']['rechargeData'][0]["userLimitFlag"]+"/"+setInitData['result']['rechargeData'][0]["rechargeLimit"]+")";
-		this.curCoin2.leading = 5;
-        this.curCoin2.pos(120,250);
-        this.addChild(this.curCoin2);
-
-        this.limit = new Laya.Sprite();
-        this.limit.loadImage("comp/limit.png");
-        this.limit.pos(290,150);
-        this.limit.scale(2,2);
-        this.addChild(this.limit);
-        //充值按钮背景图
-        this.bgcolor1 = new Laya.Sprite();
-        this.bgcolor1.zOrder=1;
-        if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["rechargeLimit"] ){
-            var color = "#FEFE9E";
-        }else{
-            var color = "#DCDCDC";
-        }
-        this.bgcolor1.graphics.drawPath(100, 310, [
-            ["moveTo", 20, 0],
-            ["lineTo", 200, 0],
-            ["arcTo", 210, 0, 210, 20, 20],
-            ["lineTo", 210, 30],
-            ["arcTo", 210, 60, 200, 60, 20],
-            ["lineTo", 20, 60],
-            ["arcTo", 0, 60, 0, 30, 20],
-            ["lineTo", 0, 20],
-            ["arcTo", 0, 0, 20, 0, 20],
-            ["closePath"]
-        ],
-        {
-            fillStyle: color
-        });
-        this.addChild(this.bgcolor1);
-        this.rechargeFont1 = new Laya.Text();//文字
-		this.rechargeFont1.font = "Impact";
-        this.rechargeFont1.fontSize = 30;
-        this.rechargeFont1.width = 300;
-		this.rechargeFont1.wordWrap = true;
-        if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["rechargeLimit"] ){
-			this.rechargeFont1.color = "#FF0000";
-		    this.rechargeFont1.text = "￥"+setInitData['result']['rechargeData'][0]["money"];
-			this.rechargeFont1.pos(150,320);
-        }else{
-			this.rechargeFont1.color = "#808080";
-            this.rechargeFont1.text = "今日已达上限";
-			this.rechargeFont1.pos(110,320);
-        }
-		this.rechargeFont1.leading = 5;
-        this.rechargeFont1.zOrder = 2;
         
-        if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["rechargeLimit"]){
-            //判断限冲次数
-            this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][0]["money"]]);
-        }
-        this.addChild(this.rechargeFont1);
-
-        this.coinImg2 = new Laya.Sprite();//图
-        this.coinImg2.loadImage("comp/rechargeCoin.png");
-        this.coinImg2.pos(420,170);
-        this.addChild(this.coinImg2);
-        this.curCoin2 = new Laya.Text();//文字
-        this.curCoin2.color = "#000000";
-		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 30;
-        this.curCoin2.width = 300;
-		this.curCoin2.wordWrap = true;
-        if(setInitData['result']['rechargeData'][1]["userFirstFlag"] == 'is_first'){
-		    this.curCoin2.text = "充"+setInitData['result']['rechargeData'][1]["coinText"]+"送"+setInitData['result']['rechargeData'][1]["giveCoin"];
-        }else{
-            this.curCoin2.text = "充"+setInitData['result']['rechargeData'][1]["coinText"];
-        }
-		this.curCoin2.leading = 5;
-        this.curCoin2.pos(520,180);
-        this.addChild(this.curCoin2);
-        this.curCoin2 = new Laya.Text();//文字
-        this.curCoin2.color = "#D0D0D0";
-		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 30;
-        this.curCoin2.width = 300;
-		this.curCoin2.wordWrap = true;
-        if(setInitData['result']['rechargeData'][1]["userFirstFlag"] == 'is_first'){
-		    this.curCoin2.text = setInitData['result']['rechargeData'][1]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][1]["giveCoin"]);
-        }else{
-            this.curCoin2.text = setInitData['result']['rechargeData'][1]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][1]['coin']);
-        }
-		this.curCoin2.leading = 5;
-        this.curCoin2.pos(470,250);
-        this.addChild(this.curCoin2);
-
-        //判断是否首充
-        if(setInitData['result']['rechargeData'][1]["userFirstFlag"] == 'is_first'){
-            this.first = new Laya.Sprite();
-            this.first.loadImage("comp/first.png");
-            this.first.pos(640,150);
-            this.first.scale(2,2);
-            this.addChild(this.first);
-        }
-
-        this.bgcolor1.graphics.drawPath(450, 310, [
+        //顶部白色背景
+        this.whitebg = new Laya.Sprite();
+        this.whitebg.zOrder=1;
+        this.whitebg.graphics.drawPath(180, 20, [
             ["moveTo", 20, 0],
             ["lineTo", 200, 0],
-            ["arcTo", 210, 0, 210, 20, 20],
-            ["lineTo", 210, 30],
-            ["arcTo", 210, 60, 200, 60, 20],
-            ["lineTo", 20, 60],
-            ["arcTo", 0, 60, 0, 30, 20],
-            ["lineTo", 0, 20],
-            ["arcTo", 0, 0, 20, 0, 20],
-            ["closePath"]
-        ],
-        {
-            fillStyle: "#FEFE9E"
-        });
-        this.addChild(this.bgcolor1);
-        this.rechargeFont1 = new Laya.Text();//文字
-        this.rechargeFont1.color = "#FF0000";
-		this.rechargeFont1.font = "Impact";
-        this.rechargeFont1.fontSize = 30;
-        this.rechargeFont1.width = 300;
-		this.rechargeFont1.wordWrap = true;
-		this.rechargeFont1.text = "￥"+setInitData['result']['rechargeData'][1]["money"];
-		this.rechargeFont1.leading = 5;
-        this.rechargeFont1.zOrder = 2;
-        this.rechargeFont1.pos(500,320);
-        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][1]["money"]]);
-        this.addChild(this.rechargeFont1);
-
-        this.coinImg3 = new Laya.Sprite();//图
-        this.coinImg3.loadImage("comp/rechargeCoin.png");
-        this.coinImg3.pos(70,440);
-        this.addChild(this.coinImg3);
-        this.curCoin2 = new Laya.Text();//文字
-        this.curCoin2.color = "#000000";
-		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 30;
-        this.curCoin2.width = 300;
-		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = setInitData['result']['rechargeData'][2]["coinText"];
-		this.curCoin2.leading = 5;
-        this.curCoin2.pos(170,450);
-        this.addChild(this.curCoin2);
-        this.curCoin2 = new Laya.Text();//文字
-        this.curCoin2.color = "#D0D0D0";
-		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 30;
-        this.curCoin2.width = 300;
-		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = this.curCoin2.text = setInitData['result']['rechargeData'][2]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][2]['coin']);
-		this.curCoin2.leading = 5;
-        this.curCoin2.pos(120,520);
-        this.addChild(this.curCoin2);
-        this.bgcolor1.graphics.drawPath(100, 580, [
-            ["moveTo", 20, 0],
-            ["lineTo", 200, 0],
-            ["arcTo", 210, 0, 210, 20, 20],
-            ["lineTo", 210, 30],
-            ["arcTo", 210, 60, 200, 60, 20],
-            ["lineTo", 20, 60],
-            ["arcTo", 0, 60, 0, 30, 20],
-            ["lineTo", 0, 20],
-            ["arcTo", 0, 0, 20, 0, 20],
-            ["closePath"]
-        ],
-        {
-            fillStyle: "#FEFE9E"
-        });
-        this.addChild(this.bgcolor1);
-        this.rechargeFont1 = new Laya.Text();//文字
-        this.rechargeFont1.color = "#FF0000";
-		this.rechargeFont1.font = "Impact";
-        this.rechargeFont1.fontSize = 30;
-        this.rechargeFont1.width = 300;
-		this.rechargeFont1.wordWrap = true;
-		this.rechargeFont1.text = "￥"+setInitData['result']['rechargeData'][2]["money"];
-		this.rechargeFont1.leading = 5;
-        this.rechargeFont1.zOrder = 2;
-        this.rechargeFont1.pos(150,590);
-        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][2]["money"]]);
-        this.addChild(this.rechargeFont1);
-
-        this.coinImg4 = new Laya.Sprite();//图
-        this.coinImg4.loadImage("comp/rechargeCoin.png");
-        this.coinImg4.pos(420,440);
-        this.addChild(this.coinImg4);
-        this.curCoin2 = new Laya.Text();//文字
-        this.curCoin2.color = "#000000";
-		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 30;
-        this.curCoin2.width = 300;
-		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = setInitData['result']['rechargeData'][3]["coinText"];
-		this.curCoin2.leading = 5;
-        this.curCoin2.pos(520,450);
-        this.addChild(this.curCoin2);
-        this.curCoin2 = new Laya.Text();//文字
-        this.curCoin2.color = "#D0D0D0";
-		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 30;
-        this.curCoin2.width = 300;
-		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = this.curCoin2.text = setInitData['result']['rechargeData'][3]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][3]['coin']);
-		this.curCoin2.leading = 5;
-        this.curCoin2.pos(470,520);
-        this.addChild(this.curCoin2);
-        this.bgcolor1.graphics.drawPath(450, 580, [
-            ["moveTo", 20, 0],
-            ["lineTo", 200, 0],
-            ["arcTo", 210, 0, 210, 20, 20],
-            ["lineTo", 210, 30],
-            ["arcTo", 210, 60, 200, 60, 20],
-            ["lineTo", 20, 60],
-            ["arcTo", 0, 60, 0, 30, 20],
-            ["lineTo", 0, 20],
-            ["arcTo", 0, 0, 20, 0, 20],
-            ["closePath"]
-        ],
-        {
-            fillStyle: "#FEFE9E"
-        });
-        this.addChild(this.bgcolor1);
-        this.rechargeFont1 = new Laya.Text();//文字
-        this.rechargeFont1.color = "#FF0000";
-		this.rechargeFont1.font = "Impact";
-        this.rechargeFont1.fontSize = 30;
-        this.rechargeFont1.width = 300;
-		this.rechargeFont1.wordWrap = true;
-		this.rechargeFont1.text = "￥"+setInitData['result']['rechargeData'][3]["money"];
-		this.rechargeFont1.leading = 5;
-        this.rechargeFont1.zOrder = 2;
-        this.rechargeFont1.pos(500,590);
-        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][3]["money"]]);
-        this.addChild(this.rechargeFont1);
-
-        this.coinImg5 = new Laya.Sprite();//图
-        this.coinImg5.loadImage("comp/rechargeCoin.png");
-        this.coinImg5.pos(70,710);
-        this.addChild(this.coinImg5);
-        this.curCoin2 = new Laya.Text();//文字
-        this.curCoin2.color = "#000000";
-		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 30;
-        this.curCoin2.width = 300;
-		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = setInitData['result']['rechargeData'][4]["coinText"];
-		this.curCoin2.leading = 5;
-        this.curCoin2.pos(170,720);
-        this.addChild(this.curCoin2);
-        this.curCoin2 = new Laya.Text();//文字
-        this.curCoin2.color = "#D0D0D0";
-		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 30;
-        this.curCoin2.width = 300;
-		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = this.curCoin2.text = setInitData['result']['rechargeData'][4]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][4]['coin']);
-		this.curCoin2.leading = 5;
-        this.curCoin2.pos(120,790);
-        this.addChild(this.curCoin2);
-        this.bgcolor1.graphics.drawPath(100, 850, [
-            ["moveTo", 20, 0],
-            ["lineTo", 200, 0],
-            ["arcTo", 210, 0, 210, 20, 20],
-            ["lineTo", 210, 30],
-            ["arcTo", 210, 60, 200, 60, 20],
-            ["lineTo", 20, 60],
-            ["arcTo", 0, 60, 0, 30, 20],
-            ["lineTo", 0, 20],
-            ["arcTo", 0, 0, 20, 0, 20],
-            ["closePath"]
-        ],
-        {
-            fillStyle: "#FEFE9E"
-        });
-        this.addChild(this.bgcolor1);
-        this.rechargeFont1 = new Laya.Text();//文字
-        this.rechargeFont1.color = "#FF0000";
-		this.rechargeFont1.font = "Impact";
-        this.rechargeFont1.fontSize = 30;
-        this.rechargeFont1.width = 300;
-		this.rechargeFont1.wordWrap = true;
-		this.rechargeFont1.text = "￥"+setInitData['result']['rechargeData'][4]["money"];
-		this.rechargeFont1.leading = 5;
-        this.rechargeFont1.zOrder = 2;
-        this.rechargeFont1.pos(150,860);
-        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][4]["money"]]);
-        this.addChild(this.rechargeFont1);
-
-        this.coinImg6 = new Laya.Sprite();//图
-        this.coinImg6.loadImage("comp/rechargeCoin.png");
-        this.coinImg6.pos(420,710);
-        this.addChild(this.coinImg6);
-        this.curCoin2 = new Laya.Text();//文字
-        this.curCoin2.color = "#000000";
-		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 30;
-        this.curCoin2.width = 300;
-		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = setInitData['result']['rechargeData'][5]["coinText"];
-		this.curCoin2.leading = 5;
-        this.curCoin2.pos(520,720);
-        this.addChild(this.curCoin2);
-        this.curCoin2 = new Laya.Text();//文字
-        this.curCoin2.color = "#D0D0D0";
-		this.curCoin2.font = "Impact";
-        this.curCoin2.fontSize = 30;
-        this.curCoin2.width = 300;
-		this.curCoin2.wordWrap = true;
-		this.curCoin2.text = this.curCoin2.text = setInitData['result']['rechargeData'][5]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][5]['coin']);
-		this.curCoin2.leading = 5;
-        this.curCoin2.pos(470,790);
-        this.addChild(this.curCoin2);
-        this.bgcolor1.graphics.drawPath(450, 850, [
-            ["moveTo", 20, 0],
-            ["lineTo", 200, 0],
-            ["arcTo", 210, 0, 210, 20, 20],
-            ["lineTo", 210, 30],
-            ["arcTo", 210, 60, 200, 60, 20],
-            ["lineTo", 20, 60],
-            ["arcTo", 0, 60, 0, 30, 20],
-            ["lineTo", 0, 20],
-            ["arcTo", 0, 0, 20, 0, 20],
-            ["closePath"]
-        ],
-        {
-            fillStyle: "#FEFE9E"
-        });
-        this.addChild(this.bgcolor1);
-        this.rechargeFont1 = new Laya.Text();//文字
-        this.rechargeFont1.color = "#FF0000";
-		this.rechargeFont1.font = "Impact";
-        this.rechargeFont1.fontSize = 30;
-        this.rechargeFont1.width = 300;
-		this.rechargeFont1.wordWrap = true;
-		this.rechargeFont1.text = "￥"+setInitData['result']['rechargeData'][5]["money"];
-		this.rechargeFont1.leading = 5;
-        this.rechargeFont1.zOrder = 2;
-        this.rechargeFont1.pos(500,860);
-        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][5]["money"]]);
-        this.addChild(this.rechargeFont1);
-
-        this.bgcolor.graphics.drawPath(280, 20, [
-            ["moveTo", 20, 0],
-            ["lineTo", 200, 0],
-            ["arcTo", 210, 0, 210, 20, 20],
-            ["lineTo", 210, 50],
-            ["arcTo", 210, 70, 200, 70, 20],
-            ["lineTo", 20, 70],
-            ["arcTo", 0, 70, 0, 50, 20],
-            ["lineTo", 0, 20],
-            ["arcTo", 0, 0, 20, 0, 20],
+            ["arcTo", 210, 0, 210, 10, 10],
+            ["lineTo", 210, 40],
+            ["arcTo", 210, 50, 200, 50, 10],
+            ["lineTo", 20, 50],
+            ["arcTo", 0, 50, 0, 40, 10],
+            ["lineTo", 0, 10],
+            ["arcTo", 0, 0, 10, 0, 10],
             ["closePath"]
         ],
         {
             fillStyle: "#ffffff"
         });
-
+        this.whitebg.zOrder = 10;
+        this.addChild(this.whitebg);
+        //当前游戏币个数
         this.curCoin = new Laya.Text();
         this.curCoin.color = "#000000";
 		this.curCoin.font = "Impact";
@@ -401,101 +51,177 @@
 		this.curCoin.wordWrap = true;
 		this.curCoin.text = sessionStorage["toiletCatUserCoin"]; 
 		this.curCoin.leading = 5;
-        this.curCoin.pos(380,30);
+        this.curCoin.zOrder=11;
+        this.curCoin.pos(260,25);
         this.addChild(this.curCoin);
 
-        this.bgcolor.graphics.drawPath(50, 150, [
-            ["moveTo", 20, 0],
-            ["lineTo", 300, 0],
-            ["arcTo", 310, 0, 310, 20, 20],
-            ["lineTo", 310, 200],
-            ["arcTo", 310, 230, 300, 230, 20],
-            ["lineTo", 20, 230],
-            ["arcTo", 0, 230, 0, 50, 20],
-            ["lineTo", 0, 20],
-            ["arcTo", 0, 0, 20, 0, 20],
-            ["closePath"]
-        ],
-        {
-            fillStyle: "#ffffff"
-        });
-        this.bgcolor.graphics.drawPath(400, 150, [
-            ["moveTo", 20, 0],
-            ["lineTo", 300, 0],
-            ["arcTo", 310, 0, 310, 20, 20],
-            ["lineTo", 310, 200],
-            ["arcTo", 310, 230, 300, 230, 20],
-            ["lineTo", 20, 230],
-            ["arcTo", 0, 230, 0, 50, 20],
-            ["lineTo", 0, 20],
-            ["arcTo", 0, 0, 20, 0, 20],
-            ["closePath"]
-        ],
-        {
-            fillStyle: "#ffffff"
-        });
-        this.bgcolor.graphics.drawPath(50, 420, [
-            ["moveTo", 20, 0],
-            ["lineTo", 300, 0],
-            ["arcTo", 310, 0, 310, 20, 20],
-            ["lineTo", 310, 200],
-            ["arcTo", 310, 230, 300, 230, 20],
-            ["lineTo", 20, 230],
-            ["arcTo", 0, 230, 0, 50, 20],
-            ["lineTo", 0, 20],
-            ["arcTo", 0, 0, 20, 0, 20],
-            ["closePath"]
-        ],
-        {
-            fillStyle: "#ffffff"
-        });
-        this.bgcolor.graphics.drawPath(400, 420, [
-            ["moveTo", 20, 0],
-            ["lineTo", 300, 0],
-            ["arcTo", 310, 0, 310, 20, 20],
-            ["lineTo", 310, 200],
-            ["arcTo", 310, 230, 300, 230, 20],
-            ["lineTo", 20, 230],
-            ["arcTo", 0, 230, 0, 50, 20],
-            ["lineTo", 0, 20],
-            ["arcTo", 0, 0, 20, 0, 20],
-            ["closePath"]
-        ],
-        {
-            fillStyle: "#ffffff"
-        });
-        this.bgcolor.graphics.drawPath(50, 690, [
-            ["moveTo", 20, 0],
-            ["lineTo", 300, 0],
-            ["arcTo", 310, 0, 310, 20, 20],
-            ["lineTo", 310, 200],
-            ["arcTo", 310, 230, 300, 230, 20],
-            ["lineTo", 20, 230],
-            ["arcTo", 0, 230, 0, 50, 20],
-            ["lineTo", 0, 20],
-            ["arcTo", 0, 0, 20, 0, 20],
-            ["closePath"]
-        ],
-        {
-            fillStyle: "#ffffff"
-        });
-        this.bgcolor.graphics.drawPath(400, 690, [
-            ["moveTo", 20, 0],
-            ["lineTo", 300, 0],
-            ["arcTo", 310, 0, 310, 20, 20],
-            ["lineTo", 310, 200],
-            ["arcTo", 310, 230, 300, 230, 20],
-            ["lineTo", 20, 230],
-            ["arcTo", 0, 230, 0, 50, 20],
-            ["lineTo", 0, 20],
-            ["arcTo", 0, 0, 20, 0, 20],
-            ["closePath"]
-        ],
-        {
-            fillStyle: "#ffffff"
-        });
+        //充值背景
+        for(var i=0;i<3;i++){
+            y = 110 + (i*260);
+            this.rechargebg1 = new Laya.Sprite();
+            this.rechargebg1.loadImage("comp/rechargeback.png");
+            this.rechargebg1.pos(15,y);
+            this.addChild(this.rechargebg1);
+            
+            this.rechargebg1 = new Laya.Sprite();
+            this.rechargebg1.loadImage("comp/rechargeback.png");
+            this.rechargebg1.pos(285,y);
+            this.addChild(this.rechargebg1);
+        }
+
+        //充值1
+        for(var i=0;i<6;i+=2){
+            y = i * 130;
+            this.curCoin1 = new Laya.Text();//文字
+            this.curCoin1.color = "#D2B160";
+            this.curCoin1.font = "Impact";
+            this.curCoin1.fontSize = 30;
+            this.curCoin1.width = 300;
+            this.curCoin1.wordWrap = true;
+            this.curCoin1.text = setInitData['result']['rechargeData'][i]["coinText"];
+            this.curCoin1.leading = 5;
+            this.curCoin1.pos(70,120+y);
+            this.addChild(this.curCoin1);
+            this.coinImg1 = new Laya.Sprite();//图
+            this.coinImg1.loadImage("comp/coin1.png");
+            this.coinImg1.pos(100,170+y);
+            this.addChild(this.coinImg1);
+            this.curCoin2 = new Laya.Text();//文字
+            this.curCoin2.color = "#D2B160";
+            this.curCoin2.font = "Impact";
+            this.curCoin2.fontSize = 29;
+            this.curCoin2.width = 300;
+            this.curCoin2.wordWrap = true;
+            if(i == 0){
+                this.curCoin2.text =  setInitData['result']['rechargeData'][i]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][i]['coin'])+"("+setInitData['result']['rechargeData'][i]["userLimitFlag"]+"/"+setInitData['result']['rechargeData'][i]["rechargeLimit"]+")";
+            }else{
+                this.curCoin2.text =  setInitData['result']['rechargeData'][i]["showText"].replace("#{coin}",setInitData['result']['rechargeData'][i]['coin']);
+            }
+            this.curCoin2.leading = 5;
+            this.curCoin2.pos(40,230+y);
+            this.addChild(this.curCoin2);     
+
+            this.rechargeFont1 = new Laya.Text();//文字
+            this.rechargeFont1.font = "Impact";
+            this.rechargeFont1.fontSize = 40;
+            this.rechargeFont1.width = 300;
+            this.rechargeFont1.wordWrap = true;
+
+            this.limit = new Laya.Sprite();
+            this.limit.loadImage("comp/limit.png");
+            this.limit.pos(170,90);
+            this.limit.scale(2,2);
+            this.addChild(this.limit);
+
+            if(i > 0){
+                this.coinImg1 = new Laya.Sprite();//图
+                this.coinImg1.loadImage("comp/money.png");
+                this.coinImg1.pos(50,285+y);
+                this.addChild(this.coinImg1);
+                this.rechargeFont1.fontSize = 40;
+                this.rechargeFont1.color = "#FE613C";
+                this.rechargeFont1.text = setInitData['result']['rechargeData'][i]["money"];
+                this.rechargeFont1.pos(130,290+y);
+            }else if(setInitData['result']['rechargeData'][i]["userLimitFlag"] < setInitData['result']['rechargeData'][i]["rechargeLimit"] ){
+                this.coinImg1 = new Laya.Sprite();//图
+                this.coinImg1.loadImage("comp/money.png");
+                this.coinImg1.pos(50,285+y);
+                this.addChild(this.coinImg1);
+                this.rechargeFont1.fontSize = 40;
+                this.rechargeFont1.color = "#FE613C";
+                this.rechargeFont1.text = setInitData['result']['rechargeData'][i]["money"];
+                this.rechargeFont1.pos(130,290+y);
+            }else{
+                this.rechargeFont1.fontSize = 30;
+                this.rechargeFont1.color = "#FE613C";
+                this.rechargeFont1.text = "今日已达上限";
+                this.rechargeFont1.pos(50,290+y);
+            }
+            this.rechargeFont1.leading = 5;
+            this.rechargeFont1.zOrder = 2;
+            
+            if(i == 0){
+                if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["rechargeLimit"]){
+                    //判断限冲次数
+                    this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][0]["money"]]);
+                }
+            }else{
+               this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][i]["money"]]); 
+            }
+            this.addChild(this.rechargeFont1);
+
+//右侧
+            this.curCoin1 = new Laya.Text();//文字
+            this.curCoin1.color = "#D2B160";
+            this.curCoin1.font = "Impact";
+            this.curCoin1.fontSize = 30;
+            this.curCoin1.width = 300;
+            this.curCoin1.wordWrap = true;
+            if(i == 0){
+                this.curCoin1.text = "充"+setInitData['result']['rechargeData'][i+1]["coinText"];
+            }else{
+                this.curCoin1.text = setInitData['result']['rechargeData'][i+1]["coinText"];
+            }
+            this.curCoin1.leading = 5;
+            this.curCoin1.pos(340,120+y);
+            this.addChild(this.curCoin1);
+            this.coinImg1 = new Laya.Sprite();//图
+            this.coinImg1.loadImage("comp/coin1.png");
+            this.coinImg1.pos(370,170+y);
+            this.addChild(this.coinImg1);
+            this.curCoin2 = new Laya.Text();//文字
+            this.curCoin2.color = "#D2B160";
+            this.curCoin2.font = "Impact";
+            this.curCoin2.fontSize = 29;
+            this.curCoin2.width = 300;
+            this.curCoin2.wordWrap = true;
+            if(i == 0){
+                if(setInitData['result']['rechargeData'][1]["userFirstFlag"] == 'is_first'){
+                    this.curCoin2.text = "充"+setInitData['result']['rechargeData'][1]["coinText"]+"送"+setInitData['result']['rechargeData'][1]["giveCoin"];
+                }else{
+                    this.curCoin2.text = "充"+setInitData['result']['rechargeData'][1]["coinText"]+"马桶币";
+                }
+            }else{
+                 this.curCoin2.text = setInitData['result']['rechargeData'][i+1]["coinText"];
+            }
+
+            this.curCoin2.leading = 5;
+            this.curCoin2.pos(310,230+y);
+            this.addChild(this.curCoin2);     
+
+            this.rechargeFont1 = new Laya.Text();//文字
+            this.rechargeFont1.font = "Impact";
+            this.rechargeFont1.fontSize = 40;
+            this.rechargeFont1.width = 300;
+            this.rechargeFont1.wordWrap = true;
+
+            if(i == 0 && setInitData['result']['rechargeData'][1]["userFirstFlag"] == 'is_first'){
+                this.limit = new Laya.Sprite();
+                this.limit.loadImage("comp/first.png");
+                this.limit.pos(420,90);
+                this.limit.scale(2,2);
+                this.addChild(this.limit);
+            }
+
+            this.coinImg1 = new Laya.Sprite();//图
+            this.coinImg1.loadImage("comp/money.png");
+            this.coinImg1.pos(320,285+y);
+            this.addChild(this.coinImg1);
+            this.rechargeFont1.fontSize = 40;
+            this.rechargeFont1.color = "#FE613C";
+            this.rechargeFont1.text = setInitData['result']['rechargeData'][i+1]["money"];
+            this.rechargeFont1.pos(400,290+y);
+            
+            this.rechargeFont1.leading = 5;
+            this.rechargeFont1.zOrder = 2;
+
+            this.addChild(this.rechargeFont1);
+            this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][i+1]["money"]]); 
+        }
     }
 
+
+//充值操作
     function gameRecharge(data){
         rechargeThis(data);
     }
@@ -505,7 +231,7 @@
     function rechargeThis(amount) {
         sessionStorage["toiletCatLastPage"] = window.location.href;
         $.ajax({
-            url:"/toiletCat/api/recharge/userRecharge.action",
+            url:"/toiletCat/api/user/userRecharge.action",
             type:"POST",
             async:false,
             data:{
@@ -525,46 +251,11 @@
                     return;
                 }
 
-                var result = data["result"];
+                // 将当前url放入前端缓存
+                sessionStorage["toiletCatLastPage"] = window.location.href;
 
-            if (typeof(result) == "string") {
-                result = eval("(" + result + ")");
-            }
-
-            WeixinJSBridge.invoke(
-                'getBrandWCPayRequest', {
-                    "appId": result["appId"],     //公众号名称，由商户传入
-                    "timeStamp": result["timeStamp"],         //时间戳，自1970年以来的秒数
-                    "nonceStr": result["nonceStr"], //随机串
-                    "package": result["package"],
-                    "signType": result["signType"],         //微信签名方式：
-                    "paySign": result["paySign"] //微信签名
-                },
-                function (res) {
-
-                    // 微信前端返回支付成功/失败(终态)
-                    if (res.err_msg == "get_brand_wcpay_request:ok" || res.err_msg == "get_brand_wcpay_request:fail") {
-
-                        clickFlag = true;
-
-                        $("#recharge_button").html("充值");
-
-                        // 我方订单号
-                        sessionStorage["toiletCatUserOrderNo"] = result["orderNo"];
-
-                         window.location.href="/toiletCat/recharge/rechargeResult.html";
-
-                        // 微信前端返回支付取消
-                    } else if(res.err_msg == "get_brand_wcpay_request:cancel") {
-
-                        clickFlag = true;
-
-                        $("#recharge_button").html("充值");
-
-                        cancelRecharge(result["orderNo"]);
-                    }
-                }
-            );
+                // 跳转到充值页面
+                window.location.href = data["result"];
 
             }
         });
@@ -579,7 +270,7 @@
             gameRechargeObj.visible = false;
             Laya.timer.clear(this,gameRechargehide);
         }else{
-            gameRechargeObj.y +=20;
+            gameRechargeObj.y +=30;
         }
     }
     Laya.class(rechargeThis,"rechargeThis",_super);

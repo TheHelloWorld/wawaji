@@ -23,7 +23,7 @@ var userNo;
 var canPlayMyBroadcast = 1;
 var csh,cshback,gameRechargeObj;
 
-var toyinfo_position = [[150,430,70],[340,430,70],[260,530,75],[450,530,75]];
+var toyinfo_position = [[60,430,70],[240,430,70],[130,480,75],[300,480,75]];
 var defaultSize=[185, 235];
 var addX = addY = 0;
 var broadcastSuccessList = [];
@@ -31,14 +31,14 @@ var broadcastSuccessList = [];
 
     function connect()
 	{
-        Laya.init(753, 1092);//宽高，渲染方式
+        Laya.init(540, 960);//宽高，渲染方式
 	//Laya.init(Laya.Browser.width,Laya.Browser.height);
         //初始化引擎，设置游戏宽高
         Laya.stage.scaleMode = "exactfit";
         Laya.stage.alignH = "center";
 
 this.cshback = new Laya.Sprite();
-        this.cshback.graphics.drawRect(0, 0, 753, 1092, "#000000");
+        this.cshback.graphics.drawRect(0, 0, 540, 960, "#000000");
         this.cshback.alpha = 1;
         this.cshback.zOrder = 600;
         Laya.stage.addChild(this.cshback);
@@ -52,7 +52,7 @@ this.cshback = new Laya.Sprite();
 		this.csh.text = "游戏初始化中，请稍后";
 		this.csh.leading = 5;
         this.csh.zOrder = 601;
-        this.csh.pos(250,550);
+        this.csh.pos(140,400);
         Laya.stage.addChild(this.csh);
 
         cshback = this.cshback;
@@ -71,8 +71,8 @@ this.cshback = new Laya.Sprite();
 
 	function onSocketOpen()
 	{
-		uId = getQueryString('userNo');
-        rId = getQueryString('gameRoomNo');
+		uId = 'cbadf785c72245ec821faa07b814d54a';//getQueryString('userNo');
+        rId = '99';//getQueryString('gameRoomNo');
         userName = sessionStorage["toiletCatUserName"];
         userImg = sessionStorage["toiletCatUserImg"];
 
@@ -120,7 +120,7 @@ this.cshback = new Laya.Sprite();
         
         //地址 回调 加载进度
         
-        Laya.loader.load(data.result.toyRoomImg,Laya.Handler.create(this, createPlayToy));
+        Laya.loader.load("http://www.9w83c6.cn"+data.result.toyRoomImg,Laya.Handler.create(this, createPlayToy));
         //创建背景
         this.bg1 = new Background1();
         this.bg1.zOrder = 100;
@@ -134,34 +134,34 @@ this.cshback = new Laya.Sprite();
         //加载文字
         this.coinFont = new coinFont(data);
         this.coinFont.zOrder = 105;
-        this.coinFont.pos(110,47)
+        this.coinFont.pos(190,22)
         Laya.stage.addChild(this.coinFont);
 
         this.singlePlayFont = new singlePlayFont();
         this.singlePlayFont.zOrder = 105;
-        this.singlePlayFont.pos(450,49);
+        this.singlePlayFont.pos(300,22);
         Laya.stage.addChild(this.singlePlayFont);
 
         this.curNumFont = new curNumFont(data);
         this.curNumFont.zOrder = 105;
-        this.curNumFont.pos(530,49);
+        this.curNumFont.pos(370,22);
         Laya.stage.addChild(this.curNumFont);
 
         this.addLuckyNumFont = new addLuckyNumFont();
         this.addLuckyNumFont.zOrder = 105;
-        this.addLuckyNumFont.pos(120,1000);
+        this.addLuckyNumFont.pos(120,880);
         this.addLuckyNumFont.visible = false;
         Laya.stage.addChild(this.addLuckyNumFont);
 
         this.timePngTxt = new timePngTxt();
         this.timePngTxt.zOrder = 105;
-        this.timePngTxt.pos(540,49);
+        this.timePngTxt.pos(400,20);
         Laya.stage.addChild(this.timePngTxt);
 
         this.toyBackgroundImg = new addToyBackground();
         this.toyBackgroundImg.zOrder=15;
         this.toyBackgroundImg.alpha = 0.7;
-        this.toyBackgroundImg.pos(200,150);
+        this.toyBackgroundImg.pos(120,150);
         Laya.stage.addChild(this.toyBackgroundImg);
 
         //广播
@@ -181,12 +181,12 @@ this.cshback = new Laya.Sprite();
         this.Ufo = new Ufo();
         this.Ufo.zOrder = 80;
         Laya.stage.addChild(this.Ufo);
-        this.Ufo.pivot(-80, -125);
+        this.Ufo.pivot(-25, -125);
         ufoAll = this.Ufo;
 
         this.UfoShadow = new UfoShadow();
         this.UfoShadow.zOrder = 60;
-        this.UfoShadow.pivot(-100, -730);
+        this.UfoShadow.pivot(-40, -690);
         Laya.stage.addChild(this.UfoShadow);
         shadow = this.UfoShadow;
         shadowBounds = this.UfoShadow.getBounds();

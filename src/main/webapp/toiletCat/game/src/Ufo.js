@@ -19,7 +19,7 @@ var Ufo = (function(_super){
         Laya.Animation.createFrames(["comp/ufo.png"],"flyStop");
         Laya.Animation.createFrames(["comp/ufo.png","comp/ufoleft1.png","comp/ufoleft2.png","comp/ufoleft3.png","comp/ufoleft4.png"],"flyLeft");
         Laya.Animation.createFrames(["comp/ufo.png","comp/uforight1.png","comp/uforight2.png","comp/uforight3.png","comp/uforight4.png"],"flyRight");
-        Laya.Animation.createFrames(["comp/ufo.png","comp/up1.png","comp/up2.png","comp/up3.png"],"flySmall");
+        Laya.Animation.createFrames(["comp/ufo.png","comp/ufoup1.png","comp/ufoup2.png","comp/up3.png"],"flySmall");
         Laya.Animation.createFrames(["comp/ufo.png","comp/down1.png","comp/down2.png","comp/down3.png"],"flybig");
         this.ufo.zOrder = 90;
         this.addChild(this.ufo);
@@ -41,9 +41,9 @@ var Ufo = (function(_super){
 
         //this.bound = this.getBounds();console.log(this.bound);
         this.ufo.pos(10,0);
-        this.armleft.pivot(57,0);
-        this.armleft.pos(57,70);
-        this.armright.pos(155,70);
+        this.armleft.pivot(40,0);
+        this.armleft.pos(40,60);
+        this.armright.pos(120,60);
         ufoBounds = this.getBounds();
 
 
@@ -122,6 +122,7 @@ var Ufo = (function(_super){
     }
 
     function moveSmall(){
+        //upButton.play(0,false,'upAct');
         if(canMoveStatus == 1){
             ufo.play(0,false,"flySmall");
             Laya.timer.frameLoop(1,this,onLoopSmall);
@@ -129,6 +130,7 @@ var Ufo = (function(_super){
     }
 
     function stopMoveSmall(){
+        //upButton.play(0,false,'upStop');
         if(canMoveStatus == 1){
             ufo.play(0,false,"flyStop");
             Laya.timer.clear(this,onLoopSmall);
@@ -152,7 +154,7 @@ var Ufo = (function(_super){
         if(shadowBounds.x == 0){
             shadowBounds = shadow.getBounds();
         }
-        if((ufoAll.x + ufoBounds.width) < (595-(0.78*((1-x)/0.005)))){
+        if((ufoAll.x + ufoBounds.width) < (490-(0.78*((1-x)/0.005)))){
             ufoAll.x +=1.5;
             shadow.x += 1.5;
             shadowBounds.x = shadow.x+100;
@@ -161,11 +163,11 @@ var Ufo = (function(_super){
     }
 
     function onLoopSmall(){
-        if(x >= 0.7){
+        if(x >= 0.85){
             ufoBounds = ufoAll.getBounds();
             shadowBounds = shadow.getBounds();
             x -=0.005;
-            if((ufoAll.x + ufoBounds.width) < (595-(0.78*((1-x)/0.005)))){
+            if((ufoAll.x + ufoBounds.width) < (490-(0.78*((1-x)/0.005)))){
                 ufoAll.x +=2*x;
                 shadow.x +=2.1*x;
             }
@@ -298,16 +300,17 @@ var Ufo = (function(_super){
         if(selectToy > -1){
             if(catch_status == 1){
                 if(selectToy <= 1){
-                    var need_j = 30;
+                    var need_j = 5;
                 }else{
                     var need_j = 0;
                 }
                 toyImgCreate[selectToy].y -=2;
-                var ufox = (ufoAll.x + ufoBounds.width/2-need_j);
-                if(armleft.rotation > -40){
+                var ufox = (ufoAll.x + ufoBounds.width/4-need_j);
+
+                if(armleft.rotation > -20){
                     armleft.rotation -=2;
                 }
-                if(armright.rotation < 40){
+                if(armright.rotation < 20){
                     armright.rotation +=2;
                 }
                 if(toyImgCreate[selectToy].x < ufox+2){
@@ -324,11 +327,12 @@ var Ufo = (function(_super){
     //抓取失败 娃娃上升
     function upToy(){
         if(selectToy <= 1){
-            var need_j = 30;
+            var need_j = 50;
         }else{
             var need_j = 0;
         }
-        var ufox = ufoAll.x + ufoBounds.width/2-need_j;
+        var ufox = ufoAll.x + ufoBounds.width/4-need_j;
+
         if(armleft.rotation > -40){
             armleft.rotation -=2;
         }
@@ -440,8 +444,8 @@ var Ufo = (function(_super){
     var djs_time = 10;
     function luckyNumChange(){
         if(catch_status == 1){
-            luckyNumPNG.x = 30;
-            luckyNumPNG.xscale = (0,1);
+            luckyNumPNG.x = 32;
+            luckyNumPNG.scale(0,1);
             zzcObj.visible = true;
             successInfoObj.visible = true;
             timepng.visible = false;
@@ -454,7 +458,7 @@ var Ufo = (function(_super){
 
         }else{
             var luckynumxlen = luckyNum/100 > 1?1:luckyNum/100;
-            luckyNumPNG.x = (30-(luckynumxlen)*20);
+            luckyNumPNG.x = 32;
             luckyNumPNG.scale(luckynumxlen,1);
             addLuckyNumFontObj.text = "+"+addLuckyNum;
             addLuckyNumFont.visible = true;
@@ -480,7 +484,7 @@ var Ufo = (function(_super){
             closeFailInfo();
         }else{
             djs_time--;
-            againtxt.text = "再来一次（"+djs_time+"）";
+            againtxt.text = "再来一次 ("+djs_time+")";
         }
     }
 

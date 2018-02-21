@@ -11,7 +11,7 @@ var socketJs = (function(_super){
     var curPlayer = 0;
     _proto.toyInit = function(data){
         this.toyImg = new Laya.Sprite();
-        this.toyImg.loadImage(data.result.toyRoomImg);
+        this.toyImg.loadImage("http://www.9w83c6.cn"+data.result.toyRoomImg);
         this.addChild(this.toyImg);
         if(toySize[0] == 0){
             var size = this.toyImg.getBounds();
@@ -21,11 +21,11 @@ var socketJs = (function(_super){
         toyNo = data.result.toyNo;
         toyNowCoin = data.result.toyNowCoin;
         toyName = data.result.toyName;
-        toyRoomImg = data.result.toyRoomImg;
+        toyRoomImg = "http://www.9w83c6.cn"+data.result.toyRoomImg;
         luckyNum = data.result.userGameRoomLuckyNum;
         curPlayer = data.result.curPlayer
 
-    };
+    }
     _proto.toyShadow = function(data){
         this.toyShadow = new Laya.Animation();
         Laya.Animation.createFrames(["comp/wawadi.png"],"shadowStop");
@@ -34,7 +34,7 @@ var socketJs = (function(_super){
         this.addChild(this.toyShadow);
         shadowObj = this.toyShadow;
         shadowObj.play(0,false,'shadowStop');
-    };
+    }
 
     _proto.broadcast = function(data){
         this.broadcastBack = new Laya.Sprite();
@@ -51,7 +51,7 @@ var socketJs = (function(_super){
         this.broadcasttxt.text = data.str;
         this.broadcasttxt.leading = 5;
         this.addChild(this.broadcasttxt);
-    };
+    }
 
     function refreshCurNum(data){
         console.log('刷新在线人数');
@@ -162,9 +162,9 @@ var socketJs = (function(_super){
     function coinFont (){
         coinFont.super(this);
         this.txt = new Laya.Text();
-        this.txt.color = "#FFFFFF";
+        this.txt.color = "#A7682E";
         this.txt.font = "Impact";
-        this.txt.fontSize = 30;
+        this.txt.fontSize = 24;
         this.txt.wordWrap = true;
         this.txt.text = sessionStorage["toiletCatUserCoin"];
         this.txt.leading = 5;
@@ -176,10 +176,10 @@ var socketJs = (function(_super){
     function curNumFont(){
         curNumFont.super(this);
         this.txt = new Laya.Text();
-        this.txt.color = "#FFFFFF";
+        this.txt.color = "#A7682E";
         this.txt.font = "Impact";
         this.txt.width = 200;
-        this.txt.fontSize = 25;
+        this.txt.fontSize = 22;
         this.txt.wordWrap = true;
         this.txt.text = "在线人数:"+curPlayer;
         this.txt.leading = 5;
@@ -191,9 +191,9 @@ var socketJs = (function(_super){
     function singlePlayFont(){
         singlePlayFont.super(this);
         this.txt = new Laya.Text();
-        this.txt.color = "#FFFFFF";
+        this.txt.color = "#A7682E";
         this.txt.font = "Impact";
-        this.txt.fontSize = 25;
+        this.txt.fontSize = 22;
         this.txt.wordWrap = true;
         this.txt.text = data.result.toyNowCoin+"/局";
         this.txt.leading = 5;
@@ -219,7 +219,7 @@ var socketJs = (function(_super){
     function timePngTxt(){
         timePngTxt.super(this);
         this.txt = new Laya.Text();
-        this.txt.color = "#FFFFFF";
+        this.txt.color = "#A86831";
         this.txt.font = "Impact";
         this.txt.fontSize = 35;
         this.txt.wordWrap = true;
