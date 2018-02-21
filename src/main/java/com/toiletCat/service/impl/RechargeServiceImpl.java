@@ -270,6 +270,9 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                     logger.info("getRechargeResultByParam request duplicate param:" +  rechargeResultMap);
 
+                    // 释放锁
+                    relaseLockByKey(lockKey);
+
                     return;
                 }
 
