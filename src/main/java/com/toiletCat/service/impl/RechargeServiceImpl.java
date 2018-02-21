@@ -257,7 +257,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
                     // 尝试获取锁
-                    if(redisUtil.setnx(RedisConstant.RECHARGE_RESULT_LOCK_TIME_OUT, lockKey, orderNo) == 0L) {
+                    if(redisUtil.setnx(lockKey, orderNo) == 0L) {
 
                         logger.info("getRechargeResultByParam orderNo:" + orderNo + " is running");
 
