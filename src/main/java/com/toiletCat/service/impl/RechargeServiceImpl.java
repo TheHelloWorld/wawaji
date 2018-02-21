@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -250,6 +251,24 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 // 我方订单号
                 String orderNo = rechargeResultMap.get("out_trade_no");
 
+                // 锁机制
+                try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
+
+                    // 尝试获取锁
+                    if(redisUtil.setnx(RedisConstant.RECHARGE_RESULT_LOCK_TIME_OUT, orderNo, orderNo) == 0L) {
+
+                        logger.info("getRechargeResultByParam orderNo:" + orderNo + " is running");
+
+                        return;
+                    }
+
+                } catch (Exception e) {
+
+                    logger.error("getRechargeResultByParam redis get lock error: " + e.getMessage(), e);
+
+                    return;
+                }
+
                 // 防止重复请求 获得充值结果
                 CommonResult<Integer> commonRechargeResult = userRechargeRecordService.
                         getTradeStatusByOrderNo(userNo, orderNo);
@@ -268,7 +287,23 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 CommonResult<String> result = updateRechargeResult(orderNo, userNo, amount,
                         rechargeResultMap.get("result_code"));
 
+
+                // 锁机制
+                try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
+
+                    // 释放锁
+                    redisUtil.del(orderNo);
+
+                } catch (Exception e) {
+
+                    logger.error("getRechargeResultByParam redis relase lock error: " + e.getMessage(), e);
+
+                    return;
+                }
+
                 if(!result.success()) {
+
+                    setOtherMsg();
 
                     got(result.getValue());
 
