@@ -251,11 +251,13 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 // 我方订单号
                 String orderNo = rechargeResultMap.get("out_trade_no");
 
+                String lockKey = RedisConstant.RECHARGE_RESULT_LOCK.replace(RedisConstant.PLACEHOLDER, orderNo);
+
                 // 锁机制
                 try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
                     // 尝试获取锁
-                    if(redisUtil.setnx(RedisConstant.RECHARGE_RESULT_LOCK_TIME_OUT, orderNo, orderNo) == 0L) {
+                    if(redisUtil.setnx(RedisConstant.RECHARGE_RESULT_LOCK_TIME_OUT, lockKey, orderNo) == 0L) {
 
                         logger.info("getRechargeResultByParam orderNo:" + orderNo + " is running");
 
@@ -292,7 +294,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
 
                     // 释放锁
-                    redisUtil.del(orderNo);
+                    redisUtil.del(lockKey);
 
                 } catch (Exception e) {
 

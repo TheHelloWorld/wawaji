@@ -22,6 +22,11 @@ public class RedisConstant {
     public static final Integer RECHARGE_RESULT_LOCK_TIME_OUT = 30;
 
     /**
+     * 充值返回结果锁超时时间
+     */
+    public static final String RECHARGE_RESULT_LOCK = "recharge_result_lock_" + PLACEHOLDER;
+
+    /**
      * 短信验证相关
      */
     public static final String SMS_MOBILE_NO = "sms_" + PLACEHOLDER;
