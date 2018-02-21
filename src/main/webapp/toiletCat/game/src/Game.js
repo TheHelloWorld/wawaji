@@ -71,8 +71,8 @@ this.cshback = new Laya.Sprite();
 
 	function onSocketOpen()
 	{
-		uId = 'cbadf785c72245ec821faa07b814d54a';//getQueryString('userNo');
-        rId = '99';//getQueryString('gameRoomNo');
+		uId = getQueryString('userNo');
+        rId = getQueryString('gameRoomNo');
         userName = sessionStorage["toiletCatUserName"];
         userImg = sessionStorage["toiletCatUserImg"];
 
