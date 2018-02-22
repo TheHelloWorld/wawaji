@@ -1057,10 +1057,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     return;
                 }
 
-                String invitationUserNo = userDao.getInvitationUserNoByUserNo(userNo);
+                // 用户当前邀请码所属用户
+                String userNowInvitationUserNo = userDao.getInvitationUserNoByUserNo(userNo);
 
                 // 判断当前用户是否已被邀请过
-                if(!BaseConstant.DEFAULT_INVITATION_USER_NO.equals(invitationUserNo)) {
+                if(!BaseConstant.DEFAULT_INVITATION_USER_NO.equals(userNowInvitationUserNo)) {
 
                     setOtherMsg();
 
@@ -1069,7 +1070,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     return;
                 }
 
-                // 根据邀请码获得邀请用户用户编号
+                // 根据邀请码获得邀请码所属用户用户编号
                 String inviteUserNo = userDao.getUserNoByInvitationCode(inviteCode);
 
                 // 判断该邀请码是否正确
@@ -1136,7 +1137,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 userSpendRecordService.addUserSpendRecord(userSpendRecord);
 
                 // 获得邀请用户当前已邀请用户数量
-                Integer invitationCount = userDao.countByInvitationUserNo(invitationUserNo);
+                Integer invitationCount = userDao.countByInvitationUserNo(inviteUserNo);
 
                 // 若数量小于最大邀请数量则给邀请用户添加游戏币
                 if(invitationCount < BaseConstant.INVITE_MAX_NUM) {
