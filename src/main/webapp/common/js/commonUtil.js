@@ -60,6 +60,12 @@ $(function(){
 
     // 设置div为屏幕宽度
     $(".index-body-div").width($(window).width());
+
+    // 设置body为屏幕高度
+    $(".my-body").height($(window).height());
+
+    // 设置body为屏幕宽度
+    $(".my-body").width($(window).width());
 });
 
 //初始化页码
