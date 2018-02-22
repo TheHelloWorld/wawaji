@@ -540,7 +540,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
-                String lockKey = RedisConstant.RECHARGE_QUERY_LOCK.replace(RedisConstant.PLACEHOLDER, orderNo);
+                String lockKey = RedisConstant.RECHARGE_RESULT_LOCK.replace(RedisConstant.PLACEHOLDER, orderNo);
 
                 if(!getLockByKey(lockKey)) {
 
