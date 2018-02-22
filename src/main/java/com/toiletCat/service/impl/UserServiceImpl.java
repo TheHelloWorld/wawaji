@@ -1148,7 +1148,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     // 设置邀请用户用户编号
                     userSpendRecord.setUserNo(inviteUserNo);
 
-                    String inviteOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime();
+                    String inviteOrderNo = BaseConstant.TOILER_CAT + System.currentTimeMillis();
 
                     // 设置邀请用户订单编号
                     userSpendRecord.setOrderNo(inviteOrderNo);
