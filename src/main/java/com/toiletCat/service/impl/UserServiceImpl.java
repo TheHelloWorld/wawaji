@@ -123,7 +123,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                             for(String inviteCode : userInviteCodeList) {
 
-                                redisUtil.sadd(BaseConstant.USER_INVITATION_CODE, invitationCode);
+                                redisUtil.sadd(BaseConstant.USER_INVITATION_CODE, inviteCode);
                             }
                         }
 
