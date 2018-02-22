@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.List;
 
 @SuppressWarnings("all")
 @Service("userService")
@@ -107,7 +108,24 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                     String invitationCode = "";
 
+                    Integer userNum = userDao.countAllUser();
+
                     try(RedisUtil redisUtil = new RedisUtil(RedisConstant.REDIS)) {
+
+                        // 若当前redis中邀请码数量与库中不一致则重新将库中邀请码放入redis中
+                        if(redisUtil.scard(BaseConstant.USER_INVITATION_CODE) != (long)userNum) {
+
+                            // 清除当前redis中用户邀请码
+                            redisUtil.del(BaseConstant.USER_INVITATION_CODE);
+
+                            // 获得库中所有用户邀请码
+                            List<String> userInviteCodeList = userDao.getAllUserInviteCode();
+
+                            for(String inviteCode : userInviteCodeList) {
+
+                                redisUtil.sadd(BaseConstant.USER_INVITATION_CODE, invitationCode);
+                            }
+                        }
 
                         while (true) {
 

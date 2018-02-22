@@ -22,6 +22,12 @@ public interface UserDao {
     Integer countAllUser();
 
     /**
+     * 获取所有用户邀请码
+     * @return
+     */
+    List<String> getAllUserInviteCode();
+
+    /**
      * 分页获得所有用户记录
      * @param startPage 开始数据
      * @param pageSize 每页数据数
