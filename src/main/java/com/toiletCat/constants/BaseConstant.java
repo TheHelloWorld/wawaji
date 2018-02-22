@@ -2,7 +2,6 @@ package com.toiletCat.constants;
 
 import com.toiletCat.entity.MoneyForCoin;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -177,5 +176,40 @@ public class BaseConstant {
 	 * 默认为空的值
 	 */
 	public static final String DEFAULT_NULL = "0";
+
+	/**
+	 * 充值订单标志位
+	 */
+	public static final String TRADE = "0000000000";
+
+	/**
+	 * 邀请码所属用户订单标志位
+	 */
+	public static final String INVITE_CODE_OWNER = "1111111111";
+
+	/**
+	 * 填写邀请码订单标志位
+	 */
+	public static final String INVITE_CODE = "2222222222";
+
+	/**
+	 * 战利品兑换游戏币订单标志位
+	 */
+	public static final String TOY_FOR_COIN = "3333333333";
+
+	/**
+	 * 游戏房间玩游戏扣币订单标志位
+	 */
+	public static final String PLAY_GAME = "4444444444";
+
+	/**
+	 * 机器房间玩游戏扣币订单标志位
+	 */
+	public static final String PLAY_MACHINE = "5555555555";
+
+	/**
+	 * 战利品寄送扣除邮费订单标志位
+	 */
+	public static final String DELIVER_COIN = "6666666666";
 
 }

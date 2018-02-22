@@ -444,7 +444,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 userSpendRecord.setTradeTime(DateUtil.getFullDateByTime(date));
 
                 // 订单号
-                String spendOrderNo = BaseConstant.TOILER_CAT + date.getTime();
+                String spendOrderNo = BaseConstant.TOILER_CAT + BaseConstant.PLAY_MACHINE + date.getTime();
 
                 userSpendRecord.setOrderNo(spendOrderNo);
 
@@ -608,7 +608,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 userSpendRecord.setTradeTime(DateUtil.getFullDateByTime(date));
 
                 // 订单号
-                String spendOrderNo = BaseConstant.TOILER_CAT + date.getTime();
+                String spendOrderNo = BaseConstant.TOILER_CAT + BaseConstant.PLAY_GAME + date.getTime();
 
                 userSpendRecord.setOrderNo(spendOrderNo);
 
@@ -1122,7 +1122,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 userSpendRecord.setTradeDate(tradeDate);
 
                 // 被邀请用户订单号
-                String beInviteOrderNo = BaseConstant.TOILER_CAT + tradeTime.getTime();
+                String beInviteOrderNo = BaseConstant.TOILER_CAT + BaseConstant.INVITE_CODE + tradeTime.getTime();
 
                 // 设置被邀请用户订单号
                 userSpendRecord.setOrderNo(beInviteOrderNo);
@@ -1148,7 +1148,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                     // 设置邀请用户用户编号
                     userSpendRecord.setUserNo(inviteUserNo);
 
-                    String inviteOrderNo = BaseConstant.TOILER_CAT + System.currentTimeMillis();
+                    String inviteOrderNo = BaseConstant.TOILER_CAT + BaseConstant.INVITE_CODE_OWNER +
+                            System.currentTimeMillis();
 
                     // 设置邀请用户订单编号
                     userSpendRecord.setOrderNo(inviteOrderNo);

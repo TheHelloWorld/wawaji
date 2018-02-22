@@ -161,8 +161,8 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 // 交易状态
                 userRechargeRecord.setTradeStatus(TradeStatus.INIT.getStatus());
 
-                // 订单号(ToiletCat + 时间戳)
-                String orderNo = BaseConstant.TOILER_CAT + tradeTime.getTime();
+                // 订单号(ToiletCat + 交易类型 + 时间戳)
+                String orderNo = BaseConstant.TOILER_CAT + BaseConstant.TRADE + tradeTime.getTime();
 
                 // 订单号
                 userRechargeRecord.setOrderNo(orderNo);
