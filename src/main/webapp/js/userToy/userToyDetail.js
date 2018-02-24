@@ -369,26 +369,38 @@ function getAllUnHandleUserToyByUserNo() {
 // 修改选择方式
 function updateChoiceType() {
 
-    userToyJson["userNo"] = userNo;
-    userToyJson["choiceType"] = $("#choiceType").val();
-    userToyJson["toyForCoin"] = toyForCoin;
-    userToyJson["handleStatus"] = handleStatus;
-    userToyJson["deliverId"] = deliverId;
+    $("#submitButton").html("提交中..");
 
+    $("#submitButton").attr("disabled", true);
+
+    userToyJson["userNo"] = userNo;
+
+    userToyJson["choiceType"] = $("#choiceType").val();
+
+    userToyJson["toyForCoin"] = toyForCoin;
+
+    userToyJson["handleStatus"] = handleStatus;
+
+    userToyJson["deliverId"] = deliverId;
 
     if($("#choiceType").val() == 2) {
 
         var userToyNoJson = [];
+
         var userToyNameJson = [];
 
         userAddressJson["userName"] = $("#userName"+userAddressId).val();
+
         userAddressJson["mobileNo"] = $("#mobileNo"+userAddressId).val();
+
         userAddressJson["address"] = $("#province"+userAddressId).val() + $("#address"+userAddressId).val();
 
         var count = 0;
 
         var obj = document.getElementsByName('unHandleToy');
+
         for(var i = 0;i<obj.length; i++) {
+
             if(obj[i].checked) {
 
                 count ++;
@@ -409,8 +421,15 @@ function updateChoiceType() {
 
         // 如果寄送数量小于免费数量
         if(count < freeDeliverNum) {
+
             if(userCoin < deliverCoin) {
+
+                $("#submitButton").html("确定");
+
+                $("#submitButton").attr("disabled",false);
+
                 toiletCatMsg("游戏币不足QAQ 请充值喵", null);
+
                 return;
             }
         }
@@ -451,7 +470,13 @@ function updateChoiceType() {
 
             // 判断是否成功
             if(data["is_success"] != "success") {
+
+                $("#submitButton").html("确定");
+
+                $("#submitButton").attr("disabled",false);
+
                 toiletCatMsg(data["result"], null);
+
                 return;
             }
 
@@ -463,6 +488,10 @@ function updateChoiceType() {
 
             // 更新用户游戏币数
             sessionStorage["toiletCatUserCoin"] = result["userCoin"];
+
+            $("#submitButton").html("确定");
+
+            $("#submitButton").attr("disabled",false);
 
             window.location.href = "/toiletCat/userToy/userToyHandle.html?userNo=" + userNo;
         }
