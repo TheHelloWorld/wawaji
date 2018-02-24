@@ -175,7 +175,11 @@ public class RechargeUtil {
      */
     public static String getWxPayRequestInfo(String orderNo, String money, String openId, String ip) {
 
+        logger.info("getWxPayRequestInfo param: orderNo:" + orderNo + ", money:" + money + ", openId:" + openId +
+                ", ip:" + ip);
+
         try {
+
             PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
             JSONObject json = new JSONObject();
@@ -198,7 +202,7 @@ public class RechargeUtil {
             json.put("out_trade_no", orderNo);
 
             // 交易金额(单位为分)
-            json.put("total_fee", (int)(Double.valueOf(money) * 100));
+            json.put("total_fee", (int)(Math.rint(Double.valueOf(money) * 100)));
 
             // 终端ip
             json.put("spbill_create_ip", ip);

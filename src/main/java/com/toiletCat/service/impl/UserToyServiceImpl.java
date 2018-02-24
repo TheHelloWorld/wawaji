@@ -412,7 +412,7 @@ public class UserToyServiceImpl extends BaseServiceImpl implements UserToyServic
 
                     userSpendRecordDao.addUserSpendRecord(userSpendRecord);
                     
-                    userToyUpdateChoiceTypeByIdAndUserNo(userNo, userToy.getToyNo(), toyInfo.getDeliverNum(), choiceType);
+                    userToyUpdateChoiceTypeByIdAndUserNo(userNo, userToy.getToyNo(), forCoinNum, choiceType);
 
                 }
 

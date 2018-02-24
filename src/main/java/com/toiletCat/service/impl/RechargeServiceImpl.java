@@ -177,7 +177,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 }
 
                 // 获得请求url并返回
-                got(RechargeUtil.getWxPayRequestInfo(orderNo, String.valueOf(amount), user.getOpenId(), ip));
+                got(RechargeUtil.getWxPayRequestInfo(orderNo, amount, user.getOpenId(), ip));
 
             }
         }, true, "userRecharge", json);
@@ -361,7 +361,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 } catch (Exception e) {
 
-                    logger.error("updateRechargeResult transMoney err param:" + amount, e);
+                    logger.error("updateRechargeResult transMoney err orderNo:" + orderNo + ", amount:" + amount, e);
 
                     setOtherMsg();
 
@@ -376,7 +376,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
 
                 if(coin == null) {
 
-                    logger.warn("updateRechargeResult money is wrong param:" + money);
+                    logger.warn("updateRechargeResult money is wrong orderNo:" + orderNo + ", money:" + money);
 
                     setOtherMsg();
 
@@ -385,7 +385,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     return;
                 }
 
-                logger.info("updateRechargeResult userNo:" + userNo + ", coin:" + coin);
+                logger.info("updateRechargeResult userNo:" + userNo + ", orderNo:" + orderNo + ", coin:" + coin);
 
                 // 根据用户编号和订单号获得我方记录交易金额
                 CommonResult<BigDecimal> orderAmount = userRechargeRecordService.getAmountByUserNoAndOrderNo(userNo,
