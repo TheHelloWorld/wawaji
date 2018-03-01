@@ -87,13 +87,18 @@ function hideInvite(){
 
 // 用户填写邀请码
 function userInvite() {
+
     if(!isNotNull("invite")) {
+
         toiletCatMsg("请填写邀请码", null);
+
         return;
     }
 
     if($("#invite").val().trim().length != 5) {
+
         toiletCatMsg("请填写正确邀请码", null);
+
         return;
     }
 
@@ -142,15 +147,53 @@ function userInvite() {
 // 分享到朋友圈
 function shareToWeChat() {
 
-    var str = "	<div onclick='closeShare()' class='toiletCat-msg' >";
-    str += "        <img style='float:right;' src='/image/share/guide.png'>";
-    str += "	</div>";
+    // 若是APP端
+    if(sessionStorage["toiletCatType"] == "app") {
 
-    $("body").append(str);
-    $(".toiletCat-msg").height($(window).height());
+        getShareImg();
+
+    } else {
+
+        var str = "	<div onclick='closeShare()' class='toiletCat-msg' >";
+        str += "        <img style='float:right;' src='/image/share/guide.png'>";
+        str += "	</div>";
+
+        $("body").append(str);
+        $(".toiletCat-msg").height($(window).height());
+    }
 }
 
 // 取消分享
 function closeShare() {
     $(".toiletCat-msg").remove();
+}
+
+// 获取用户分享图片
+function getShareImg() {
+    $.ajax({
+        url:"/toiletCat/api/weChat/getUserShareImgByUserNo.action",
+        type:"POST",
+        async:false,
+        data:{
+            inviteCode:$("#invite").val(),
+            userNo:sessionStorage["toiletCatUserNo"]
+        },
+        success:function(data) {
+            // 转换数据
+            if(typeof(data) == "string") {
+                data = eval("("+data+")");
+            }
+
+            // 判断是否成功
+            if(data["is_success"] != "success") {
+                toiletCatMsg(data["result"], null);
+                return;
+            }
+
+            var url = data["url"];
+
+            // 将参数传给native端
+            window.android.share(url);
+        }
+    });
 }

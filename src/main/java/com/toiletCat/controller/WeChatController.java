@@ -81,11 +81,12 @@ public class WeChatController {
     /**
      * 获得微信朋友圈分享图片
      * @param userNo 用户编号
+     * @param inviteCode 用户邀请码
      * @return
      */
     @RequestMapping(value = "/getUserShareImgByUserNo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String getUserShareImgByUserNo(String userNo) {
+    public String getUserShareImgByUserNo(String userNo, String inviteCode) {
 
         CommonResult<User> result = userService.getUserByUserNo(userNo);
 
@@ -128,6 +129,12 @@ public class WeChatController {
 
         // 用户邀请码
         String inputWords = result.getValue().getInvitationCode();
+
+        if(!inputWords.equals(inviteCode)) {
+
+            return JSONUtil.getOtherMsgJson("邀请码错误");
+
+        }
 
         if(ImageUtil.alphaWords2Image(srcPath, alpha, font, fontStyle, fontSize, color, inputWords, x, y, imageFormat,
                 toPath)) {

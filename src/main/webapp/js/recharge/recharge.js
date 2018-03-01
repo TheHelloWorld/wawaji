@@ -217,6 +217,8 @@ function rechargeThis() {
 
     $("#recharge_button").html("支付中...");
 
+    sessionStorage["toiletCatLastPage"] = window.location.href;
+
     var rechargeType = "web_wxpay";
 
     if(sessionStorage["toiletCatType"] == "app") {

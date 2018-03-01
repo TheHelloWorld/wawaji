@@ -229,22 +229,32 @@
     }
 
 
-//充值操作
-    function gameRecharge(data){
+    // 充值操作
+    function gameRecharge(data) {
         rechargeThis(data);
     }
+
     Laya.class(gameRecharge,"gameRecharge",_super);
 
     // 充值操作
     function rechargeThis(amount) {
+
+        var rechargeType = "web_game_wxpay";
+
+        if(sessionStorage["toiletCatType"] == "app") {
+
+            rechargeType = "app_game_wxpay";
+        }
+
         sessionStorage["toiletCatLastPage"] = window.location.href;
+
         $.ajax({
             url:"/toiletCat/api/recharge/userRecharge.action",
             type:"POST",
             async:false,
             data:{
                 amount:amount,
-                rechargeType:"wxpay",
+                rechargeType:rechargeType,
                 userNo:uId
             },
             success:function(data) {
@@ -261,47 +271,62 @@
 
                 var result = data["result"];
 
-            if (typeof(result) == "string") {
-                result = eval("(" + result + ")");
-            }
+                // 判断是web端还是app端
+                if(sessionStorage["toiletCatType"] == "app") {
 
-            WeixinJSBridge.invoke(
-                'getBrandWCPayRequest', {
-                    "appId": result["appId"],     //公众号名称，由商户传入
-                    "timeStamp": result["timeStamp"].toString(),         //时间戳，自1970年以来的秒数
-                    "nonceStr": result["nonceStr"], //随机串
-                    "package": result["package"],
-                    "signType": result["signType"],         //微信签名方式：
-                    "paySign": result["paySign"] //微信签名
-                },
-                function (res) {
+                    // 将参数传给native端
+                    window.android.pay(result);
 
-                    // 微信前端返回支付成功/失败(终态)
-                    if (res.err_msg == "get_brand_wcpay_request:ok" || res.err_msg == "get_brand_wcpay_request:fail") {
+                } else {
 
-                        clickFlag = true;
-
-                        $("#recharge_button").html("充值");
-
-                        // 我方订单号
-                        sessionStorage["toiletCatUserOrderNo"] = result["orderNo"];
-
-                         window.location.href="/toiletCat/recharge/rechargeResult.html";
-
-                        // 微信前端返回支付取消
-                    } else if(res.err_msg == "get_brand_wcpay_request:cancel") {
-
-                        clickFlag = true;
-
-                        $("#recharge_button").html("充值");
-
-                        cancelRecharge(result["orderNo"]);
-                    }
+                    // web端充值
+                    gameWebRecharge(result);
                 }
-            );
-
             }
         });
+    }
+
+    // web端充值
+    function gameWebRecharge(data) {
+
+        if (typeof(data) == "string") {
+            data = eval("(" + data + ")");
+        }
+
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', {
+                "appId": data["appId"],     //公众号名称，由商户传入
+                "timeStamp": data["timeStamp"].toString(),         //时间戳，自1970年以来的秒数
+                "nonceStr": data["nonceStr"], //随机串
+                "package": data["package"],
+                "signType": data["signType"],         //微信签名方式：
+                "paySign": data["paySign"] //微信签名
+            },
+            function (res) {
+
+                // 微信前端返回支付成功/失败(终态)
+                if (res.err_msg == "get_brand_wcpay_request:ok" || res.err_msg == "get_brand_wcpay_request:fail") {
+
+                    clickFlag = true;
+
+                    $("#recharge_button").html("充值");
+
+                    // 我方订单号
+                    sessionStorage["toiletCatUserOrderNo"] = data["orderNo"];
+
+                    window.location.href="/toiletCat/recharge/rechargeResult.html";
+
+                    // 微信前端返回支付取消
+                } else if(res.err_msg == "get_brand_wcpay_request:cancel") {
+
+                    clickFlag = true;
+
+                    $("#recharge_button").html("充值");
+
+                    cancelRecharge(data["orderNo"]);
+                }
+            }
+        );
     }
 
     function gameRechargeBack(){
