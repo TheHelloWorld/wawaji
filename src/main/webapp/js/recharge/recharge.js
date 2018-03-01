@@ -217,13 +217,20 @@ function rechargeThis() {
 
     $("#recharge_button").html("支付中...");
 
+    var rechargeType = "web_wxpay";
+
+    if(sessionStorage["toiletCatType"] == "app") {
+
+        rechargeType = "app_wxpay";
+    }
+
     $.ajax({
         url:"/toiletCat/api/recharge/userRecharge.action",
         type:"POST",
         async:false,
         data:{
             amount: clickMoney,
-            rechargeType: "wxpay",
+            rechargeType: rechargeType,
             userNo: sessionStorage["toiletCatUserNo"]
         },
         success:function(data) {
@@ -243,46 +250,62 @@ function rechargeThis() {
 
             var result = data["result"];
 
-            if (typeof(result) == "string") {
-                result = eval("(" + result + ")");
+            // 判断是web端还是app端
+            if(sessionStorage["toiletCatType"] == "app") {
+
+                // 将参数传给native端
+                window.android.pay(result);
+
+            } else {
+
+                // web端充值
+                webRecharge(result);
             }
-
-            WeixinJSBridge.invoke(
-                'getBrandWCPayRequest', {
-                    "appId": result["appId"],     //公众号名称，由商户传入
-                    "timeStamp": String(result["timeStamp"]),         //时间戳，自1970年以来的秒数
-                    "nonceStr": result["nonceStr"], //随机串
-                    "package": result["package"],
-                    "signType": result["signType"],         //微信签名方式：
-                    "paySign": result["paySign"] //微信签名
-                },
-                function (res) {
-
-                    // 微信前端返回支付成功/失败(终态)
-                    if (res.err_msg == "get_brand_wcpay_request:ok" || res.err_msg == "get_brand_wcpay_request:fail") {
-
-                        clickFlag = true;
-
-                        $("#recharge_button").html("充值");
-
-                        // 我方订单号
-                        sessionStorage["toiletCatUserOrderNo"] = result["orderNo"];
-
-                         window.location.href="/toiletCat/recharge/rechargeResult.html";
-
-                        // 微信前端返回支付取消
-                    } else if(res.err_msg == "get_brand_wcpay_request:cancel") {
-
-                        clickFlag = true;
-
-                        $("#recharge_button").html("充值");
-
-                        cancelRecharge(result["orderNo"]);
-                    }
-                }
-            );
         }
     });
+}
+
+// web端充值
+function webRecharge(data) {
+
+    if (typeof(data) == "string") {
+        data = eval("(" + data + ")");
+    }
+
+    WeixinJSBridge.invoke(
+        'getBrandWCPayRequest', {
+            "appId": data["appId"],     //公众号名称，由商户传入
+            "timeStamp": String(data["timeStamp"]),         //时间戳，自1970年以来的秒数
+            "nonceStr": data["nonceStr"], //随机串
+            "package": data["package"],
+            "signType": data["signType"],         //微信签名方式：
+            "paySign": data["paySign"] //微信签名
+        },
+        function (res) {
+
+            // 微信前端返回支付成功/失败(终态)
+            if (res.err_msg == "get_brand_wcpay_request:ok" || res.err_msg == "get_brand_wcpay_request:fail") {
+
+                clickFlag = true;
+
+                $("#recharge_button").html("充值");
+
+                // 我方订单号
+                sessionStorage["toiletCatUserOrderNo"] = data["orderNo"];
+
+                window.location.href="/toiletCat/recharge/rechargeResult.html";
+
+                // 微信前端返回支付取消
+            } else if(res.err_msg == "get_brand_wcpay_request:cancel") {
+
+                clickFlag = true;
+
+                $("#recharge_button").html("充值");
+
+                cancelRecharge(data["orderNo"]);
+            }
+        }
+    );
 }
 
 // 取消支付操作

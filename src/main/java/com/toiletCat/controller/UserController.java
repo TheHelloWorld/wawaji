@@ -1,11 +1,13 @@
 package com.toiletCat.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.toiletCat.bean.CommonResult;
 import com.toiletCat.bean.WxUserInfo;
 import com.toiletCat.constants.BaseConstant;
 import com.toiletCat.entity.User;
 import com.toiletCat.service.UserService;
 import com.toiletCat.utils.CommonHandle;
+import com.toiletCat.utils.EmojiFilter;
 import com.toiletCat.utils.JSONUtil;
 import com.toiletCat.utils.WeChatUtil;
 import org.apache.commons.lang.StringUtils;
@@ -27,7 +29,15 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private static final String redirectUrl = "/toiletCat/gameRoom/gameRoom.html";
+    /**
+     * 公众号访问url
+     */
+    private static final String redirectUrl = "/toiletCat/gameRoom/gameRoom.html?type=wx_web";
+
+    /**
+     * app访问url
+     */
+    private static final String appUrl = "http://www.9w83c6.cn/toiletCat/gameRoom/gameRoom.html?type=app";
 
     @Autowired
     private UserService userService;
@@ -38,7 +48,6 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/userWeChatLogin", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    @ResponseBody
     public void userWeChatLogin(HttpServletRequest request, HttpServletResponse response, String code) {
 
         try {
@@ -127,7 +136,6 @@ public class UserController {
                 response.sendRedirect(redirectUrl);
 
                 return;
-
             }
 
             logger.info("userWeChatLogin userNo:{}", userNo);
@@ -166,6 +174,79 @@ public class UserController {
         userService.updateUserInfo(user);
 
         return user;
+    }
+
+    /**
+     * 根据openId获取userNo
+     * @param openId 微信openId
+     * @param userName 用户微信昵称
+     * @param headImg 用户微信头像
+     * @return
+     */
+    @RequestMapping(value = "/getUserInfoByOpenId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getUserInfoByOpenId(String openId, String userName, String headImg) {
+
+        // 根据openId获取用户信息
+        CommonResult<User> openIdCommonResult = userService.getUserByOpenId(openId);
+
+        User user = openIdCommonResult.getValue();
+
+        JSONObject json = new JSONObject();
+
+        json.put("is_success", BaseConstant.SUCCESS);
+
+        json.put("url", appUrl);
+
+        if(user != null) {
+
+            json.put("userNo", user.getUserNo());
+
+            return json.toJSONString();
+        }
+
+        WxUserInfo wxUserInfo = new WxUserInfo();
+
+        // 判断用户头像是否为空
+        if(StringUtils.isBlank(headImg)) {
+
+            headImg = BaseConstant.DEFAULT_HEAD_FLAG;
+
+        } else {
+
+            headImg = headImg.replaceAll("\"", "");
+        }
+
+        wxUserInfo.setHeadImgUrl(headImg);
+
+        // 判断昵称是否为空
+        if(StringUtils.isBlank(userName)) {
+
+            userName = BaseConstant.DEFAULT_NAME_FLAG;
+
+        } else {
+
+            userName = EmojiFilter.filterEmoji(userName.replaceAll("\"", ""));
+        }
+
+        // 过滤用户名中的emoji表情
+        wxUserInfo.setNickName(userName);
+
+        wxUserInfo.setOpenId(openId);
+
+        // 注册用户
+        CommonResult<User> userResult = userService.registerOrLoginUserByWxUserInfo(wxUserInfo);
+
+        user = userResult.getValue();
+
+        if(user != null) {
+
+            json.put("userNo", user.getUserNo());
+
+            return json.toJSONString();
+        }
+
+        return JSONUtil.getErrorJson();
     }
 
     /**

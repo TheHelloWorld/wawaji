@@ -13,6 +13,18 @@ var loginUrl = "/toiletCat/user/login.html?from=gameIndex&type=gameRoom&checkTyp
 
 $(function() {
 
+    // 从url获取类型参数
+    var type = getQueryString("type");
+
+    // 判断类型并添加不同的type
+    if(type == "app") {
+
+        sessionStorage["toiletCatType"] = "app";
+
+    } else {
+        sessionStorage["toiletCatType"] = "wx_web";
+    }
+
     var url = "/toiletCat/api/gameRoom/getUserSeeGameRoomTotalCountAndPageSize.action";
 
     // 获取banner图

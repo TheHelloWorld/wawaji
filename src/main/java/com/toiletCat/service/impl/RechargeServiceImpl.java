@@ -71,13 +71,6 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
             @Override
             public void exec() {
 
-                if(StringUtils.isBlank(userNo) || StringUtils.isBlank(amount) ||
-                        StringUtils.isBlank(rechargeType) || StringUtils.isBlank(ip)) {
-
-                    logger.info("userRecharge u");
-
-                }
-
                 logger.info("userRecharge userNo:" + userNo + ", amount:" + amount);
 
                 MoneyForCoin coin = moneyForCoinService.getMoneyForCoinByMoney(amount);
@@ -177,7 +170,7 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 }
 
                 // 获得请求url并返回
-                got(RechargeUtil.getWxPayRequestInfo(orderNo, amount, user.getOpenId(), ip));
+                got(RechargeUtil.getWxPayRequestInfo(orderNo, amount, user.getOpenId(), ip, rechargeType));
 
             }
         }, true, "userRecharge", json);

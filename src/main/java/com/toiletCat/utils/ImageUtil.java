@@ -8,9 +8,12 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import net.coobird.thumbnailator.Thumbnails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ImageUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(ImageUtil.class);
 
     /**
      * 在源图片上设置水印文字
@@ -25,37 +28,47 @@ public class ImageUtil {
      * @param y     文字显示起始的y坐标
      * @param imageFormat   写入图片格式（png/jpg等）
      * @param toPath    写入图片路径
-     * @throws IOException
      */
-    private static void alphaWords2Image(String srcImagePath,float alpha,
-                                 String font,int fontStyle, int fontSize, Color color,
-                                 String inputWords,int x,int y,String imageFormat,String toPath) throws IOException{
-        FileOutputStream fos=null;
-        try {
+    public static Boolean alphaWords2Image(String srcImagePath, float alpha,
+                                 String font, int fontStyle, int fontSize, Color color,
+                                 String inputWords, int x, int y, String imageFormat, String toPath) {
+
+        try (FileOutputStream fos = new FileOutputStream(toPath)) {
+
             BufferedImage image = ImageIO.read(new File(srcImagePath));
-            //创建java2D对象
+
+            // 创建java2D对象
             Graphics2D g2d=image.createGraphics();
-            //用源图像填充背景
+
+            // 用源图像填充背景
             g2d.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null, null);
-            //设置透明度
+
+            // 设置透明度
             AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
+
             g2d.setComposite(ac);
-            //设置文字字体名称、样式、大小
+
+            // 设置文字字体名称、样式、大小
             g2d.setFont(new Font(font, fontStyle, fontSize));
 
-            g2d.setColor(color);//设置字体颜色
-            g2d.drawString(inputWords, x, y); //输入水印文字及其起始x、y坐标
+            // 设置字体颜色
+            g2d.setColor(color);
+
+            // 输入水印文字及其起始x、y坐标
+            g2d.drawString(inputWords, x, y);
 
             g2d.dispose();
-            fos=new FileOutputStream(toPath);
+
             ImageIO.write(image, imageFormat, fos);
+
         } catch (Exception e) {
-            e.printStackTrace();
-        }finally{
-            if(fos!=null){
-                fos.close();
-            }
+
+            logger.error("alphaWords2Image error: " + e.getMessage(), e);
+
+            return false;
         }
+
+        return true;
     }
 
 
@@ -89,11 +102,6 @@ public class ImageUtil {
         String dd = "D://test2.jpg";
 
 //        alphaWords2Image(imgSrc, alpha, font, fontStyle, fontSize, color, inputWords, x, y, imageFormat, toPath);
-
-
-        Thumbnails.of(toPath)
-                .scale(1f)
-                .outputQuality(0.3f)
-                .toFile(dd);
+        
     }
 }

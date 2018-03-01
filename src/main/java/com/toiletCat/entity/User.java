@@ -35,7 +35,7 @@ public class User extends BaseEntity implements Serializable {
 	private String invitationCode;
 
 	/**
-	 * 用户填写邀请码的用户
+	 * 用户填写的邀请码的所属用户
 	 */
 	private String invitationUserNo;
 

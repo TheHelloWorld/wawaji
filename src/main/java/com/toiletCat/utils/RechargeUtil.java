@@ -171,9 +171,10 @@ public class RechargeUtil {
      * @param money 交易金额
      * @param openId 用户openId
      * @param ip 用户ip
+     * @param type 类型
      * @return
      */
-    public static String getWxPayRequestInfo(String orderNo, String money, String openId, String ip) {
+    public static String getWxPayRequestInfo(String orderNo, String money, String openId, String ip, String type) {
 
         logger.info("getWxPayRequestInfo param: orderNo:" + orderNo + ", money:" + money + ", openId:" + openId +
                 ", ip:" + ip);
@@ -258,21 +259,42 @@ public class RechargeUtil {
 
             JSONObject returnJson = new JSONObject();
 
-            returnJson.put("appId", appId);
+            if(type.startsWith("app")) {
 
-            returnJson.put("timeStamp", WeChatUtil.getCurrentTimestamp());
+                returnJson.put("appId", appId);
 
-            returnJson.put("nonceStr", WeChatUtil.generateUUID());
+                returnJson.put("partnerid", propertiesUtil.getProperty("we_chat_merchant_no"));
 
-            returnJson.put("package", "prepay_id=" + prepay_id);
+                returnJson.put("prepayid", prepay_id);
 
-            returnJson.put("signType", "MD5");
+                returnJson.put("package", "Sign=WXPay");
 
-            String paySign = WeChatUtil.weChatSign(returnJson);
+                returnJson.put("nonceStr", WeChatUtil.generateUUID());
 
-            returnJson.put("paySign", paySign);
+                returnJson.put("timeStamp", WeChatUtil.getCurrentTimestamp());
 
-            returnJson.put("orderNo", orderNo);
+                String paySign = WeChatUtil.weChatSign(returnJson);
+
+                returnJson.put("sign", paySign);
+
+            } else {
+
+                returnJson.put("appId", appId);
+
+                returnJson.put("timeStamp", WeChatUtil.getCurrentTimestamp());
+
+                returnJson.put("nonceStr", WeChatUtil.generateUUID());
+
+                returnJson.put("package", "prepay_id=" + prepay_id);
+
+                returnJson.put("signType", "MD5");
+
+                String paySign = WeChatUtil.weChatSign(returnJson);
+
+                returnJson.put("paySign", paySign);
+
+                returnJson.put("orderNo", orderNo);
+            }
 
             return returnJson.toJSONString();
 
