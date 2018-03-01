@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.awt.*;
+import java.io.File;
 import java.security.MessageDigest;
 import java.util.Formatter;
 
@@ -110,6 +111,20 @@ public class WeChatController {
         String toPath = propertiesUtil.getProperty("user_share_output_path");
 
         toPath += userSharePng;
+
+        // 若图片已经存在则直接返回
+        if(new File(toPath).exists()) {
+
+            JSONObject json = new JSONObject();
+
+            // 成功
+            json.put("is_success", BaseConstant.SUCCESS);
+
+            // 用户分享图片访问路径
+            json.put("url", "http://www.9w83c6.cn/static/image/share/" + userSharePng);
+
+            return json.toJSONString();
+        }
 
         // 用户邀请码
         String inputWords = result.getValue().getInvitationCode();
