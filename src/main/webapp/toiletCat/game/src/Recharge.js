@@ -1,3 +1,5 @@
+    var backObj = [];
+    var chongzhiText;
     var Recharge = (function(_super){
     function Recharge(){
         Recharge.super(this);
@@ -54,19 +56,23 @@
         this.curCoin.zOrder=11;
         this.curCoin.pos(260,25);
         this.addChild(this.curCoin);
-
+        
+        var j=0;
         //充值背景
         for(var i=0;i<3;i++){
             y = 110 + (i*260);
             this.rechargebg1 = new Laya.Sprite();
             this.rechargebg1.loadImage("comp/rechargeback.png");
+            backObj[j] = this.rechargebg1;
             this.rechargebg1.pos(15,y);
             this.addChild(this.rechargebg1);
-            
+            j++;
             this.rechargebg1 = new Laya.Sprite();
             this.rechargebg1.loadImage("comp/rechargeback.png");
             this.rechargebg1.pos(285,y);
+            backObj[j] = this.rechargebg1;
             this.addChild(this.rechargebg1);
+            j++;
         }
 
         //充值1
@@ -140,10 +146,10 @@
             if(i == 0){
                 if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["rechargeLimit"]){
                     //判断限冲次数
-                    this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][0]["money"]]);
+                    this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][0]["money"],i]);
                 }
             }else{
-               this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][i]["money"]]); 
+               this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][i]["money"],i]); 
             }
             this.addChild(this.rechargeFont1);
 
@@ -210,7 +216,7 @@
             this.rechargeFont1.zOrder = 2;
 
             this.addChild(this.rechargeFont1);
-            this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][i+1]["money"]]); 
+            this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][i+1]["money"],i+1]); 
         }
 
         for(var i=0;i<6;i++){
@@ -226,18 +232,68 @@
             this.coinImg1.pos(370-x,170+y);
             this.addChild(this.coinImg1);
         }
+
+        //确认充值按钮
+        this.whitebg = new Laya.Sprite();
+        this.whitebg.zOrder=1;
+        this.whitebg.graphics.drawPath(180, 890, [
+            ["moveTo", 20, 0],
+            ["lineTo", 200, 0],
+            ["arcTo", 210, 0, 210, 10, 10],
+            ["lineTo", 210, 40],
+            ["arcTo", 210, 50, 200, 50, 10],
+            ["lineTo", 20, 50],
+            ["arcTo", 0, 50, 0, 40, 10],
+            ["lineTo", 0, 10],
+            ["arcTo", 0, 0, 10, 0, 10],
+            ["closePath"]
+        ],
+        {
+            fillStyle: "#9ACD32"
+        });
+        this.addChild(this.whitebg);
+        
+
+        this.rechargeFont1 = new Laya.Text();//文字
+        this.rechargeFont1.font = "Impact";
+        this.rechargeFont1.fontSize = 40;
+        this.rechargeFont1.width = 300;
+        this.rechargeFont1.wordWrap = true;
+        this.rechargeFont1.fontSize = 30;
+        this.rechargeFont1.color = "black";
+        this.rechargeFont1.text = '充值';
+        this.rechargeFont1.zOrder = 11;
+        this.rechargeFont1.pos(250,895);
+        chongzhiText = this.rechargeFont1;
+        this.rechargeFont1.on(Laya.Event.CLICK,this,gameRechargeSure);
+        this.addChild(this.rechargeFont1);
     }
 
-
-    // 充值操作
-    function gameRecharge(data) {
-        rechargeThis(data);
+var rechargeDataNum = 0;
+//充值操作
+    function gameRecharge(data, id){
+        for(var i=0;i<6;i++){
+            backObj[i].loadImage('comp/rechargeback.png');
+        }
+        backObj[id].loadImage('comp/rechargebacking.png');
+        rechargeDataNum = data;
     }
-
     Laya.class(gameRecharge,"gameRecharge",_super);
+
+    function gameRechargeSure(){
+        if( rechargeDataNum != 0 ){
+            chongzhiText.text = '充值中...';
+            chongzhiText.x = 230;
+            rechargeThis(rechargeDataNum);
+        }
+    }
+
+    Laya.class(gameRechargeSure,"gameRechargeSure",_super);
 
     // 充值操作
     function rechargeThis(amount) {
+
+        sessionStorage["toiletCatLastPage"] = window.location.href;
 
         var rechargeType = "web_game_wxpay";
 
@@ -245,8 +301,6 @@
 
             rechargeType = "app_game_wxpay";
         }
-
-        sessionStorage["toiletCatLastPage"] = window.location.href;
 
         $.ajax({
             url:"/toiletCat/api/recharge/userRecharge.action",
@@ -276,12 +330,13 @@
 
                     // 将参数传给native端
                     window.android.pay(result);
-
                 } else {
 
-                    // web端充值
                     gameWebRecharge(result);
+
                 }
+
+
             }
         });
     }
@@ -296,7 +351,7 @@
         WeixinJSBridge.invoke(
             'getBrandWCPayRequest', {
                 "appId": data["appId"],     //公众号名称，由商户传入
-                "timeStamp": data["timeStamp"].toString(),         //时间戳，自1970年以来的秒数
+                "timeStamp": String(data["timeStamp"]),         //时间戳，自1970年以来的秒数
                 "nonceStr": data["nonceStr"], //随机串
                 "package": data["package"],
                 "signType": data["signType"],         //微信签名方式：
@@ -309,7 +364,8 @@
 
                     clickFlag = true;
 
-                    $("#recharge_button").html("充值");
+                    chongzhiText.text = '充值';
+                    chongzhiText.x = 250;
 
                     // 我方订单号
                     sessionStorage["toiletCatUserOrderNo"] = data["orderNo"];
@@ -321,12 +377,44 @@
 
                     clickFlag = true;
 
-                    $("#recharge_button").html("充值");
+                    chongzhiText.text = '充值';
+                    chongzhiText.x = 250;
 
                     cancelRecharge(data["orderNo"]);
                 }
             }
         );
+    }
+
+    // 取消支付操作
+    function cancelRecharge(orderNo) {
+
+        $.ajax({
+            url:"/toiletCat/api/recharge/cancelRechargeByOrderNo.action",
+            type:"POST",
+            async:false,
+            data:{
+                orderNo: orderNo,
+                userNo: sessionStorage["toiletCatUserNo"]
+            },
+                success:function(data) {
+
+                    // 转换数据
+                    if (typeof(data) == "string") {
+
+                        data = eval("(" + data + ")");
+                    }
+
+                    // 判断是否成功
+                    if (data["is_success"] != "success") {
+
+                        toiletCatMsg(data["result"], null);
+
+                    }
+
+                }
+            });
+
     }
 
     function gameRechargeBack(){
