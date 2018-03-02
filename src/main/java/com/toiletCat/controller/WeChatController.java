@@ -88,6 +88,8 @@ public class WeChatController {
     @ResponseBody
     public String getUserShareImgByUserNo(String userNo, String inviteCode) {
 
+        logger.info("getUserShareImgByUserNo userNo:" + userNo + ", inviteCode:" + inviteCode);
+
         CommonResult<User> result = userService.getUserByUserNo(userNo);
 
         if(!result.success()) {
