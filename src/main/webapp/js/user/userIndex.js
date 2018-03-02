@@ -107,7 +107,7 @@ function userInvite() {
         type:"POST",
         async:false,
         data:{
-            inviteCode:$("#invitationCode").html(),
+            inviteCode:$("#invite").val(),
             userNo:sessionStorage["toiletCatUserNo"]
         },
         success:function(data) {
@@ -175,7 +175,7 @@ function getShareImg() {
         type:"POST",
         async:false,
         data:{
-            inviteCode:$("#invite").val(),
+            inviteCode:$("#invitationCode").html(),
             userNo:sessionStorage["toiletCatUserNo"]
         },
         success:function(data) {
