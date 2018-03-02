@@ -85,23 +85,23 @@ public class ImageUtil {
 
         int fontStyle = Font.BOLD;
 
-        int fontSize = 100;
+        int fontSize = 80;
 
         Color color = Color.decode("#824121");
 
         String inputWords = "ESDC5";
 
-        int x = 600;
+        int x = 400;
 
-        int y = 1306;
+        int y = 790;
 
         String imageFormat = "png";
 
-        String toPath = "D://test1.jpg";
+        String toPath = "D://test1.png";
 
         String dd = "D://test2.jpg";
 
-//        alphaWords2Image(imgSrc, alpha, font, fontStyle, fontSize, color, inputWords, x, y, imageFormat, toPath);
+        alphaWords2Image(imgSrc, alpha, font, fontStyle, fontSize, color, inputWords, x, y, imageFormat, toPath);
         
     }
 }

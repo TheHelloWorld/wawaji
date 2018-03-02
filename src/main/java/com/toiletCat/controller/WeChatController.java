@@ -36,9 +36,9 @@ public class WeChatController {
 
     private static final Color color = Color.decode("#824121");
 
-    private static final int x = 600;
+    private static final int x = 400;
 
-    private static final int y = 1306;
+    private static final int y = 790;
 
     private static final String imageFormat = "png";
 

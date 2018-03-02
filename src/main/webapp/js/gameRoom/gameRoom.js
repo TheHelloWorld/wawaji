@@ -13,16 +13,18 @@ var loginUrl = "/toiletCat/user/login.html?from=gameIndex&type=gameRoom&checkTyp
 
 $(function() {
 
-    // 从url获取类型参数
-    var type = getQueryString("type");
+    if(sessionStorage["toiletCatType"] == null || sessionStorage["toiletCatType"] == undefined) {
 
-    // 判断类型并添加不同的type
-    if(type == "app") {
+        // 从url获取类型参数
+        var type = getQueryString("type");
 
-        sessionStorage["toiletCatType"] = "app";
+        if(type == "app") {
 
-    } else {
-        sessionStorage["toiletCatType"] = "wx_web";
+            sessionStorage["toiletCatType"] = "app";
+
+        } else {
+            sessionStorage["toiletCatType"] = "wx_web";
+        }
     }
 
     var url = "/toiletCat/api/gameRoom/getUserSeeGameRoomTotalCountAndPageSize.action";
