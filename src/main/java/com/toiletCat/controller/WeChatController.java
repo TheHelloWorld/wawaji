@@ -99,6 +99,8 @@ public class WeChatController {
 
         if(result.getValue() == null) {
 
+            logger.info("getUserShareImgByUserNo user not exists userNo:" + userNo + ", inviteCode:" + inviteCode);
+
             return JSONUtil.getOtherMsgJson("用户不存在");
         }
 
@@ -134,6 +136,9 @@ public class WeChatController {
 
         if(!inputWords.equals(inviteCode)) {
 
+            logger.info("getUserShareImgByUserNo invitationCode wrong userNo:" + userNo + ", inviteCode:" + inviteCode +
+                    ", userInvitationCode:" + inputWords);
+
             return JSONUtil.getOtherMsgJson("邀请码错误");
 
         }
@@ -151,6 +156,9 @@ public class WeChatController {
 
             return json.toJSONString();
         }
+
+        logger.info("getUserShareImgByUserNo execute fail userNo:" + userNo + ", inviteCode:" + inviteCode +
+                ", userInvitationCode:" + inputWords);
 
         return JSONUtil.getErrorJson();
     }
