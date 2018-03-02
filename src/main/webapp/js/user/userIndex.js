@@ -107,7 +107,7 @@ function userInvite() {
         type:"POST",
         async:false,
         data:{
-            inviteCode:$("#invite").val(),
+            inviteCode:$("#invitationCode").html(),
             userNo:sessionStorage["toiletCatUserNo"]
         },
         success:function(data) {
