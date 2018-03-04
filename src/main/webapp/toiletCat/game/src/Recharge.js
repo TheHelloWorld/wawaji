@@ -1,6 +1,6 @@
-    var backObj = [];
-    var chongzhiText;
-    var Recharge = (function(_super){
+var backObj = [];
+var chongzhiText;
+var Recharge = (function(_super){
     function Recharge(){
         Recharge.super(this);
         this.bgcolor = new Laya.Sprite();
@@ -14,7 +14,7 @@
         this.back = new Laya.Sprite();
         this.back.loadImage("comp/back.png");
         this.back.pos(20,20);
-        
+
         this.back.on(Laya.Event.CLICK,this,gameRechargeBack);
         this.addChild(this.back);
 
@@ -23,40 +23,40 @@
         this.coinImg.pos(180,20);
         this.coinImg.zOrder=11;
         this.addChild(this.coinImg);
-        
+
         //顶部白色背景
         this.whitebg = new Laya.Sprite();
         this.whitebg.zOrder=1;
         this.whitebg.graphics.drawPath(180, 20, [
-            ["moveTo", 20, 0],
-            ["lineTo", 200, 0],
-            ["arcTo", 210, 0, 210, 10, 10],
-            ["lineTo", 210, 40],
-            ["arcTo", 210, 50, 200, 50, 10],
-            ["lineTo", 20, 50],
-            ["arcTo", 0, 50, 0, 40, 10],
-            ["lineTo", 0, 10],
-            ["arcTo", 0, 0, 10, 0, 10],
-            ["closePath"]
-        ],
-        {
-            fillStyle: "#ffffff"
-        });
+                ["moveTo", 20, 0],
+                ["lineTo", 200, 0],
+                ["arcTo", 210, 0, 210, 10, 10],
+                ["lineTo", 210, 40],
+                ["arcTo", 210, 50, 200, 50, 10],
+                ["lineTo", 20, 50],
+                ["arcTo", 0, 50, 0, 40, 10],
+                ["lineTo", 0, 10],
+                ["arcTo", 0, 0, 10, 0, 10],
+                ["closePath"]
+            ],
+            {
+                fillStyle: "#ffffff"
+            });
         this.whitebg.zOrder = 10;
         this.addChild(this.whitebg);
         //当前游戏币个数
         this.curCoin = new Laya.Text();
         this.curCoin.color = "#000000";
-		this.curCoin.font = "Impact";
+        this.curCoin.font = "Impact";
         this.curCoin.fontSize = 30;
         this.curCoin.width = 300;
-		this.curCoin.wordWrap = true;
-		this.curCoin.text = sessionStorage["toiletCatUserCoin"]; 
-		this.curCoin.leading = 5;
+        this.curCoin.wordWrap = true;
+        this.curCoin.text = sessionStorage["toiletCatUserCoin"];
+        this.curCoin.leading = 5;
         this.curCoin.zOrder=11;
         this.curCoin.pos(260,25);
         this.addChild(this.curCoin);
-        
+
         var j=0;
         //充值背景
         for(var i=0;i<3;i++){
@@ -66,12 +66,14 @@
             backObj[j] = this.rechargebg1;
             this.rechargebg1.pos(15,y);
             this.addChild(this.rechargebg1);
+            this.rechargebg1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][j]["money"],j]);
             j++;
             this.rechargebg1 = new Laya.Sprite();
             this.rechargebg1.loadImage("comp/rechargeback.png");
             this.rechargebg1.pos(285,y);
             backObj[j] = this.rechargebg1;
             this.addChild(this.rechargebg1);
+            this.rechargebg1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][j]["money"],j]);
             j++;
         }
 
@@ -88,7 +90,7 @@
             this.curCoin1.leading = 5;
             this.curCoin1.pos(70,120+y);
             this.addChild(this.curCoin1);
-            
+
             this.curCoin2 = new Laya.Text();//文字
             this.curCoin2.color = "#D2B160";
             this.curCoin2.font = "Impact";
@@ -102,7 +104,7 @@
             }
             this.curCoin2.leading = 5;
             this.curCoin2.pos(40,230+y);
-            this.addChild(this.curCoin2);     
+            this.addChild(this.curCoin2);
 
             this.rechargeFont1 = new Laya.Text();//文字
             this.rechargeFont1.font = "Impact";
@@ -142,14 +144,14 @@
             }
             this.rechargeFont1.leading = 5;
             this.rechargeFont1.zOrder = 2;
-            
+
             if(i == 0){
                 if(setInitData['result']['rechargeData'][0]["userLimitFlag"] < setInitData['result']['rechargeData'][0]["rechargeLimit"]){
                     //判断限冲次数
                     this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][0]["money"],i]);
                 }
             }else{
-               this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][i]["money"],i]); 
+                this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][i]["money"],i]);
             }
             this.addChild(this.rechargeFont1);
 
@@ -168,7 +170,7 @@
             this.curCoin1.leading = 5;
             this.curCoin1.pos(340,120+y);
             this.addChild(this.curCoin1);
-            
+
             this.curCoin2 = new Laya.Text();//文字
             this.curCoin2.color = "#D2B160";
             this.curCoin2.font = "Impact";
@@ -182,12 +184,12 @@
                     this.curCoin2.text = "充"+setInitData['result']['rechargeData'][1]["coinText"]+"马桶币";
                 }
             }else{
-                 this.curCoin2.text = setInitData['result']['rechargeData'][i+1]["coinText"];
+                this.curCoin2.text = setInitData['result']['rechargeData'][i+1]["coinText"];
             }
 
             this.curCoin2.leading = 5;
             this.curCoin2.pos(310,230+y);
-            this.addChild(this.curCoin2);     
+            this.addChild(this.curCoin2);
 
             this.rechargeFont1 = new Laya.Text();//文字
             this.rechargeFont1.font = "Impact";
@@ -211,12 +213,12 @@
             this.rechargeFont1.color = "#FE613C";
             this.rechargeFont1.text = setInitData['result']['rechargeData'][i+1]["money"];
             this.rechargeFont1.pos(400,290+y);
-            
+
             this.rechargeFont1.leading = 5;
             this.rechargeFont1.zOrder = 2;
 
             this.addChild(this.rechargeFont1);
-            this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][i+1]["money"],i+1]); 
+            this.rechargeFont1.on(Laya.Event.CLICK,this,gameRecharge,[setInitData['result']['rechargeData'][i+1]["money"],i+1]);
         }
 
         for(var i=0;i<6;i++){
@@ -237,22 +239,23 @@
         this.whitebg = new Laya.Sprite();
         this.whitebg.zOrder=1;
         this.whitebg.graphics.drawPath(180, 890, [
-            ["moveTo", 20, 0],
-            ["lineTo", 200, 0],
-            ["arcTo", 210, 0, 210, 10, 10],
-            ["lineTo", 210, 40],
-            ["arcTo", 210, 50, 200, 50, 10],
-            ["lineTo", 20, 50],
-            ["arcTo", 0, 50, 0, 40, 10],
-            ["lineTo", 0, 10],
-            ["arcTo", 0, 0, 10, 0, 10],
-            ["closePath"]
-        ],
-        {
-            fillStyle: "#9ACD32"
-        });
+                ["moveTo", 20, 0],
+                ["lineTo", 200, 0],
+                ["arcTo", 210, 0, 210, 10, 10],
+                ["lineTo", 210, 40],
+                ["arcTo", 210, 50, 200, 50, 10],
+                ["lineTo", 20, 50],
+                ["arcTo", 0, 50, 0, 40, 10],
+                ["lineTo", 0, 10],
+                ["arcTo", 0, 0, 10, 0, 10],
+                ["closePath"]
+            ],
+            {
+                fillStyle: "#9ACD32"
+            });
         this.addChild(this.whitebg);
-        
+        this.whitebg.on(Laya.Event.CLICK,this,gameRechargeSure);
+
 
         this.rechargeFont1 = new Laya.Text();//文字
         this.rechargeFont1.font = "Impact";
@@ -269,7 +272,7 @@
         this.addChild(this.rechargeFont1);
     }
 
-var rechargeDataNum = 0;
+    var rechargeDataNum = 0;
 //充值操作
     function gameRecharge(data, id){
         for(var i=0;i<6;i++){
@@ -335,8 +338,6 @@ var rechargeDataNum = 0;
                     gameWebRecharge(result);
 
                 }
-
-
             }
         });
     }
@@ -397,24 +398,22 @@ var rechargeDataNum = 0;
                 orderNo: orderNo,
                 userNo: sessionStorage["toiletCatUserNo"]
             },
-                success:function(data) {
+            success:function(data) {
 
-                    // 转换数据
-                    if (typeof(data) == "string") {
+                // 转换数据
+                if (typeof(data) == "string") {
 
-                        data = eval("(" + data + ")");
-                    }
+                    data = eval("(" + data + ")");
+                }
 
-                    // 判断是否成功
-                    if (data["is_success"] != "success") {
+                // 判断是否成功
+                if (data["is_success"] != "success") {
 
-                        toiletCatMsg(data["result"], null);
-
-                    }
+                    toiletCatMsg(data["result"], null);
 
                 }
-            });
-
+            }
+        });
     }
 
     function gameRechargeBack(){
