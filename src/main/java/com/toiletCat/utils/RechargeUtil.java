@@ -287,6 +287,8 @@ public class RechargeUtil {
 
                 returnJson.put("package", "Sign=WXPay");
 
+                returnJson.put("packageValue", "Sign=WXPay");
+
                 returnJson.put("nonceStr", WeChatUtil.generateUUID());
 
                 returnJson.put("timeStamp", WeChatUtil.getCurrentTimestamp());
