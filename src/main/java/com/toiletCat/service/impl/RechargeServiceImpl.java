@@ -415,6 +415,8 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                     tradeStatus = TradeStatus.FAIL;
                 }
 
+                Integer rechargeCoin = null;
+
                 if(tradeStatus == TradeStatus.SUCCESS) {
 
                     // 判断返回金额是否正确
@@ -430,8 +432,11 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                         return;
                     }
 
+                    // 根据用户编号和充值项获得应冲游戏币数
+                    rechargeCoin = getCoinByMoneyForCoin(userNo, coin);
+
                     // 添加用户游戏币
-                    userDao.updateUserCoinByUserNo(coin.getCoin(), userNo);
+                    userDao.updateUserCoinByUserNo(rechargeCoin, userNo);
 
                     // 设置限充
                     setLimitRechargeByUserNo(userNo, coin);
@@ -474,7 +479,10 @@ public class RechargeServiceImpl extends BaseServiceImpl implements RechargeServ
                 // 消费类型(充值)
                 userSpendRecord.setTradeType(TradeType.RECHARGE.getType());
 
-                Integer rechargeCoin = getCoinByMoneyForCoin(userNo, coin);
+                if(rechargeCoin == null) {
+
+                    rechargeCoin = getCoinByMoneyForCoin(userNo, coin);
+                }
 
                 // 消费游戏币
                 userSpendRecord.setCoin(rechargeCoin);
