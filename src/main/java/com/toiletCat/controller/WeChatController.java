@@ -32,7 +32,7 @@ public class WeChatController {
 
     private static final int fontStyle = Font.BOLD;
 
-    private static final int fontSize = 100;
+    private static final int fontSize = 80;
 
     private static final Color color = Color.decode("#824121");
 
