@@ -180,7 +180,15 @@ public class WeChatUtil {
 
             PropertiesUtil propertiesUtil = PropertiesUtil.getInstance("system");
 
-            str += "&key=" + propertiesUtil.getProperty("we_chat_key");
+            String type = json.getString("trade_type");
+
+            String key = propertiesUtil.getProperty("we_chat_key");
+
+            if(type != null && type.startsWith("APP")) {
+                key = propertiesUtil.getProperty("we_chat_app_key");
+            }
+
+            str += "&key=" + key;
 
             logger.info("weChatSign str before sign:" + str);
 

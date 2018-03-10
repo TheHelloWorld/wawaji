@@ -233,6 +233,8 @@ public class RechargeUtil {
 
             Map<String, String> map = new TreeMap<>();
 
+            System.out.println(json);
+
             map.put("sign", WeChatUtil.weChatSign(json));
 
             for(String key : json.keySet()) {
@@ -244,6 +246,8 @@ public class RechargeUtil {
 
             String response = HttpClientUtil.httpsRequest(RechargeConstant.WE_CHAT_REQUEST_URL, BaseConstant.HTTP_POST,
                     WeChatUtil.mapToXml(map));
+
+            System.out.println(response);
 
             logger.info("response is :" + response);
 
