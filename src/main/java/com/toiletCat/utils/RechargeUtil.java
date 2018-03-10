@@ -189,12 +189,16 @@ public class RechargeUtil {
 
             String mch_id = propertiesUtil.getProperty("we_chat_merchant_no");
 
+            String trade_type = "JSAPI";
+
             // 若是app调用支付请求
             if(type.startsWith("app")) {
 
                 appId = propertiesUtil.getProperty("we_chat_app_app_id");
 
                 mch_id = propertiesUtil.getProperty("we_chat_app_merchant_no");
+
+                trade_type = "APP";
             }
 
             // appId
@@ -222,7 +226,7 @@ public class RechargeUtil {
             json.put("notify_url", propertiesUtil.getProperty("recharge_notify_url"));
 
             // 交易类型
-            json.put("trade_type", "JSAPI");
+            json.put("trade_type", trade_type);
 
             // 用户openId
             json.put("openid", openId);
