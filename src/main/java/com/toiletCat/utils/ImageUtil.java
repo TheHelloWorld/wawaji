@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +39,7 @@ public class ImageUtil {
             BufferedImage image = ImageIO.read(new File(srcImagePath));
 
             // 创建java2D对象
-            Graphics2D g2d=image.createGraphics();
+            Graphics2D g2d = image.createGraphics();
 
             // 用源图像填充背景
             g2d.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null, null);
@@ -61,12 +62,20 @@ public class ImageUtil {
 
             ImageIO.write(image, imageFormat, fos);
 
+            // 图片压缩
+            Thumbnails.of(toPath)
+                    .scale(1f)
+                    .outputQuality(0.5f)
+                    .toFile(toPath);
+
         } catch (Exception e) {
 
             logger.error("alphaWords2Image error: " + e.getMessage(), e);
 
             return false;
         }
+
+
 
         return true;
     }
@@ -99,9 +108,14 @@ public class ImageUtil {
 
         String toPath = "D://test1.png";
 
-        String dd = "D://test2.jpg";
+        String dd = "D://test212344.png";
 
-        alphaWords2Image(imgSrc, alpha, font, fontStyle, fontSize, color, inputWords, x, y, imageFormat, toPath);
+        //alphaWords2Image(imgSrc, alpha, font, fontStyle, fontSize, color, inputWords, x, y, imageFormat, toPath);
+
+        Thumbnails.of(toPath)
+                .scale(1f)
+                .outputQuality(0.5f)
+                .toFile(toPath);
         
     }
 }
