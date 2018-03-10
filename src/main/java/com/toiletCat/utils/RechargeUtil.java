@@ -187,11 +187,21 @@ public class RechargeUtil {
 
             String appId = propertiesUtil.getProperty("we_chat_app_id");
 
+            String mch_id = propertiesUtil.getProperty("we_chat_merchant_no");
+
+            // 若是app调用支付请求
+            if(type.startsWith("app")) {
+
+                appId = propertiesUtil.getProperty("we_chat_app_app_id");
+
+                mch_id = propertiesUtil.getProperty("we_chat_app_merchant_no");
+            }
+
             // appId
             json.put("appid", appId);
 
             // 商户编号(微信分配)
-            json.put("mch_id", propertiesUtil.getProperty("we_chat_merchant_no"));
+            json.put("mch_id", mch_id);
 
             // 随机字符串
             json.put("nonce_str", WeChatUtil.generateUUID());
