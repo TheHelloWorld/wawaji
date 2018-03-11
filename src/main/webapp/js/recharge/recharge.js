@@ -258,6 +258,10 @@ function rechargeThis() {
                 // 将参数传给native端
                 window.android.pay(result);
 
+                clickFlag = true;
+
+                $("#recharge_button").html("充值");
+
             } else {
 
                 // web端充值

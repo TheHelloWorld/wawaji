@@ -333,6 +333,11 @@ var Recharge = (function(_super){
 
                     // 将参数传给native端
                     window.android.pay(result);
+
+                    clickFlag = true;
+
+                    chongzhiText.text = '充值';
+                    chongzhiText.x = 250;
                 } else {
 
                     gameWebRecharge(result);
