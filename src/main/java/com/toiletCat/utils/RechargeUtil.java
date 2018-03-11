@@ -281,7 +281,7 @@ public class RechargeUtil {
 
                 returnJson.put("appId", appId);
 
-                returnJson.put("partnerid", propertiesUtil.getProperty("we_chat_merchant_no"));
+                returnJson.put("partnerid", propertiesUtil.getProperty("we_chat_app_merchant_no"));
 
                 returnJson.put("prepayid", prepay_id);
 
@@ -290,6 +290,8 @@ public class RechargeUtil {
                 returnJson.put("nonceStr", WeChatUtil.generateUUID());
 
                 returnJson.put("timeStamp", WeChatUtil.getCurrentTimestamp());
+
+                returnJson.put("return_recharge_type", "app");
 
                 String paySign = WeChatUtil.weChatSign(returnJson);
 
@@ -308,6 +310,8 @@ public class RechargeUtil {
                 returnJson.put("package", "prepay_id=" + prepay_id);
 
                 returnJson.put("signType", "MD5");
+
+                returnJson.put("return_recharge_type", "web");
 
                 String paySign = WeChatUtil.weChatSign(returnJson);
 

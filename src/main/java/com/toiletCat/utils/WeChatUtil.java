@@ -158,6 +158,11 @@ public class WeChatUtil {
                     continue;
                 }
 
+                if("return_recharge_type".equals(key)) {
+
+                    continue;
+                }
+
                 map.put(key, json.getString(key));
             }
 
@@ -185,6 +190,12 @@ public class WeChatUtil {
             String key = propertiesUtil.getProperty("we_chat_key");
 
             if(type != null && type.startsWith("APP")) {
+                key = propertiesUtil.getProperty("we_chat_app_key");
+            }
+
+            String recharge_type = json.getString("return_recharge_type");
+
+            if(recharge_type != null && recharge_type.equals("app")) {
                 key = propertiesUtil.getProperty("we_chat_app_key");
             }
 

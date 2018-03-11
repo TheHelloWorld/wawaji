@@ -251,4 +251,55 @@ public class WeChatController {
         return Long.toString(System.currentTimeMillis() / 1000);
     }
 
+//    private static void quickSort(int[] arr, int low, int height) {
+//        if(low >= height) {
+//            return;
+//        }
+//
+//        int i,j,index;
+//
+//        i = low;
+//
+//        j = height;
+//
+//        index = arr[i];
+//
+//        while(i<j) {
+//            while(i<j && arr[j] >= arr[i]) {
+//                j--;
+//            }
+//
+//            if(i < j){
+//                arr[i] = arr[j];
+//                i++;
+//            }
+//
+//            while(i < j && arr[i] <= arr[j]) {
+//                i++;
+//            }
+//
+//            if(i < j) {
+//                arr[j] = arr[i];
+//                j--;
+//            }
+//        }
+//
+//        arr[i] = index;
+//
+//        quickSort(arr, low, i-1);
+//
+//        quickSort(arr, i + 1, height);
+//
+//    }
+//
+//    public static void main(String[] args) {
+//        int[] arr = {1,5,7,9,31,45,888,2};
+//
+//        quickSort(arr, 0, arr.length-1);
+//
+//        for(int i : arr) {
+//            System.out.print(i + ", ");
+//        }
+//    }
+
 }
