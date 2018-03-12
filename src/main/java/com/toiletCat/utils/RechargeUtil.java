@@ -279,23 +279,25 @@ public class RechargeUtil {
 
             if(type.startsWith("app")) {
 
-                returnJson.put("appId", appId);
+                returnJson.put("appid", appId);
 
-                returnJson.put("partnerId", propertiesUtil.getProperty("we_chat_app_merchant_no"));
+                returnJson.put("partnerid", propertiesUtil.getProperty("we_chat_app_merchant_no"));
 
-                returnJson.put("prepayId", prepay_id);
+                returnJson.put("prepayid", prepay_id);
 
-                returnJson.put("packageValue", "Sign=WXPay");
+                returnJson.put("package", "Sign=WXPay");
 
-                returnJson.put("nonceStr", WeChatUtil.generateUUID());
+                returnJson.put("noncestr", WeChatUtil.generateUUID());
 
-                returnJson.put("timeStamp", WeChatUtil.getCurrentTimestamp());
+                returnJson.put("timestamp", WeChatUtil.getCurrentTimestamp());
 
                 returnJson.put("return_recharge_type", "app");
 
                 String paySign = WeChatUtil.weChatSign(returnJson);
 
                 returnJson.put("sign", paySign);
+
+                returnJson.put("packageValue", "Sign=WXPay");
 
             } else {
 
